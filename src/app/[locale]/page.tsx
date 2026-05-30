@@ -19,17 +19,17 @@ const onBrandClick = (brand: string) => console.log('[brand]', brand);
 type ProductData = Omit<ProductCardProps, 'onAddToCart' | 'onCompare' | 'onFavorite'>;
 
 const PRODUCTS: ProductData[] = [
-  { id: '1', slug: 'makita-df333dsae', brand: 'MAKITA', name: 'Дриль-шурупокрут Makita DF333DSAE 12V', image: '/next.svg', price: 2990, oldPrice: 3499, currency: 'грн', rating: 4.5, reviewCount: 127, inStock: true, isHit: true },
-  { id: '2', slug: 'dewalt-dwe4157', brand: 'DEWALT', name: 'Кутова шліфмашина DeWalt DWE4157 900 Вт', image: '/next.svg', price: 3199, oldPrice: 4099, currency: 'грн', rating: 4, reviewCount: 56, inStock: true, isHit: true },
-  { id: '3', slug: 'metabo-steb-65', brand: 'METABO', name: 'Лобзик Metabo STEB 65 Quick 450 Вт', image: '/next.svg', price: 4290, currency: 'грн', rating: 5, reviewCount: 38, inStock: true, isNew: true },
-  { id: '4', slug: 'milwaukee-m18-fiw2f12', brand: 'MILWAUKEE', name: 'Гайковерт ударний Milwaukee M18 FIW2F12', image: '/next.svg', price: 8999, oldPrice: 10999, currency: 'грн', rating: 4.5, reviewCount: 91, inStock: true, isHit: true },
+  { id: '1', slug: 'makita-df333dsae', brand: 'MAKITA', name: 'Дриль-шурупокрут Makita DF333DSAE 12V', image: '/placeholder-product.svg', price: 2990, oldPrice: 3499, currency: 'грн', rating: 4.5, reviewCount: 127, inStock: true, isHit: true },
+  { id: '2', slug: 'dewalt-dwe4157', brand: 'DEWALT', name: 'Кутова шліфмашина DeWalt DWE4157 900 Вт', image: '/placeholder-product.svg', price: 3199, oldPrice: 4099, currency: 'грн', rating: 4, reviewCount: 56, inStock: true, isHit: true },
+  { id: '3', slug: 'metabo-steb-65', brand: 'METABO', name: 'Лобзик Metabo STEB 65 Quick 450 Вт', image: '/placeholder-product.svg', price: 4290, currency: 'грн', rating: 5, reviewCount: 38, inStock: true, isNew: true },
+  { id: '4', slug: 'milwaukee-m18-fiw2f12', brand: 'MILWAUKEE', name: 'Гайковерт ударний Milwaukee M18 FIW2F12', image: '/placeholder-product.svg', price: 8999, oldPrice: 10999, currency: 'грн', rating: 4.5, reviewCount: 91, inStock: true, isHit: true },
 ];
 
 const PRODUCT_OF_DAY = {
   id: 'pod-bosch-gbh',
   brand: 'BOSCH',
   name: 'Перфоратор Bosch GBH 2-26 DRE Professional',
-  image: '/next.svg',
+  image: '/placeholder-product.svg',
   price: 2490,
   oldPrice: 5499,
   currency: 'грн',
