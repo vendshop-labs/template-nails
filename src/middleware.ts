@@ -7,7 +7,7 @@ import { routing } from './i18n/routing';
 export default createMiddleware(routing);
 
 export const config = {
-  // Match all pathnames except API routes, Next.js internals, and files with an
-  // extension (e.g. favicon.ico).
-  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
+  // Match all pathnames except API routes, the standalone /admin section,
+  // Next.js internals, and files with an extension (e.g. favicon.ico).
+  matcher: ['/((?!api|admin|_next|_vercel|.*\\..*).*)'],
 };

@@ -5,7 +5,7 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { routing, type Locale } from '@/i18n/routing';
 import Header from '@/components/layout/Header/Header';
 import Footer from '@/components/layout/Footer/Footer';
-import '../globals.css';
+import '../../globals.css';
 
 export const metadata: Metadata = {
   title: 'ElectroMarket',
