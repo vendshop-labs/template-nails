@@ -145,5 +145,33 @@
     "selected": "Vybrané",
     "deleteSelected": "Odstrániť vybrané",
     "cod": "Dobierka"
+  },
+  "checkout": {
+    "title": "Objednávka",
+    "contactInfo": "Kontaktné údaje",
+    "firstName": "Meno",
+    "lastName": "Priezvisko",
+    "phone": "Telefón",
+    "email": "Email",
+    "delivery": "Doručenie",
+    "novaPoshta": "Nova Pošta — pobočka",
+    "novaPoshtaCourier": "Nova Pošta — kuriér",
+    "selfPickup": "Vyzdvihnutie",
+    "city": "Mesto",
+    "branch": "Pobočka №",
+    "payment": "Platba",
+    "payOnline": "Online platba kartou",
+    "liqpay": "LiqPay",
+    "cashOnDelivery": "Dobierka",
+    "installments": "Splátky",
+    "comment": "Komentár k objednávke",
+    "commentPlaceholder": "Vaše priania...",
+    "submit": "Objednať",
+    "required": "Povinné pole",
+    "orderNumber": "Objednávka №",
+    "successTitle": "Ďakujeme za objednávku!",
+    "successMessage": "Čoskoro vás kontaktujeme",
+    "continueShopping": "Pokračovať v nákupe",
+    "backToHome": "Na hlavnú"
   }
 }

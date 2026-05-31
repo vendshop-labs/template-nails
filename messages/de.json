@@ -145,5 +145,33 @@
     "selected": "Ausgewählt",
     "deleteSelected": "Ausgewählte löschen",
     "cod": "Nachnahme"
+  },
+  "checkout": {
+    "title": "Bestellung aufgeben",
+    "contactInfo": "Kontaktdaten",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "delivery": "Lieferung",
+    "novaPoshta": "Nova Poshta — Filiale",
+    "novaPoshtaCourier": "Nova Poshta — Kurier",
+    "selfPickup": "Abholung",
+    "city": "Stadt",
+    "branch": "Filiale №",
+    "payment": "Zahlung",
+    "payOnline": "Online per Karte bezahlen",
+    "liqpay": "LiqPay",
+    "cashOnDelivery": "Nachnahme",
+    "installments": "Ratenzahlung",
+    "comment": "Bestellkommentar",
+    "commentPlaceholder": "Ihre Wünsche...",
+    "submit": "Bestellung aufgeben",
+    "required": "Pflichtfeld",
+    "orderNumber": "Bestellung №",
+    "successTitle": "Vielen Dank für Ihre Bestellung!",
+    "successMessage": "Wir werden Sie in Kürze kontaktieren",
+    "continueShopping": "Weiter einkaufen",
+    "backToHome": "Zur Startseite"
   }
 }

@@ -145,5 +145,33 @@
     "selected": "Selected",
     "deleteSelected": "Delete selected",
     "cod": "Cash on delivery"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "contactInfo": "Contact Information",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phone": "Phone",
+    "email": "Email",
+    "delivery": "Delivery",
+    "novaPoshta": "Nova Poshta — branch",
+    "novaPoshtaCourier": "Nova Poshta — courier",
+    "selfPickup": "Store pickup",
+    "city": "City",
+    "branch": "Branch №",
+    "payment": "Payment",
+    "payOnline": "Pay online by card",
+    "liqpay": "LiqPay",
+    "cashOnDelivery": "Cash on delivery",
+    "installments": "Pay in installments",
+    "comment": "Order comment",
+    "commentPlaceholder": "Your wishes...",
+    "submit": "Place order",
+    "required": "Required field",
+    "orderNumber": "Order №",
+    "successTitle": "Thank you for your order!",
+    "successMessage": "We will contact you shortly",
+    "continueShopping": "Continue shopping",
+    "backToHome": "Back to home"
   }
 }

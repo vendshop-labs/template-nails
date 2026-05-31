@@ -145,5 +145,33 @@
     "selected": "Выбрано",
     "deleteSelected": "Удалить выбранные",
     "cod": "Наложенный"
+  },
+  "checkout": {
+    "title": "Оформление заказа",
+    "contactInfo": "Контактные данные",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "phone": "Телефон",
+    "email": "Email",
+    "delivery": "Доставка",
+    "novaPoshta": "Нова Пошта — отделение",
+    "novaPoshtaCourier": "Нова Пошта — курьер",
+    "selfPickup": "Самовывоз",
+    "city": "Город",
+    "branch": "Отделение №",
+    "payment": "Оплата",
+    "payOnline": "Онлайн оплата картой",
+    "liqpay": "LiqPay",
+    "cashOnDelivery": "Наложенный платёж",
+    "installments": "Оплата частями",
+    "comment": "Комментарий к заказу",
+    "commentPlaceholder": "Ваши пожелания...",
+    "submit": "Оформить заказ",
+    "required": "Обязательное поле",
+    "orderNumber": "Заказ №",
+    "successTitle": "Спасибо за заказ!",
+    "successMessage": "Мы свяжемся с вами в ближайшее время",
+    "continueShopping": "Продолжить покупки",
+    "backToHome": "На главную"
   }
 }

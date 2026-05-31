@@ -145,5 +145,33 @@
     "selected": "Вибрано",
     "deleteSelected": "Видалити вибрані",
     "cod": "Наложений"
+  },
+  "checkout": {
+    "title": "Оформлення замовлення",
+    "contactInfo": "Контактні дані",
+    "firstName": "Ім'я",
+    "lastName": "Прізвище",
+    "phone": "Телефон",
+    "email": "Email",
+    "delivery": "Доставка",
+    "novaPoshta": "Нова Пошта — відділення",
+    "novaPoshtaCourier": "Нова Пошта — кур'єр",
+    "selfPickup": "Самовивіз з магазину",
+    "city": "Місто",
+    "branch": "Відділення №",
+    "payment": "Оплата",
+    "payOnline": "Онлайн оплата карткою",
+    "liqpay": "LiqPay",
+    "cashOnDelivery": "Наложений платіж",
+    "installments": "Оплата частинами",
+    "comment": "Коментар до замовлення",
+    "commentPlaceholder": "Ваші побажання...",
+    "submit": "Оформити замовлення",
+    "required": "Обов'язкове поле",
+    "orderNumber": "Замовлення №",
+    "successTitle": "Дякуємо за замовлення!",
+    "successMessage": "Ми зв'яжемося з вами найближчим часом",
+    "continueShopping": "Продовжити покупки",
+    "backToHome": "На головну"
   }
 }
