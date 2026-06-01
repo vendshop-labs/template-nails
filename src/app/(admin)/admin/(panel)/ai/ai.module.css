@@ -504,7 +504,7 @@
   align-items: center;
   justify-content: center;
   gap: 14px;
-  height: 260px;
+  flex: 1;
   color: #9ca3af;
   text-align: center;
   line-height: 1.6;
@@ -606,12 +606,13 @@
   40%           { transform: translateY(-6px);  background: #f97316; }
 }
 
-/* Suggestions */
+/* Suggestions — shown below input */
 .chatSuggestions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  padding: 0 22px 16px;
+  padding: 10px 22px 16px;
+  border-top: 1px solid #f1f5f9;
 }
 
 .chatSuggestion {

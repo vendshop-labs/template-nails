@@ -253,17 +253,6 @@ export default function AdminAiPage() {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Suggestions */}
-        {messages.length === 0 && (
-          <div className={styles.chatSuggestions}>
-            {SUGGESTIONS.map((s) => (
-              <button key={s} type="button" className={styles.chatSuggestion} onClick={() => sendMessage(s)}>
-                {s}
-              </button>
-            ))}
-          </div>
-        )}
-
         {/* Input */}
         <div className={styles.chatInputArea}>
           <textarea
@@ -286,6 +275,17 @@ export default function AdminAiPage() {
             <SendIcon />
           </button>
         </div>
+
+        {/* Suggestions — below input, shown only on empty chat */}
+        {messages.length === 0 && (
+          <div className={styles.chatSuggestions}>
+            {SUGGESTIONS.map((s) => (
+              <button key={s} type="button" className={styles.chatSuggestion} onClick={() => sendMessage(s)}>
+                {s}
+              </button>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* ── Indexing status ───────────────────────────────────────────────── */}
