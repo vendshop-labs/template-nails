@@ -6,6 +6,8 @@ import type { CatalogProduct } from '@/components/catalog/CatalogPage/CatalogPag
 import type { CategoryId } from '@/components/home/CategoriesGrid/CategoriesGrid';
 import { db } from '@/lib/db';
 
+export const revalidate = 60;
+
 const STORE_SLUG = process.env.STORE_SLUG ?? 'electromarket';
 
 export async function generateMetadata({

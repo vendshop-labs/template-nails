@@ -5,6 +5,8 @@ import CatalogPage, {
 } from '@/components/catalog/CatalogPage/CatalogPage';
 import { db } from '@/lib/db';
 
+export const revalidate = 60;
+
 const STORE_SLUG = process.env.STORE_SLUG ?? 'electromarket';
 const PAGE_SIZE = 12;
 

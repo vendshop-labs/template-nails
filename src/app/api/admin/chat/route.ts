@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
 import { OrderStatus, PaymentStatus, PromoType } from '@prisma/client';
 import { DEFAULT_THEME, type ThemeConfig } from '@/lib/theme';
@@ -243,6 +244,7 @@ async function executeTool(tool: ToolParams): Promise<string> {
         where: { id: p.productId },
         data: { price: p.newPrice, ...(p.oldPrice ? { oldPrice: p.oldPrice } : {}) },
       });
+      revalidatePath('/', 'layout');
       return `Price updated: ${product.nameKey} → ${product.price} ${product.currency}`;
     }
 
@@ -281,6 +283,7 @@ async function executeTool(tool: ToolParams): Promise<string> {
           ...(p.status === 'DELIVERED' ? { paymentStatus: PaymentStatus.PAID } : {}),
         },
       });
+      revalidatePath('/', 'layout');
       return `Order ${order.orderNumber} updated → ${order.status}`;
     }
 
@@ -350,6 +353,7 @@ async function executeTool(tool: ToolParams): Promise<string> {
           storeId: store.id,
         },
       });
+      revalidatePath('/', 'layout');
       return `Promotion created: "${promo.title}" (${promo.type}, id: ${promo.id})`;
     }
 
@@ -394,6 +398,7 @@ async function executeTool(tool: ToolParams): Promise<string> {
       }
 
       const direction = p.percent > 0 ? 'increased' : 'decreased';
+      revalidatePath('/', 'layout');
       return JSON.stringify({
         message: `${results.length} products ${direction} by ${Math.abs(p.percent)}%`,
         products: results,
@@ -433,6 +438,7 @@ async function executeTool(tool: ToolParams): Promise<string> {
       });
 
       const changed = [...Object.keys(newColors), ...Object.keys(newLayout)];
+      revalidatePath('/', 'layout');
       return JSON.stringify({ message: `Theme updated: ${changed.join(', ')}`, theme: updatedTheme });
     }
 

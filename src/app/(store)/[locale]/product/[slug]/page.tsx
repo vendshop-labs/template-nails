@@ -5,6 +5,8 @@ import ProductPage, { type ResolvedProduct } from '@/components/product/ProductP
 import type { ProductSpec } from '@/components/product/ProductTabs/ProductTabs';
 import { db } from '@/lib/db';
 
+export const revalidate = 60;
+
 const STORE_SLUG = process.env.STORE_SLUG ?? 'electromarket';
 
 interface ProductMetadata {

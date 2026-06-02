@@ -6,6 +6,8 @@ import type { CatalogProduct } from '@/components/catalog/CatalogPage/CatalogPag
 import { BRANDS, isBrandSlug } from '@/data/products';
 import { db } from '@/lib/db';
 
+export const revalidate = 60;
+
 const STORE_SLUG = process.env.STORE_SLUG ?? 'electromarket';
 
 export async function generateMetadata({

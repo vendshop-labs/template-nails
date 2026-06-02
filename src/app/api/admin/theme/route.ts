@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
 import { DEFAULT_THEME, type ThemeConfig } from '@/lib/theme';
 
@@ -47,5 +48,6 @@ export async function PUT(req: NextRequest) {
     data: { themeConfig: updatedTheme as object },
   });
 
+  revalidatePath('/', 'layout');
   return Response.json({ success: true, theme: updatedTheme });
 }

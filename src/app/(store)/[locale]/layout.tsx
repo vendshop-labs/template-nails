@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   description: 'Universal e-commerce template for VendShop',
 };
 
+// Re-check DB every 60 seconds (ISR)
+export const revalidate = 60;
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }

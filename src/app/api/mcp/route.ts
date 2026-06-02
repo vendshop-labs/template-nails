@@ -1,6 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
 import { z } from 'zod';
+import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
 import { OrderStatus, PaymentStatus, PromoType } from '@prisma/client';
 import { DEFAULT_THEME, type ThemeConfig } from '@/lib/theme';
@@ -89,6 +90,7 @@ function createServer() {
           ...(params.oldPrice ? { oldPrice: params.oldPrice } : {}),
         },
       });
+      revalidatePath('/', 'layout');
       return text(`Цена обновлена: ${product.nameKey} → ${product.price} ${product.currency}`);
     }
   );
@@ -154,6 +156,7 @@ function createServer() {
           ...(params.status === 'DELIVERED' ? { paymentStatus: PaymentStatus.PAID } : {}),
         },
       });
+      revalidatePath('/', 'layout');
       return text(`Заказ ${order.orderNumber} → ${order.status}${order.trackingNumber ? ` (TTN: ${order.trackingNumber})` : ''}`);
     }
   );
@@ -300,6 +303,7 @@ function createServer() {
         },
       });
 
+      revalidatePath('/', 'layout');
       return text(`Акция создана: "${promo.title}" (${promo.type}, id: ${promo.id})`);
     }
   );
@@ -341,6 +345,7 @@ function createServer() {
       }
 
       const direction = params.percent > 0 ? 'increased' : 'decreased';
+      revalidatePath('/', 'layout');
       return text({ message: `${results.length} products ${direction} by ${Math.abs(params.percent)}%`, products: results });
     }
   );
@@ -422,6 +427,7 @@ function createServer() {
       });
 
       const changedFields = [...Object.keys(newColors), ...Object.keys(newLayout)];
+      revalidatePath('/', 'layout');
       return text({ message: `Theme updated: ${changedFields.join(', ')}`, theme: updatedTheme });
     }
   );

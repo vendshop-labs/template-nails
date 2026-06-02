@@ -2,6 +2,8 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import HomeClient, { type ProductData } from '@/components/home/HomeClient/HomeClient';
 import { db } from '@/lib/db';
 
+export const revalidate = 60;
+
 const STORE_SLUG = process.env.STORE_SLUG ?? 'electromarket';
 
 export default async function HomePage({
