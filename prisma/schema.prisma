@@ -20,13 +20,15 @@ model Store {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  products      Product[]
-  categories    Category[]
-  orders        Order[]
-  customers     Customer[]
-  promotions    Promotion[]
-  knowledgeBase KnowledgeEntry[]
-  deliveryZones DeliveryZone[]
+  products         Product[]
+  categories       Category[]
+  orders           Order[]
+  customers        Customer[]
+  promotions       Promotion[]
+  knowledgeBase    KnowledgeEntry[]
+  deliveryZones    DeliveryZone[]
+  reservations     Reservation[]
+  restaurantTables RestaurantTable[]
 }
 
 enum Vertical {
@@ -259,6 +261,60 @@ model KnowledgeEntry {
   updatedAt DateTime @updatedAt
 
   @@index([storeId, category])
+}
+
+// ============ RESERVATIONS (RESTAURANT only) ============
+
+model Reservation {
+  id      String @id @default(cuid())
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id])
+
+  date    DateTime
+  time    String
+  guests  Int
+  tableId String?
+  table   RestaurantTable? @relation(fields: [tableId], references: [id])
+
+  name            String
+  phone           String
+  email           String
+  specialRequests String?
+
+  status ReservationStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId, date])
+  @@index([storeId, status])
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
+model RestaurantTable {
+  id      String @id @default(cuid())
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id])
+
+  number String
+  seats  Int
+  zone   String
+  x      Int
+  y      Int
+  type   String
+  active Boolean @default(true)
+
+  reservations Reservation[]
+
+  @@unique([storeId, number])
+  @@index([storeId, zone])
 }
 
 // ============ ADMIN AUTH ============

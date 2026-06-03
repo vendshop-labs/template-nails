@@ -461,6 +461,35 @@ async function main() {
   }
   console.log('✅ KnowledgeBase:', knowledgeData.length, 'entries');
 
+  // ── Restaurant Tables ──
+  console.log('🪑  Seeding restaurant tables...');
+  const tableData = [
+    // Terrace
+    { number: 'T1',  seats: 2, zone: 'terrace', x: 60,  y: 60,  type: 'round' },
+    { number: 'T2',  seats: 2, zone: 'terrace', x: 160, y: 60,  type: 'round' },
+    { number: 'T3',  seats: 4, zone: 'terrace', x: 60,  y: 150, type: 'round' },
+    // Main Hall
+    { number: 'T4',  seats: 4, zone: 'main',    x: 300, y: 60,  type: 'round' },
+    { number: 'T5',  seats: 6, zone: 'main',    x: 400, y: 60,  type: 'rect'  },
+    { number: 'T6',  seats: 2, zone: 'main',    x: 300, y: 150, type: 'round' },
+    { number: 'T7',  seats: 4, zone: 'main',    x: 400, y: 150, type: 'round' },
+    { number: 'T8',  seats: 8, zone: 'main',    x: 300, y: 240, type: 'rect'  },
+    { number: 'T9',  seats: 2, zone: 'main',    x: 400, y: 240, type: 'round' },
+    // Private Room
+    { number: 'T10', seats: 6, zone: 'private', x: 540, y: 60,  type: 'rect'  },
+    { number: 'T11', seats: 4, zone: 'private', x: 540, y: 150, type: 'round' },
+    { number: 'T12', seats: 2, zone: 'private', x: 540, y: 240, type: 'round' },
+  ];
+
+  for (const td of tableData) {
+    await db.restaurantTable.upsert({
+      where: { storeId_number: { storeId: store.id, number: td.number } },
+      update: td,
+      create: { storeId: store.id, ...td },
+    });
+  }
+  console.log(`   ✔ ${tableData.length} tables`);
+
   console.log('\n🎉 Adriano seed complete!');
   console.log(`   Store slug:   ${store.slug}`);
   console.log(`   Admin email:  ${adminEmail}`);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import styles from './ReservationSection.module.css';
 
@@ -15,40 +15,19 @@ interface ReservationForm {
   selectedTable: string | null;
 }
 
-type TableStatus = 'available' | 'occupied';
-type TableType   = 'round' | 'rect';
-
 interface TableDef {
-  id: string;
+  id: string;      // cuid from DB
+  number: string;  // "T1", "T2" display label
   x: number;
   y: number;
-  type: TableType;
+  type: string;
   seats: number;
   zone: string;
-  status: TableStatus;
+  status: string;  // "available" | "occupied"
 }
-
-const TABLES: TableDef[] = [
-  // Terrace
-  { id: 'T1',  x: 60,  y: 60,  type: 'round', seats: 2, zone: 'terrace', status: 'available' },
-  { id: 'T2',  x: 160, y: 60,  type: 'round', seats: 2, zone: 'terrace', status: 'available' },
-  { id: 'T3',  x: 60,  y: 150, type: 'round', seats: 4, zone: 'terrace', status: 'occupied'  },
-  // Main Hall
-  { id: 'T4',  x: 300, y: 60,  type: 'round', seats: 4, zone: 'main',    status: 'available' },
-  { id: 'T5',  x: 400, y: 60,  type: 'rect',  seats: 6, zone: 'main',    status: 'available' },
-  { id: 'T6',  x: 300, y: 150, type: 'round', seats: 2, zone: 'main',    status: 'occupied'  },
-  { id: 'T7',  x: 400, y: 150, type: 'round', seats: 4, zone: 'main',    status: 'available' },
-  { id: 'T8',  x: 300, y: 240, type: 'rect',  seats: 8, zone: 'main',    status: 'available' },
-  { id: 'T9',  x: 400, y: 240, type: 'round', seats: 2, zone: 'main',    status: 'available' },
-  // Private Room
-  { id: 'T10', x: 540, y: 60,  type: 'rect',  seats: 6, zone: 'private', status: 'available' },
-  { id: 'T11', x: 540, y: 150, type: 'round', seats: 4, zone: 'private', status: 'occupied'  },
-  { id: 'T12', x: 540, y: 240, type: 'round', seats: 2, zone: 'private', status: 'available' },
-];
 
 const TIME_SLOTS = ['12:00', '13:00', '14:00', '18:00', '19:00', '20:00', '21:00'];
 
-// Hardcoded until auth is implemented
 const IS_LOGGED_IN = false;
 
 export default function ReservationSection() {
@@ -64,16 +43,72 @@ export default function ReservationSection() {
     specialRequests: '',
     selectedTable: null,
   });
+  const [tables, setTables] = useState<TableDef[]>([]);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const set = (field: keyof ReservationForm, value: string | number | null) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const fetchTables = useCallback(async (date?: string, time?: string) => {
+    try {
+      const params = new URLSearchParams();
+      if (date) params.set('date', date);
+      if (time) params.set('time', time);
+      const res = await fetch(`/api/tables?${params}`);
+      const data = await res.json() as { tables?: TableDef[] };
+      if (data.tables) setTables(data.tables);
+    } catch {
+      // silently keep existing table state
+    }
+  }, []);
+
+  // Load table layout on mount
+  useEffect(() => { fetchTables(); }, [fetchTables]);
+
+  // Refresh availability when date+time changes
+  useEffect(() => {
+    if (form.date && form.time) {
+      fetchTables(form.date, form.time);
+      setForm((prev) => ({ ...prev, selectedTable: null }));
+    }
+  }, [form.date, form.time, fetchTables]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Reservation:', form);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 4000);
+    setError(null);
+    setSubmitting(true);
+
+    try {
+      const res = await fetch('/api/reservations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          date: form.date,
+          time: form.time,
+          guests: form.guests,
+          name: form.name,
+          phone: form.phone,
+          email: form.email,
+          specialRequests: form.specialRequests || undefined,
+          tableId: form.selectedTable || undefined,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json() as { error?: string };
+        throw new Error(data.error ?? 'Failed to create reservation');
+      }
+
+      setSubmitted(true);
+      setForm({ date: '', time: '', guests: 2, name: '', phone: '', email: '', specialRequests: '', selectedTable: null });
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleTableClick = (table: TableDef) => {
@@ -103,6 +138,9 @@ export default function ReservationSection() {
             <div className={styles.successToast}>
               ✓ {t('confirm')} — we&apos;ll contact you shortly!
             </div>
+          )}
+          {error && (
+            <div className={styles.errorToast}>{error}</div>
           )}
 
           <form onSubmit={handleSubmit} noValidate>
@@ -191,7 +229,7 @@ export default function ReservationSection() {
                 />
               </div>
 
-              {/* Special requests — full width */}
+              {/* Special requests */}
               <div className={`${styles.field} ${styles.fieldFull}`}>
                 <label className={styles.label} htmlFor="res-requests">
                   {t('specialRequests')} <span className={styles.optional}>({t('optional')})</span>
@@ -207,8 +245,8 @@ export default function ReservationSection() {
               </div>
             </div>
 
-            <button type="submit" className={styles.submitBtn}>
-              {t('confirm')}
+            <button type="submit" className={styles.submitBtn} disabled={submitting}>
+              {submitting ? '...' : t('confirm')}
             </button>
           </form>
 
@@ -221,7 +259,6 @@ export default function ReservationSection() {
           <p className={styles.mapSubtitle}>{t('tapToSelect')}</p>
 
           <div className={styles.mapContainer}>
-            {/* SVG floor plan */}
             <svg
               viewBox="0 0 640 320"
               className={styles.mapSvg}
@@ -237,8 +274,8 @@ export default function ReservationSection() {
               <text x="360" y="18" textAnchor="middle" fill="#555" fontSize="11" fontFamily="inherit">{t('mainHall')}</text>
               <text x="565" y="18" textAnchor="middle" fill="#555" fontSize="11" fontFamily="inherit">{t('privateRoom')}</text>
 
-              {/* Tables */}
-              {TABLES.map((table) => {
+              {/* Tables from DB */}
+              {tables.map((table) => {
                 const { stroke, fill } = tableStyle(table);
                 const isOccupied = table.status === 'occupied';
                 const r = table.type === 'round' ? (table.seats <= 2 ? 22 : 28) : 0;
@@ -255,7 +292,7 @@ export default function ReservationSection() {
                       <rect x={table.x - 36} y={table.y - 20} width="72" height="40" rx="6" stroke={stroke} strokeWidth="2" fill={fill} />
                     )}
                     <text x={table.x} y={table.y + 1} textAnchor="middle" dominantBaseline="middle" fill="#aaa" fontSize="10" fontFamily="inherit">
-                      {table.id}
+                      {table.number}
                     </text>
                     <text x={table.x} y={table.y + 13} textAnchor="middle" dominantBaseline="middle" fill="#666" fontSize="9" fontFamily="inherit">
                       {table.seats}p
