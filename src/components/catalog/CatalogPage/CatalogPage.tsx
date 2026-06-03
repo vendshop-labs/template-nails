@@ -172,7 +172,7 @@ export default function CatalogPage({
   return (
     <div className={`${styles.cat} ${isRestaurant ? styles.catDark : ''}`}>
       <h1 className={`${styles.h1} ${isRestaurant ? styles.h1Dark : ''}`}>
-        {t('title')}
+        {isRestaurant ? tMenu('title') : t('title')}
       </h1>
 
       {/* Restaurant: horizontal category tabs */}
@@ -198,7 +198,7 @@ export default function CatalogPage({
         </div>
       )}
 
-      <div className={styles.body}>
+      <div className={isRestaurant ? styles.bodyFull : styles.body}>
         {/* Hide sidebar for restaurant */}
         {!isRestaurant && (
           <FilterSidebar

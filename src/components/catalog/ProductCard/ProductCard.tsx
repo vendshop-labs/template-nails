@@ -137,7 +137,10 @@ export default function ProductCard({
   };
 
   // Explicit locale keeps SSR and client numbers identical (no hydration mismatch).
-  const formatPrice = (value: number) => new Intl.NumberFormat('uk-UA').format(value);
+  const formatPrice = (value: number) =>
+    currency === '€'
+      ? new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value)
+      : new Intl.NumberFormat('uk-UA').format(value);
   const discount =
     oldPrice != null && oldPrice > price
       ? Math.round((1 - price / oldPrice) * 100)

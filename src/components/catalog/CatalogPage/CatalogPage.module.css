@@ -257,14 +257,22 @@
   font-weight: 600;
 }
 
+/* Full-width body — replaces 2-col sidebar layout for restaurant */
+.bodyFull {
+  display: block;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
 /* Full-width content when no sidebar */
 .contentFull {
   width: 100%;
 }
 
-/* Menu-style grid: 2 cols, bigger cards */
+/* Menu-style grid: 3 cols, full-width cards */
 .gridMenu {
-  grid-template-columns: repeat(2, 1fr) !important;
+  grid-template-columns: repeat(3, 1fr) !important;
   gap: 24px;
 }
 
@@ -282,9 +290,18 @@
   border-color: rgba(255, 255, 255, 0.12);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .gridMenu {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 640px) {
   .gridMenu {
     grid-template-columns: 1fr !important;
+  }
+  .bodyFull {
+    padding: 0 16px;
   }
   .categoryTabs {
     padding: 0 16px;
