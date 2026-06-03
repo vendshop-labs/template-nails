@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import type { Vertical } from '@prisma/client';
@@ -19,12 +19,44 @@ interface HeaderProps {
   vertical?: Vertical;
 }
 
-function RestaurantHeader({ storeName, phone }: { storeName: string; phone: string }) {
-  const t = useTranslations('Header');
+type TFn = ReturnType<typeof useTranslations<'Header'>>;
+
+function RestaurantHeader({ storeName, phone, t }: { storeName: string; phone: string; t: TFn }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      const threshold = 64;
+
+      setScrolled(currentY > 40);
+
+      if (currentY < threshold) {
+        setVisible(true);
+      } else if (currentY > lastScrollY.current + 5) {
+        setVisible(false);
+      } else if (currentY < lastScrollY.current - 5) {
+        setVisible(true);
+      }
+
+      lastScrollY.current = currentY;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const headerClass = [
+    styles.restaurantHeader,
+    scrolled ? styles.restaurantScrolled : '',
+    visible ? '' : styles.restaurantHidden,
+  ].filter(Boolean).join(' ');
 
   return (
-    <header className={styles.restaurantHeader}>
+    <header className={headerClass}>
       <div className={styles.restaurantInner}>
         {/* Logo */}
         <a className={styles.restaurantLogo} href="/">
@@ -101,7 +133,7 @@ export default function Header({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   if (vertical === 'RESTAURANT') {
-    return <RestaurantHeader storeName={storeName} phone={phone} />;
+    return <RestaurantHeader storeName={storeName} phone={phone} t={t} />;
   }
 
   const toggleMenu = () => setIsMenuOpen((open) => !open);
