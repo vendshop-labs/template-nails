@@ -19,7 +19,13 @@
     "sanders": "Schleifmaschinen",
     "lasers": "Laserwasserwaagen",
     "measuring": "Messwerkzeuge",
-    "accessories": "Zubehör"
+    "accessories": "Zubehör",
+    "antipasti": "Vorspeisen",
+    "primi": "Pasta & Risotto",
+    "secondi": "Hauptgerichte",
+    "pizza": "Pizza",
+    "dolci": "Desserts",
+    "bevande": "Getränke"
   },
   "product": {
     "addToCart": "In den Warenkorb",
@@ -131,7 +137,26 @@
     "dewaltBitSet32": "DeWalt DT7921 Extreme Impact Bit-Set 32-teilig",
     "milwaukeeToolBag": "Milwaukee 48-22-8200 Werkzeugtasche",
     "metaboDiscSet": "Metabo Schleifscheiben-Set 125mm 10-teilig",
-    "boschDiamondBlade": "Bosch Diamant-Trennscheibe 125mm Professional"
+    "boschDiamondBlade": "Bosch Diamant-Trennscheibe 125mm Professional",
+    "bruschettaClassica": "Bruschetta Classica",
+    "carpaccioManzo": "Rinder-Carpaccio",
+    "capreseSalad": "Caprese-Salat",
+    "spaghettiCarbonara": "Spaghetti Carbonara",
+    "penneArrabiata": "Penne all'Arrabbiata",
+    "risottoFunghi": "Pilzrisotto",
+    "lasagnaBolognese": "Lasagne Bolognese",
+    "ossoBuco": "Osso Buco Milanese Art",
+    "saltimboccaRomana": "Saltimbocca alla Romana",
+    "grilledSeaBass": "Gegrillter Wolfsbarsch",
+    "margherita": "Pizza Margherita",
+    "quattroFormaggi": "Pizza Quattro Formaggi",
+    "diavola": "Pizza Diavola",
+    "pizzaProsciutto": "Pizza Prosciutto e Rucola",
+    "tiramisu": "Tiramisù",
+    "pannaCotta": "Panna Cotta mit Beeren",
+    "espresso": "Espresso",
+    "chiantiGlass": "Chianti Classico (Glas)",
+    "limonata": "Hausgemachte Limonata"
   },
   "catalog": {
     "title": "Katalog",

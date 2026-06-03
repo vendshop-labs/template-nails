@@ -9,7 +9,9 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "clean": "powershell -Command \"Remove-Item -Recurse -Force .next -ErrorAction SilentlyContinue\""
+    "clean": "powershell -Command \"Remove-Item -Recurse -Force .next -ErrorAction SilentlyContinue\"",
+    "seed": "npx tsx prisma/seed.ts",
+    "seed:adriano": "npx tsx prisma/seed-adriano.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",

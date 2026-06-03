@@ -19,7 +19,13 @@
     "sanders": "Brúsky",
     "lasers": "Laserové nivelačné prístroje",
     "measuring": "Meracie nástroje",
-    "accessories": "Príslušenstvo"
+    "accessories": "Príslušenstvo",
+    "antipasti": "Predjedlá",
+    "primi": "Cestoviny a rizoto",
+    "secondi": "Hlavné jedlá",
+    "pizza": "Pizza",
+    "dolci": "Dezerty",
+    "bevande": "Nápoje"
   },
   "product": {
     "addToCart": "Do košíka",
@@ -131,7 +137,26 @@
     "dewaltBitSet32": "DeWalt DT7921 sada bitov 32 ks",
     "milwaukeeToolBag": "Milwaukee 48-22-8200 taška na náradie",
     "metaboDiscSet": "Metabo sada brúsnych kotúčov 125mm 10 ks",
-    "boschDiamondBlade": "Bosch diamantový rezný kotúč 125mm Professional"
+    "boschDiamondBlade": "Bosch diamantový rezný kotúč 125mm Professional",
+    "bruschettaClassica": "Bruschetta Classica",
+    "carpaccioManzo": "Hovädzie carpaccio",
+    "capreseSalad": "Šalát Caprese",
+    "spaghettiCarbonara": "Špagety Carbonara",
+    "penneArrabiata": "Penne all'Arrabbiata",
+    "risottoFunghi": "Hubové rizoto",
+    "lasagnaBolognese": "Lasagne Bolognese",
+    "ossoBuco": "Osso Buco po milánsky",
+    "saltimboccaRomana": "Saltimbocca alla Romana",
+    "grilledSeaBass": "Grilovaný morský vlk",
+    "margherita": "Pizza Margherita",
+    "quattroFormaggi": "Pizza Quattro Formaggi",
+    "diavola": "Pizza Diavola",
+    "pizzaProsciutto": "Pizza Prosciutto e Rucola",
+    "tiramisu": "Tiramisu",
+    "pannaCotta": "Panna Cotta s ovocím",
+    "espresso": "Espresso",
+    "chiantiGlass": "Chianti Classico (pohár)",
+    "limonata": "Domáca limonáda"
   },
   "catalog": {
     "title": "Katalóg",

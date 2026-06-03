@@ -19,7 +19,13 @@
     "sanders": "Шліфмашини",
     "lasers": "Лазерні рівні",
     "measuring": "Вимірювальні інструменти",
-    "accessories": "Приладдя та аксесуари"
+    "accessories": "Приладдя та аксесуари",
+    "antipasti": "Закуски",
+    "primi": "Паста та різото",
+    "secondi": "Основні страви",
+    "pizza": "Піца",
+    "dolci": "Десерти",
+    "bevande": "Напої"
   },
   "product": {
     "addToCart": "До кошика",
@@ -131,7 +137,26 @@
     "dewaltBitSet32": "Набір біт DeWalt DT7921 Extreme Impact 32 шт.",
     "milwaukeeToolBag": "Сумка для інструментів Milwaukee 48-22-8200",
     "metaboDiscSet": "Набір шліфувальних дисків Metabo 125 мм 10 шт.",
-    "boschDiamondBlade": "Алмазний диск Bosch Professional 125 мм"
+    "boschDiamondBlade": "Алмазний диск Bosch Professional 125 мм",
+    "bruschettaClassica": "Брускетта класична",
+    "carpaccioManzo": "Карпачо з яловичини",
+    "capreseSalad": "Салат Капрезе",
+    "spaghettiCarbonara": "Спагеті Карбонара",
+    "penneArrabiata": "Пенне Аррабіата",
+    "risottoFunghi": "Різото з грибами",
+    "lasagnaBolognese": "Лазанья Болоньєзе",
+    "ossoBuco": "Оссо Буко по-мілански",
+    "saltimboccaRomana": "Сальтімбокка по-римськи",
+    "grilledSeaBass": "Сібас на грилі",
+    "margherita": "Піца Маргарита",
+    "quattroFormaggi": "Піца Чотири сири",
+    "diavola": "Піца Діавола",
+    "pizzaProsciutto": "Піца з прошуто та руколою",
+    "tiramisu": "Тірамісу",
+    "pannaCotta": "Панна Котта з ягодами",
+    "espresso": "Еспресо",
+    "chiantiGlass": "К'янті Классіко (келих)",
+    "limonata": "Домашній лимонад"
   },
   "catalog": {
     "title": "Каталог",

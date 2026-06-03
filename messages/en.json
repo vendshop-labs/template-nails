@@ -19,7 +19,13 @@
     "sanders": "Sanders",
     "lasers": "Laser Levels",
     "measuring": "Measuring Tools",
-    "accessories": "Accessories"
+    "accessories": "Accessories",
+    "antipasti": "Appetizers",
+    "primi": "Pasta & Risotto",
+    "secondi": "Main Courses",
+    "pizza": "Pizza",
+    "dolci": "Desserts",
+    "bevande": "Drinks"
   },
   "product": {
     "addToCart": "Add to cart",
@@ -131,7 +137,26 @@
     "dewaltBitSet32": "DeWalt DT7921 Extreme Impact Bit Set 32-piece",
     "milwaukeeToolBag": "Milwaukee 48-22-8200 Contractor Tool Bag",
     "metaboDiscSet": "Metabo Grinding Disc Set 125mm 10-piece",
-    "boschDiamondBlade": "Bosch Diamond Cutting Disc 125mm Professional"
+    "boschDiamondBlade": "Bosch Diamond Cutting Disc 125mm Professional",
+    "bruschettaClassica": "Bruschetta Classica",
+    "carpaccioManzo": "Beef Carpaccio",
+    "capreseSalad": "Caprese Salad",
+    "spaghettiCarbonara": "Spaghetti Carbonara",
+    "penneArrabiata": "Penne all'Arrabbiata",
+    "risottoFunghi": "Mushroom Risotto",
+    "lasagnaBolognese": "Lasagna Bolognese",
+    "ossoBuco": "Osso Buco alla Milanese",
+    "saltimboccaRomana": "Saltimbocca alla Romana",
+    "grilledSeaBass": "Grilled Sea Bass",
+    "margherita": "Pizza Margherita",
+    "quattroFormaggi": "Pizza Quattro Formaggi",
+    "diavola": "Pizza Diavola",
+    "pizzaProsciutto": "Pizza Prosciutto e Rucola",
+    "tiramisu": "Tiramisù",
+    "pannaCotta": "Panna Cotta with Berries",
+    "espresso": "Espresso",
+    "chiantiGlass": "Chianti Classico (glass)",
+    "limonata": "Homemade Limonata"
   },
   "catalog": {
     "title": "Catalog",
