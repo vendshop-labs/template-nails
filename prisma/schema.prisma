@@ -30,6 +30,7 @@ model Store {
   deliveryZones    DeliveryZone[]
   reservations     Reservation[]
   restaurantTables RestaurantTable[]
+  galleryImages    GalleryImage[]
 }
 
 enum Vertical {
@@ -316,6 +317,23 @@ model RestaurantTable {
 
   @@unique([storeId, number])
   @@index([storeId, zone])
+}
+
+// ============ GALLERY (RESTAURANT) ============
+
+model GalleryImage {
+  id      String @id @default(cuid())
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id])
+
+  url       String
+  alt       String  @default("")
+  sortOrder Int     @default(0)
+  active    Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  @@index([storeId, sortOrder])
 }
 
 // ============ ADMIN AUTH ============
