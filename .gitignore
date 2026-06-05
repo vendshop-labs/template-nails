@@ -22,3 +22,6 @@ build/
 *.pem
 Thumbs.db
 *.tsbuildinfo
+
+# Local dev uploads
+public/uploads/
