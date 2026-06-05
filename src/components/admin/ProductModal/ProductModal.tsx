@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import type { Vertical } from '@prisma/client';
 import styles from './ProductModal.module.css';
 
 export interface ProductFormData {
@@ -10,15 +11,32 @@ export interface ProductFormData {
   price: string;
   oldPrice: string;
   inStock: boolean;
+  dietaryTags?: string[];
+  allergens?: string;
+  portion?: string;
+  prepTime?: number;
 }
 
 export interface ProductModalProps {
   mode: 'add' | 'edit';
   initial: ProductFormData;
   categories: { slug: string; label: string }[];
+  vertical?: Vertical;
   onSave: (data: ProductFormData) => void;
   onClose: () => void;
 }
+
+const DIETARY_TAGS = ['vegan', 'vegetarian', 'gluten-free', 'dairy-free', 'nut-free', 'spicy'] as const;
+type DietaryTag = (typeof DIETARY_TAGS)[number];
+
+const DIETARY_LABELS: Record<DietaryTag, string> = {
+  vegan: '🌱 Vegan',
+  vegetarian: '🥬 Vegetarian',
+  'gluten-free': '🌾 Gluten-free',
+  'dairy-free': '🥛 Dairy-free',
+  'nut-free': '🥜 Nut-free',
+  spicy: '🌶️ Spicy',
+};
 
 function CloseIcon() {
   return (
@@ -28,22 +46,40 @@ function CloseIcon() {
   );
 }
 
-export default function ProductModal({ mode, initial, categories, onSave, onClose }: ProductModalProps) {
+export default function ProductModal({ mode, initial, categories, vertical, onSave, onClose }: ProductModalProps) {
   const [data, setData] = useState<ProductFormData>(initial);
+  const [dietaryTags, setDietaryTags] = useState<string[]>(initial.dietaryTags ?? []);
+  const [allergens, setAllergens] = useState(initial.allergens ?? '');
+  const [portion, setPortion] = useState(initial.portion ?? '');
+  const [prepTime, setPrepTime] = useState(initial.prepTime ?? 0);
 
   const set = <K extends keyof ProductFormData>(key: K, value: ProductFormData[K]) =>
     setData((d) => ({ ...d, [key]: value }));
 
+  const toggleDietaryTag = (tag: string) =>
+    setDietaryTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
+    );
+
+  const isRestaurant = vertical === 'RESTAURANT';
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSave(data);
+    onSave({
+      ...data,
+      ...(isRestaurant && { dietaryTags, allergens, portion, prepTime }),
+    });
   };
 
   return (
     <div className={styles.overlay} onClick={onClose} role="presentation">
       <div className={styles.dialog} onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
         <div className={styles.head}>
-          <h2 className={styles.title}>{mode === 'add' ? 'Додати товар' : 'Редагувати товар'}</h2>
+          <h2 className={styles.title}>
+            {mode === 'add'
+              ? (isRestaurant ? 'Додати страву' : 'Додати товар')
+              : (isRestaurant ? 'Редагувати страву' : 'Редагувати товар')}
+          </h2>
           <button type="button" className={styles.close} onClick={onClose} aria-label="Закрити">
             <CloseIcon />
           </button>
@@ -122,6 +158,59 @@ export default function ProductModal({ mode, initial, categories, onSave, onClos
               <span className={styles.track} />
             </span>
           </label>
+
+          {isRestaurant && (
+            <div className={styles.restaurantFields}>
+              <h3 className={styles.fieldGroupTitle}>Деталі страви</h3>
+              <div>
+                <span className={styles.label}>Дієтичні мітки</span>
+                <div className={styles.checkboxGroup}>
+                  {DIETARY_TAGS.map((tag) => (
+                    <label key={tag} className={styles.checkbox}>
+                      <input
+                        type="checkbox"
+                        checked={dietaryTags.includes(tag)}
+                        onChange={() => toggleDietaryTag(tag)}
+                      />
+                      {DIETARY_LABELS[tag]}
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <label className={styles.field}>
+                <span className={styles.label}>Алергени (через кому)</span>
+                <input
+                  className={styles.input}
+                  type="text"
+                  value={allergens}
+                  onChange={(e) => setAllergens(e.target.value)}
+                  placeholder="горіхи, молоко, глютен..."
+                />
+              </label>
+              <div className={styles.grid2}>
+                <label className={styles.field}>
+                  <span className={styles.label}>Порція</span>
+                  <input
+                    className={styles.input}
+                    type="text"
+                    value={portion}
+                    onChange={(e) => setPortion(e.target.value)}
+                    placeholder="350г"
+                  />
+                </label>
+                <label className={styles.field}>
+                  <span className={styles.label}>Час приготування (хв)</span>
+                  <input
+                    className={styles.input}
+                    type="number"
+                    value={prepTime}
+                    onChange={(e) => setPrepTime(parseInt(e.target.value, 10) || 0)}
+                    min={0}
+                  />
+                </label>
+              </div>
+            </div>
+          )}
 
           <div className={styles.actions}>
             <button type="button" className={styles.cancel} onClick={onClose}>

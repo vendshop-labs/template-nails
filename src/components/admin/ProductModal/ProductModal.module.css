@@ -188,3 +188,57 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Restaurant fields ─────────────────────────── */
+.restaurantFields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  background: #fff7ed;
+  border: 1.5px solid #fed7aa;
+  border-radius: 10px;
+}
+
+.fieldGroupTitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ea580c;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4b5563;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 7px;
+  background: #fff;
+  transition: border-color 150ms ease, background 150ms ease;
+  user-select: none;
+}
+
+.checkbox:has(input:checked) {
+  border-color: #f97316;
+  background: #fff7ed;
+  color: #ea580c;
+  font-weight: 600;
+}
+
+.checkbox input {
+  display: none;
+}
