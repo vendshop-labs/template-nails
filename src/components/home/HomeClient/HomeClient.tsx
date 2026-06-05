@@ -91,7 +91,11 @@ export default function HomeClient({ products, productOfDay, storeName, menuCate
             return <BrandsSection key={section} onBrandClick={noopStr} />;
 
           case 'trust-strip':
-            return <TrustStrip key={section} />;
+            return (
+              <section key={section} id="contacts">
+                <TrustStrip />
+              </section>
+            );
 
           case 'subscribe':
             return <SubscribeBanner key={section} />;
@@ -119,13 +123,25 @@ export default function HomeClient({ products, productOfDay, storeName, menuCate
             );
 
           case 'menu-categories':
-            return <MenuCategories key={section} categories={menuCategories} />;
+            return (
+              <section key={section} id="menu">
+                <MenuCategories categories={menuCategories} />
+              </section>
+            );
 
           case 'daily-specials':
-            return <DailySpecials key={section} items={dailySpecials} />;
+            return (
+              <section key={section} id="specials">
+                <DailySpecials items={dailySpecials} />
+              </section>
+            );
 
           case 'reservations':
-            return <ReservationSection key={section} />;
+            return (
+              <section key={section} id="reservations">
+                <ReservationSection />
+              </section>
+            );
 
           // Future vertical sections — not yet implemented
           case 'delivery-zones':
