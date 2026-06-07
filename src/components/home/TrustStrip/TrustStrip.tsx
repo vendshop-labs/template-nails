@@ -135,10 +135,11 @@ export default function TrustStrip() {
       : ECOMMERCE_ITEMS;
 
   const isDark = vConfig.vertical === 'RESTAURANT';
+  const gridClass = items.length === 3 ? styles.grid3 : styles.grid4;
 
   return (
     <section className={`${styles.section} ${isDark ? styles.sectionDark : ''}`}>
-      <div className={styles.wrap}>
+      <div className={`${styles.wrap} ${gridClass}`}>
         {items.map((item) => (
           <div className={styles.item} key={item.id}>
             <span className={styles.icon} aria-hidden="true">
