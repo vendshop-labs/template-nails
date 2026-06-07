@@ -74,7 +74,11 @@
     "allergens": "Alergeny",
     "deliveryTime": "Doručení 30–45 min",
     "dineIn": "Jídlo na místě",
-    "takeaway": "S sebou"
+    "takeaway": "S sebou",
+    "frozen": "Zmrazené",
+    "refrigerated": "Chlazené",
+    "organic": "Bio",
+    "expiryDays": "{days} dní"
   },
   "home": {
     "bestSellers": "Nejprodávanější",
@@ -315,12 +319,18 @@
   "dailySpecials": {
     "tagline": "— DENNÍ SPECIÁLY —",
     "title": "Výběr šéfkuchaře",
-    "subtitle": "Vybráno naším šéfkuchařem — k dispozici pouze dnes",
+    "titleFood": "Dnes čerstvé",
+    "subtitle": "Ručně vybrané naším šéfkuchařem — jen dnes",
+    "subtitleFood": "Čerstvé nabídky a denní speciály",
     "order": "Objednat",
-    "chefPick": "Tip šéfkuchaře",
+    "orderFood": "Do košíku",
+    "chefPick": "Výběr šéfa",
+    "staffPick": "Náš tip",
     "popular": "Oblíbené",
     "new": "Novinka",
-    "updatedAt": "Aktualizováno denně v 11:00"
+    "freshToday": "Dnes čerstvé",
+    "updatedAt": "Aktualizováno denně v 11:00",
+    "updatedAtFood": "Každé ráno čerstvě doplněno"
   },
   "reservation": {
     "tagline": "— REZERVACE —",

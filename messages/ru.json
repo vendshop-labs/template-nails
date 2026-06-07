@@ -74,7 +74,11 @@
     "allergens": "Аллергены",
     "deliveryTime": "Доставка 30–45 мин",
     "dineIn": "Возможно в зале",
-    "takeaway": "Навынос"
+    "takeaway": "Навынос",
+    "frozen": "Заморожено",
+    "refrigerated": "Охлаждённое",
+    "organic": "Органик",
+    "expiryDays": "Срок {days} дн"
   },
   "home": {
     "bestSellers": "Хиты продаж",
@@ -315,12 +319,18 @@
   "dailySpecials": {
     "tagline": "— БЛЮДА ДНЯ —",
     "title": "Выбор шефа",
+    "titleFood": "Сегодня свежее",
     "subtitle": "Отобрано нашим шефом — только сегодня",
+    "subtitleFood": "Свежие предложения и дневные специалитеты",
     "order": "Заказать",
+    "orderFood": "В корзину",
     "chefPick": "Выбор шефа",
+    "staffPick": "Рекомендуем",
     "popular": "Популярное",
     "new": "Новинка",
-    "updatedAt": "Обновляется ежедневно в 11:00"
+    "freshToday": "Сегодня свежее",
+    "updatedAt": "Обновляется ежедневно в 11:00",
+    "updatedAtFood": "Свежее пополнение каждое утро"
   },
   "reservation": {
     "tagline": "— БРОНИРОВАНИЕ —",
