@@ -22,6 +22,8 @@ export interface CatalogPageProps {
   vertical?: string;
   initialCategory?: string;
   initialQuery?: string;
+  initialNewFilter?: boolean;
+  initialSaleFilter?: boolean;
 }
 
 interface ApiProduct {
@@ -73,6 +75,8 @@ export default function CatalogPage({
   vertical,
   initialCategory = '',
   initialQuery = '',
+  initialNewFilter = false,
+  initialSaleFilter = false,
 }: CatalogPageProps) {
   const t = useTranslations('catalog');
   const ts = useTranslations('sampleProducts');
@@ -107,6 +111,8 @@ export default function CatalogPage({
       if (filters.priceFrom > 0) params.set('minPrice', String(filters.priceFrom));
       if (filters.priceTo < 25000) params.set('maxPrice', String(filters.priceTo));
       if (initialQuery) params.set('q', initialQuery);
+      if (initialNewFilter) params.set('new', 'true');
+      if (initialSaleFilter) params.set('sale', 'true');
 
       const res = await fetch(`/api/products?${params.toString()}`);
       if (!res.ok) throw new Error('Failed to fetch products');
@@ -138,7 +144,7 @@ export default function CatalogPage({
     } finally {
       setLoading(false);
     }
-  }, [ts]);
+  }, [ts, initialQuery, initialNewFilter, initialSaleFilter]);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);

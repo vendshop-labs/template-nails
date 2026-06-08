@@ -70,6 +70,8 @@ export default async function CatalogRoute({
   // Initial category from URL (for restaurant category tabs)
   const initialCategory = typeof sp.category === 'string' ? sp.category : '';
   const searchQuery = typeof sp.q === 'string' ? sp.q.trim() : '';
+  const isNewFilter = sp.new === 'true';
+  const isSaleFilter = sp.sale === 'true';
 
   const categoryFilter = initialCategory
     ? { category: { slug: initialCategory } }
@@ -84,7 +86,10 @@ export default async function CatalogRoute({
       }
     : {};
 
-  const baseWhere = { storeId: store.id, ...categoryFilter, ...searchFilter };
+  const newFilter = isNewFilter ? { isNew: true } : {};
+  const saleFilter = isSaleFilter ? { oldPrice: { not: null, gt: 0 } } : {};
+
+  const baseWhere = { storeId: store.id, ...categoryFilter, ...searchFilter, ...newFilter, ...saleFilter };
 
   const [dbProducts, total, categoryFacets, brandGroups] = await Promise.all([
     db.product.findMany({
@@ -153,6 +158,8 @@ export default async function CatalogRoute({
         vertical={store.vertical}
         initialCategory={initialCategory}
         initialQuery={searchQuery}
+        initialNewFilter={isNewFilter}
+        initialSaleFilter={isSaleFilter}
       />
     </>
   );

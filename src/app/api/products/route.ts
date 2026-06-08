@@ -16,6 +16,8 @@ export async function GET(request: Request) {
   const inStock = searchParams.get('inStock');
   const minPrice = searchParams.get('minPrice');
   const maxPrice = searchParams.get('maxPrice');
+  const isNew = searchParams.get('new');
+  const isSale = searchParams.get('sale');
   const sort = searchParams.get('sort') ?? 'popular';
   const page = Math.max(1, parseInt(searchParams.get('page') ?? '1', 10));
   const pageSize = Math.min(100, parseInt(searchParams.get('pageSize') ?? '12', 10));
@@ -45,6 +47,15 @@ export async function GET(request: Request) {
         : {}),
       ...(categorySlugs.length > 0
         ? { category: { slug: { in: categorySlugs } } }
+        : {}),
+      ...(isNew === 'true' ? { isNew: true } : {}),
+      ...(isSale === 'true'
+        ? {
+            oldPrice: { not: null },
+            AND: [
+              { oldPrice: { gt: 0 } },
+            ],
+          }
         : {}),
     };
 
