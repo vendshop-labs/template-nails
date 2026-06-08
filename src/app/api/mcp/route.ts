@@ -1,7 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
 import { z } from 'zod';
-import { revalidatePath } from 'next/cache';
+import { revalidateCatalog } from '@/lib/revalidate';
 import { db } from '@/lib/db';
 import { OrderStatus, PaymentStatus, PromoType } from '@prisma/client';
 import { DEFAULT_THEME, type ThemeConfig } from '@/lib/theme';
@@ -133,7 +133,7 @@ async function createServer() {
           ...(params.oldPrice ? { oldPrice: params.oldPrice } : {}),
         },
       });
-      revalidatePath('/', 'layout');
+      revalidateCatalog();
       return text(`Цена обновлена: ${product.nameKey} → ${product.price} ${product.currency}`);
     },
   );
@@ -199,7 +199,7 @@ async function createServer() {
           ...(params.status === 'DELIVERED' ? { paymentStatus: PaymentStatus.PAID } : {}),
         },
       });
-      revalidatePath('/', 'layout');
+      revalidateCatalog();
       return text(`Заказ ${order.orderNumber} → ${order.status}${order.trackingNumber ? ` (TTN: ${order.trackingNumber})` : ''}`);
     },
   );
@@ -340,7 +340,7 @@ async function createServer() {
         },
       });
 
-      revalidatePath('/', 'layout');
+      revalidateCatalog();
       return text(`Акция создана: "${promo.title}" (${promo.type}, id: ${promo.id})`);
     },
   );
@@ -385,7 +385,7 @@ async function createServer() {
       }
 
       const direction = params.percent > 0 ? 'increased' : 'decreased';
-      revalidatePath('/', 'layout');
+      revalidateCatalog();
       return text({ message: `${results.length} products ${direction} by ${Math.abs(params.percent)}%`, products: results });
     },
   );
@@ -468,7 +468,7 @@ async function createServer() {
       });
 
       const changedFields = [...Object.keys(newColors), ...Object.keys(newLayout)];
-      revalidatePath('/', 'layout');
+      revalidateCatalog();
       return text({ message: `Theme updated: ${changedFields.join(', ')}`, theme: updatedTheme });
     },
   );
@@ -494,7 +494,7 @@ async function createServer() {
         data: { themeConfig: preset.theme as object },
       });
 
-      revalidatePath('/', 'layout');
+      revalidateCatalog();
       return text(`Template "${preset.name}" applied. Colors: primary=${preset.theme.colors.primary}, layout: ${preset.theme.layout.cardStyle} cards, ${preset.theme.layout.borderRadius} radius.`);
     },
   );

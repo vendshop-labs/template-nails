@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { revalidatePath } from 'next/cache';
+import { revalidateCatalog } from '@/lib/revalidate';
 import { db } from '@/lib/db';
 import { OrderStatus, PaymentStatus, PromoType } from '@prisma/client';
 import { DEFAULT_THEME, type ThemeConfig } from '@/lib/theme';
@@ -320,7 +320,7 @@ async function executeTool(tool: ToolParams): Promise<string> {
         where: { id: p.productId },
         data: { price: p.newPrice, ...(p.oldPrice ? { oldPrice: p.oldPrice } : {}) },
       });
-      revalidatePath('/', 'layout');
+      revalidateCatalog();
       return `Price updated: ${product.nameKey} → ${product.price} ${product.currency}`;
     }
 
@@ -359,7 +359,7 @@ async function executeTool(tool: ToolParams): Promise<string> {
           ...(p.status === 'DELIVERED' ? { paymentStatus: PaymentStatus.PAID } : {}),
         },
       });
-      revalidatePath('/', 'layout');
+      revalidateCatalog();
       return `Order ${order.orderNumber} updated → ${order.status}`;
     }
 
@@ -429,7 +429,7 @@ async function executeTool(tool: ToolParams): Promise<string> {
           storeId: store.id,
         },
       });
-      revalidatePath('/', 'layout');
+      revalidateCatalog();
       return `Promotion created: "${promo.title}" (${promo.type}, id: ${promo.id})`;
     }
 
@@ -474,7 +474,7 @@ async function executeTool(tool: ToolParams): Promise<string> {
       }
 
       const direction = p.percent > 0 ? 'increased' : 'decreased';
-      revalidatePath('/', 'layout');
+      revalidateCatalog();
       return JSON.stringify({
         message: `${results.length} products ${direction} by ${Math.abs(p.percent)}%`,
         products: results,
@@ -514,7 +514,7 @@ async function executeTool(tool: ToolParams): Promise<string> {
       });
 
       const changed = [...Object.keys(newColors), ...Object.keys(newLayout)];
-      revalidatePath('/', 'layout');
+      revalidateCatalog();
       return JSON.stringify({ message: `Theme updated: ${changed.join(', ')}`, theme: updatedTheme });
     }
 
@@ -537,7 +537,7 @@ async function executeTool(tool: ToolParams): Promise<string> {
         data: { themeConfig: preset.theme as object },
       });
 
-      revalidatePath('/', 'layout');
+      revalidateCatalog();
       return `Template "${preset.name}" applied successfully. Colors: primary=${preset.theme.colors.primary}, layout: ${preset.theme.layout.cardStyle} cards, ${preset.theme.layout.borderRadius} radius.`;
     }
 
