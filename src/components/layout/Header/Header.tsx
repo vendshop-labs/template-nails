@@ -202,7 +202,7 @@ function ShoeMarketHeader({ storeName, t }: { storeName: string; t: TFn }) {
             <Link href="/catalog?gender=men">{t('shoeNavMen')}</Link>
             <Link href="/catalog?gender=women">{t('shoeNavWomen')}</Link>
             <Link href="/catalog?gender=kids">{t('shoeNavKids')}</Link>
-            <Link href="/brands">{t('shoeNavBrands')}</Link>
+            <Link href="/catalog?tab=brands">{t('shoeNavBrands')}</Link>
             <Link href="/catalog?sale=true" className={styles.shoeNavSale}>{t('shoeNavSale')}</Link>
           </nav>
 
@@ -231,7 +231,7 @@ function ShoeMarketHeader({ storeName, t }: { storeName: string; t: TFn }) {
           <Link href="/catalog?gender=men" onClick={() => setIsMenuOpen(false)}>{t('shoeNavMen')}</Link>
           <Link href="/catalog?gender=women" onClick={() => setIsMenuOpen(false)}>{t('shoeNavWomen')}</Link>
           <Link href="/catalog?gender=kids" onClick={() => setIsMenuOpen(false)}>{t('shoeNavKids')}</Link>
-          <Link href="/brands" onClick={() => setIsMenuOpen(false)}>{t('shoeNavBrands')}</Link>
+          <Link href="/catalog?tab=brands" onClick={() => setIsMenuOpen(false)}>{t('shoeNavBrands')}</Link>
           <Link href="/catalog?sale=true" onClick={() => setIsMenuOpen(false)} className={styles.shoeNavSale}>{t('shoeNavSale')}</Link>
           <LanguageSwitcher variant="inline" />
         </div>

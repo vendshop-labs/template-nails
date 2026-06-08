@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import styles from './FilterSidebar.module.css';
 
@@ -88,6 +88,10 @@ export default function FilterSidebar({ onApply, categoryRows, brandRows, showGe
   const [cats, setCats] = useState<Record<string, boolean>>({});
   const [brands, setBrands] = useState<Record<string, boolean>>({});
   const [gender, setGender] = useState(initialGender ?? '');
+
+  useEffect(() => {
+    setGender(initialGender ?? '');
+  }, [initialGender]);
   const [inStock, setInStock] = useState(false);
   const [lo, setLo] = useState(PRICE_MIN);
   const [hi, setHi] = useState(PRICE_MAX);
@@ -136,7 +140,18 @@ export default function FilterSidebar({ onApply, categoryRows, brandRows, showGe
                 key={g}
                 type="button"
                 className={`${styles.genderChip} ${gender === g ? styles.genderChipActive : ''}`}
-                onClick={() => setGender(g)}
+                onClick={() => {
+                  setGender(g);
+                  const state: FilterState = {
+                    categories: Object.keys(cats).filter((k) => cats[k]),
+                    brands: Object.keys(brands).filter((k) => brands[k]),
+                    gender: g,
+                    priceFrom: lo,
+                    priceTo: hi,
+                    inStockOnly: inStock,
+                  };
+                  onApply?.(state);
+                }}
               >
                 {g === '' ? t('genderAll') : t(`gender_${g}`)}
               </button>

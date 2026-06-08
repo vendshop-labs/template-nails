@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useVerticalConfig } from '@/lib/vertical-context';
 import ProductCard, { type ProductCardProps } from '@/components/catalog/ProductCard/ProductCard';
@@ -103,6 +103,10 @@ export default function CatalogPage({
     priceTo: 25000,
     inStockOnly: false,
   });
+
+  useEffect(() => {
+    activeFilters.current.gender = initialGender;
+  }, [initialGender]);
 
   const fetchProducts = useCallback(async (p: number, s: SortKey, filters: FilterState) => {
     setLoading(true);
