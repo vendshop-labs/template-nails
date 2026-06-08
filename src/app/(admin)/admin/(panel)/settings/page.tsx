@@ -54,9 +54,28 @@ export default function AdminSettingsPage() {
 
   useEffect(() => {
     fetch('/api/admin/store-info')
-      .then((r) => r.json() as Promise<{ store?: { vertical: string } }>)
-      .then((data) => { if (data.store?.vertical) setVertical(data.store.vertical); })
-      .catch(() => {});
+      .then((r) => r.json() as Promise<{ store?: Record<string, unknown> }>)
+      .then((data) => {
+        if (data.store) {
+          const s = data.store;
+          if (s.vertical) setVertical(s.vertical as string);
+          setStore((prev) => ({
+            ...prev,
+            name: (s.name as string) ?? '',
+            description: (s.description as string) ?? '',
+            phone: (s.phone as string) ?? '',
+            email: (s.email as string) ?? '',
+            address: (s.address as string) ?? '',
+            city: (s.city as string) ?? '',
+            openingHours: (s.openingHours as string) ?? '',
+            primaryMode: (s.primaryMode as 'PHYSICAL' | 'ONLINE' | 'HYBRID') ?? 'ONLINE',
+            mapLat: s.mapLat != null ? String(s.mapLat) : '',
+            mapLng: s.mapLng != null ? String(s.mapLng) : '',
+          }));
+        }
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, []);
 
   const tabs = [
@@ -68,6 +87,40 @@ export default function AdminSettingsPage() {
   const [toast, setToast] = useState(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => { if (toastTimer.current) clearTimeout(toastTimer.current); }, []);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  const saveStore = async () => {
+    setSaving(true);
+    try {
+      const res = await fetch('/api/admin/store-info', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: store.name,
+          description: store.description,
+          phone: store.phone || null,
+          email: store.email || null,
+          address: store.address || null,
+          city: store.city || null,
+          openingHours: store.openingHours || null,
+          primaryMode: store.primaryMode,
+          mapLat: store.mapLat ? parseFloat(store.mapLat) : null,
+          mapLng: store.mapLng ? parseFloat(store.mapLng) : null,
+        }),
+      });
+      if (res.ok) {
+        setToast(true);
+        if (toastTimer.current) clearTimeout(toastTimer.current);
+        toastTimer.current = setTimeout(() => setToast(false), 2000);
+      }
+    } catch {
+      // silent
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const save = (section: string, data: unknown) => {
     console.log('[admin settings save]', section, data);
     setToast(true);
@@ -76,7 +129,21 @@ export default function AdminSettingsPage() {
   };
 
   // Store
-  const [store, setStore] = useState({ name: 'ЕлектроМаркет', description: 'Професійний електроінструмент від провідних брендів.', phone: '+38 (097) 123-45-67', email: 'info@electromarket.ua', address: 'м. Київ, вул. Хрещатик, 1', schedule: 'Пн-Нд: 9:00-20:00', facebook: '', instagram: '', youtube: '' });
+  const [store, setStore] = useState({
+    name: '',
+    description: '',
+    phone: '',
+    email: '',
+    address: '',
+    city: '',
+    openingHours: '',
+    primaryMode: 'ONLINE' as 'PHYSICAL' | 'ONLINE' | 'HYBRID',
+    mapLat: '',
+    mapLng: '',
+    facebook: '',
+    instagram: '',
+    youtube: '',
+  });
   // Delivery
   const [delivery, setDelivery] = useState({ novaPoshtaOn: true, novaPoshtaKey: '', pickupOn: true, pickupAddress: 'м. Київ, вул. Хрещатик, 1', freeFrom: '2000' });
   // Payment
@@ -107,30 +174,86 @@ export default function AdminSettingsPage() {
       {/* TAB 1 — Store */}
       {tab === 'store' && (
         <div className={styles.card}>
-          <div className={styles.logoUpload} onClick={() => console.log('[admin logo upload]')}>
-            <UploadIcon />
-            <span>Завантажити логотип</span>
-          </div>
+          {loading ? (
+            <p style={{ color: '#6b7280', fontSize: 14 }}>Завантаження...</p>
+          ) : (
+            <>
+              <div className={styles.logoUpload} onClick={() => console.log('[admin logo upload]')}>
+                <UploadIcon />
+                <span>Завантажити логотип</span>
+              </div>
 
-          <Field label="Назва магазину">
-            <input className={styles.input} value={store.name} onChange={(e) => sStore('name', e.target.value)} />
-          </Field>
-          <Field label="Опис">
-            <textarea className={styles.textarea} rows={3} value={store.description} onChange={(e) => sStore('description', e.target.value)} />
-          </Field>
-          <div className={styles.grid2}>
-            <Field label="Телефон"><input className={styles.input} value={store.phone} onChange={(e) => sStore('phone', e.target.value)} /></Field>
-            <Field label="Email"><input className={styles.input} type="email" value={store.email} onChange={(e) => sStore('email', e.target.value)} /></Field>
-          </div>
-          <Field label="Адреса"><input className={styles.input} value={store.address} onChange={(e) => sStore('address', e.target.value)} /></Field>
-          <Field label="Графік роботи"><input className={styles.input} value={store.schedule} onChange={(e) => sStore('schedule', e.target.value)} /></Field>
-          <div className={styles.grid2}>
-            <Field label="Facebook"><input className={styles.input} value={store.facebook} placeholder="https://facebook.com/..." onChange={(e) => sStore('facebook', e.target.value)} /></Field>
-            <Field label="Instagram"><input className={styles.input} value={store.instagram} placeholder="https://instagram.com/..." onChange={(e) => sStore('instagram', e.target.value)} /></Field>
-          </div>
-          <Field label="YouTube"><input className={styles.input} value={store.youtube} placeholder="https://youtube.com/..." onChange={(e) => sStore('youtube', e.target.value)} /></Field>
+              {/* Store Mode selector */}
+              <div className={styles.block}>
+                <span className={styles.blockTitle}>Тип магазину</span>
+                <p className={styles.modeHint}>Визначає які поля доступні та як сайт відображає магазин</p>
+                <div className={styles.modeCards}>
+                  {([
+                    { mode: 'PHYSICAL' as const, icon: '🏪', title: 'Фізичний магазин', desc: 'Офлайн точка з адресою. Клієнти приходять в магазин.' },
+                    { mode: 'ONLINE' as const,   icon: '🛒', title: 'Онлайн магазин',   desc: 'Тільки онлайн. Доставка поштою або кур\'єром.' },
+                    { mode: 'HYBRID' as const,   icon: '🔄', title: 'Гібридний',        desc: 'Фізична точка + онлайн доставка.' },
+                  ]).map((opt) => (
+                    <button
+                      key={opt.mode}
+                      type="button"
+                      className={`${styles.modeCard} ${store.primaryMode === opt.mode ? styles.modeCardActive : ''}`}
+                      onClick={() => sStore('primaryMode', opt.mode)}
+                    >
+                      <span className={styles.modeIcon}>{opt.icon}</span>
+                      <span className={styles.modeTitle}>{opt.title}</span>
+                      <span className={styles.modeDesc}>{opt.desc}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-          <button type="button" className={styles.saveBtn} onClick={() => save('store', store)}>Зберегти зміни</button>
+              <Field label="Назва магазину">
+                <input className={styles.input} value={store.name} onChange={(e) => sStore('name', e.target.value)} />
+              </Field>
+              <Field label="Опис">
+                <textarea className={styles.textarea} rows={3} value={store.description} onChange={(e) => sStore('description', e.target.value)} />
+              </Field>
+              <div className={styles.grid2}>
+                <Field label="Телефон"><input className={styles.input} value={store.phone} onChange={(e) => sStore('phone', e.target.value)} /></Field>
+                <Field label="Email"><input className={styles.input} type="email" value={store.email} onChange={(e) => sStore('email', e.target.value)} /></Field>
+              </div>
+
+              {/* Address fields — only for PHYSICAL / HYBRID */}
+              {store.primaryMode !== 'ONLINE' && (
+                <>
+                  <Field label="Адреса магазину">
+                    <input className={styles.input} value={store.address} onChange={(e) => sStore('address', e.target.value)} placeholder="Marktstraße 15" />
+                  </Field>
+                  <div className={styles.grid2}>
+                    <Field label="Місто">
+                      <input className={styles.input} value={store.city} onChange={(e) => sStore('city', e.target.value)} placeholder="Berlin" />
+                    </Field>
+                    <Field label="Графік роботи">
+                      <input className={styles.input} value={store.openingHours} onChange={(e) => sStore('openingHours', e.target.value)} placeholder="Mon-Sat: 9:00-20:00" />
+                    </Field>
+                  </div>
+                  <div className={styles.grid2}>
+                    <Field label="Широта (lat)">
+                      <input className={styles.input} type="number" step="any" value={store.mapLat} onChange={(e) => sStore('mapLat', e.target.value)} placeholder="52.5200" />
+                    </Field>
+                    <Field label="Довгота (lng)">
+                      <input className={styles.input} type="number" step="any" value={store.mapLng} onChange={(e) => sStore('mapLng', e.target.value)} placeholder="13.4050" />
+                    </Field>
+                  </div>
+                </>
+              )}
+
+              <div className={styles.grid2}>
+                <Field label="Facebook"><input className={styles.input} value={store.facebook} placeholder="https://facebook.com/..." onChange={(e) => sStore('facebook', e.target.value)} /></Field>
+                <Field label="Instagram"><input className={styles.input} value={store.instagram} placeholder="https://instagram.com/..." onChange={(e) => sStore('instagram', e.target.value)} /></Field>
+              </div>
+              <Field label="YouTube"><input className={styles.input} value={store.youtube} placeholder="https://youtube.com/..." onChange={(e) => sStore('youtube', e.target.value)} /></Field>
+
+              <button type="button" className={styles.saveBtn} onClick={saveStore} disabled={saving}>
+                {saving ? 'Збереження...' : 'Зберегти зміни'}
+              </button>
+            </>
+          )}
         </div>
       )}
 

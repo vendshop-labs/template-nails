@@ -12,6 +12,7 @@ model Store {
   id           String   @id @default(cuid())
   name         String
   slug         String   @unique
+  description  String?
   vertical     Vertical @default(ECOMMERCE)
   regionBundle String   @default("UA")
 
