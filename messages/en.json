@@ -440,7 +440,18 @@
     "step3Desc": "Tracked postal delivery in 2–5 business days to your door",
     "pill1": "Free shipping from €75",
     "pill2": "2-year warranty",
-    "pill3": "14-day free returns"
+    "pill3": "14-day free returns",
+    "shoe_title": "Shop with confidence",
+    "shoe_subtitle": "Three simple steps from browsing to your doorstep",
+    "shoe_step1Title": "Find Your Pair",
+    "shoe_step1Desc": "Browse by brand, size & style. Compare models side by side.",
+    "shoe_step2Title": "Secure Checkout",
+    "shoe_step2Desc": "Pay with card, PayPal or cash on delivery. 100% secure.",
+    "shoe_step3Title": "Fast Delivery",
+    "shoe_step3Desc": "Free shipping over €75. Try at home, easy 30-day returns.",
+    "shoe_pill1": "Free shipping from €75",
+    "shoe_pill2": "100% original products",
+    "shoe_pill3": "30-day easy returns"
   },
   "About": {
     "label": "Our Story",

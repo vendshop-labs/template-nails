@@ -58,6 +58,27 @@ const ICONS = {
       </svg>
     ),
   },
+  SHOE_MARKET: {
+    step1: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="11" cy="11" r="7" />
+        <path d="m21 21-4.3-4.3" />
+      </svg>
+    ),
+    step2: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="5" width="20" height="14" rx="2" />
+        <path d="M2 10h20" />
+      </svg>
+    ),
+    step3: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+        <path d="m3.3 7 8.7 5 8.7-5" />
+        <path d="M12 22V12" />
+      </svg>
+    ),
+  },
 } as const;
 
 type SupportedVertical = keyof typeof ICONS;
@@ -71,13 +92,19 @@ export default function HowItWorksSection() {
 
   const icons = ICONS[vertical as SupportedVertical];
 
+  const prefix = vertical === 'SHOE_MARKET' ? 'shoe_' : vertical === 'FOOD_MARKET' ? 'food_' : '';
+  const tv = (key: string) => {
+    const prefixed = `${prefix}${key}`;
+    return prefix && t.has(prefixed) ? t(prefixed) : t(key);
+  };
+
   return (
     <section className={styles.section}>
       <div className={styles.container}>
         <div className={styles.header}>
           <span className={styles.label}>{t('label')}</span>
-          <h2 className={styles.title}>{t('title')}</h2>
-          <p className={styles.subtitle}>{t('subtitle')}</p>
+          <h2 className={styles.title}>{tv('title')}</h2>
+          <p className={styles.subtitle}>{tv('subtitle')}</p>
         </div>
 
         <div className={styles.steps}>
@@ -87,8 +114,8 @@ export default function HowItWorksSection() {
                 {icons[`step${n}` as keyof typeof icons]}
                 <span className={styles.stepBadge}>{n}</span>
               </div>
-              <h3 className={styles.stepTitle}>{t(`step${n}Title`)}</h3>
-              <p className={styles.stepDesc}>{t(`step${n}Desc`)}</p>
+              <h3 className={styles.stepTitle}>{tv(`step${n}Title`)}</h3>
+              <p className={styles.stepDesc}>{tv(`step${n}Desc`)}</p>
             </div>
           ))}
         </div>
@@ -101,7 +128,7 @@ export default function HowItWorksSection() {
                   <path d="M20 6 9 17l-5-5" />
                 </svg>
               </span>
-              {t(`pill${n}`)}
+              {tv(`pill${n}`)}
             </span>
           ))}
         </div>
