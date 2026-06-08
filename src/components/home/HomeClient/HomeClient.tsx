@@ -14,6 +14,7 @@ const ReservationSection = dynamic(() => import('@/components/home/ReservationSe
 const GallerySection = dynamic(() => import('@/components/home/GallerySection/GallerySection'));
 const AboutSection = dynamic(() => import('@/components/home/AboutSection/AboutSection'));
 const BrandsSection = dynamic(() => import('@/components/home/BrandsSection/BrandsSection'));
+const NewArrivals = dynamic(() => import('@/components/home/NewArrivals/NewArrivals'));
 const TrustStrip = dynamic(() => import('@/components/home/TrustStrip/TrustStrip'));
 const PromoBanner = dynamic(() => import('@/components/home/PromoBanner'));
 const SubscribeBanner = dynamic(() => import('@/components/home/SubscribeBanner/SubscribeBanner'));
@@ -48,6 +49,7 @@ interface DailySpecialItem {
 
 interface HomeClientProps {
   products: ProductData[];
+  newArrivals?: ProductData[];
   productOfDay: ProductOfDayData;
   storeName: string;
   menuCategories?: MenuCategoryItem[];
@@ -62,11 +64,18 @@ const ENDS_AT = new Date(Date.now() + ((2 * 24 + 14) * 3600 + 37 * 60 + 22) * 10
 const noop = (_id: string) => {};
 const noopStr = (_s: string) => {};
 
-export default function HomeClient({ products, productOfDay, storeName, menuCategories, dailySpecials, deliveryZones, foodCategories }: HomeClientProps) {
+export default function HomeClient({ products, newArrivals, productOfDay, storeName, menuCategories, dailySpecials, deliveryZones, foodCategories }: HomeClientProps) {
   const vConfig = useVerticalConfig();
   const sections = vConfig.ui.homeSections;
 
   const fullProducts: ProductCardProps[] = products.map((p) => ({
+    ...p,
+    onAddToCart: noop,
+    onCompare: noop,
+    onFavorite: noop,
+  }));
+
+  const fullNewArrivals: ProductCardProps[] = (newArrivals ?? []).map((p) => ({
     ...p,
     onAddToCart: noop,
     onCompare: noop,
@@ -108,6 +117,10 @@ export default function HomeClient({ products, productOfDay, storeName, menuCate
           case 'product-of-day':
             // Rendered inside the bestsellers section above to preserve the side-by-side layout
             return null;
+
+          case 'new-arrivals':
+            if (!fullNewArrivals.length) return null;
+            return <NewArrivals key={section} products={fullNewArrivals} />;
 
           case 'brands':
             return <BrandsSection key={section} onBrandClick={noopStr} />;

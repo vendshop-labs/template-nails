@@ -109,7 +109,8 @@
     "minutes": "min",
     "seconds": "sec",
     "popularBrands": "Popular Brands",
-    "officialDealer": "Official dealer of leading global brands"
+    "officialDealer": "Official dealer of leading global brands",
+    "newArrivalsTitle": "New Arrivals"
   },
   "trust": {
     "freeDelivery": "Free Delivery",

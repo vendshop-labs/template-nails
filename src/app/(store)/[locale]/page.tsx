@@ -33,11 +33,16 @@ export default async function HomePage({
   // Fetch bestsellers and product-of-day from DB
   const store = await db.store.findUniqueOrThrow({ where: { slug: STORE_SLUG } });
 
-  const [hitProducts, podPromotion, dbZones] = await Promise.all([
+  const [hitProducts, newProducts, podPromotion, dbZones] = await Promise.all([
     db.product.findMany({
       where: { storeId: store.id, isHit: true, inStock: true },
       orderBy: { reviewCount: 'desc' },
       take: 4,
+    }),
+    db.product.findMany({
+      where: { storeId: store.id, isNew: true, inStock: true },
+      orderBy: { createdAt: 'desc' },
+      take: 8,
     }),
     db.promotion.findFirst({
       where: { storeId: store.id, type: 'PRODUCT_OF_DAY', active: true },
@@ -60,6 +65,23 @@ export default async function HomePage({
   }));
 
   const products: ProductData[] = hitProducts.map((p) => ({
+    id: p.id,
+    slug: p.slug,
+    brand: p.brand ?? '',
+    name: t.has(p.nameKey) ? t(p.nameKey) : p.nameKey,
+    image: p.image ?? '/placeholder-product.svg',
+    price: p.price,
+    oldPrice: p.oldPrice ?? undefined,
+    currency: p.currency,
+    rating: p.rating,
+    reviewCount: p.reviewCount,
+    inStock: p.inStock,
+    isHit: p.isHit,
+    isNew: p.isNew,
+    metadata: p.metadata as Record<string, unknown> | null,
+  }));
+
+  const newArrivals: ProductData[] = newProducts.map((p) => ({
     id: p.id,
     slug: p.slug,
     brand: p.brand ?? '',
@@ -194,6 +216,7 @@ export default async function HomePage({
       <JsonLd data={localBusinessSchema} />
       <HomeClient
         products={products}
+        newArrivals={newArrivals.length > 0 ? newArrivals : undefined}
         productOfDay={productOfDay}
         storeName={store.name}
         menuCategories={menuCategories.length > 0 ? menuCategories : undefined}

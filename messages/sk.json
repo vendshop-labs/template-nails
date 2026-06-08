@@ -109,7 +109,8 @@
     "minutes": "min",
     "seconds": "sek",
     "popularBrands": "Obľúbené značky",
-    "officialDealer": "Oficiálny predajca popredných svetových značiek"
+    "officialDealer": "Oficiálny predajca popredných svetových značiek",
+    "newArrivalsTitle": "Novinky"
   },
   "trust": {
     "freeDelivery": "Doprava zdarma",
