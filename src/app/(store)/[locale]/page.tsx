@@ -158,16 +158,16 @@ export default async function HomePage({
     productCount: c._count.products,
   }));
 
-  // Fetch top hit products as daily specials
-  const dbSpecials = isRestaurant
-    ? await db.product.findMany({
-        where: { storeId: store.id, isHit: true, inStock: true },
-        orderBy: { rating: 'desc' },
-        take: 3,
-      })
-    : [];
+  // Fetch top hit products as daily specials (all verticals)
+  const dbSpecials = await db.product.findMany({
+    where: { storeId: store.id, isHit: true, inStock: true },
+    orderBy: { rating: 'desc' },
+    take: 3,
+  });
 
-  const BADGE_MAP = ['chef', 'popular', 'new'] as const;
+  const BADGE_MAP_RESTAURANT = ['chef', 'popular', 'new'] as const;
+  const BADGE_MAP_DEFAULT = ['new', 'popular', 'new'] as const;
+  const BADGE_MAP = isRestaurant ? BADGE_MAP_RESTAURANT : BADGE_MAP_DEFAULT;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dailySpecials = dbSpecials.map((p, i) => ({
     id: p.id,
