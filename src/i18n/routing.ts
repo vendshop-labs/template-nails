@@ -7,8 +7,8 @@ import { defineRouting } from 'next-intl/routing';
  * only influences a UI language switcher, never which routes exist.
  */
 export const routing = defineRouting({
-  locales: ['uk', 'ru', 'en', 'de', 'sk', 'cs'],
-  defaultLocale: 'uk',
+  locales: ['en', 'uk', 'ru', 'de', 'sk', 'cs', 'pl'],
+  defaultLocale: 'en',
   localePrefix: 'always',
 });
 

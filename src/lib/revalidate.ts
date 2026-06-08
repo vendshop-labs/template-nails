@@ -1,6 +1,6 @@
 import { revalidatePath, revalidateTag } from 'next/cache';
 
-const LOCALES = ['en', 'de', 'sk', 'cs', 'uk', 'ru'];
+const LOCALES = ['en', 'de', 'sk', 'cs', 'uk', 'ru', 'pl'];
 
 export function revalidateStorefront() {
   revalidatePath('/', 'layout');

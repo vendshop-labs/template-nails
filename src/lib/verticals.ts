@@ -74,6 +74,7 @@ export type HomeSection =
   | 'trust-strip'
   | 'delivery-zones'
   | 'how-it-works'
+  | 'new-arrivals'
   | 'menu-categories'
   | 'daily-specials'
   | 'reservations'
@@ -221,6 +222,51 @@ export const VERTICAL_CONFIGS: Record<Vertical, VerticalConfig> = {
       showReservation: true,
       defaultCurrency: 'UAH',
       defaultRegion: 'UA',
+    },
+  },
+
+  SHOE_MARKET: {
+    vertical: 'SHOE_MARKET',
+    label: 'Shoe Market',
+    product: {
+      metadataFields: [
+        { key: 'brand',    label: 'Brand',    type: 'text',   required: true },
+        { key: 'size',     label: 'Size',     type: 'text',   required: true },
+        { key: 'color',    label: 'Color',    type: 'text' },
+        { key: 'material', label: 'Material', type: 'select', options: ['Leather', 'Suede', 'Canvas', 'Mesh', 'Synthetic'] },
+        { key: 'gender',   label: 'Gender',   type: 'select', options: ['Men', 'Women', 'Kids', 'Unisex'], required: true },
+      ],
+      showBrand: true,
+      showSku: true,
+      cardVariant: 'standard',
+    },
+    delivery: {
+      modes: [
+        { mode: 'SHIPPING', label: 'Standard Post',   enabled: true, icon: '📦' },
+        { mode: 'COURIER',  label: 'Express Courier', enabled: true, icon: '🚴' },
+        { mode: 'PICKUP',   label: 'Pickup Point',    enabled: true, icon: '🏪' },
+      ],
+      showEstimatedTime: true,
+      showZonesMap: false,
+      defaultMinOrder: 0,
+    },
+    checkout: {
+      showCompanyFields: false,
+      showTimeSlots: false,
+      showTableNumber: false,
+      paymentMethods: ['card', 'cod'],
+    },
+    ui: {
+      homeSections: ['hero', 'categories', 'bestsellers', 'product-of-day', 'new-arrivals', 'brands', 'how-it-works', 'trust-strip', 'subscribe'],
+      catalogStyle: 'grid',
+      categoryDisplay: 'sidebar',
+      addToCartLabel: 'Add to Cart',
+    },
+    store: {
+      showHours: false,
+      showReservation: false,
+      defaultCurrency: 'EUR',
+      defaultRegion: 'DE',
     },
   },
 

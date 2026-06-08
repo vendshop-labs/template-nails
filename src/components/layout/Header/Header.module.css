@@ -334,6 +334,238 @@
   }
 }
 
+/* ─── Shoe Market Header ─────────────────────────────────────────── */
+
+.shoeHeader {
+  width: 100%;
+  font-family: inherit;
+  background: var(--color-bg, #fff);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Top strip */
+.shoeStrip {
+  background: var(--color-bg-dark);
+  color: var(--color-contrast, #fff);
+  font-size: 12px;
+}
+
+.shoeStripInner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 7px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.shoeStripText {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: inherit;
+  opacity: 0.85;
+}
+
+.shoeStripRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.shoeTrackLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: inherit;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.8;
+  transition: opacity 0.15s ease;
+}
+
+.shoeTrackLink:hover {
+  opacity: 1;
+}
+
+/* Main bar */
+.shoeBar {
+  background: var(--color-bg, #fff);
+}
+
+.shoeBarInner {
+  max-width: 1400px;
+  height: 66px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.shoeBurger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  border-radius: var(--radius-md, 6px);
+  flex-shrink: 0;
+}
+
+.shoeBurger:hover {
+  background: var(--color-bg-subtle);
+}
+
+.shoeLogo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.shoeLogoIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md, 6px);
+  background: var(--color-primary);
+  color: var(--color-bg, #fff);
+}
+
+.shoeLogoText {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+  letter-spacing: -0.3px;
+}
+
+.shoeNav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 16px;
+  flex: 1;
+}
+
+.shoeNav a {
+  padding: 6px 14px;
+  color: var(--color-text-secondary, #555);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius-md, 6px);
+  transition: color 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+}
+
+.shoeNav a:hover {
+  color: var(--color-text);
+  background: var(--color-bg-subtle);
+}
+
+.shoeNavSale {
+  color: var(--color-primary) !important;
+  font-weight: 700 !important;
+}
+
+.shoeNavSale:hover {
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
+}
+
+.shoeActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.shoeAction {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md, 6px);
+  color: var(--color-text-secondary, #555);
+  text-decoration: none;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.shoeAction:hover {
+  color: var(--color-text);
+  background: var(--color-bg-subtle);
+}
+
+.shoeCartAction {
+  color: var(--color-primary);
+}
+
+.shoeCartAction:hover {
+  color: var(--color-primary-dark);
+  background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+}
+
+/* Mobile menu */
+.shoeMobileMenu {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .shoeBurger {
+    display: inline-flex;
+  }
+
+  .shoeNav {
+    display: none;
+  }
+
+  .shoeStripText {
+    display: none;
+  }
+
+  .shoeMobileMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 20px 20px;
+    border-top: 1px solid var(--color-border);
+    animation: slideDown 0.2s ease;
+  }
+
+  .shoeMobileMenu a {
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--color-border);
+    display: block;
+    transition: color 0.15s ease;
+  }
+
+  .shoeMobileMenu a:last-of-type {
+    border-bottom: none;
+  }
+
+  .shoeMobileMenu a:hover {
+    color: var(--color-primary);
+  }
+}
+
 /* ─── Restaurant Header (transparent overlay) ───────────────────── */
 
 .restaurantHeader {

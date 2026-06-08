@@ -13,7 +13,14 @@
     "restaurantReservations": "Rezervácia",
     "restaurantGallery": "Galéria",
     "restaurantAbout": "O nás",
-    "restaurantContacts": "Kontakt"
+    "restaurantContacts": "Kontakt",
+    "shoeNavMen": "Muži",
+    "shoeNavWomen": "Ženy",
+    "shoeNavKids": "Deti",
+    "shoeNavBrands": "Značky",
+    "shoeNavSale": "Výpredaj",
+    "shoeShippingBanner": "Doprava zdarma pri objednávkach nad 75€",
+    "shoeTrackOrder": "Sledovať objednávku"
   },
   "categories": {
     "title": "Kategórie",

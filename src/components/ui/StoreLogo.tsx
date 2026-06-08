@@ -44,12 +44,27 @@ function ForkIcon({ size, fill }: { size: number; fill: boolean }) {
   );
 }
 
+function ShoeIcon({ size, fill }: { size: number; fill: boolean }) {
+  return fill ? (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M13.5 4.5c-1.1 0-2 .4-2.7 1.1L5 12H2v2h2.5l1.5 3h14v-3.5c0-2.5-2-4.5-4.5-4.5h-1.1l2.1-2.1c.4-.4.5-1 .2-1.5C16.4 5 15 4.5 13.5 4.5z" />
+    </svg>
+  ) : (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M2 12h3l5.5-6.5a2 2 0 0 1 3 0l3 3.5H20a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H4l-2-2z" />
+      <path d="M4 17h16" />
+    </svg>
+  );
+}
+
 export default function StoreLogo({ vertical, size = 22, fill = false }: StoreLogoProps) {
   switch (vertical) {
     case 'FOOD_MARKET':
       return <LeafIcon size={size} fill={fill} />;
     case 'RESTAURANT':
       return <ForkIcon size={size} fill={fill} />;
+    case 'SHOE_MARKET':
+      return <ShoeIcon size={size} fill={fill} />;
     default:
       return <BoltIcon size={size} fill={fill} />;
   }

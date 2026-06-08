@@ -13,7 +13,14 @@
     "restaurantReservations": "Бронирование",
     "restaurantGallery": "Галерея",
     "restaurantAbout": "О нас",
-    "restaurantContacts": "Контакты"
+    "restaurantContacts": "Контакты",
+    "shoeNavMen": "Мужчины",
+    "shoeNavWomen": "Женщины",
+    "shoeNavKids": "Дети",
+    "shoeNavBrands": "Бренды",
+    "shoeNavSale": "Распродажа",
+    "shoeShippingBanner": "Бесплатная доставка при заказах от 75€",
+    "shoeTrackOrder": "Отследить заказ"
   },
   "categories": {
     "title": "Категории",

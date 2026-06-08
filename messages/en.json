@@ -13,7 +13,14 @@
     "restaurantReservations": "Reservations",
     "restaurantGallery": "Gallery",
     "restaurantAbout": "About",
-    "restaurantContacts": "Contacts"
+    "restaurantContacts": "Contacts",
+    "shoeNavMen": "Men",
+    "shoeNavWomen": "Women",
+    "shoeNavKids": "Kids",
+    "shoeNavBrands": "Brands",
+    "shoeNavSale": "Sale",
+    "shoeShippingBanner": "Free shipping on orders over €75",
+    "shoeTrackOrder": "Track order"
   },
   "categories": {
     "title": "Categories",

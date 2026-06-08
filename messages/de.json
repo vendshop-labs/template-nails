@@ -13,7 +13,14 @@
     "restaurantReservations": "Reservierung",
     "restaurantGallery": "Galerie",
     "restaurantAbout": "Über uns",
-    "restaurantContacts": "Kontakt"
+    "restaurantContacts": "Kontakt",
+    "shoeNavMen": "Herren",
+    "shoeNavWomen": "Damen",
+    "shoeNavKids": "Kinder",
+    "shoeNavBrands": "Marken",
+    "shoeNavSale": "Sale",
+    "shoeShippingBanner": "Kostenloser Versand ab 75€",
+    "shoeTrackOrder": "Bestellung verfolgen"
   },
   "categories": {
     "title": "Kategorien",
