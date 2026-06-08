@@ -474,5 +474,29 @@
     "freeReturns": "30 Tage Rückgabe",
     "shopSale": "Sale ansehen",
     "newArrivals": "Neuheiten"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "register": "Konto erstellen",
+    "logout": "Abmelden",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "name": "Vollständiger Name",
+    "phone": "Telefon (optional)",
+    "confirmPassword": "Passwort bestätigen",
+    "alreadyHaveAccount": "Bereits ein Konto?",
+    "dontHaveAccount": "Noch kein Konto?",
+    "loginHere": "Hier anmelden",
+    "registerHere": "Erstellen",
+    "registerSuccess": "Konto erfolgreich erstellt!",
+    "loginSuccess": "Willkommen zurück!",
+    "errorInvalidEmail": "Bitte gültige E-Mail eingeben",
+    "errorPasswordShort": "Passwort muss mindestens 6 Zeichen lang sein",
+    "errorPasswordMismatch": "Passwörter stimmen nicht überein",
+    "errorNameRequired": "Name ist erforderlich",
+    "errorEmailTaken": "Diese E-Mail ist bereits registriert",
+    "errorInvalidCredentials": "Ungültige E-Mail oder Passwort",
+    "myAccount": "Mein Konto",
+    "greeting": "Hallo, {name}"
   }
 }

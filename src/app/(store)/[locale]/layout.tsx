@@ -10,6 +10,7 @@ import { getStoreConfig } from '@/lib/store-config';
 import { themeToCssVars } from '@/lib/theme';
 import { VerticalProvider } from '@/lib/vertical-context';
 import { PresenceProvider } from '@/lib/presence-context';
+import { CustomerProvider } from '@/lib/useCustomer';
 import { getBaseUrl } from '@/lib/url';
 import '../../globals.css';
 
@@ -104,13 +105,15 @@ export default async function LocaleLayout({
       </head>
       <body style={cssVars as React.CSSProperties}>
         <NextIntlClientProvider messages={messages}>
-          <VerticalProvider config={config.vertical}>
-            <PresenceProvider presence={config.presence}>
-              <Header storeName={config.name} vertical={config.vertical.vertical} />
-              <main>{children}</main>
-              <Footer storeName={config.name} vertical={config.vertical.vertical} />
-            </PresenceProvider>
-          </VerticalProvider>
+          <CustomerProvider>
+            <VerticalProvider config={config.vertical}>
+              <PresenceProvider presence={config.presence}>
+                <Header storeName={config.name} vertical={config.vertical.vertical} />
+                <main>{children}</main>
+                <Footer storeName={config.name} vertical={config.vertical.vertical} />
+              </PresenceProvider>
+            </VerticalProvider>
+          </CustomerProvider>
         </NextIntlClientProvider>
       </body>
     </html>

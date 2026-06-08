@@ -42,12 +42,14 @@ model Store {
   reservations     Reservation[]
   restaurantTables RestaurantTable[]
   galleryImages    GalleryImage[]
+  testimonials     Testimonial[]
 }
 
 enum Vertical {
   ECOMMERCE
   FOOD_MARKET
   RESTAURANT
+  SHOE_MARKET
   B2B
 }
 
@@ -112,18 +114,21 @@ model Product {
 // ============ CUSTOMERS ============
 
 model Customer {
-  id          String  @id @default(cuid())
-  email       String
-  name        String?
-  phone       String?
-  companyName String?
-  taxId       String?
+  id           String  @id @default(cuid())
+  email        String
+  name         String?
+  phone        String?
+  passwordHash String?
+  isVerified   Boolean @default(false)
+  companyName  String?
+  taxId        String?
 
   // pgvector: ALTER TABLE "Customer" ADD COLUMN embedding vector(1536);
 
-  storeId String
-  store   Store   @relation(fields: [storeId], references: [id])
-  orders  Order[]
+  storeId      String
+  store        Store         @relation(fields: [storeId], references: [id])
+  orders       Order[]
+  testimonials Testimonial[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -309,6 +314,12 @@ model Reservation {
   @@index([storeId, status])
 }
 
+enum TestimonialStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 enum ReservationStatus {
   PENDING
   CONFIRMED
@@ -351,6 +362,31 @@ model GalleryImage {
   createdAt DateTime @default(now())
 
   @@index([storeId, sortOrder])
+}
+
+// ============ TESTIMONIALS ============
+
+model Testimonial {
+  id     String @id @default(cuid())
+
+  text   String
+  rating Int    @default(5)
+
+  status TestimonialStatus @default(PENDING)
+  locale String?
+
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id])
+
+  storeId String
+  store   Store @relation(fields: [storeId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId, status])
+  @@index([storeId, createdAt])
+  @@index([customerId])
 }
 
 // ============ ADMIN AUTH ============

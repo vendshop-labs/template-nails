@@ -474,5 +474,29 @@
     "freeReturns": "30-day returns",
     "shopSale": "Shop Sale",
     "newArrivals": "New Arrivals"
+  },
+  "auth": {
+    "login": "Sign In",
+    "register": "Create Account",
+    "logout": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full Name",
+    "phone": "Phone (optional)",
+    "confirmPassword": "Confirm Password",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "loginHere": "Sign in here",
+    "registerHere": "Create one",
+    "registerSuccess": "Account created successfully!",
+    "loginSuccess": "Welcome back!",
+    "errorInvalidEmail": "Please enter a valid email",
+    "errorPasswordShort": "Password must be at least 6 characters",
+    "errorPasswordMismatch": "Passwords do not match",
+    "errorNameRequired": "Name is required",
+    "errorEmailTaken": "This email is already registered",
+    "errorInvalidCredentials": "Invalid email or password",
+    "myAccount": "My Account",
+    "greeting": "Hello, {name}"
   }
 }

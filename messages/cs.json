@@ -474,5 +474,29 @@
     "freeReturns": "30 dní na vrácení",
     "shopSale": "Zobrazit slevy",
     "newArrivals": "Novinky"
+  },
+  "auth": {
+    "login": "Přihlásit se",
+    "register": "Vytvořit účet",
+    "logout": "Odhlásit se",
+    "email": "Email",
+    "password": "Heslo",
+    "name": "Celé jméno",
+    "phone": "Telefon (volitelné)",
+    "confirmPassword": "Potvrdit heslo",
+    "alreadyHaveAccount": "Již máte účet?",
+    "dontHaveAccount": "Nemáte účet?",
+    "loginHere": "Přihlaste se zde",
+    "registerHere": "Vytvořte si",
+    "registerSuccess": "Účet byl úspěšně vytvořen!",
+    "loginSuccess": "Vítejte zpět!",
+    "errorInvalidEmail": "Zadejte platný email",
+    "errorPasswordShort": "Heslo musí mít alespoň 6 znaků",
+    "errorPasswordMismatch": "Hesla se neshodují",
+    "errorNameRequired": "Jméno je povinné",
+    "errorEmailTaken": "Tento email je již zaregistrován",
+    "errorInvalidCredentials": "Nesprávný email nebo heslo",
+    "myAccount": "Můj účet",
+    "greeting": "Ahoj, {name}"
   }
 }

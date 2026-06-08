@@ -474,5 +474,29 @@
     "freeReturns": "30 днів на повернення",
     "shopSale": "Перейти до знижок",
     "newArrivals": "Новинки"
+  },
+  "auth": {
+    "login": "Увійти",
+    "register": "Створити акаунт",
+    "logout": "Вийти",
+    "email": "Email",
+    "password": "Пароль",
+    "name": "Повне ім'я",
+    "phone": "Телефон (необов'язково)",
+    "confirmPassword": "Підтвердити пароль",
+    "alreadyHaveAccount": "Вже маєте акаунт?",
+    "dontHaveAccount": "Немає акаунту?",
+    "loginHere": "Увійти тут",
+    "registerHere": "Створити",
+    "registerSuccess": "Акаунт створено успішно!",
+    "loginSuccess": "З поверненням!",
+    "errorInvalidEmail": "Введіть коректний email",
+    "errorPasswordShort": "Пароль має бути мінімум 6 символів",
+    "errorPasswordMismatch": "Паролі не співпадають",
+    "errorNameRequired": "Ім'я обов'язкове",
+    "errorEmailTaken": "Цей email вже зареєстрований",
+    "errorInvalidCredentials": "Невірний email або пароль",
+    "myAccount": "Мій акаунт",
+    "greeting": "Привіт, {name}"
   }
 }

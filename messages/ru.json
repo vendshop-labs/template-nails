@@ -474,5 +474,29 @@
     "freeReturns": "30 дней на возврат",
     "shopSale": "Перейти к скидкам",
     "newArrivals": "Новинки"
+  },
+  "auth": {
+    "login": "Войти",
+    "register": "Создать аккаунт",
+    "logout": "Выйти",
+    "email": "Email",
+    "password": "Пароль",
+    "name": "Полное имя",
+    "phone": "Телефон (необязательно)",
+    "confirmPassword": "Подтвердить пароль",
+    "alreadyHaveAccount": "Уже есть аккаунт?",
+    "dontHaveAccount": "Нет аккаунта?",
+    "loginHere": "Войти здесь",
+    "registerHere": "Создать",
+    "registerSuccess": "Аккаунт создан успешно!",
+    "loginSuccess": "С возвращением!",
+    "errorInvalidEmail": "Введите корректный email",
+    "errorPasswordShort": "Пароль минимум 6 символов",
+    "errorPasswordMismatch": "Пароли не совпадают",
+    "errorNameRequired": "Имя обязательно",
+    "errorEmailTaken": "Этот email уже зарегистрирован",
+    "errorInvalidCredentials": "Неверный email или пароль",
+    "myAccount": "Мой аккаунт",
+    "greeting": "Привет, {name}"
   }
 }
