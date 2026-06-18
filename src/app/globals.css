@@ -1672,3 +1672,6 @@ body {
   gap: 1rem;
   pointer-events: none;
 }
+
+/* ── Admin masters ── */
+.admin-masters__form { max-width: 640px; }

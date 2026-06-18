@@ -1,56 +1,102 @@
-import { db } from '@/lib/db';
-import styles from '../admin.module.css';
+'use client';
 
-const STORE_SLUG = process.env.STORE_SLUG ?? 'kate-barber';
+import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 
-export default async function MastersPage() {
-  const store = await db.store.findUnique({ where: { slug: STORE_SLUG } });
+interface Master {
+  id: string;
+  name: string;
+  role: string;
+  bio?: string | null;
+  photo?: string | null;
+  active: boolean;
+  sortOrder: number;
+}
 
-  const masters = store
-    ? await db.serviceMaster.findMany({
-        where: { storeId: store.id },
-        orderBy: { sortOrder: 'asc' },
-      })
-    : [];
+export default function MastersPage() {
+  const [masters, setMasters] = useState<Master[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const load = useCallback(async () => {
+    const r = await fetch('/api/admin/masters');
+    if (r.ok) setMasters(await r.json() as Master[]);
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { void load(); }, [load]);
+
+  async function remove(id: string, name: string) {
+    if (!window.confirm(`Vymazať majstra "${name}"?`)) return;
+    await fetch(`/api/admin/masters/${id}`, { method: 'DELETE' });
+    await load();
+  }
+
+  async function toggleActive(m: Master) {
+    await fetch(`/api/admin/masters/${m.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ active: !m.active }),
+    });
+    await load();
+  }
 
   return (
-    <div className={styles.page}>
-      <div className={styles.pageHeader}>
-        <h1 className={styles.pageTitle}>Masters</h1>
-        <a href="/admin/masters/new" className="btn-primary">+ Add Master</a>
+    <div className="admin-page">
+      <div className="admin-page__header">
+        <h1>Majstri</h1>
+        <Link href="/admin/masters/new" className="btn-primary btn-sm">+ Pridať majstra</Link>
       </div>
 
-      <div className={styles.tableWrap}>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Role</th>
-              <th>Active</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {masters.map((m, i) => (
-              <tr key={m.id}>
-                <td>{i + 1}</td>
-                <td>{m.name}</td>
-                <td>{m.role}</td>
-                <td>{m.active ? '✓' : '—'}</td>
-                <td>
-                  <a href={`/admin/masters/${m.id}`} className={styles.actionLink}>Edit</a>
-                </td>
-              </tr>
-            ))}
-            {masters.length === 0 && (
-              <tr>
-                <td colSpan={5} className={styles.emptyRow}>No masters yet</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      {loading ? (
+        <p style={{ color: 'var(--color-text-muted)', padding: '2rem' }}>Načítavam...</p>
+      ) : (
+        <div className="admin-services__list">
+          {masters.length === 0 ? (
+            <p style={{ color: 'var(--color-text-muted)', padding: '2rem' }}>
+              Žiadni majstri. Pridajte prvého.
+            </p>
+          ) : masters.map((m) => (
+            <div
+              key={m.id}
+              className={`admin-services__item${m.active ? '' : ' admin-services__item--inactive'}`}
+            >
+              {m.photo && (
+                <img
+                  src={m.photo}
+                  alt={m.name}
+                  style={{ width: 44, height: 44, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
+                />
+              )}
+              <div className="admin-services__info">
+                <span className="admin-services__name">{m.name}</span>
+                <span className="admin-services__desc">{m.role}</span>
+                {m.bio && <span className="admin-services__meta">{m.bio}</span>}
+              </div>
+
+              <div className="admin-services__actions">
+                <button
+                  type="button"
+                  className={`btn-sm ${m.active ? 'btn-outline' : 'btn-primary'}`}
+                  onClick={() => toggleActive(m)}
+                  title={m.active ? 'Skryť zo stránky' : 'Zobraziť na stránke'}
+                >
+                  {m.active ? 'Skryť' : 'Zobraziť'}
+                </button>
+                <Link href={`/admin/masters/${m.id}/edit`} className="btn-sm btn-outline">
+                  Upraviť
+                </Link>
+                <button
+                  type="button"
+                  className="btn-sm btn-danger"
+                  onClick={() => remove(m.id, m.name)}
+                >
+                  Zmazať
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
