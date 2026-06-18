@@ -1,8 +1,8 @@
 .sidebar {
   width: 240px;
   flex-shrink: 0;
-  background: #1e293b;
-  color: #cbd5e1;
+  background: #0A0A0A;
+  color: #b0a898;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -23,7 +23,7 @@
   width: 36px;
   height: 36px;
   border-radius: 9px;
-  background: #f97316;
+  background: #B87333;
   color: #fff;
   display: flex;
   align-items: center;
@@ -55,7 +55,7 @@
   border-radius: 9px;
   font-size: 14px;
   font-weight: 600;
-  color: #94a3b8;
+  color: #888;
   text-decoration: none;
   transition:
     background 150ms ease,
@@ -68,12 +68,12 @@
 }
 
 .itemActive {
-  background: #f97316;
+  background: #B87333;
   color: #fff;
 }
 
 .itemActive:hover {
-  background: #ea6c00;
+  background: #9E6829;
   color: #fff;
 }
 
@@ -114,5 +114,5 @@
 
 .store {
   font-size: 12px;
-  color: #64748b;
+  color: #555;
 }

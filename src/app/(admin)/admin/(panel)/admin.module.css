@@ -1,13 +1,13 @@
 .shell {
   display: flex;
   min-height: 100vh;
-  background: #f1f5f9;
+  background: #111111;
 }
 
 .content {
   flex: 1;
   min-width: 0;
-  background: #f1f5f9;
+  background: #111111;
 }
 
 @media (max-width: 720px) {

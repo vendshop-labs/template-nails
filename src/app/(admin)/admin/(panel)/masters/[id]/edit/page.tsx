@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 
@@ -17,11 +17,15 @@ export default function EditMasterPage() {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
 
-  const [form, setForm] = useState({ name: '', role: '', bio: '', photo: '' });
+  const [form, setForm] = useState({ name: '', role: '', bio: '' });
+  const [currentPhoto, setCurrentPhoto] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const [active, setActive] = useState(true);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch('/api/admin/masters')
@@ -29,7 +33,8 @@ export default function EditMasterPage() {
       .then((masters) => {
         const m = masters.find((x) => x.id === id);
         if (m) {
-          setForm({ name: m.name, role: m.role, bio: m.bio ?? '', photo: m.photo ?? '' });
+          setForm({ name: m.name, role: m.role, bio: m.bio ?? '' });
+          setCurrentPhoto(m.photo ?? null);
           setActive(m.active);
         }
         setLoading(false);
@@ -37,22 +42,49 @@ export default function EditMasterPage() {
       .catch(() => setLoading(false));
   }, [id]);
 
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) setPreview(URL.createObjectURL(file));
+  }
+
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!form.name.trim() || !form.role.trim()) return;
     setSaving(true);
     setError('');
 
+    let photoUrl: string | null | undefined = undefined;
+
+    const file = fileRef.current?.files?.[0];
+    if (file) {
+      setUploading(true);
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('purpose', 'master');
+      const up = await fetch('/api/admin/upload', { method: 'POST', body: fd });
+      setUploading(false);
+      if (!up.ok) {
+        const d = await up.json() as { error?: string };
+        setError(d.error ?? 'Chyba pri nahrávaní fotky');
+        setSaving(false);
+        return;
+      }
+      const { url } = await up.json() as { url: string };
+      photoUrl = url;
+    }
+
+    const body: Record<string, unknown> = {
+      name: form.name,
+      role: form.role,
+      bio: form.bio || null,
+      active,
+    };
+    if (photoUrl !== undefined) body.photo = photoUrl;
+
     const res = await fetch(`/api/admin/masters/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: form.name,
-        role: form.role,
-        bio: form.bio || null,
-        photo: form.photo || null,
-        active,
-      }),
+      body: JSON.stringify(body),
     });
 
     if (res.ok) {
@@ -71,6 +103,8 @@ export default function EditMasterPage() {
       </div>
     );
   }
+
+  const displayPhoto = preview ?? currentPhoto;
 
   return (
     <div className="admin-page">
@@ -98,13 +132,23 @@ export default function EditMasterPage() {
             />
           </div>
           <div className="booking__field" style={{ gridColumn: '1 / -1' }}>
-            <label>Foto URL</label>
-            <input
-              type="url"
-              value={form.photo}
-              onChange={(e) => setForm((p) => ({ ...p, photo: e.target.value }))}
-              placeholder="https://..."
-            />
+            <label>Foto</label>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              {displayPhoto && (
+                <img
+                  src={displayPhoto}
+                  alt="foto"
+                  style={{ width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
+                />
+              )}
+              <input
+                ref={fileRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                onChange={handleFileChange}
+                style={{ color: 'var(--color-text-secondary, #b0a898)' }}
+              />
+            </div>
           </div>
           <div className="booking__field" style={{ gridColumn: '1 / -1' }}>
             <label>Bio</label>
@@ -133,9 +177,9 @@ export default function EditMasterPage() {
           <button
             type="submit"
             className="btn-primary btn-sm"
-            disabled={saving || !form.name.trim() || !form.role.trim()}
+            disabled={saving || uploading || !form.name.trim() || !form.role.trim()}
           >
-            {saving ? 'Ukladá sa...' : 'Uložiť zmeny'}
+            {uploading ? 'Nahrávam fotku...' : saving ? 'Ukladá sa...' : 'Uložiť zmeny'}
           </button>
           <Link href="/admin/masters" className="btn-outline btn-sm">Zrušiť</Link>
         </div>

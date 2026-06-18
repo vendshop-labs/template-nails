@@ -1,22 +1,50 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-const EMPTY = { name: '', role: '', bio: '', photo: '' };
+const EMPTY = { name: '', role: '', bio: '' };
 
 export default function NewMasterPage() {
   const router = useRouter();
   const [form, setForm] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState('');
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) setPreview(URL.createObjectURL(file));
+  }
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!form.name.trim() || !form.role.trim()) return;
     setSaving(true);
     setError('');
+
+    let photoUrl: string | undefined;
+
+    const file = fileRef.current?.files?.[0];
+    if (file) {
+      setUploading(true);
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('purpose', 'master');
+      const up = await fetch('/api/admin/upload', { method: 'POST', body: fd });
+      setUploading(false);
+      if (!up.ok) {
+        const d = await up.json() as { error?: string };
+        setError(d.error ?? 'Chyba pri nahrávaní fotky');
+        setSaving(false);
+        return;
+      }
+      const { url } = await up.json() as { url: string };
+      photoUrl = url;
+    }
 
     const res = await fetch('/api/admin/masters', {
       method: 'POST',
@@ -25,7 +53,7 @@ export default function NewMasterPage() {
         name: form.name,
         role: form.role,
         bio: form.bio || undefined,
-        photo: form.photo || undefined,
+        photo: photoUrl,
       }),
     });
 
@@ -66,13 +94,23 @@ export default function NewMasterPage() {
             />
           </div>
           <div className="booking__field" style={{ gridColumn: '1 / -1' }}>
-            <label>Foto URL</label>
-            <input
-              type="url"
-              value={form.photo}
-              onChange={(e) => setForm((p) => ({ ...p, photo: e.target.value }))}
-              placeholder="https://..."
-            />
+            <label>Foto</label>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              {preview && (
+                <img
+                  src={preview}
+                  alt="náhľad"
+                  style={{ width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
+                />
+              )}
+              <input
+                ref={fileRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                onChange={handleFileChange}
+                style={{ color: 'var(--color-text-secondary, #b0a898)' }}
+              />
+            </div>
           </div>
           <div className="booking__field" style={{ gridColumn: '1 / -1' }}>
             <label>Bio</label>
@@ -93,9 +131,9 @@ export default function NewMasterPage() {
           <button
             type="submit"
             className="btn-primary btn-sm"
-            disabled={saving || !form.name.trim() || !form.role.trim()}
+            disabled={saving || uploading || !form.name.trim() || !form.role.trim()}
           >
-            {saving ? 'Ukladá sa...' : 'Vytvoriť majstra'}
+            {uploading ? 'Nahrávam fotku...' : saving ? 'Ukladá sa...' : 'Vytvoriť majstra'}
           </button>
           <Link href="/admin/masters" className="btn-outline btn-sm">Zrušiť</Link>
         </div>

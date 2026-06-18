@@ -1514,6 +1514,27 @@ body {
 }
 .testimonials-submit__back:hover { color: var(--color-gold, #C96030); }
 
+/* ── Admin page layout ── */
+.admin-page {
+  padding: 2rem;
+  min-height: 100vh;
+  background: #111111;
+  color: var(--color-text-primary, #fff);
+}
+.admin-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.admin-page__header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary, #fff);
+}
+
 /* ── Admin Testimonials page ── */
 .admin-testimonials__list { display: flex; flex-direction: column; gap: 1rem; }
 .admin-testimonials__item {
