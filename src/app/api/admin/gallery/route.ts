@@ -61,6 +61,7 @@ export async function PATCH(request: Request) {
 
   const body = await request.json() as {
     id: string;
+    url?: string;
     alt?: string;
     sortOrder?: number;
     active?: boolean;
