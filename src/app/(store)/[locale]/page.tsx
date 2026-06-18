@@ -30,7 +30,7 @@ export default async function HomePage({
     select: { id: true },
   });
 
-  const [heroConfig, galleryImages] = store
+  const [heroConfig, galleryImages, dbTestimonials] = store
     ? await Promise.all([
         db.heroConfig.findUnique({ where: { storeId: store.id } }),
         db.galleryImage.findMany({
@@ -38,8 +38,14 @@ export default async function HomePage({
           orderBy: { sortOrder: 'asc' },
           select: { id: true, url: true, alt: true },
         }),
+        db.testimonial.findMany({
+          where: { storeId: store.id, status: 'APPROVED' },
+          orderBy: { createdAt: 'desc' },
+          take: 3,
+          include: { customer: { select: { name: true } } },
+        }),
       ])
-    : [null, []];
+    : [null, [], []];
 
   return (
     <>
@@ -50,7 +56,15 @@ export default async function HomePage({
       <WhyUsSection />
       <GallerySection images={galleryImages} />
       <TeamSection />
-      <TestimonialsSection />
+      <TestimonialsSection testimonials={(dbTestimonials as typeof dbTestimonials).map((t) => ({
+        id: t.id,
+        name: t.customer.name ?? 'Klient',
+        content: t.text,
+        rating: t.rating,
+        createdAt: t.createdAt.toISOString(),
+        adminReply: t.adminReply,
+        adminReplyAt: t.adminReplyAt?.toISOString() ?? null,
+      }))} />
       <BookingSection />
       <AboutSection />
       <ContactSection />

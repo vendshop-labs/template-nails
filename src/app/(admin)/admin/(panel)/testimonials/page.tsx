@@ -22,16 +22,17 @@ interface AdminResponse {
 export default function AdminTestimonialsPage() {
   const [items, setItems] = useState<TestimonialRow[]>([]);
   const [counts, setCounts] = useState({ all: 0, pending: 0, approved: 0, rejected: 0 });
-  const [filter, setFilter] = useState<Status | 'ALL'>('PENDING');
+  const [filter, setFilter] = useState<Status | 'ALL'>('ALL');
   const [replyDraft, setReplyDraft] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState<string | null>(null);
 
   const load = useCallback(async () => {
-    const r = await fetch('/api/admin/testimonials');
+    const qs = filter === 'ALL' ? '' : `?status=${filter}`;
+    const r = await fetch(`/api/admin/testimonials${qs}`);
     const data = await r.json() as AdminResponse;
     setItems(data.items ?? []);
     setCounts(data.counts ?? { all: 0, pending: 0, approved: 0, rejected: 0 });
-  }, []);
+  }, [filter]);
 
   useEffect(() => { void load(); }, [load]);
 
@@ -55,7 +56,11 @@ export default function AdminTestimonialsPage() {
     setSaving(null);
   }
 
-  const filtered = items.filter((t) => filter === 'ALL' || t.status === filter);
+  async function deleteItem(id: string) {
+    if (!confirm('Vymazať recenziu?')) return;
+    await fetch(`/api/admin/testimonials/${id}`, { method: 'DELETE' });
+    await load();
+  }
 
   return (
     <div className="admin-page">
@@ -69,7 +74,7 @@ export default function AdminTestimonialsPage() {
       </div>
 
       <div className="admin-filter">
-        {(['PENDING', 'APPROVED', 'REJECTED', 'ALL'] as const).map((s) => (
+        {(['ALL', 'PENDING', 'APPROVED', 'REJECTED'] as const).map((s) => (
           <button
             key={s}
             type="button"
@@ -85,13 +90,13 @@ export default function AdminTestimonialsPage() {
       </div>
 
       <div className="admin-testimonials__list">
-        {filtered.map((t) => (
+        {items.map((t) => (
           <div key={t.id} className="admin-testimonials__item">
             <div className="admin-testimonials__meta">
               <strong>{t.customerName}</strong>
               <span style={{ color: 'var(--color-gold, #C96030)' }}>{'★'.repeat(t.rating)}</span>
               <span className={`status-badge status-badge--${t.status.toLowerCase()}`}>
-                {t.status === 'PENDING' ? 'Čaká' : t.status === 'APPROVED' ? 'Schválené' : 'Zamietnuté'}
+                {t.status === 'PENDING' ? 'Čaká' : t.status === 'APPROVED' ? 'Schválená' : 'Zamietnutá'}
               </span>
               <span className="admin-testimonials__date">
                 {new Date(t.createdAt).toLocaleDateString('sk-SK')}
@@ -99,6 +104,13 @@ export default function AdminTestimonialsPage() {
             </div>
 
             <p className="admin-testimonials__content">&ldquo;{t.text}&rdquo;</p>
+
+            {t.adminReply ? (
+              <div className="admin-testimonials__existing-reply">
+                <span className="admin-testimonials__reply-label">Vaša odpoveď:</span>
+                <p>{t.adminReply}</p>
+              </div>
+            ) : null}
 
             <div className="admin-testimonials__reply">
               <label>Odpoveď majiteľa (viditeľná na webe):</label>
@@ -113,7 +125,7 @@ export default function AdminTestimonialsPage() {
               <button
                 type="button"
                 className="btn-sm btn-outline"
-                onClick={() => saveReply(t.id)}
+                onClick={() => void saveReply(t.id)}
                 disabled={saving === t.id}
               >
                 {saving === t.id ? 'Ukladá...' : 'Uložiť odpoveď'}
@@ -125,7 +137,7 @@ export default function AdminTestimonialsPage() {
                 <button
                   type="button"
                   className="btn-sm btn-primary"
-                  onClick={() => setStatus(t.id, 'APPROVED')}
+                  onClick={() => void setStatus(t.id, 'APPROVED')}
                 >
                   ✓ Schváliť
                 </button>
@@ -134,16 +146,23 @@ export default function AdminTestimonialsPage() {
                 <button
                   type="button"
                   className="btn-sm btn-danger"
-                  onClick={() => setStatus(t.id, 'REJECTED')}
+                  onClick={() => void setStatus(t.id, 'REJECTED')}
                 >
                   ✕ Zamietnuť
                 </button>
               )}
+              <button
+                type="button"
+                className="btn-sm btn-ghost"
+                onClick={() => void deleteItem(t.id)}
+              >
+                Vymazať
+              </button>
             </div>
           </div>
         ))}
 
-        {filtered.length === 0 && (
+        {items.length === 0 && (
           <p style={{ color: 'var(--color-text-muted, #666)', padding: '2rem' }}>
             Žiadne recenzie
           </p>
