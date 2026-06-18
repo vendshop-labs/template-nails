@@ -10,6 +10,7 @@ import { useCompareStore } from '@/stores/useCompareStore';
 import StoreLogo from '@/components/ui/StoreLogo';
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import { useCustomer } from '@/lib/useCustomer';
+import { useStorePresence } from '@/lib/presence-context';
 import styles from './Header.module.css';
 
 interface HeaderProps {
@@ -134,6 +135,111 @@ function RestaurantHeader({ storeName, phone, t }: { storeName: string; phone: s
           <Link href="/login" onClick={() => setIsMenuOpen(false)}>
             {customer ? (customer.name?.split(' ')[0] ?? t('myAccount')) : t('login')}
           </Link>
+        </div>
+      )}
+    </header>
+  );
+}
+
+function ServicesHeader({ storeName, t }: { storeName: string; t: TFn }) {
+  const presence = useStorePresence();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      setScrolled(currentY > 40);
+      if (currentY < 64) {
+        setVisible(true);
+      } else if (currentY > lastScrollY.current + 5) {
+        setVisible(false);
+      } else if (currentY < lastScrollY.current - 5) {
+        setVisible(true);
+      }
+      lastScrollY.current = currentY;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setIsMenuOpen(false);
+  };
+
+  const headerClass = [
+    styles.servicesHeader,
+    scrolled ? styles.servicesScrolled : '',
+    visible ? '' : styles.servicesHidden,
+  ].filter(Boolean).join(' ');
+
+  return (
+    <header className={headerClass}>
+      <div className={styles.servicesInner}>
+        {/* Logo */}
+        <a className={styles.servicesLogo} href="/">
+          <span className={styles.servicesLogoName}>{storeName}</span>
+          {presence.city && (
+            <span className={styles.servicesLogoSub}>
+              {t('servicesSubtitle')} · {presence.city}
+            </span>
+          )}
+        </a>
+
+        {/* Desktop nav */}
+        <nav className={styles.servicesNav}>
+          <a href="/#services" onClick={(e) => scrollTo(e, 'services')}>{t('servicesServices')}</a>
+          <a href="/#team" onClick={(e) => scrollTo(e, 'team')}>{t('servicesTeam')}</a>
+          <a href="/#gallery" onClick={(e) => scrollTo(e, 'gallery')}>{t('servicesGallery')}</a>
+          <a href="/#contacts" onClick={(e) => scrollTo(e, 'contacts')}>{t('servicesContact')}</a>
+        </nav>
+
+        {/* CTA */}
+        <div className={styles.servicesActions}>
+          <a className={styles.servicesBookBtn} href="/#booking" onClick={(e) => scrollTo(e, 'booking')}>
+            {t('servicesBookNow')}
+          </a>
+        </div>
+
+        {/* Mobile burger */}
+        <button
+          type="button"
+          className={styles.servicesBurger}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={t('menu')}
+          aria-expanded={isMenuOpen}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            {isMenuOpen ? (
+              <>
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </>
+            ) : (
+              <>
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </>
+            )}
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile dropdown */}
+      {isMenuOpen && (
+        <div className={styles.servicesMobileMenu}>
+          <a href="/#services" onClick={(e) => scrollTo(e, 'services')}>{t('servicesServices')}</a>
+          <a href="/#team" onClick={(e) => scrollTo(e, 'team')}>{t('servicesTeam')}</a>
+          <a href="/#gallery" onClick={(e) => scrollTo(e, 'gallery')}>{t('servicesGallery')}</a>
+          <a href="/#contacts" onClick={(e) => scrollTo(e, 'contacts')}>{t('servicesContact')}</a>
+          <a className={styles.servicesMobileBookBtn} href="/#booking" onClick={(e) => scrollTo(e, 'booking')}>
+            {t('servicesBookNow')}
+          </a>
         </div>
       )}
     </header>
@@ -285,6 +391,10 @@ export default function Header({
       setIsMenuOpen(false);
     }
   };
+
+  if (vertical === 'SERVICES') {
+    return <ServicesHeader storeName={storeName} t={t} />;
+  }
 
   if (vertical === 'RESTAURANT') {
     return <RestaurantHeader storeName={storeName} phone={phone} t={t} />;

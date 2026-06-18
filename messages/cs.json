@@ -21,7 +21,13 @@
     "shoeNavSale": "Výprodej",
     "shoeShippingBanner": "Doprava zdarma při objednávkách nad 75€",
     "shoeTrackOrder": "Sledovat objednávku",
-    "myAccount": "Účet"
+    "myAccount": "Účet",
+    "servicesServices": "Služby",
+    "servicesTeam": "Tým",
+    "servicesGallery": "Galerie",
+    "servicesContact": "Kontakt",
+    "servicesBookNow": "Rezervovat",
+    "servicesSubtitle": "Studio"
   },
   "categories": {
     "title": "Kategorie",
@@ -171,7 +177,16 @@
     "sizeGuide": "Tabulka velikostí",
     "wholesale": "Velkoobchodní podmínky",
     "deliveryEU": "Rychlé doručení po celé EU",
-    "deliveryB2B": "Hromadné objednávky a individuální dodávka"
+    "deliveryB2B": "Hromadné objednávky a individuální dodávka",
+    "aboutDescServices": "Profesionální barbershop a kadeřnický salón v centru Trenčína. Pánské střihy, holení vousů a styling na nejvyšší úrovni.",
+    "servicesNavTitle": "Navigace",
+    "servicesHoursTitle": "Pracovní doba",
+    "servicesClosed": "Zavřeno",
+    "servicesServices": "Služby",
+    "servicesTeam": "Tým",
+    "servicesGallery": "Galerie",
+    "servicesBookNow": "Rezervovat",
+    "servicesAdmin": "Admin"
   },
   "tags": {
     "popularQueries": "Oblíbené dotazy:"

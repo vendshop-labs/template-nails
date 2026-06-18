@@ -21,7 +21,13 @@
     "shoeNavSale": "Розпродаж",
     "shoeShippingBanner": "Безкоштовна доставка при замовленнях від 75€",
     "shoeTrackOrder": "Відстежити замовлення",
-    "myAccount": "Акаунт"
+    "myAccount": "Акаунт",
+    "servicesServices": "Послуги",
+    "servicesTeam": "Команда",
+    "servicesGallery": "Галерея",
+    "servicesContact": "Контакт",
+    "servicesBookNow": "Записатися",
+    "servicesSubtitle": "Studio"
   },
   "categories": {
     "title": "Категорії",
@@ -171,7 +177,16 @@
     "sizeGuide": "Таблиця розмірів",
     "wholesale": "Умови опту",
     "deliveryEU": "Швидка доставка по ЄС",
-    "deliveryB2B": "Оптові замовлення та індивідуальна доставка"
+    "deliveryB2B": "Оптові замовлення та індивідуальна доставка",
+    "aboutDescServices": "Професійний барбершоп та перукарня у центрі Тренчина. Чоловічі стрижки, догляд за бородою та стайлінг найвищого рівня.",
+    "servicesNavTitle": "Навігація",
+    "servicesHoursTitle": "Години роботи",
+    "servicesClosed": "Зачинено",
+    "servicesServices": "Послуги",
+    "servicesTeam": "Команда",
+    "servicesGallery": "Галерея",
+    "servicesBookNow": "Записатися",
+    "servicesAdmin": "Адмін"
   },
   "tags": {
     "popularQueries": "Популярні запити:"

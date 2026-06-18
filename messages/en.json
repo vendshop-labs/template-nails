@@ -21,7 +21,13 @@
     "shoeNavSale": "Sale",
     "shoeShippingBanner": "Free shipping on orders over €75",
     "shoeTrackOrder": "Track order",
-    "myAccount": "Account"
+    "myAccount": "Account",
+    "servicesServices": "Services",
+    "servicesTeam": "Team",
+    "servicesGallery": "Gallery",
+    "servicesContact": "Contact",
+    "servicesBookNow": "Book Now",
+    "servicesSubtitle": "Studio"
   },
   "categories": {
     "title": "Categories",
@@ -171,7 +177,16 @@
     "sizeGuide": "Size Guide",
     "wholesale": "Wholesale Terms",
     "deliveryEU": "Fast EU-wide shipping",
-    "deliveryB2B": "Bulk orders & custom delivery"
+    "deliveryB2B": "Bulk orders & custom delivery",
+    "aboutDescServices": "Professional barbershop and hair salon in the heart of Trenčín. Men's haircuts, beard grooming, and styling at the highest level.",
+    "servicesNavTitle": "Navigation",
+    "servicesHoursTitle": "Working Hours",
+    "servicesClosed": "Closed",
+    "servicesServices": "Services",
+    "servicesTeam": "Team",
+    "servicesGallery": "Gallery",
+    "servicesBookNow": "Book Now",
+    "servicesAdmin": "Admin"
   },
   "tags": {
     "popularQueries": "Popular searches:"

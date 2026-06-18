@@ -70,6 +70,44 @@ const B2B_CATEGORIES = [
   'services',
 ] as const;
 
+function parseOpeningHours(raw: string | undefined): Array<{ label: string; hours: string; closed: boolean }> {
+  if (!raw) return [];
+  const DAY_ORDER = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const;
+  const DAY_SHORT: Record<string, string> = {
+    mon: 'Mon', tue: 'Tue', wed: 'Wed', thu: 'Thu',
+    fri: 'Fri', sat: 'Sat', sun: 'Sun',
+  };
+  try {
+    const data = JSON.parse(raw) as Record<string, { open: string; close: string } | null>;
+    const result: Array<{ label: string; hours: string; closed: boolean }> = [];
+    let i = 0;
+    while (i < DAY_ORDER.length) {
+      const day = DAY_ORDER[i];
+      const slot = data[day] ?? null;
+      if (!slot) {
+        result.push({ label: DAY_SHORT[day], hours: '', closed: true });
+        i++;
+        continue;
+      }
+      const h = `${slot.open}–${slot.close}`;
+      let j = i + 1;
+      while (j < DAY_ORDER.length) {
+        const next = data[DAY_ORDER[j]] ?? null;
+        if (!next || `${next.open}–${next.close}` !== h) break;
+        j++;
+      }
+      const label = j > i + 1
+        ? `${DAY_SHORT[day]}–${DAY_SHORT[DAY_ORDER[j - 1]]}`
+        : DAY_SHORT[day];
+      result.push({ label, hours: h, closed: false });
+      i = j;
+    }
+    return result;
+  } catch {
+    return [];
+  }
+}
+
 const strokeProps = {
   fill: 'none',
   stroke: 'currentColor',
@@ -142,7 +180,8 @@ export default function Footer({
   const isFoodMarket = effectiveVertical === 'FOOD_MARKET';
   const isShoeMarket = effectiveVertical === 'SHOE_MARKET';
   const isB2B = effectiveVertical === 'B2B';
-  const isDark = isRestaurant;
+  const isServices = effectiveVertical === 'SERVICES';
+  const isDark = isRestaurant || isServices;
 
   return (
     <footer className={`${styles.footer} ${isDark ? styles.footerDark : ''}`}>
@@ -164,9 +203,17 @@ export default function Footer({
                   ? t('aboutDescShoe')
                   : isB2B
                     ? t('aboutDescB2B')
-                    : t('aboutDesc')}
+                    : isServices
+                      ? t('aboutDescServices')
+                      : t('aboutDesc')}
           </p>
-          {(presence.openingHours || (!isRestaurant && !isFoodMarket)) && (
+          {isServices && presence.city && (
+            <p className={styles.schedule}>
+              <MapPinIcon />
+              {presence.address ? `${presence.address}, ` : ''}{presence.city}
+            </p>
+          )}
+          {!isServices && (presence.openingHours || (!isRestaurant && !isFoodMarket)) && (
             <p className={styles.schedule}>
               <ClockIcon />
               {presence.openingHours ?? t('schedule')}
@@ -174,11 +221,19 @@ export default function Footer({
           )}
         </div>
 
-        {/* Catalog / Menu */}
-        <nav className={styles.col} aria-label={isRestaurant ? t('menuTitle') : t('catalog')}>
-          <h3 className={styles.colTitle}>{isRestaurant ? t('menuTitle') : t('catalog')}</h3>
+        {/* Catalog / Menu / Navigation */}
+        <nav className={styles.col} aria-label={isRestaurant ? t('menuTitle') : isServices ? t('servicesNavTitle') : t('catalog')}>
+          <h3 className={styles.colTitle}>{isRestaurant ? t('menuTitle') : isServices ? t('servicesNavTitle') : t('catalog')}</h3>
           <ul className={styles.links}>
-            {isRestaurant ? (
+            {isServices ? (
+              <>
+                <li><a className={styles.link} href="/#services">{t('servicesServices')}</a></li>
+                <li><a className={styles.link} href="/#team">{t('servicesTeam')}</a></li>
+                <li><a className={styles.link} href="/#gallery">{t('servicesGallery')}</a></li>
+                <li><a className={styles.link} href="/#booking">{t('servicesBookNow')}</a></li>
+                <li><a className={styles.link} href="/admin">{t('servicesAdmin')}</a></li>
+              </>
+            ) : isRestaurant ? (
               RESTAURANT_CATEGORIES.map((cat) => (
                 <li key={cat}>
                   <Link className={styles.link} href={`/catalog?category=${cat}`}>
@@ -250,10 +305,21 @@ export default function Footer({
           </ul>
         </nav>
 
-        {/* Information */}
-        <nav className={styles.col} aria-label={t('info')}>
-          <h3 className={styles.colTitle}>{t('info')}</h3>
-          {isRestaurant ? (
+        {/* Information / Hours */}
+        <nav className={styles.col} aria-label={isServices ? t('servicesHoursTitle') : t('info')}>
+          <h3 className={styles.colTitle}>{isServices ? t('servicesHoursTitle') : t('info')}</h3>
+          {isServices ? (
+            <ul className={styles.hoursGrid}>
+              {parseOpeningHours(presence.openingHours).map((row) => (
+                <li key={row.label} className={styles.hoursRow}>
+                  <span className={styles.hoursDay}>{row.label}</span>
+                  <span className={row.closed ? styles.hoursClosed : undefined}>
+                    {row.closed ? t('servicesClosed') : row.hours}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : isRestaurant ? (
             <ul className={styles.links}>
               <li><a className={styles.link} href="/#menu">{t('menuLink')}</a></li>
               <li><a className={styles.link} href="/#reservations">{t('reservationsLink')}</a></li>
@@ -302,6 +368,21 @@ export default function Footer({
                 {displayPhone}
               </a>
             </li>
+            {isServices && displayPhone && (
+              <li>
+                <a
+                  className={styles.contactLink}
+                  href={`https://wa.me/${displayPhone.replace(/[^+\d]/g, '').replace(/^\+/, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
+                  WhatsApp
+                </a>
+              </li>
+            )}
             {displayEmail && (
               <li>
                 <a className={styles.contactLink} href={`mailto:${displayEmail}`}>
@@ -316,11 +397,13 @@ export default function Footer({
                 {presence.address}{presence.city ? `, ${presence.city}` : ''}
               </li>
             )}
-            <li className={styles.contactItem}>
-              <ClockIcon />
-              {presence.openingHours ?? t('schedule')}
-            </li>
-            {!isRestaurant && !isFoodMarket && !presence.hasPhysicalLocation && (
+            {!isServices && (
+              <li className={styles.contactItem}>
+                <ClockIcon />
+                {presence.openingHours ?? t('schedule')}
+              </li>
+            )}
+            {!isRestaurant && !isFoodMarket && !isServices && !presence.hasPhysicalLocation && (
               <li className={styles.contactItem}>
                 <TruckIcon />
                 {isShoeMarket

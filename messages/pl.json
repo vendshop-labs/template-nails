@@ -21,7 +21,13 @@
     "shoeNavSale": "Wyprzedaż",
     "shoeShippingBanner": "Bezpłatna dostawa przy zamówieniach powyżej 75€",
     "shoeTrackOrder": "Śledź zamówienie",
-    "myAccount": "Konto"
+    "myAccount": "Konto",
+    "servicesServices": "Usługi",
+    "servicesTeam": "Zespół",
+    "servicesGallery": "Galeria",
+    "servicesContact": "Kontakt",
+    "servicesBookNow": "Zarezerwuj",
+    "servicesSubtitle": "Studio"
   },
   "categories": {
     "title": "Kategorie",
@@ -171,7 +177,16 @@
     "sizeGuide": "Tabela rozmiarów",
     "wholesale": "Warunki hurtowe",
     "deliveryEU": "Szybka wysyłka w całej UE",
-    "deliveryB2B": "Zamówienia hurtowe i indywidualna dostawa"
+    "deliveryB2B": "Zamówienia hurtowe i indywidualna dostawa",
+    "aboutDescServices": "Profesjonalny barbershop i salon fryzjerski w centrum Trenčína. Strzyżenie męskie, pielęgnacja brody i stylizacja na najwyższym poziomie.",
+    "servicesNavTitle": "Nawigacja",
+    "servicesHoursTitle": "Godziny pracy",
+    "servicesClosed": "Zamknięte",
+    "servicesServices": "Usługi",
+    "servicesTeam": "Zespół",
+    "servicesGallery": "Galeria",
+    "servicesBookNow": "Zarezerwuj",
+    "servicesAdmin": "Admin"
   },
   "tags": {
     "popularQueries": "Popularne wyszukiwania:"
