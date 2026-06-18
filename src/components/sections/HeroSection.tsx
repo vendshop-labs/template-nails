@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { WHATSAPP_LINKS } from '@/lib/constants';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
+import { BLUR_PLACEHOLDER } from '@/components/ui/BlurImage';
 
 interface HeroConfig {
   title?: string | null;
@@ -72,6 +73,8 @@ export default function HeroSection({ config }: HeroSectionProps) {
             sizes="(max-width: 768px) 100vw, 42vw"
             quality={85}
             unoptimized={imageSrc.startsWith('http')}
+            placeholder="blur"
+            blurDataURL={BLUR_PLACEHOLDER}
           />
           <div className="hero__overlay" />
         </div>

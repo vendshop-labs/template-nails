@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { GALLERY_IMAGES } from '@/lib/constants';
 import GoldDivider from '@/components/ui/GoldDivider';
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import { BLUR_PLACEHOLDER } from '@/components/ui/BlurImage';
 
 interface GalleryImage {
   id: string;
@@ -38,6 +39,8 @@ export default function GallerySection({ images }: GallerySectionProps) {
                 className="gallery-img"
                 priority={index === 0}
                 unoptimized={image.url.startsWith('http')}
+                placeholder="blur"
+                blurDataURL={BLUR_PLACEHOLDER}
               />
               <div className="gallery-overlay" />
             </div>

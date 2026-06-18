@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { TEAM } from '@/lib/constants';
 import GoldDivider from '@/components/ui/GoldDivider';
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import { BLUR_PLACEHOLDER } from '@/components/ui/BlurImage';
 
 export default function TeamSection() {
   return (
@@ -24,6 +25,8 @@ export default function TeamSection() {
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="team-photo"
+                  placeholder="blur"
+                  blurDataURL={BLUR_PLACEHOLDER}
                 />
               </div>
               <h3 className="team-name">{member.name}</h3>
