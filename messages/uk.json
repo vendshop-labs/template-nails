@@ -536,5 +536,39 @@
     "errorInvalidCredentials": "Невірний email або пароль",
     "myAccount": "Мій акаунт",
     "greeting": "Привіт, {name}"
+  },
+  "services": {
+    "title": "Наші послуги",
+    "haircut": "Чоловіча стрижка",
+    "beard": "Догляд за бородою",
+    "hairBeard": "Стрижка + борода",
+    "styling": "Стайлінг",
+    "bookNow": "Записатися",
+    "duration": "{min} хв",
+    "from": "від"
+  },
+  "booking": {
+    "title": "Запис на прийом",
+    "selectService": "Оберіть послугу",
+    "selectMaster": "Оберіть майстра",
+    "selectDate": "Оберіть дату",
+    "selectTime": "Оберіть час",
+    "yourName": "Ваше ім'я",
+    "yourPhone": "Номер телефону",
+    "note": "Примітка (необов'язково)",
+    "submit": "Записатися",
+    "whatsappFallback": "Або через WhatsApp",
+    "confirmation": "Запис підтверджено! Ми зв'яжемося з вами."
+  },
+  "team": {
+    "title": "Наші майстри"
+  },
+  "gallery": {
+    "title": "Наші роботи"
+  },
+  "courses": {
+    "title": "Навчайтесь у майстрів",
+    "enroll": "Записатися",
+    "preview": "Безкоштовний перегляд"
   }
 }

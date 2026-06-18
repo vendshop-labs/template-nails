@@ -536,5 +536,39 @@
     "errorInvalidCredentials": "Nieprawidłowy email lub hasło",
     "myAccount": "Moje konto",
     "greeting": "Cześć, {name}"
+  },
+  "services": {
+    "title": "Nasze usługi",
+    "haircut": "Strzyżenie",
+    "beard": "Pielęgnacja brody",
+    "hairBeard": "Strzyżenie + broda",
+    "styling": "Stylizacja",
+    "bookNow": "Zarezerwuj",
+    "duration": "{min} min",
+    "from": "od"
+  },
+  "booking": {
+    "title": "Zarezerwuj wizytę",
+    "selectService": "Wybierz usługę",
+    "selectMaster": "Wybierz mistrza",
+    "selectDate": "Wybierz datę",
+    "selectTime": "Wybierz godzinę",
+    "yourName": "Twoje imię",
+    "yourPhone": "Numer telefonu",
+    "note": "Uwaga (opcjonalnie)",
+    "submit": "Zarezerwuj",
+    "whatsappFallback": "Lub zarezerwuj przez WhatsApp",
+    "confirmation": "Wizyta potwierdzona! Skontaktujemy się wkrótce."
+  },
+  "team": {
+    "title": "Nasi mistrzowie"
+  },
+  "gallery": {
+    "title": "Nasze prace"
+  },
+  "courses": {
+    "title": "Ucz się od mistrzów",
+    "enroll": "Zapisz się",
+    "preview": "Darmowy podgląd"
   }
 }

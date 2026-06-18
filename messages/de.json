@@ -536,5 +536,39 @@
     "errorInvalidCredentials": "Ungültige E-Mail oder Passwort",
     "myAccount": "Mein Konto",
     "greeting": "Hallo, {name}"
+  },
+  "services": {
+    "title": "Unsere Leistungen",
+    "haircut": "Haarschnitt",
+    "beard": "Bartpflege",
+    "hairBeard": "Haare + Bart",
+    "styling": "Styling",
+    "bookNow": "Jetzt buchen",
+    "duration": "{min} Min",
+    "from": "ab"
+  },
+  "booking": {
+    "title": "Termin buchen",
+    "selectService": "Leistung wählen",
+    "selectMaster": "Barber wählen",
+    "selectDate": "Datum wählen",
+    "selectTime": "Uhrzeit wählen",
+    "yourName": "Ihr Name",
+    "yourPhone": "Telefonnummer",
+    "note": "Anmerkung (optional)",
+    "submit": "Termin buchen",
+    "whatsappFallback": "Oder per WhatsApp buchen",
+    "confirmation": "Termin bestätigt! Wir melden uns bald."
+  },
+  "team": {
+    "title": "Unsere Meister"
+  },
+  "gallery": {
+    "title": "Unsere Arbeit"
+  },
+  "courses": {
+    "title": "Lernen Sie von den Meistern",
+    "enroll": "Jetzt einschreiben",
+    "preview": "Kostenlose Vorschau"
   }
 }

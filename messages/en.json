@@ -536,5 +536,39 @@
     "errorInvalidCredentials": "Invalid email or password",
     "myAccount": "My Account",
     "greeting": "Hello, {name}"
+  },
+  "services": {
+    "title": "Our Services",
+    "haircut": "Haircut",
+    "beard": "Beard Trim",
+    "hairBeard": "Hair + Beard",
+    "styling": "Styling",
+    "bookNow": "Book Now",
+    "duration": "{min} min",
+    "from": "from"
+  },
+  "booking": {
+    "title": "Book Your Appointment",
+    "selectService": "Choose Service",
+    "selectMaster": "Choose Master",
+    "selectDate": "Select Date",
+    "selectTime": "Select Time",
+    "yourName": "Your Name",
+    "yourPhone": "Phone Number",
+    "note": "Note (optional)",
+    "submit": "Book Appointment",
+    "whatsappFallback": "Or book via WhatsApp",
+    "confirmation": "Appointment confirmed! We will contact you shortly."
+  },
+  "team": {
+    "title": "Our Masters"
+  },
+  "gallery": {
+    "title": "Our Work"
+  },
+  "courses": {
+    "title": "Learn from the Masters",
+    "enroll": "Enroll Now",
+    "preview": "Free Preview"
   }
 }

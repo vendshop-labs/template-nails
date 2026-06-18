@@ -81,7 +81,10 @@ export type HomeSection =
   | 'reservations'
   | 'gallery'
   | 'about'
-  | 'testimonials';
+  | 'testimonials'
+  | 'services'
+  | 'team'
+  | 'booking';
 
 // ── Default configs ───────────────────────────────────────────────────────
 
@@ -319,6 +322,40 @@ export const VERTICAL_CONFIGS: Record<Vertical, VerticalConfig> = {
       showReservation: false,
       defaultCurrency: 'EUR',
       defaultRegion: 'EU',
+    },
+  },
+  SERVICES: {
+    vertical: 'SERVICES',
+    label: 'Services / Barbershop',
+    product: {
+      metadataFields: [],
+      showBrand: false,
+      showSku: false,
+      cardVariant: 'standard',
+    },
+    delivery: {
+      modes: [],
+      showEstimatedTime: false,
+      showZonesMap: false,
+      defaultMinOrder: 0,
+    },
+    checkout: {
+      showCompanyFields: false,
+      showTimeSlots: true,
+      showTableNumber: false,
+      paymentMethods: [],
+    },
+    ui: {
+      homeSections: ['hero', 'services', 'team', 'gallery', 'booking', 'testimonials'],
+      catalogStyle: 'grid',
+      categoryDisplay: 'tabs',
+      addToCartLabel: 'Book Now',
+    },
+    store: {
+      showHours: true,
+      showReservation: true,
+      defaultCurrency: 'EUR',
+      defaultRegion: 'SK',
     },
   },
 };

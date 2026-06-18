@@ -536,5 +536,39 @@
     "errorInvalidCredentials": "Nesprávny email alebo heslo",
     "myAccount": "Môj účet",
     "greeting": "Ahoj, {name}"
+  },
+  "services": {
+    "title": "Naše služby",
+    "haircut": "Pánsky strih",
+    "beard": "Úprava brady",
+    "hairBeard": "Strih + brada",
+    "styling": "Styling",
+    "bookNow": "Rezervovať",
+    "duration": "{min} min",
+    "from": "od"
+  },
+  "booking": {
+    "title": "Rezervujte si termín",
+    "selectService": "Vyberte službu",
+    "selectMaster": "Vyberte barbera",
+    "selectDate": "Vyberte dátum",
+    "selectTime": "Vyberte čas",
+    "yourName": "Vaše meno",
+    "yourPhone": "Telefónne číslo",
+    "note": "Poznámka (nepovinné)",
+    "submit": "Rezervovať",
+    "whatsappFallback": "Alebo cez WhatsApp",
+    "confirmation": "Rezervácia potvrdená! Ozveme sa vám."
+  },
+  "team": {
+    "title": "Naši majstri"
+  },
+  "gallery": {
+    "title": "Naša práca"
+  },
+  "courses": {
+    "title": "Učte sa od majstrov",
+    "enroll": "Prihlásiť sa",
+    "preview": "Ukážka zadarmo"
   }
 }

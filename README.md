@@ -1,28 +1,62 @@
-# vendshop-template-ecommerce
+# vendshop-template-services
 
-Universal multi-region e-commerce template ("ElectroMarket") — a power-tools store with a full customer storefront and an admin panel.
+Universal services template for VendShop — barbershops, hair salons, nail studios, massage, beauty.
 
-## Setup
+## Verticals supported
+- Barbershop (dark theme) — default demo
+- Hair salon (light/warm theme)
+- Nail studio (warm theme)
+- Massage/SPA (navy theme)
+
+## Quick start
 1. Clone repo
 2. `cp .env.local.example .env.local`
-3. Set your values in `.env.local`
+3. Set feature flags in `.env.local`
 4. `pnpm install --config.node-linker=hoisted`
-5. `pnpm dev:clean`
+5. `pnpm db:push` (creates DB tables)
+6. `pnpm exec tsx prisma/seed-services.ts` (seeds demo data)
+7. `pnpm dev`
 
-> On Windows/exFAT drives, always install with `--config.node-linker=hoisted` and run `pnpm dev:clean` (kills stale Next dev processes + clears `.next`).
+## Feature flags
+See `.env.local.example` — toggle modules with `true`/`false`.
 
-## Vercel Deploy
-`vercel.json` contains **no secrets** — all 4 vars must be set in **Vercel Dashboard → Settings → Environment Variables**:
-- `REGION_BUNDLE=UA`
-- `ADMIN_EMAIL=your@email.com`
-- `ADMIN_PASSWORD=your_secure_password`
-- `ADMIN_SECRET=random_32_char_string` (generate with: `openssl rand -hex 32`)
+| Flag | Default | Description |
+|------|---------|-------------|
+| `NEXT_PUBLIC_ENABLE_BOOKING` | `true` | Online booking calendar |
+| `NEXT_PUBLIC_ENABLE_WHATSAPP_BOOKING` | `true` | WhatsApp fallback booking |
+| `NEXT_PUBLIC_ENABLE_PAYMENT` | `false` | Stripe online payment |
+| `NEXT_PUBLIC_ENABLE_DEPOSIT` | `false` | Deposit at booking |
+| `NEXT_PUBLIC_ENABLE_SMS` | `false` | Twilio SMS reminders |
+| `NEXT_PUBLIC_ENABLE_DIGITAL` | `false` | Digital products |
+| `NEXT_PUBLIC_ENABLE_COURSES` | `false` | Video courses |
+| `NEXT_PUBLIC_ENABLE_TEAM` | `true` | Team/masters section |
+| `NEXT_PUBLIC_ENABLE_GALLERY` | `true` | Gallery section |
+| `NEXT_PUBLIC_REVIEWS_MODE` | `static` | `static` or `dynamic` |
+| `NEXT_PUBLIC_THEME` | `dark` | `dark`, `light`, `warm`, `navy` |
 
-## Admin Access
-`/admin` → redirects to `/admin/login` when not authenticated.
-Default demo credentials: `admin@electromarket.ua` / `admin123` (change before production).
+## Themes
+Set `NEXT_PUBLIC_THEME` in `.env.local`:
+- `dark` — copper on black (barbershop)
+- `light` — copper on white (modern salon)
+- `warm` — saddle-brown on cream (classic)
+- `navy` — gold on navy (luxury spa)
 
-The admin session is an httpOnly cookie holding an HMAC-SHA256 token signed with `ADMIN_SECRET`; the middleware verifies the signature on every `/admin` request.
+## New pages (vs ecommerce template)
+- `/` — Landing: Hero → Services → Team → Gallery → Booking → Testimonials → CTA
+- `/services` — Services catalog
+- `/team/[slug]` — Master profile
+- `/courses` — Courses (only when `ENABLE_COURSES=true`)
+- `/admin/appointments` — Appointment calendar + list
+- `/admin/masters` — Team management
+- `/admin/services` — Services management
 
-## Tech Stack
-Next.js 15, TypeScript, CSS Modules, next-intl (6 locales: uk/ru/en/de/sk/cs), Zustand, Vercel.
+## API routes
+- `GET /api/services` — public service list
+- `GET /api/masters` — public masters list
+- `GET /api/availability?masterId=&date=&serviceId=` — available time slots
+- `POST /api/appointments` — create booking
+- `PATCH /api/appointments/[id]` — confirm/cancel/add note
+
+## Deploy
+Same as vendshop-template-ecommerce — set env vars in Vercel Dashboard.
+Push to GitHub → connect to Vercel → set DATABASE_URL (Neon) and all NEXT_PUBLIC_ flags.

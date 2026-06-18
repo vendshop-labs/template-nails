@@ -97,8 +97,10 @@ export default async function LocaleLayout({
   const config = await getStoreConfig();
   const cssVars = themeToCssVars(config.theme);
 
+  const theme = process.env.NEXT_PUBLIC_THEME ?? 'dark';
+
   return (
-    <html lang={locale} data-vertical={config.vertical.vertical} className={playfair.variable}>
+    <html lang={locale} data-vertical={config.vertical.vertical} data-theme={theme} className={playfair.variable}>
       <head>
         <link rel="preconnect" href="https://conuflmgcnkfqjmncsth.public.blob.vercel-storage.com" />
         <link rel="dns-prefetch" href="https://conuflmgcnkfqjmncsth.public.blob.vercel-storage.com" />
