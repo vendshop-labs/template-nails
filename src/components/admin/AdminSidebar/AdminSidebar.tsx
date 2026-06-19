@@ -184,7 +184,7 @@ const NAV_SERVICES_ALL: (NavItem & { show: boolean })[] = [
   {
     href: '/admin/rezervacie',
     labelKey: 'reservations',
-    show: FLAGS.booking,
+    show: true,
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" {...ico}>
         <rect x="3" y="4" width="18" height="18" rx="2" />
