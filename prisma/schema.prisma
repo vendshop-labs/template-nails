@@ -21,6 +21,7 @@ model Store {
   address      String?
   city         String?
   openingHours String?
+  logoUrl      String?
   phone        String?
   email        String?
   mapLat       Float?

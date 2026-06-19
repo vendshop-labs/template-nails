@@ -22,6 +22,7 @@ export async function GET() {
       address: true,
       city: true,
       openingHours: true,
+      logoUrl: true,
       phone: true,
       email: true,
       mapLat: true,

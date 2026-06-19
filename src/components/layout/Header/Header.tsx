@@ -13,7 +13,7 @@ const NAV_LINKS = [
   { href: '/sk/#kontakt',  label: 'Kontakt' },
 ];
 
-export default function Header() {
+export default function Header({ logoUrl }: { logoUrl?: string }) {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -51,7 +51,12 @@ export default function Header() {
     <header className={headerClass}>
       <div className="header__inner">
         <Link href="/sk" className="header__logo">
-          Kate <span className="header__logo-span">Barber Studio</span>
+          {logoUrl ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src={logoUrl} alt="Logo" style={{ height: '40px', objectFit: 'contain' }} />
+          ) : (
+            <>Kate <span className="header__logo-span">Barber Studio</span></>
+          )}
         </Link>
 
         <nav className="header__nav">

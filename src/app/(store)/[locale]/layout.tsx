@@ -115,7 +115,7 @@ export default async function LocaleLayout({
           <CustomerProvider>
             <VerticalProvider config={config.vertical}>
               <PresenceProvider presence={config.presence}>
-                <Header />
+                <Header logoUrl={config.logoUrl} />
                 <main>{children}</main>
                 <Footer />
               </PresenceProvider>

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import WorkingHours from '@/components/admin/WorkingHours';
+import WorkingHoursEditor, { DEFAULT_HOURS, type HoursMap } from './WorkingHoursEditor';
 import GalleryTab from './GalleryTab';
 import MastersTab from './MastersTab';
 import styles from './settings.module.css';
@@ -25,9 +26,6 @@ function EyeIcon({ off }: { off?: boolean }) {
     <svg width="18" height="18" viewBox="0 0 24 24" {...stroke} aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
   );
 }
-function UploadIcon() {
-  return <svg width="28" height="28" viewBox="0 0 24 24" {...stroke} aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="M7 9l5-5 5 5M12 4v12" /></svg>;
-}
 
 function Toggle({ checked, onChange, disabled }: { checked: boolean; onChange: (v: boolean) => void; disabled?: boolean }) {
   return (
@@ -50,9 +48,44 @@ function MaskedInput({ value, onChange, placeholder }: { value: string; onChange
   );
 }
 
+function parseHours(raw: unknown): HoursMap {
+  if (!raw || typeof raw !== 'string') return DEFAULT_HOURS;
+  try {
+    const parsed = JSON.parse(raw) as HoursMap;
+    // validate it has at least one expected key
+    if ('mon' in parsed) return parsed;
+  } catch {
+    // plain text string — fall back to defaults
+  }
+  return DEFAULT_HOURS;
+}
+
 export default function AdminSettingsPage() {
   const [tab, setTab] = useState<Tab>('store');
   const [vertical, setVertical] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  const [store, setStore] = useState({
+    name: '',
+    description: '',
+    phone: '',
+    email: '',
+    address: '',
+    city: '',
+    mapLat: '',
+    mapLng: '',
+    facebook: '',
+    instagram: '',
+    whatsapp: '',
+  });
+
+  // Working hours — parsed from openingHours JSON string
+  const [hours, setHours] = useState<HoursMap>(DEFAULT_HOURS);
+
+  // Logo
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [logoUploading, setLogoUploading] = useState(false);
 
   useEffect(() => {
     fetch('/api/admin/store-info')
@@ -69,10 +102,11 @@ export default function AdminSettingsPage() {
             email: (s.email as string) ?? '',
             address: (s.address as string) ?? '',
             city: (s.city as string) ?? '',
-            openingHours: (s.openingHours as string) ?? '',
             mapLat: s.mapLat != null ? String(s.mapLat) : '',
             mapLng: s.mapLng != null ? String(s.mapLng) : '',
           }));
+          setHours(parseHours(s.openingHours));
+          setLogoUrl((s.logoUrl as string | null) ?? null);
         }
         setLoading(false);
       })
@@ -87,8 +121,12 @@ export default function AdminSettingsPage() {
   const [toast, setToast] = useState(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => { if (toastTimer.current) clearTimeout(toastTimer.current); }, []);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+
+  const showToast = () => {
+    setToast(true);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(false), 2000);
+  };
 
   const saveStore = async () => {
     setSaving(true);
@@ -103,16 +141,12 @@ export default function AdminSettingsPage() {
           email: store.email || null,
           address: store.address || null,
           city: store.city || null,
-          openingHours: store.openingHours || null,
+          openingHours: JSON.stringify(hours),
           mapLat: store.mapLat ? parseFloat(store.mapLat) : null,
           mapLng: store.mapLng ? parseFloat(store.mapLng) : null,
         }),
       });
-      if (res.ok) {
-        setToast(true);
-        if (toastTimer.current) clearTimeout(toastTimer.current);
-        toastTimer.current = setTimeout(() => setToast(false), 2000);
-      }
+      if (res.ok) showToast();
     } catch {
       // silent
     } finally {
@@ -120,32 +154,26 @@ export default function AdminSettingsPage() {
     }
   };
 
-  const showToast = () => {
-    setToast(true);
-    if (toastTimer.current) clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(() => setToast(false), 2000);
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setLogoUploading(true);
+    const fd = new FormData();
+    fd.append('file', file);
+    const res = await fetch('/api/admin/settings/logo', { method: 'POST', body: fd });
+    const data = (await res.json()) as { url?: string; error?: string };
+    if (data.url) setLogoUrl(data.url);
+    setLogoUploading(false);
+    e.target.value = '';
   };
 
-  const [store, setStore] = useState({
-    name: '',
-    description: '',
-    phone: '',
-    email: '',
-    address: '',
-    city: '',
-    openingHours: '',
-    mapLat: '',
-    mapLng: '',
-    facebook: '',
-    instagram: '',
-    whatsapp: '',
-  });
-  const [notif, setNotif] = useState({ emailOn: true, email: '', reviewsOn: true, telegramOn: false, botToken: '', chatId: '' });
-  const [security, setSecurity] = useState({ currentPw: '', newPw: '', confirmPw: '', twoFactor: false });
+  const sStore = <K extends keyof typeof store>(k: K, v: (typeof store)[K]) =>
+    setStore((p) => ({ ...p, [k]: v }));
 
-  const sStore = <K extends keyof typeof store>(k: K, v: (typeof store)[K]) => setStore((p) => ({ ...p, [k]: v }));
+  const [notif, setNotif]     = useState({ emailOn: true, email: '', reviewsOn: true, telegramOn: false, botToken: '', chatId: '' });
+  const [security, setSecurity] = useState({ currentPw: '', newPw: '', confirmPw: '', twoFactor: false });
   const sNotif = <K extends keyof typeof notif>(k: K, v: (typeof notif)[K]) => setNotif((p) => ({ ...p, [k]: v }));
-  const sSec = <K extends keyof typeof security>(k: K, v: (typeof security)[K]) => setSecurity((p) => ({ ...p, [k]: v }));
+  const sSec   = <K extends keyof typeof security>(k: K, v: (typeof security)[K]) => setSecurity((p) => ({ ...p, [k]: v }));
 
   return (
     <div className={styles.page}>
@@ -153,7 +181,12 @@ export default function AdminSettingsPage() {
 
       <div className={styles.tabs}>
         {tabs.map((t) => (
-          <button key={t.key} type="button" className={`${styles.tab} ${tab === t.key ? styles.tabActive : ''}`} onClick={() => setTab(t.key)}>
+          <button
+            key={t.key}
+            type="button"
+            className={`${styles.tab} ${tab === t.key ? styles.tabActive : ''}`}
+            onClick={() => setTab(t.key)}
+          >
             {t.label}
           </button>
         ))}
@@ -166,11 +199,45 @@ export default function AdminSettingsPage() {
             <p style={{ color: '#6b7280', fontSize: 14 }}>Načítavam...</p>
           ) : (
             <>
-              <div className={styles.logoUpload} onClick={() => console.log('[admin logo upload]')}>
-                <UploadIcon />
-                <span>Nahrať logo</span>
+              {/* ── Logo upload ─────────────────────────────────────── */}
+              <div style={{
+                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: '12px',
+                padding: '1.25rem 1.5rem',
+                background: '#111',
+                marginBottom: '1.5rem',
+              }}>
+                <p style={{ color: '#888', fontSize: '0.78rem', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+                  Logo salóna
+                </p>
+                {logoUrl ? (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={logoUrl}
+                      alt="Logo"
+                      style={{ height: '56px', objectFit: 'contain', background: '#1a1a1a', borderRadius: '8px', padding: '0.5rem' }}
+                    />
+                    <label style={{ cursor: logoUploading ? 'wait' : 'pointer', color: '#B87333', fontSize: '0.875rem', textDecoration: 'underline' }}>
+                      {logoUploading ? 'Nahrávam...' : 'Zmeniť logo'}
+                      <input type="file" accept="image/*" onChange={handleLogoUpload} style={{ display: 'none' }} disabled={logoUploading} />
+                    </label>
+                  </div>
+                ) : (
+                  <label style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem',
+                    padding: '1.5rem', cursor: logoUploading ? 'wait' : 'pointer',
+                    border: '1px dashed rgba(255,255,255,0.12)', borderRadius: '8px', color: '#666',
+                  }}>
+                    <span style={{ fontSize: '1.5rem', lineHeight: 1 }}>↑</span>
+                    <span>{logoUploading ? 'Nahrávam...' : 'Nahrať logo'}</span>
+                    <span style={{ fontSize: '0.75rem', color: '#444' }}>WebP / PNG / JPG · výstup 400×120 · max 5 MB</span>
+                    <input type="file" accept="image/*" onChange={handleLogoUpload} style={{ display: 'none' }} disabled={logoUploading} />
+                  </label>
+                )}
               </div>
 
+              {/* ── Store fields ─────────────────────────────────────── */}
               <Field label="Názov salóna">
                 <input className={styles.input} value={store.name} onChange={(e) => sStore('name', e.target.value)} />
               </Field>
@@ -178,22 +245,29 @@ export default function AdminSettingsPage() {
                 <textarea className={styles.textarea} rows={3} value={store.description} onChange={(e) => sStore('description', e.target.value)} />
               </Field>
               <div className={styles.grid2}>
-                <Field label="Telefón"><input className={styles.input} value={store.phone} onChange={(e) => sStore('phone', e.target.value)} /></Field>
-                <Field label="Email"><input className={styles.input} type="email" value={store.email} onChange={(e) => sStore('email', e.target.value)} /></Field>
+                <Field label="Telefón">
+                  <input className={styles.input} value={store.phone} onChange={(e) => sStore('phone', e.target.value)} />
+                </Field>
+                <Field label="Email">
+                  <input className={styles.input} type="email" value={store.email} onChange={(e) => sStore('email', e.target.value)} />
+                </Field>
               </div>
-
               <Field label="Adresa salóna">
                 <input className={styles.input} value={store.address} onChange={(e) => sStore('address', e.target.value)} placeholder="Hlavná ulica 15" />
               </Field>
-              <div className={styles.grid2}>
-                <Field label="Mesto">
-                  <input className={styles.input} value={store.city} onChange={(e) => sStore('city', e.target.value)} placeholder="Trenčín" />
-                </Field>
-                <Field label="Pracovné hodiny">
-                  <input className={styles.input} value={store.openingHours} onChange={(e) => sStore('openingHours', e.target.value)} placeholder="Po–Pia: 9:00–19:00" />
-                </Field>
+              <Field label="Mesto">
+                <input className={styles.input} value={store.city} onChange={(e) => sStore('city', e.target.value)} placeholder="Trenčín" />
+              </Field>
+
+              {/* ── Working hours editor ─────────────────────────────── */}
+              <div style={{ marginTop: '1.5rem', marginBottom: '0.5rem' }}>
+                <p style={{ color: '#888', fontSize: '0.78rem', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
+                  Pracovné hodiny
+                </p>
+                <WorkingHoursEditor value={hours} onChange={setHours} />
               </div>
-              <div className={styles.grid2}>
+
+              <div className={styles.grid2} style={{ marginTop: '1rem' }}>
                 <Field label="Zemepisná šírka (lat)">
                   <input className={styles.input} type="number" step="any" value={store.mapLat} onChange={(e) => sStore('mapLat', e.target.value)} placeholder="48.8944" />
                 </Field>
@@ -203,8 +277,12 @@ export default function AdminSettingsPage() {
               </div>
 
               <div className={styles.grid2}>
-                <Field label="Facebook"><input className={styles.input} value={store.facebook} placeholder="https://facebook.com/..." onChange={(e) => sStore('facebook', e.target.value)} /></Field>
-                <Field label="Instagram"><input className={styles.input} value={store.instagram} placeholder="https://instagram.com/..." onChange={(e) => sStore('instagram', e.target.value)} /></Field>
+                <Field label="Facebook">
+                  <input className={styles.input} value={store.facebook} placeholder="https://facebook.com/..." onChange={(e) => sStore('facebook', e.target.value)} />
+                </Field>
+                <Field label="Instagram">
+                  <input className={styles.input} value={store.instagram} placeholder="https://instagram.com/..." onChange={(e) => sStore('instagram', e.target.value)} />
+                </Field>
               </div>
               <Field label="WhatsApp">
                 <input className={styles.input} value={store.whatsapp} placeholder="https://wa.me/421..." onChange={(e) => sStore('whatsapp', e.target.value)} />
@@ -240,7 +318,9 @@ export default function AdminSettingsPage() {
               <span className={styles.blockTitle}>Email</span>
               <Toggle checked={notif.emailOn} onChange={(v) => sNotif('emailOn', v)} />
             </div>
-            <Field label="Email pre notifikácie"><input className={styles.input} type="email" value={notif.email} onChange={(e) => sNotif('email', e.target.value)} /></Field>
+            <Field label="Email pre notifikácie">
+              <input className={styles.input} type="email" value={notif.email} onChange={(e) => sNotif('email', e.target.value)} />
+            </Field>
             <div className={styles.settingRow}>
               <span>Notifikácie o nových recenziách</span>
               <Toggle checked={notif.reviewsOn} onChange={(v) => sNotif('reviewsOn', v)} />
@@ -252,8 +332,12 @@ export default function AdminSettingsPage() {
               <span className={styles.blockTitle}>Telegram</span>
               <Toggle checked={notif.telegramOn} onChange={(v) => sNotif('telegramOn', v)} />
             </div>
-            <Field label="Bot Token"><MaskedInput value={notif.botToken} onChange={(v) => sNotif('botToken', v)} placeholder="••••••••••••" /></Field>
-            <Field label="Chat ID"><input className={styles.input} value={notif.chatId} onChange={(e) => sNotif('chatId', e.target.value)} /></Field>
+            <Field label="Bot Token">
+              <MaskedInput value={notif.botToken} onChange={(v) => sNotif('botToken', v)} placeholder="••••••••••••" />
+            </Field>
+            <Field label="Chat ID">
+              <input className={styles.input} value={notif.chatId} onChange={(e) => sNotif('chatId', e.target.value)} />
+            </Field>
             <button type="button" className={styles.testBtn} onClick={() => console.log('[test telegram]')}>Test</button>
           </div>
 
@@ -266,9 +350,15 @@ export default function AdminSettingsPage() {
         <div className={styles.card}>
           <div className={styles.block}>
             <span className={styles.blockTitle}>Zmena hesla</span>
-            <Field label="Aktuálne heslo"><MaskedInput value={security.currentPw} onChange={(v) => sSec('currentPw', v)} /></Field>
-            <Field label="Nové heslo"><MaskedInput value={security.newPw} onChange={(v) => sSec('newPw', v)} /></Field>
-            <Field label="Potvrďte heslo"><MaskedInput value={security.confirmPw} onChange={(v) => sSec('confirmPw', v)} /></Field>
+            <Field label="Aktuálne heslo">
+              <MaskedInput value={security.currentPw} onChange={(v) => sSec('currentPw', v)} />
+            </Field>
+            <Field label="Nové heslo">
+              <MaskedInput value={security.newPw} onChange={(v) => sSec('newPw', v)} />
+            </Field>
+            <Field label="Potvrďte heslo">
+              <MaskedInput value={security.confirmPw} onChange={(v) => sSec('confirmPw', v)} />
+            </Field>
             <button type="button" className={styles.saveBtn} onClick={showToast}>Zmeniť heslo</button>
           </div>
 

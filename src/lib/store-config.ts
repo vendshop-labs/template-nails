@@ -23,6 +23,7 @@ export interface StoreConfig {
   id: string;
   name: string;
   slug: string;
+  logoUrl?: string;
   theme: ThemeConfig;
   vertical: VerticalConfig;
   presence: StorePresence;
@@ -42,6 +43,7 @@ export async function getStoreConfig(): Promise<StoreConfig> {
       address: true,
       city: true,
       openingHours: true,
+      logoUrl: true,
       phone: true,
       email: true,
       mapLat: true,
@@ -77,6 +79,7 @@ export async function getStoreConfig(): Promise<StoreConfig> {
     id: store.id,
     name: store.name,
     slug: store.slug,
+    logoUrl: store.logoUrl ?? undefined,
     theme,
     vertical: getVerticalConfig(store.vertical),
     presence,
