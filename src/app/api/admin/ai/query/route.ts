@@ -110,6 +110,61 @@ const TOOLS: OpenAI.Chat.Completions.ChatCompletionTool[] = [
   {
     type: 'function',
     function: {
+      name: 'get_bookings',
+      description: "Get list of bookings/appointments filtered by status or date. Use to show pending, confirmed, today's, or all bookings.",
+      parameters: {
+        type: 'object',
+        properties: {
+          status: {
+            type: 'string',
+            enum: ['ALL', 'PENDING', 'CONFIRMED', 'CANCELLED', 'COMPLETED'],
+            description: 'Filter by status. ALL returns everything.',
+          },
+          date: {
+            type: 'string',
+            description: 'Filter by specific date in YYYY-MM-DD format. Omit for all dates.',
+          },
+          limit: {
+            type: 'number',
+            description: 'Max results to return. Default 10.',
+          },
+        },
+        required: [],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'confirm_booking',
+      description: 'Confirm a pending booking (change status from PENDING to CONFIRMED)',
+      parameters: {
+        type: 'object',
+        properties: {
+          booking_id: { type: 'string', description: 'The appointment ID to confirm' },
+        },
+        required: ['booking_id'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'cancel_booking',
+      description: 'Cancel a booking (change status to CANCELLED)',
+      parameters: {
+        type: 'object',
+        properties: {
+          booking_id: { type: 'string', description: 'The appointment ID to cancel' },
+          reason:     { type: 'string', description: 'Optional reason for cancellation' },
+        },
+        required: ['booking_id'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
       name: 'get_new_reviews',
       description: 'Get latest reviews with their content, ratings, and status.',
       parameters: {
@@ -239,6 +294,71 @@ async function executeTool(name: string, args: Record<string, unknown>, storeId:
         available,
         totalBooked:    bookedTimes.length,
         totalAvailable: available.length,
+      };
+    }
+
+    case 'get_bookings': {
+      const { status = 'ALL', date, limit = 10 } = args as {
+        status?: string;
+        date?: string;
+        limit?: number;
+      };
+      const where: Record<string, unknown> = { storeId };
+      if (status !== 'ALL') where.status = status;
+      if (date) {
+        const d    = new Date(date);
+        const next = new Date(d);
+        next.setDate(next.getDate() + 1);
+        where.date = { gte: d, lt: next };
+      }
+      const bookings = await db.appointment.findMany({
+        where,
+        include: {
+          service: { select: { nameKey: true } },
+          master:  { select: { name: true } },
+        },
+        orderBy: [{ date: 'asc' }, { timeSlot: 'asc' }],
+        take: limit,
+      });
+      if (bookings.length === 0) return { message: 'No bookings found', count: 0 };
+      return {
+        count: bookings.length,
+        bookings: bookings.map((b) => ({
+          id:       b.id,
+          date:     b.date.toLocaleDateString('sk-SK'),
+          time:     b.timeSlot,
+          name:     b.guestName ?? '—',
+          phone:    b.guestPhone ?? '—',
+          service:  b.service?.nameKey ?? '—',
+          master:   b.master?.name ?? '—',
+          status:   b.status,
+        })),
+      };
+    }
+
+    case 'confirm_booking': {
+      const { booking_id } = args as { booking_id: string };
+      await db.appointment.update({
+        where: { id: booking_id },
+        data:  { status: 'CONFIRMED' },
+      });
+      revalidatePath('/admin/rezervacie');
+      return { success: true, message: `Booking ${booking_id} confirmed.` };
+    }
+
+    case 'cancel_booking': {
+      const { booking_id, reason } = args as { booking_id: string; reason?: string };
+      await db.appointment.update({
+        where: { id: booking_id },
+        data: {
+          status: 'CANCELLED',
+          ...(reason ? { note: reason } : {}),
+        },
+      });
+      revalidatePath('/admin/rezervacie');
+      return {
+        success: true,
+        message: `Booking ${booking_id} cancelled${reason ? ` (reason: ${reason})` : ''}.`,
       };
     }
 

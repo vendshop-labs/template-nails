@@ -14,6 +14,19 @@ interface Service {
 
 const EMPTY = { nameKey: '', description: '', price: 0, duration: 30, category: '' };
 
+const SERVICE_NAMES: Record<string, string> = {
+  'services.beard':    'Strihanie brady',
+  'services.haircut':  'Strihanie vlasov',
+  'services.hairBeard': 'Vlasy + Brada',
+  'services.styling':  'Styling',
+  'services.shave':    'Holenie',
+  'services.kids':     'Detský strih',
+};
+
+function displayName(nameKey: string) {
+  return SERVICE_NAMES[nameKey] ?? nameKey;
+}
+
 export default function AdminServicesPage() {
   const [services, setServices] = useState<Service[]>([]);
   const [editId, setEditId] = useState<string | null>(null);
@@ -188,7 +201,7 @@ export default function AdminServicesPage() {
             className={`admin-services__item${s.active ? '' : ' admin-services__item--inactive'}`}
           >
             <div className="admin-services__info">
-              <span className="admin-services__name">{s.nameKey}</span>
+              <span className="admin-services__name">{displayName(s.nameKey)}</span>
               {s.description && (
                 <span className="admin-services__desc">{s.description}</span>
               )}
