@@ -147,6 +147,52 @@
   margin: 12px 0 0;
 }
 
+.breakdownTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 4px;
+}
+
+.breakdownTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  background: rgba(184, 115, 51, 0.12);
+  color: #B87333;
+  border: 1px solid rgba(184, 115, 51, 0.3);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.reindexBtnOutline {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 44px;
+  padding: 0 22px;
+  background: transparent;
+  color: #B87333;
+  border: 1px solid #B87333;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.reindexBtnOutline:hover:not(:disabled) {
+  background: rgba(184, 115, 51, 0.1);
+}
+
+.reindexBtnOutline:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
 /* ── Two-column settings ──────────────────────────── */
 .twoCol {
   display: grid;

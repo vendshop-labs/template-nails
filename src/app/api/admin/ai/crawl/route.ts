@@ -2,6 +2,27 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { db } from '@/lib/db';
 
+export async function GET() {
+  const storeSlug = process.env.STORE_SLUG ?? 'kate-barber';
+  const store = await db.store.findUnique({ where: { slug: storeSlug } });
+  if (!store) return NextResponse.json({ total: 0, breakdown: {}, lastUpdated: null });
+
+  const chunks = await db.$queryRawUnsafe<{ chunkType: string; count: bigint }[]>(
+    `SELECT "chunkType", COUNT(*) as count FROM "StoreKnowledge" WHERE "storeId" = $1 GROUP BY "chunkType"`,
+    store.id
+  );
+
+  const breakdown = Object.fromEntries(chunks.map((c) => [c.chunkType, Number(c.count)]));
+  const total = chunks.reduce((s, c) => s + Number(c.count), 0);
+
+  const latest = await db.$queryRawUnsafe<{ createdAt: Date }[]>(
+    `SELECT "createdAt" FROM "StoreKnowledge" WHERE "storeId" = $1 ORDER BY "createdAt" DESC LIMIT 1`,
+    store.id
+  );
+
+  return NextResponse.json({ total, breakdown, lastUpdated: latest[0]?.createdAt ?? null });
+}
+
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const STORE_SLUG = process.env.STORE_SLUG ?? 'kate-barber';
 
