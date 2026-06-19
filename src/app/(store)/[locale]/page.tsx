@@ -27,8 +27,22 @@ export default async function HomePage({
 
   const store = await db.store.findUnique({
     where: { slug: STORE_SLUG },
-    select: { id: true },
+    select: {
+      id: true,
+      address: true,
+      city: true,
+      phone: true,
+      email: true,
+      openingHours: true,
+      mapLat: true,
+      mapLng: true,
+    },
   });
+
+  const parsedHours = (() => {
+    try { return store?.openingHours ? JSON.parse(store.openingHours) as unknown : null; }
+    catch { return null; }
+  })();
 
   const [heroConfig, galleryImages, dbTestimonials] = store
     ? await Promise.all([
@@ -67,7 +81,15 @@ export default async function HomePage({
       }))} />
       <BookingSection />
       <AboutSection />
-      <ContactSection />
+      <ContactSection
+        address={store?.address}
+        city={store?.city}
+        phone={store?.phone}
+        email={store?.email}
+        mapLat={store?.mapLat}
+        mapLng={store?.mapLng}
+        workingHours={parsedHours}
+      />
       <WhatsAppButton />
     </>
   );
