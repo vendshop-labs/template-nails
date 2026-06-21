@@ -166,6 +166,17 @@ export default function AdminSettingsPage() {
     e.target.value = '';
   };
 
+  const handleLogoRemove = async () => {
+    if (!window.confirm(tr.settings.removeLogoConfirm)) return;
+    setLogoUploading(true);
+    const res = await fetch('/api/admin/settings/logo', { method: 'DELETE' });
+    if (res.ok) {
+      setLogoUrl(null);
+      showToast();
+    }
+    setLogoUploading(false);
+  };
+
   const sStore = <K extends keyof typeof store>(k: K, v: (typeof store)[K]) =>
     setStore((p) => ({ ...p, [k]: v }));
 
@@ -210,7 +221,7 @@ export default function AdminSettingsPage() {
                   {tr.settings.logoLabel}
                 </p>
                 {logoUrl ? (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={logoUrl}
@@ -221,6 +232,23 @@ export default function AdminSettingsPage() {
                       {logoUploading ? tr.settings.uploading : tr.settings.changeLogo}
                       <input type="file" accept="image/*" onChange={handleLogoUpload} style={{ display: 'none' }} disabled={logoUploading} />
                     </label>
+                    <button
+                      type="button"
+                      onClick={handleLogoRemove}
+                      disabled={logoUploading}
+                      style={{
+                        background: 'none',
+                        border: '1px solid rgba(239,68,68,0.4)',
+                        borderRadius: '6px',
+                        color: '#ef4444',
+                        fontSize: '0.8rem',
+                        padding: '0.25rem 0.625rem',
+                        cursor: logoUploading ? 'wait' : 'pointer',
+                        opacity: logoUploading ? 0.5 : 1,
+                      }}
+                    >
+                      {tr.settings.removeLogo}
+                    </button>
                   </div>
                 ) : (
                   <label style={{

@@ -104,6 +104,8 @@ export interface AdminTranslations {
     changeLogo: string;
     uploadLogo: string;
     uploading: string;
+    removeLogo: string;
+    removeLogoConfirm: string;
     workingHoursLabel: string;
   };
   reviews: {
@@ -286,6 +288,8 @@ const SK: AdminTranslations = {
     changeLogo:        'Zmeniť logo',
     uploadLogo:        'Nahrať logo',
     uploading:         'Nahrávam...',
+    removeLogo:        'Odstrániť logo',
+    removeLogoConfirm: 'Naozaj chcete odstrániť logo? Zobrazí sa textový logotyp.',
     workingHoursLabel: 'Pracovné hodiny',
   },
   reviews: {
@@ -468,6 +472,8 @@ const EN: AdminTranslations = {
     changeLogo:        'Change logo',
     uploadLogo:        'Upload logo',
     uploading:         'Uploading...',
+    removeLogo:        'Remove logo',
+    removeLogoConfirm: 'Remove the logo? The text logotype will be shown instead.',
     workingHoursLabel: 'Working hours',
   },
   reviews: {

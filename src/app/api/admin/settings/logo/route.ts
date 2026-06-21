@@ -1,4 +1,4 @@
-import { put } from '@vercel/blob';
+import { put, del } from '@vercel/blob';
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import sharp from 'sharp';
@@ -40,6 +40,24 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ url: blob.url });
   } catch (err) {
     console.error('[logo/upload]', err);
+    return NextResponse.json({ error: String(err) }, { status: 500 });
+  }
+}
+
+export async function DELETE() {
+  try {
+    const store = await db.store.findUnique({
+      where: { slug: STORE_SLUG },
+      select: { logoUrl: true },
+    });
+    if (store?.logoUrl) {
+      try { await del(store.logoUrl); } catch { /* blob may already be gone */ }
+    }
+    await db.store.update({ where: { slug: STORE_SLUG }, data: { logoUrl: null } });
+    revalidatePath('/sk');
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    console.error('[logo/delete]', err);
     return NextResponse.json({ error: String(err) }, { status: 500 });
   }
 }
