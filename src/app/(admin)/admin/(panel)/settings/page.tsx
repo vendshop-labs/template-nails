@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import WorkingHours from '@/components/admin/WorkingHours';
+import AdminLoading from '@/components/admin/AdminLoading/AdminLoading';
 import WorkingHoursEditor, { DEFAULT_HOURS, type HoursMap } from './WorkingHoursEditor';
 import GalleryTab from './GalleryTab';
 import MastersTab from './MastersTab';
@@ -206,7 +207,7 @@ export default function AdminSettingsPage() {
       {tab === 'store' && (
         <div className={styles.card}>
           {loading ? (
-            <p style={{ color: '#6b7280', fontSize: 14 }}>Načítavam...</p>
+            <AdminLoading rows={4} />
           ) : (
             <>
               {/* ── Logo upload ─────────────────────────────────────── */}

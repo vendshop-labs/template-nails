@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import styles from './theme.module.css';
+import AdminLoading from '@/components/admin/AdminLoading/AdminLoading';
 import { DEFAULT_THEME, type ThemeConfig } from '@/lib/theme';
 import { THEME_PRESETS } from '@/lib/theme-presets';
 import { useAdminLocale } from '@/hooks/useAdminLocale';
@@ -57,7 +58,7 @@ export default function ThemeEditorPage() {
     setTheme({ ...theme, colors: { ...DEFAULT_THEME.colors } });
   };
 
-  if (!theme) return <div className={styles.loading}>{t.common.loading}</div>;
+  if (!theme) return <AdminLoading rows={4} />;
 
   return (
     <div className={styles.page}>

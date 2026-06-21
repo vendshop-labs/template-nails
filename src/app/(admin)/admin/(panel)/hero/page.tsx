@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import AdminLoading from '@/components/admin/AdminLoading/AdminLoading';
 
 interface HeroConfig {
   title: string;
@@ -92,13 +93,7 @@ export default function HeroAdminPage() {
     setSaving(false);
   }
 
-  if (loading) {
-    return (
-      <div className="admin-page">
-        <p style={{ color: 'var(--color-text-muted)', padding: '2rem' }}>Načítavam...</p>
-      </div>
-    );
-  }
+  if (loading) return <AdminLoading rows={3} />;
 
   return (
     <div className="admin-page">
