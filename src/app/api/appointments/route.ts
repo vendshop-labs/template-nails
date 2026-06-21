@@ -5,43 +5,15 @@ import { db } from '@/lib/db';
 const STORE_SLUG = process.env.STORE_SLUG ?? 'kate-barber';
 
 // ─── GET ───────────────────────────────────────────────────────────────────
-// ?mode=slots&date=2026-06-22&masterId=xxx  → string[]  (booked time slots)
-// ?date=2026-06-22&status=PENDING           → { appointments: [] } (admin)
+// ?date=2026-06-22&status=PENDING → { appointments: [] }
+// Slots availability → use /api/availability instead
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const mode     = searchParams.get('mode');
-  const date     = searchParams.get('date');
-  const masterId = searchParams.get('masterId');
-  const status   = searchParams.get('status');
+  const date   = searchParams.get('date');
+  const status = searchParams.get('status');
 
   const store = await db.store.findUnique({ where: { slug: STORE_SLUG } });
-  if (!store) return NextResponse.json(mode === 'slots' ? [] : { appointments: [] });
-
-  // ── Slots mode: return booked time strings ──────────────────────────────
-  if (mode === 'slots' && date) {
-    const todayBratislava = new Intl.DateTimeFormat('sv-SE', {
-      timeZone: 'Europe/Bratislava',
-      year: 'numeric', month: '2-digit', day: '2-digit',
-    }).format(new Date()).trim();
-    if (date < todayBratislava) return NextResponse.json([]);
-
-    const d    = new Date(date);
-    const next = new Date(d);
-    next.setDate(next.getDate() + 1);
-
-    const where: Record<string, unknown> = {
-      storeId: store.id,
-      date:    { gte: d, lt: next },
-      status:  { not: 'CANCELLED' },
-    };
-    if (masterId && masterId !== 'any') where.masterId = masterId;
-
-    const appts = await db.appointment.findMany({
-      where,
-      select: { timeSlot: true },
-    });
-    return NextResponse.json(appts.map((a) => a.timeSlot));
-  }
+  if (!store) return NextResponse.json({ appointments: [] });
 
   // ── Admin list mode: full appointment objects ──────────────────────────
   const where: Record<string, unknown> = { storeId: store.id };

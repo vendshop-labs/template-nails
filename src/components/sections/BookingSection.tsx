@@ -23,9 +23,11 @@ export default function BookingSection() {
     setBookedSlots([]);       // clear stale data immediately
     setLoadingSlots(true);
     try {
-      const res   = await fetch(`/api/appointments?mode=slots&date=${date}`);
-      const slots = (await res.json()) as string[];
-      setBookedSlots(slots);
+      const res  = await fetch(`/api/availability?date=${date}`);
+      const data = (await res.json()) as { slots: { time: string; available: boolean }[] };
+      // Extract unavailable slots to reuse existing DateTimePicker bookedSlots interface
+      const booked = (data.slots ?? []).filter((s) => !s.available).map((s) => s.time);
+      setBookedSlots(booked);
     } catch {
       setBookedSlots([]);
     } finally {

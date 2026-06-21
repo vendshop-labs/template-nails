@@ -18,7 +18,7 @@ function generateSlots(startMin: number, endMin: number, intervalMin: number): s
   return slots;
 }
 
-// GET /api/availability?masterId=xxx&date=2026-06-20&serviceId=xxx
+// GET /api/availability?masterId=xxx&date=YYYY-MM-DD&serviceId=xxx
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const masterId  = searchParams.get('masterId');
@@ -29,11 +29,18 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: 'date required' }, { status: 400 });
   }
 
-  const date = new Date(dateStr);
-  const dayStart = new Date(date);
-  dayStart.setHours(0, 0, 0, 0);
-  const dayEnd = new Date(date);
-  dayEnd.setHours(23, 59, 59, 999);
+  // Bratislava "today" and "now" for past-time guard
+  const todayBratislava = new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'Europe/Bratislava',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+  }).format(new Date()).trim();
+
+  const nowHHMM = new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'Europe/Bratislava',
+    hour: '2-digit', minute: '2-digit', hour12: false,
+  }).format(new Date()).trim();
+
+  const allSlots = generateSlots(parseTime(BUSINESS_START), parseTime(BUSINESS_END), SLOT_INTERVAL);
 
   // Load service duration
   let duration = SLOT_INTERVAL;
@@ -42,9 +49,21 @@ export async function GET(req: Request) {
     if (service) duration = service.duration;
   }
 
-  // Load existing appointments for that master/day
+  // Past date → all unavailable
+  if (dateStr < todayBratislava) {
+    return NextResponse.json({
+      slots: allSlots.map((time) => ({ time, available: false })),
+      duration,
+    });
+  }
+
+  // Load booked appointments for the day
+  const date     = new Date(dateStr);
+  const dayStart = new Date(date); dayStart.setHours(0, 0, 0, 0);
+  const dayEnd   = new Date(date); dayEnd.setHours(23, 59, 59, 999);
+
   const bookedWhere: Record<string, unknown> = {
-    date: { gte: dayStart, lte: dayEnd },
+    date:   { gte: dayStart, lte: dayEnd },
     status: { notIn: ['CANCELLED'] },
   };
   if (masterId) bookedWhere.masterId = masterId;
@@ -54,13 +73,12 @@ export async function GET(req: Request) {
     select: { timeSlot: true, duration: true },
   });
 
-  const bookedSlots = new Set(booked.map((a) => a.timeSlot));
-
-  const allSlots = generateSlots(parseTime(BUSINESS_START), parseTime(BUSINESS_END), SLOT_INTERVAL);
+  const bookedSet = new Set(booked.map((a) => a.timeSlot));
+  const isToday   = dateStr === todayBratislava;
 
   const result: TimeSlot[] = allSlots.map((time) => ({
     time,
-    available: !bookedSlots.has(time),
+    available: !bookedSet.has(time) && !(isToday && time <= nowHHMM),
   }));
 
   return NextResponse.json({ slots: result, duration });
