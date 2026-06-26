@@ -32,3 +32,4 @@ PROJECT_REPORT.md
 .env.blob
 .claude/
 .env*
+!.env.example
