@@ -49,6 +49,7 @@ model Store {
   appointments     Appointment[]
   digitalProducts  DigitalProduct[]
   heroConfig       HeroConfig?
+  legalConfig      LegalConfig?
 }
 
 enum Vertical {
@@ -565,6 +566,24 @@ model CourseAccess {
   @@unique([digitalProductId, email])
   @@index([email])
   @@index([storeId])
+}
+
+// ============ LEGAL CONFIG (DACH) ============
+
+model LegalConfig {
+  id          String   @id @default(cuid())
+  storeId     String   @unique
+  store       Store    @relation(fields: [storeId], references: [id])
+  enabled     Boolean  @default(false)
+  companyName String   @default("")
+  street      String   @default("")
+  zip         String   @default("")
+  city        String   @default("")
+  country     String   @default("Deutschland")
+  email       String   @default("")
+  phone       String   @default("")
+  vatId       String   @default("")
+  updatedAt   DateTime @updatedAt
 }
 
 // ============ ADMIN AUTH ============
