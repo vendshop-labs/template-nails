@@ -70,6 +70,19 @@ export const CONTACT = {
   mapSrc:      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2628.4!2d18.044!3d48.894!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDjCsDUzJzM4LjAiTiAxOMKwMDInMzguMCJF!5e0!3m2!1sen!2ssk!4v1234567890',
 };
 
+export const ABOUT = {
+  image:    '/about-barbershop.webp',
+  imageAlt: 'Interiér Lumière Nails štúdia v Trenčíne',
+  badge:    'O nás',
+  title:    'Krása začína\nstarostlivosťou',
+  paragraphs: [
+    'Lumière Nails vzniklo z lásky ku kráse a detailu. Naše techniky prinášajú do Trenčína to najlepšie z modernej nechtovej starostlivosti.',
+    'Každý termín je pre nás umenie — venujeme sa každej klientke individuálne, pretože veríme, že každá žena si zaslúži cítiť sa výnimočne.',
+    'Navštívte nás a odíďte s dokonalými nechtami a úsmevom.',
+  ],
+  highlightText: 'každá žena si zaslúži cítiť sa výnimočne',
+};
+
 // Time slot generation helpers
 export const BUSINESS_START = '09:00';
 export const BUSINESS_END   = '19:00';

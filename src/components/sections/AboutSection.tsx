@@ -1,44 +1,58 @@
 import Image from 'next/image';
+import { ABOUT } from '@/lib/constants';
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import { BLUR_PLACEHOLDER } from '@/components/ui/BlurImage';
 
 export default function AboutSection() {
+  const titleLines = ABOUT.title.split('\n');
+
   return (
     <section id="o-nas" className="about">
       <div className="about__grid">
         <ScrollReveal direction="left">
           <div className="about__image-wrap">
             <Image
-              src="/about-barbershop.webp"
-              alt="Kate Barber Studio interiér"
+              src={ABOUT.image}
+              alt={ABOUT.imageAlt}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               className="about__image"
+              placeholder="blur"
+              blurDataURL={BLUR_PLACEHOLDER}
+              unoptimized={ABOUT.image.startsWith('http')}
             />
           </div>
         </ScrollReveal>
 
         <ScrollReveal direction="right" delay={150}>
           <div>
-            <p className="about__label">O nás</p>
+            <p className="about__label">{ABOUT.badge}</p>
             <h3 className="about__title">
-              Tradícia stretáva
-              <br />
-              moderný štýl
+              {titleLines[0]}
+              {titleLines[1] && (
+                <>
+                  <br />
+                  {titleLines[1]}
+                </>
+              )}
             </h3>
-            <p className="about__text">
-              Kate Barber vznikol v roku 2018 z lásky k tradičnému holičstvu. Náš zakladateľ{' '}
-              <strong>Marco Kate Barber</strong> priniesol do Trenčína to najlepšie z talianskej
-              barberskej tradície.
-            </p>
-            <p className="about__text">
-              Každý strih je pre nás umenie. Nerobíme rýchle strihy — venujeme sa každému klientovi
-              individuálne, pretože veríme, že{' '}
-              <strong>každý muž si zaslúži cítiť sa výnimočne</strong>.
-            </p>
-            <p className="about__text">
-              Náš shop je miesto, kde sa zastavíte, oddýchnete si a odídete ako nový človek.
-              Espresso na nás.
-            </p>
+            {ABOUT.paragraphs.map((text, i) => {
+              if (ABOUT.highlightText && text.includes(ABOUT.highlightText)) {
+                const [before, after] = text.split(ABOUT.highlightText);
+                return (
+                  <p key={i} className="about__text">
+                    {before}
+                    <strong>{ABOUT.highlightText}</strong>
+                    {after}
+                  </p>
+                );
+              }
+              return (
+                <p key={i} className="about__text">
+                  {text}
+                </p>
+              );
+            })}
           </div>
         </ScrollReveal>
       </div>

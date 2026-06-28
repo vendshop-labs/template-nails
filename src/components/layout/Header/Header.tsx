@@ -53,7 +53,7 @@ export default function Header({ logoUrl }: { logoUrl?: string }) {
         <Link href="/sk" className="header__logo">
           {logoUrl ? (
             /* eslint-disable-next-line @next/next/no-img-element */
-            <img src={logoUrl} alt="Logo" className="header__logo-img" />
+            <img src={logoUrl} alt="Lumière Nails logo" className="header__logo-img" />
           ) : (
             <>Lumière <span className="header__logo-span">Nails</span></>
           )}

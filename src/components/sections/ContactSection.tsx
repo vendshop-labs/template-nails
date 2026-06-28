@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { CONTACT, HOURS, WHATSAPP_LINKS } from '@/lib/constants';
+import { CONTACT, HOURS, STORE_NAME, WHATSAPP_LINKS } from '@/lib/constants';
 import GoldDivider from '@/components/ui/GoldDivider';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import ScrollReveal from '@/components/ui/ScrollReveal';
@@ -162,7 +162,7 @@ export default function ContactSection({
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            title={`Mapa ${displayCity ?? 'Kate Barber Studio'}`}
+            title={`Mapa — ${STORE_NAME}`}
           />
         </ScrollReveal>
       </div>
