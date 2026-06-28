@@ -55,7 +55,7 @@ export default function Header({ logoUrl }: { logoUrl?: string }) {
             /* eslint-disable-next-line @next/next/no-img-element */
             <img src={logoUrl} alt="Logo" className="header__logo-img" />
           ) : (
-            <>Kate <span className="header__logo-span">Barber Studio</span></>
+            <>Lumière <span className="header__logo-span">Nails</span></>
           )}
         </Link>
 
