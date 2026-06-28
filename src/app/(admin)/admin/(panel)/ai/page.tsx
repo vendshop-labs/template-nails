@@ -35,7 +35,7 @@ const DEFAULT_PRIORITIES: PriorityItem[] = [
 
 const PRIORITIES_KEY = 'ai_priorities';
 const CHAT_BG_KEY    = 'ai_chat_bg';
-const CHAT_BG_PRESETS = ['#0d0d0d', '#0a0a0a', '#111827', '#1a0a00', '#0a0a1a'];
+const CHAT_BG_PRESETS = ['#fdf8f5', '#f9ede9', '#fff8f3', '#f5ece8', '#faf5f2'];
 
 const SUGGESTIONS = [
   'Dnešné rezervácie',
@@ -88,7 +88,7 @@ export default function AdminAiPage() {
   const textareaRef    = useRef<HTMLTextAreaElement>(null);
 
   // Chat background (from localStorage, default #0d0d0d)
-  const [chatBg, setChatBg] = useState('#0d0d0d');
+  const [chatBg, setChatBg] = useState('#fdf8f5');
   useEffect(() => {
     const saved = typeof window !== 'undefined' ? localStorage.getItem(CHAT_BG_KEY) : null;
     if (saved) setChatBg(saved);
@@ -501,7 +501,7 @@ export default function AdminAiPage() {
                             onClick={() => saveChatBg(color)}
                             style={{
                               background: color,
-                              borderColor: chatBg === color ? '#B87333' : 'rgba(255,255,255,0.1)',
+                              borderColor: chatBg === color ? 'var(--color-primary)' : 'var(--color-border)',
                             }}
                             title={color}
                           />

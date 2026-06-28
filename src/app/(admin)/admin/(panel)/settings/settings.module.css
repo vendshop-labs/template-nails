@@ -7,7 +7,7 @@
   font-size: 26px;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: #fff;
+  color: var(--color-text-primary);
   margin: 0 0 20px;
 }
 
@@ -15,7 +15,7 @@
 .tabs {
   display: flex;
   gap: 4px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--color-border);
   margin-bottom: 24px;
   overflow-x: auto;
 }
@@ -29,25 +29,25 @@
   font-family: inherit;
   font-size: 14px;
   font-weight: 600;
-  color: #888;
+  color: var(--color-text-muted);
   cursor: pointer;
   white-space: nowrap;
   transition: color 150ms ease, border-color 150ms ease;
 }
 
 .tab:hover {
-  color: #fff;
+  color: var(--color-text-primary);
 }
 
 .tabActive {
-  color: #B87333;
-  border-bottom-color: #B87333;
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
 }
 
 /* ── Card ─────────────────────────────────────────── */
 .card {
-  background: #161616;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 14px;
   padding: 24px;
   display: flex;
@@ -57,21 +57,21 @@
 
 /* ── Logo upload ──────────────────────────────────── */
 .logoUpload {
-  border: 2px dashed rgba(255, 255, 255, 0.12);
+  border: 2px dashed var(--color-border);
   border-radius: 12px;
   padding: 28px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  color: #888;
+  color: var(--color-text-muted);
   cursor: pointer;
   transition: border-color 150ms ease, color 150ms ease;
 }
 
 .logoUpload:hover {
-  border-color: #B87333;
-  color: #B87333;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .logoUpload span {
@@ -90,7 +90,7 @@
 .label {
   font-size: 13px;
   font-weight: 600;
-  color: #b0a898;
+  color: var(--color-text-secondary);
 }
 
 .grid2 {
@@ -102,14 +102,14 @@
 .input,
 .textarea {
   width: 100%;
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border: 1.5px solid var(--color-border);
   border-radius: 9px;
   padding: 0 12px;
   height: 44px;
   font-family: inherit;
   font-size: 14px;
-  color: #fff;
-  background: #111;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
   outline: none;
   transition: border-color 150ms ease;
 }
@@ -122,7 +122,7 @@
 
 .input:focus,
 .textarea:focus {
-  border-color: #B87333;
+  border-color: var(--color-primary);
 }
 
 /* ── Masked input ─────────────────────────────────── */
@@ -142,7 +142,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #888;
+  color: var(--color-text-muted);
   padding: 6px;
   display: inline-flex;
   border-radius: 7px;
@@ -150,12 +150,12 @@
 }
 
 .eye:hover {
-  color: #fff;
+  color: var(--color-text-primary);
 }
 
 /* ── Blocks ───────────────────────────────────────── */
 .block {
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 18px;
   display: flex;
@@ -173,7 +173,7 @@
 .blockTitle {
   font-size: 15px;
   font-weight: 800;
-  color: #fff;
+  color: var(--color-text-primary);
 }
 
 .settingRow {
@@ -182,7 +182,7 @@
   justify-content: space-between;
   gap: 12px;
   font-size: 14px;
-  color: #fff;
+  color: var(--color-text-primary);
   font-weight: 500;
 }
 
@@ -206,7 +206,7 @@
   align-self: flex-start;
   height: 46px;
   padding: 0 24px;
-  background: #B87333;
+  background: var(--color-primary);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -214,12 +214,12 @@
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(184, 115, 51, 0.3);
+  box-shadow: var(--shadow-sm);
   transition: background 150ms ease;
 }
 
 .saveBtn:hover {
-  background: #9E6829;
+  background: var(--color-primary-dark);
 }
 
 .saveBtn:disabled {
@@ -231,9 +231,9 @@
   align-self: flex-start;
   height: 40px;
   padding: 0 16px;
-  background: #111;
-  color: #b0a898;
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+  border: 1.5px solid var(--color-border);
   border-radius: 9px;
   font-family: inherit;
   font-size: 13px;
@@ -243,8 +243,8 @@
 }
 
 .testBtn:hover {
-  border-color: #B87333;
-  color: #B87333;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .dangerBtn {
@@ -269,8 +269,8 @@
   height: 38px;
   padding: 0 14px;
   background: none;
-  color: #b0a898;
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  color: var(--color-text-secondary);
+  border: 1.5px solid var(--color-border);
   border-radius: 8px;
   font-family: inherit;
   font-size: 13px;
@@ -280,8 +280,8 @@
 }
 
 .outlineBtn:hover {
-  border-color: #B87333;
-  color: #B87333;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 /* ── Toggle ───────────────────────────────────────── */
@@ -302,7 +302,7 @@
   width: 44px;
   height: 25px;
   border-radius: 999px;
-  background: #333;
+  background: var(--color-text-muted);
   position: relative;
   transition: background 150ms ease;
 }
@@ -317,7 +317,7 @@
   border-radius: 50%;
   background: #fff;
   transition: transform 150ms ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-sm);
 }
 
 .toggle input:checked + .track {
@@ -352,20 +352,14 @@
 }
 
 @keyframes slideIn {
-  from {
-    transform: translateX(120%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  from { transform: translateX(120%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
 }
 
 /* ── Store Mode selector ─────────────────────────── */
 .modeHint {
   font-size: 13px;
-  color: #888;
+  color: var(--color-text-muted);
   margin: -6px 0 4px;
 }
 
@@ -381,8 +375,8 @@
   align-items: center;
   gap: 8px;
   padding: 20px 12px;
-  background: #111;
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: var(--color-bg-subtle);
+  border: 2px solid var(--color-border);
   border-radius: 12px;
   cursor: pointer;
   text-align: center;
@@ -391,30 +385,27 @@
 }
 
 .modeCard:hover {
-  border-color: #B87333;
+  border-color: var(--color-primary);
 }
 
 .modeCardActive {
-  border-color: #B87333;
-  background: rgba(184, 115, 51, 0.1);
-  box-shadow: 0 0 0 3px rgba(184, 115, 51, 0.12);
+  border-color: var(--color-primary);
+  background: rgba(184, 124, 111, 0.1);
+  box-shadow: 0 0 0 3px rgba(184, 124, 111, 0.12);
 }
 
-.modeIcon {
-  font-size: 28px;
-  line-height: 1;
-}
+.modeIcon { font-size: 28px; line-height: 1; }
 
 .modeTitle {
   font-size: 14px;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-text-primary);
 }
 
 .modeDesc {
   font-size: 12px;
   line-height: 1.4;
-  color: #888;
+  color: var(--color-text-muted);
   max-width: 180px;
 }
 
@@ -432,7 +423,7 @@
   gap: 8px;
   height: 40px;
   padding: 0 18px;
-  background: #B87333;
+  background: var(--color-primary);
   color: #fff;
   border-radius: 9px;
   font-size: 13px;
@@ -441,13 +432,8 @@
   transition: background 150ms ease;
 }
 
-.uploadLabel:hover {
-  background: #9E6829;
-}
-
-.uploadLabel input {
-  display: none;
-}
+.uploadLabel:hover { background: var(--color-primary-dark); }
+.uploadLabel input { display: none; }
 
 .galleryGrid {
   display: grid;
@@ -456,8 +442,8 @@
 }
 
 .galleryCard {
-  background: #111;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   overflow: hidden;
   display: flex;
@@ -471,9 +457,7 @@
   display: block;
 }
 
-.galleryCardInactive {
-  opacity: 0.5;
-}
+.galleryCardInactive { opacity: 0.5; }
 
 .galleryCardActions {
   display: flex;
@@ -498,13 +482,13 @@
 }
 
 .cardBtnOutline {
-  background: rgba(255, 255, 255, 0.06);
-  color: #b0a898;
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
 }
 
 .cardBtnOutline:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  background: var(--color-border);
+  color: var(--color-text-primary);
 }
 
 .cardBtnDanger {
@@ -512,9 +496,7 @@
   color: #f87171;
 }
 
-.cardBtnDanger:hover {
-  background: rgba(220, 38, 38, 0.25);
-}
+.cardBtnDanger:hover { background: rgba(220, 38, 38, 0.25); }
 
 /* ── Masters Tab ──────────────────────────────────── */
 .masterList {
@@ -528,8 +510,8 @@
   align-items: center;
   gap: 14px;
   padding: 12px 16px;
-  background: #111;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
 }
 
@@ -539,53 +521,44 @@
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
-  background: #222;
+  background: var(--color-bg-subtle);
 }
 
 .masterPhotoPlaceholder {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #222;
+  background: var(--color-bg-subtle);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #666;
+  color: var(--color-text-muted);
   font-size: 18px;
   font-weight: 700;
   flex-shrink: 0;
 }
 
-.masterInfo {
-  flex: 1;
-  min-width: 0;
-}
+.masterInfo { flex: 1; min-width: 0; }
 
 .masterName {
   font-size: 14px;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-text-primary);
 }
 
 .masterRole {
   font-size: 12px;
-  color: #888;
+  color: var(--color-text-muted);
   margin-top: 2px;
 }
 
-.masterInactive {
-  opacity: 0.5;
-}
+.masterInactive { opacity: 0.5; }
 
-.masterActions {
-  display: flex;
-  gap: 8px;
-  flex-shrink: 0;
-}
+.masterActions { display: flex; gap: 8px; flex-shrink: 0; }
 
 .addForm {
-  background: #111;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 18px;
   display: flex;
@@ -596,7 +569,7 @@
 .addFormTitle {
   font-size: 14px;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -607,10 +580,7 @@
   flex-wrap: wrap;
 }
 
-.addFormActions {
-  display: flex;
-  gap: 10px;
-}
+.addFormActions { display: flex; gap: 10px; }
 
 .photoUploadLabel {
   display: inline-flex;
@@ -618,9 +588,9 @@
   gap: 6px;
   height: 44px;
   padding: 0 14px;
-  background: rgba(255, 255, 255, 0.06);
-  color: #b0a898;
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+  border: 1.5px solid var(--color-border);
   border-radius: 9px;
   font-size: 13px;
   font-weight: 600;
@@ -630,33 +600,23 @@
 }
 
 .photoUploadLabel:hover {
-  border-color: #B87333;
-  color: #B87333;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
-.photoUploadLabel input {
-  display: none;
-}
+.photoUploadLabel input { display: none; }
 
 .photoPreview {
   width: 44px;
   height: 44px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #B87333;
+  border: 2px solid var(--color-primary);
 }
 
 @media (max-width: 560px) {
-  .page {
-    padding: 20px 16px 40px;
-  }
-  .grid2 {
-    grid-template-columns: 1fr;
-  }
-  .modeCards {
-    grid-template-columns: 1fr;
-  }
-  .galleryGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .page { padding: 20px 16px 40px; }
+  .grid2 { grid-template-columns: 1fr; }
+  .modeCards { grid-template-columns: 1fr; }
+  .galleryGrid { grid-template-columns: repeat(2, 1fr); }
 }
