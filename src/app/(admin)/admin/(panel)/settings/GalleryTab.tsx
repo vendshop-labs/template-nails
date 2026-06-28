@@ -31,7 +31,6 @@ export default function GalleryTab() {
   const [galleryLayout, setGalleryLayout] = useState('grid-3');
   const [savingLayout, setSavingLayout] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
-  const cardFileRefs = useRef<Map<string, HTMLInputElement>>(new Map());
 
   const fetchImages = useCallback(async () => {
     setLoading(true);
@@ -72,27 +71,6 @@ export default function GalleryTab() {
     } finally {
       setUploading(null);
       if (fileRef.current) fileRef.current.value = '';
-    }
-  };
-
-  const handleCardReplace = async (e: React.ChangeEvent<HTMLInputElement>, imageId: string) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(imageId);
-    try {
-      const url = await uploadFile(file);
-      await fetch('/api/admin/gallery', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: imageId, url }),
-      });
-      setImages((prev) => prev.map((img) => (img.id === imageId ? { ...img, url } : img)));
-    } catch (err) {
-      alert(err instanceof Error ? err.message : 'Chyba pri nahrávaní');
-    } finally {
-      setUploading(null);
-      const input = cardFileRefs.current.get(imageId);
-      if (input) input.value = '';
     }
   };
 
@@ -200,22 +178,6 @@ export default function GalleryTab() {
                   disabled={index === images.length - 1}
                   title="Posunúť dole"
                 >↓</button>
-                {/* Replace photo */}
-                <label
-                  className={`${styles.cardBtn} ${styles.cardBtnOutline}`}
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                  title="Nahradiť foto"
-                >
-                  <input
-                    type="file"
-                    accept="image/*"
-                    style={{ display: 'none' }}
-                    ref={(el) => { if (el) cardFileRefs.current.set(img.id, el); else cardFileRefs.current.delete(img.id); }}
-                    onChange={(e) => handleCardReplace(e, img.id)}
-                    disabled={uploading === img.id}
-                  />
-                  {uploading === img.id ? '...' : '↑'}
-                </label>
                 <button
                   type="button"
                   className={`${styles.cardBtn} ${styles.cardBtnOutline}`}
