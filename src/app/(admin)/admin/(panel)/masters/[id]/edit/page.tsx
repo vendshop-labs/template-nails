@@ -17,7 +17,7 @@ export default function EditMasterPage() {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
 
-  const [form, setForm] = useState({ name: '', role: '', bio: '' });
+  const [form, setForm] = useState({ name: '', role: '', bio: '', photoUrl: '' });
   const [currentPhoto, setCurrentPhoto] = useState<string | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [active, setActive] = useState(true);
@@ -33,7 +33,7 @@ export default function EditMasterPage() {
       .then((masters) => {
         const m = masters.find((x) => x.id === id);
         if (m) {
-          setForm({ name: m.name, role: m.role, bio: m.bio ?? '' });
+          setForm({ name: m.name, role: m.role, bio: m.bio ?? '', photoUrl: m.photo ?? '' });
           setCurrentPhoto(m.photo ?? null);
           setActive(m.active);
         }
@@ -73,13 +73,18 @@ export default function EditMasterPage() {
       photoUrl = url;
     }
 
+    // File upload takes priority; fallback to URL field; null clears photo
+    const resolvedPhoto = photoUrl !== undefined
+      ? photoUrl
+      : form.photoUrl.trim() || null;
+
     const body: Record<string, unknown> = {
       name: form.name,
       role: form.role,
       bio: form.bio || null,
       active,
+      photo: resolvedPhoto,
     };
-    if (photoUrl !== undefined) body.photo = photoUrl;
 
     const res = await fetch(`/api/admin/masters/${id}`, {
       method: 'PATCH',
@@ -132,7 +137,19 @@ export default function EditMasterPage() {
             />
           </div>
           <div className="booking__field" style={{ gridColumn: '1 / -1' }}>
-            <label>Foto</label>
+            <label>Foto URL</label>
+            <input
+              type="url"
+              value={form.photoUrl}
+              onChange={(e) => {
+                setForm((p) => ({ ...p, photoUrl: e.target.value }));
+                setPreview(e.target.value || null);
+              }}
+              placeholder="/team/photo.jpg alebo https://..."
+            />
+          </div>
+          <div className="booking__field" style={{ gridColumn: '1 / -1' }}>
+            <label>Nahrať foto (prepíše URL)</label>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               {displayPhoto && (
                 <img

@@ -101,14 +101,14 @@ async function main() {
       id: `master-kristina-${store.id}`,
       name: 'Kristína Malá',
       role: 'Nail technician',
-      photo: '/team/team-kristina.webp',
+      photo: 'https://ui-avatars.com/api/?name=Kristina+Mala&background=f5e6e3&color=b87c6f&size=400&rounded=true',
       sortOrder: 0,
     },
     {
       id: `master-monika-${store.id}`,
       name: 'Monika Horváthová',
       role: 'Nail technician',
-      photo: '/team/team-monika.webp',
+      photo: 'https://ui-avatars.com/api/?name=Monika+Horvathova&background=f5e6e3&color=b87c6f&size=400&rounded=true',
       sortOrder: 1,
     },
   ];

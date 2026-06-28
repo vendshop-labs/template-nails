@@ -44,7 +44,7 @@ export default async function HomePage({
     catch { return null; }
   })();
 
-  const [heroConfig, galleryImages, dbTestimonials] = store
+  const [heroConfig, galleryImages, dbTestimonials, dbMasters] = store
     ? await Promise.all([
         db.heroConfig.findUnique({ where: { storeId: store.id } }),
         db.galleryImage.findMany({
@@ -58,8 +58,13 @@ export default async function HomePage({
           take: 3,
           include: { customer: { select: { name: true } } },
         }),
+        db.serviceMaster.findMany({
+          where: { storeId: store.id, active: true },
+          orderBy: { sortOrder: 'asc' },
+          select: { id: true, name: true, role: true, bio: true, photo: true },
+        }),
       ])
-    : [null, [], []];
+    : [null, [], [], []];
 
   return (
     <>
@@ -69,7 +74,7 @@ export default async function HomePage({
       <ServicesSection />
       <WhyUsSection />
       <GallerySection images={galleryImages} />
-      <TeamSection />
+      <TeamSection masters={dbMasters ?? []} />
       <TestimonialsSection testimonials={(dbTestimonials as typeof dbTestimonials).map((t) => ({
         id: t.id,
         name: t.customer.name ?? 'Klient',
