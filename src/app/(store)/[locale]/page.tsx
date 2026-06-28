@@ -38,6 +38,7 @@ export default async function HomePage({
       mapLng: true,
       aboutImage: true,
       whatsappPhone: true,
+      galleryLayout: true,
     },
   });
 
@@ -75,7 +76,7 @@ export default async function HomePage({
       <StatsBar />
       <ServicesSection />
       <WhyUsSection />
-      <GallerySection images={galleryImages} />
+      <GallerySection images={galleryImages} layout={store?.galleryLayout ?? undefined} />
       <TeamSection masters={dbMasters ?? []} />
       <TestimonialsSection testimonials={(dbTestimonials as typeof dbTestimonials).map((t) => ({
         id: t.id,

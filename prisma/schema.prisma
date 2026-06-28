@@ -27,8 +27,9 @@ model Store {
   mapLat       Float?
   mapLng       Float?
 
-  aboutImage    String?
-  whatsappPhone String?
+  aboutImage     String?
+  whatsappPhone  String?
+  galleryLayout  String  @default("grid-3")
 
   themeConfig Json?
   metadata    Json?

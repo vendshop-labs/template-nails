@@ -12,12 +12,15 @@ interface GalleryImage {
 
 interface GallerySectionProps {
   images?: GalleryImage[];
+  layout?: string;
 }
 
-export default function GallerySection({ images }: GallerySectionProps) {
+export default function GallerySection({ images, layout }: GallerySectionProps) {
   const items = images && images.length > 0
     ? images
     : GALLERY_IMAGES.map((g, i) => ({ id: String(i), url: g.src, alt: g.alt }));
+
+  const gridClass = `gallery-grid gallery-grid--${layout || 'grid-3'}`;
 
   return (
     <section id="galeria" className="gallery">
@@ -28,7 +31,7 @@ export default function GallerySection({ images }: GallerySectionProps) {
       </ScrollReveal>
 
       <ScrollReveal direction="up" delay={150}>
-        <div className="gallery-grid">
+        <div className={gridClass}>
           {items.map((image, index) => (
             <div key={image.id} className="gallery-item">
               <Image

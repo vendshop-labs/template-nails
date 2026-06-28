@@ -706,6 +706,22 @@ body::after {
   gap: 0.75rem;
 }
 
+.gallery-grid--2 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 250px); }
+.gallery-grid--3 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 250px); }
+.gallery-grid--4 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 200px); }
+
+.gallery-grid--masonry {
+  display: block;
+  columns: 3;
+  column-gap: 0.75rem;
+  grid-template-rows: unset;
+}
+.gallery-grid--masonry .gallery-item {
+  break-inside: avoid;
+  margin-bottom: 0.75rem;
+  height: 250px;
+}
+
 .gallery-item {
   overflow: hidden;
   position: relative;

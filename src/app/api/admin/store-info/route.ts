@@ -29,6 +29,7 @@ export async function GET() {
       mapLng: true,
       aboutImage: true,
       whatsappPhone: true,
+      galleryLayout: true,
     },
   });
 
@@ -45,7 +46,7 @@ export async function PUT(request: Request) {
 
   const allowed = ['name', 'description', 'primaryMode', 'address', 'city',
                    'openingHours', 'phone', 'email', 'mapLat', 'mapLng',
-                   'aboutImage', 'whatsappPhone'] as const;
+                   'aboutImage', 'whatsappPhone', 'galleryLayout'] as const;
 
   const data: Record<string, unknown> = {};
   for (const key of allowed) {

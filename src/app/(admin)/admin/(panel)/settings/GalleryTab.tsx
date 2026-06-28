@@ -28,15 +28,22 @@ export default function GalleryTab() {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState<string | null>(null);
+  const [galleryLayout, setGalleryLayout] = useState('grid-3');
+  const [savingLayout, setSavingLayout] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const cardFileRefs = useRef<Map<string, HTMLInputElement>>(new Map());
 
   const fetchImages = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/admin/gallery');
-      const data = (await res.json()) as { images?: GalleryImage[] };
-      setImages(data.images ?? []);
+      const [galleryRes, storeRes] = await Promise.all([
+        fetch('/api/admin/gallery'),
+        fetch('/api/admin/store-info'),
+      ]);
+      const galleryData = (await galleryRes.json()) as { images?: GalleryImage[] };
+      const storeData = (await storeRes.json()) as { store?: { galleryLayout?: string } };
+      setImages(galleryData.images ?? []);
+      if (storeData.store?.galleryLayout) setGalleryLayout(storeData.store.galleryLayout);
     } catch {
       // silent
     } finally {
@@ -89,6 +96,22 @@ export default function GalleryTab() {
     }
   };
 
+  const moveItem = async (index: number, dir: 'up' | 'down') => {
+    const swap = dir === 'up' ? index - 1 : index + 1;
+    const newItems = [...images];
+    [newItems[index], newItems[swap]] = [newItems[swap], newItems[index]];
+    setImages(newItems);
+    await Promise.all(
+      newItems.map((item, i) =>
+        fetch('/api/admin/gallery', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: item.id, sortOrder: i }),
+        })
+      )
+    );
+  };
+
   const toggleActive = async (img: GalleryImage) => {
     await fetch('/api/admin/gallery', {
       method: 'PATCH',
@@ -104,10 +127,40 @@ export default function GalleryTab() {
     setImages((prev) => prev.filter((i) => i.id !== img.id));
   };
 
+  const handleLayoutChange = async (layout: string) => {
+    setGalleryLayout(layout);
+    setSavingLayout(true);
+    try {
+      await fetch('/api/admin/store-info', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ galleryLayout: layout }),
+      });
+    } finally {
+      setSavingLayout(false);
+    }
+  };
+
   if (loading) return <p style={{ color: '#888', fontSize: 14 }}>Načítavam...</p>;
 
   return (
     <>
+      {/* Layout selector */}
+      <div className={styles.field} style={{ marginBottom: 16 }}>
+        <span className={styles.label}>Rozloženie galérie {savingLayout && <span style={{ color: 'var(--color-text-muted)', fontWeight: 400 }}>— ukladám...</span>}</span>
+        <select
+          className={styles.input}
+          value={galleryLayout}
+          onChange={(e) => handleLayoutChange(e.target.value)}
+        >
+          <option value="grid-2">2 stĺpce</option>
+          <option value="grid-3">3 stĺpce (predvolené)</option>
+          <option value="grid-4">4 stĺpce</option>
+          <option value="masonry">Masonry</option>
+        </select>
+      </div>
+
+      {/* Upload toolbar */}
       <div className={styles.galleryToolbar}>
         <label className={styles.uploadLabel}>
           <input ref={fileRef} type="file" accept="image/*" multiple onChange={handleUpload} />
@@ -120,11 +173,27 @@ export default function GalleryTab() {
         <p style={{ color: '#888', fontSize: 14 }}>Galéria je prázdna.</p>
       ) : (
         <div className={styles.galleryGrid}>
-          {images.map((img) => (
+          {images.map((img, index) => (
             <div key={img.id} className={`${styles.galleryCard} ${!img.active ? styles.galleryCardInactive : ''}`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={img.url} alt={img.alt} />
               <div className={styles.galleryCardActions}>
+                {/* Sort buttons */}
+                <button
+                  type="button"
+                  className={`${styles.cardBtn} ${styles.cardBtnOutline}`}
+                  onClick={() => moveItem(index, 'up')}
+                  disabled={index === 0}
+                  title="Posunúť hore"
+                >↑</button>
+                <button
+                  type="button"
+                  className={`${styles.cardBtn} ${styles.cardBtnOutline}`}
+                  onClick={() => moveItem(index, 'down')}
+                  disabled={index === images.length - 1}
+                  title="Posunúť dole"
+                >↓</button>
+                {/* Replace photo */}
                 <label
                   className={`${styles.cardBtn} ${styles.cardBtnOutline}`}
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
@@ -138,7 +207,7 @@ export default function GalleryTab() {
                     onChange={(e) => handleCardReplace(e, img.id)}
                     disabled={uploading === img.id}
                   />
-                  {uploading === img.id ? '...' : '↑ Foto'}
+                  {uploading === img.id ? '...' : '↑'}
                 </label>
                 <button
                   type="button"

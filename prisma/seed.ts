@@ -124,23 +124,25 @@ async function main() {
 
   // ============ GALLERY ============
   const galleryData = [
-    { alt: 'Gélová manikúra', sortOrder: 0 },
-    { alt: 'Nail Art design',  sortOrder: 1 },
-    { alt: 'Pedikúra',         sortOrder: 2 },
+    { alt: 'Gélová manikúra',    url: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80', sortOrder: 0 },
+    { alt: 'Nail Art design',    url: 'https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=600&q=80', sortOrder: 1 },
+    { alt: 'Pedikúra',           url: 'https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=600&q=80', sortOrder: 2 },
+    { alt: 'Nechtová modeláž',   url: 'https://images.unsplash.com/photo-1604655855765-7b5156b1f8a3?w=600&q=80', sortOrder: 3 },
+    { alt: 'Japonská manikúra',  url: 'https://images.unsplash.com/photo-1583736902935-6b52b2b2b884?w=600&q=80', sortOrder: 4 },
   ];
 
   for (const g of galleryData) {
     const existing = await db.galleryImage.findFirst({
       where: { storeId: store.id, alt: g.alt },
     });
-    if (!existing) {
+    if (existing) {
+      await db.galleryImage.update({
+        where: { id: existing.id },
+        data: { url: g.url, sortOrder: g.sortOrder },
+      });
+    } else {
       await db.galleryImage.create({
-        data: {
-          storeId: store.id,
-          url: '/placeholder-gallery.jpg',
-          alt: g.alt,
-          sortOrder: g.sortOrder,
-        },
+        data: { storeId: store.id, ...g },
       });
     }
   }
