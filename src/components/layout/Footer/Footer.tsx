@@ -1,4 +1,4 @@
-import { WHATSAPP_LINKS, CONTACT } from '@/lib/constants';
+import { WHATSAPP_LINKS, CONTACT, STORE_NAME, STORE_TAGLINE } from '@/lib/constants';
 
 interface FooterProps {
   locale?: string;
@@ -16,11 +16,10 @@ export default function Footer({ locale, legalEnabled }: FooterProps) {
         {/* Col 1 — Brand */}
         <div className="footer__brand">
           <p className="footer__logo">
-            <span className="footer__logo-accent">Kate</span> Barber Studio
+            <span className="footer__logo-accent">Lumière</span> Nails
           </p>
           <p className="footer__tagline">
-            Prémiový barber studio v Trenčíne.<br />
-            Pre ženy aj mužov od roku 2018.
+            {STORE_TAGLINE}
           </p>
           <div className="footer__socials">
             <a href={CONTACT.instagram} target="_blank" rel="noopener" aria-label="Instagram" className="footer__social-link">
@@ -70,15 +69,15 @@ export default function Footer({ locale, legalEnabled }: FooterProps) {
           <ul className="footer__contact">
             <li>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Štúrova 12, Trenčín 911 01
+              {CONTACT.address.replace('\n', ', ')}
             </li>
             <li>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.1 11.77a19.79 19.79 0 01-3.07-8.67A2 2 0 013 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-              <a href="tel:+380938272293">+380 93 827 2293</a>
+              <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
             </li>
             <li>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              <a href="mailto:info@katebarber.sk">info@katebarber.sk</a>
+              <a href={CONTACT.emailHref}>{CONTACT.email}</a>
             </li>
           </ul>
         </div>
@@ -87,7 +86,7 @@ export default function Footer({ locale, legalEnabled }: FooterProps) {
 
       {/* Bottom bar */}
       <div className="footer__bottom">
-        <p>© {currentYear} Kate Barber Studio. Všetky práva vyhradené.</p>
+        <p>© {currentYear} {STORE_NAME}. Všetky práva vyhradené.</p>
         <p className="footer__bottom-links">
           <a href="#">Ochrana súkromia</a>
           <span>·</span>

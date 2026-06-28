@@ -1,5 +1,9 @@
 import type { ServiceItem, MasterItem, StaticTestimonial, GalleryImageItem, HoursRow, Service, TeamMember, Testimonial, GalleryImage, Stat, WhyUsItem } from './types';
 
+export const STORE_NAME     = 'Lumière Nails';
+export const STORE_TAGLINE  = 'Prémiové nechtové štúdio v Trenčíne.';
+export const STORE_YEAR     = '2024';
+
 export const SUPPORTED_LOCALES = ['sk', 'en', 'uk', 'cs', 'de'] as const;
 export type SupportedLocale = typeof SUPPORTED_LOCALES[number];
 
@@ -56,13 +60,13 @@ export const BUSINESS_HOURS: HoursRow[] = [
 
 export const CONTACT = {
   city:        'Trenčín',
-  address:     'Mierové námestie 10\n911 01 Trenčín',
-  phone:       '+421 900 123 456',
-  phoneHref:   'tel:+421900123456',
-  email:       'info@katebarber.sk',
-  emailHref:   'mailto:info@katebarber.sk',
-  instagram:   'https://instagram.com/katebarber',
-  facebook:    'https://facebook.com/katebarber',
+  address:     'Mierové námestie 1\n911 01 Trenčín',
+  phone:       '+421 900 000 000',
+  phoneHref:   'tel:+421900000000',
+  email:       'info@lumiere-nails.sk',
+  emailHref:   'mailto:info@lumiere-nails.sk',
+  instagram:   'https://instagram.com/lumiere.nails',
+  facebook:    'https://facebook.com/lumierenails',
   mapSrc:      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2628.4!2d18.044!3d48.894!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDjCsDUzJzM4LjAiTiAxOMKwMDInMzguMCJF!5e0!3m2!1sen!2ssk!4v1234567890',
 };
 
