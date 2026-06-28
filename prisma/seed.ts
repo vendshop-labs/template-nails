@@ -124,9 +124,9 @@ async function main() {
 
   // ============ GALLERY ============
   const galleryData = [
-    { alt: 'Gélová manikúra', category: 'manicure', sortOrder: 0 },
-    { alt: 'Nail Art design',  category: 'nail-art',  sortOrder: 1 },
-    { alt: 'Pedikúra',         category: 'pedicure',  sortOrder: 2 },
+    { alt: 'Gélová manikúra', sortOrder: 0 },
+    { alt: 'Nail Art design',  sortOrder: 1 },
+    { alt: 'Pedikúra',         sortOrder: 2 },
   ];
 
   for (const g of galleryData) {
@@ -139,7 +139,6 @@ async function main() {
           storeId: store.id,
           url: '/placeholder-gallery.jpg',
           alt: g.alt,
-          category: g.category,
           sortOrder: g.sortOrder,
         },
       });
@@ -154,14 +153,12 @@ async function main() {
       title: 'Vaše nechty. Váš štýl.',
       subtitle: 'Prémiová manikúra, gélové nechty a nail art v Trenčíne.',
       ctaText: 'Rezervovať termín',
-      badgeText: 'Nové dizajny každý mesiac',
     },
     create: {
       storeId: store.id,
       title: 'Vaše nechty. Váš štýl.',
       subtitle: 'Prémiová manikúra, gélové nechty a nail art v Trenčíne.',
       ctaText: 'Rezervovať termín',
-      badgeText: 'Nové dizajny každý mesiac',
     },
   });
   console.log('✅ HeroConfig');
@@ -175,10 +172,8 @@ async function main() {
       slug: 'kurz-gelovej-manikury',
       type: 'COURSE',
       price: 149,
-      currency: '€',
-      coverImage: '/placeholder-course.jpg',
-      duration: '1 deň (8 hodín)',
-      isActive: true,
+      currency: 'EUR',
+      active: true,
     },
   });
 
@@ -188,7 +183,7 @@ async function main() {
     create: {
       productId: course.id,
       locale: 'sk',
-      title: 'Kurz gélovej manikúry — začiatočníci',
+      name: 'Kurz gélovej manikúry — začiatočníci',
       description: 'Naučte sa profesionálnu gélovú manikúru od základov. 8-hodinový kurz.',
     },
   });
@@ -199,7 +194,7 @@ async function main() {
     create: {
       productId: course.id,
       locale: 'en',
-      title: 'Gel Nail Course — Beginners',
+      name: 'Gel Nail Course — Beginners',
       description: 'Learn professional gel manicure from scratch. 8-hour intensive course.',
     },
   });
