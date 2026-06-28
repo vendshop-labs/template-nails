@@ -115,10 +115,11 @@ export default async function LocaleLayout({
   const cssVars = themeToCssVars(theme === 'dark' ? DARK_THEME : config.theme);
 
   const storeSlug = process.env.STORE_SLUG ?? 'lumiere-nails';
-  const store = locale === 'de'
-    ? await db.store.findUnique({ where: { slug: storeSlug } })
-    : null;
-  const legalConfig = store
+  const store = await db.store.findUnique({
+    where: { slug: storeSlug },
+    select: { id: true, name: true },
+  });
+  const legalConfig = (locale === 'de' && store)
     ? await db.legalConfig.findUnique({ where: { storeId: store.id } })
     : null;
   const legalEnabled = legalConfig?.enabled ?? false;
@@ -157,9 +158,9 @@ export default async function LocaleLayout({
           <CustomerProvider>
             <VerticalProvider config={config.vertical}>
               <PresenceProvider presence={config.presence}>
-                <Header logoUrl={config.logoUrl} />
+                <Header logoUrl={config.logoUrl} storeName={store?.name ?? undefined} />
                 <main>{children}</main>
-                <Footer locale={locale} legalEnabled={legalEnabled} />
+                <Footer locale={locale} legalEnabled={legalEnabled} storeName={store?.name ?? undefined} />
                 <CookieBanner />
               </PresenceProvider>
             </VerticalProvider>

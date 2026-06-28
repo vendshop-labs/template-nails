@@ -13,7 +13,7 @@ const NAV_LINKS = [
   { href: '/sk/#kontakt',  label: 'Kontakt' },
 ];
 
-export default function Header({ logoUrl }: { logoUrl?: string }) {
+export default function Header({ logoUrl, storeName }: { logoUrl?: string; storeName?: string }) {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -53,10 +53,13 @@ export default function Header({ logoUrl }: { logoUrl?: string }) {
         <Link href="/sk" className="header__logo">
           {logoUrl ? (
             /* eslint-disable-next-line @next/next/no-img-element */
-            <img src={logoUrl} alt="Lumière Nails logo" className="header__logo-img" />
-          ) : (
-            <>Lumière <span className="header__logo-span">Nails</span></>
-          )}
+            <img src={logoUrl} alt={`${storeName || 'Lumière Nails'} logo`} className="header__logo-img" />
+          ) : (() => {
+            const name = storeName || 'Lumière Nails';
+            const idx = name.lastIndexOf(' ');
+            if (idx === -1) return <>{name}</>;
+            return <>{name.slice(0, idx)} <span className="header__logo-span">{name.slice(idx + 1)}</span></>;
+          })()}
         </Link>
 
         <nav className="header__nav">

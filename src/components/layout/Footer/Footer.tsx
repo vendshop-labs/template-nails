@@ -1,11 +1,12 @@
-import { WHATSAPP_LINKS, CONTACT, STORE_NAME, STORE_TAGLINE } from '@/lib/constants';
+import { WHATSAPP_LINKS, CONTACT, STORE_NAME_FALLBACK, STORE_TAGLINE } from '@/lib/constants';
 
 interface FooterProps {
   locale?: string;
   legalEnabled?: boolean;
+  storeName?: string;
 }
 
-export default function Footer({ locale, legalEnabled }: FooterProps) {
+export default function Footer({ locale, legalEnabled, storeName }: FooterProps) {
   const currentYear = new Date().getFullYear();
   const showLegal = locale === 'de' && legalEnabled;
 
@@ -16,7 +17,12 @@ export default function Footer({ locale, legalEnabled }: FooterProps) {
         {/* Col 1 — Brand */}
         <div className="footer__brand">
           <p className="footer__logo">
-            <span className="footer__logo-accent">Lumière</span> Nails
+            {(() => {
+              const name = storeName || STORE_NAME_FALLBACK;
+              const idx = name.lastIndexOf(' ');
+              if (idx === -1) return <>{name}</>;
+              return <><span className="footer__logo-accent">{name.slice(0, idx)}</span> {name.slice(idx + 1)}</>;
+            })()}
           </p>
           <p className="footer__tagline">
             {STORE_TAGLINE}
@@ -86,7 +92,7 @@ export default function Footer({ locale, legalEnabled }: FooterProps) {
 
       {/* Bottom bar */}
       <div className="footer__bottom">
-        <p>© {currentYear} {STORE_NAME}. Všetky práva vyhradené.</p>
+        <p>© {currentYear} {storeName || STORE_NAME_FALLBACK}. Všetky práva vyhradené.</p>
         <p className="footer__bottom-links">
           <a href="#">Ochrana súkromia</a>
           <span>·</span>

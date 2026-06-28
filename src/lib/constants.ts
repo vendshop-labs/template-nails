@@ -1,6 +1,8 @@
 import type { ServiceItem, MasterItem, StaticTestimonial, GalleryImageItem, HoursRow, Service, TeamMember, Testimonial, GalleryImage, Stat, WhyUsItem } from './types';
 
-export const STORE_NAME     = 'Lumière Nails';
+export const STORE_NAME_FALLBACK = 'Lumière Nails';
+/** @deprecated use STORE_NAME_FALLBACK — runtime name comes from DB */
+export const STORE_NAME = STORE_NAME_FALLBACK;
 export const STORE_TAGLINE  = 'Prémiové nechtové štúdio v Trenčíne.';
 export const STORE_YEAR     = '2024';
 
