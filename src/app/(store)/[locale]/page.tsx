@@ -15,7 +15,7 @@ import WhatsAppButton from '@/components/ui/WhatsAppButton';
 
 export const revalidate = 60;
 
-const STORE_SLUG = process.env.STORE_SLUG ?? 'kate-barber';
+const STORE_SLUG = process.env.STORE_SLUG ?? 'lumiere-nails';
 
 export default async function HomePage({
   params,
@@ -78,15 +78,18 @@ export default async function HomePage({
       <WhyUsSection />
       <GallerySection images={galleryImages} layout={store?.galleryLayout ?? undefined} />
       <TeamSection masters={dbMasters ?? []} />
-      <TestimonialsSection testimonials={(dbTestimonials as typeof dbTestimonials).map((t) => ({
-        id: t.id,
-        name: t.customer.name ?? 'Klient',
-        content: t.text,
-        rating: t.rating,
-        createdAt: t.createdAt.toISOString(),
-        adminReply: t.adminReply,
-        adminReplyAt: t.adminReplyAt?.toISOString() ?? null,
-      }))} />
+      <TestimonialsSection
+        locale={locale}
+        testimonials={(dbTestimonials as typeof dbTestimonials).map((t) => ({
+          id: t.id,
+          name: t.authorName ?? t.customer?.name ?? 'Klient',
+          content: t.text,
+          rating: t.rating,
+          createdAt: t.createdAt.toISOString(),
+          adminReply: t.adminReply,
+          adminReplyAt: t.adminReplyAt?.toISOString() ?? null,
+        }))}
+      />
       <BookingSection />
       <AboutSection aboutImage={store?.aboutImage} />
       <ContactSection

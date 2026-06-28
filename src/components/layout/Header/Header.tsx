@@ -2,18 +2,21 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
+import { useLocale } from 'next-intl';
 import { WHATSAPP_LINKS } from '@/lib/constants';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 
-const NAV_LINKS = [
-  { href: '/sk/#sluzby',   label: 'Služby' },
-  { href: '/sk/#galeria',  label: 'Galéria' },
-  { href: '/sk/#tim',      label: 'Tím' },
-  { href: '/sk/#recenzie', label: 'Recenzie' },
-  { href: '/sk/#kontakt',  label: 'Kontakt' },
-];
-
 export default function Header({ logoUrl, storeName }: { logoUrl?: string; storeName?: string }) {
+  const locale = useLocale();
+
+  const NAV_LINKS = [
+    { href: `/${locale}/#sluzby`,        label: 'Služby' },
+    { href: `/${locale}/#galeria`,       label: 'Galéria' },
+    { href: `/${locale}/#tim`,           label: 'Tím' },
+    { href: `/${locale}/testimonials`,   label: 'Recenzie' },
+    { href: `/${locale}/#kontakt`,       label: 'Kontakt' },
+  ];
+
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -50,7 +53,7 @@ export default function Header({ logoUrl, storeName }: { logoUrl?: string; store
   return (
     <header className={headerClass}>
       <div className="header__inner">
-        <Link href="/sk" className="header__logo">
+        <Link href={`/${locale}`} className="header__logo">
           {logoUrl ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img src={logoUrl} alt={`${storeName || 'Lumière Nails'} logo`} className="header__logo-img" />
@@ -68,7 +71,7 @@ export default function Header({ logoUrl, storeName }: { logoUrl?: string; store
               {link.label}
             </a>
           ))}
-          <a href="/sk/#rezervacia" className="header__btn-reserve">
+          <a href={`/${locale}/#rezervacia`} className="header__btn-reserve">
             Rezervácia
           </a>
           <a
@@ -103,7 +106,7 @@ export default function Header({ logoUrl, storeName }: { logoUrl?: string; store
               </a>
             ))}
             <a
-              href="/sk/#rezervacia"
+              href={`/${locale}/#rezervacia`}
               className="header__mobile-btn-reserve"
               onClick={() => setMenuOpen(false)}
             >

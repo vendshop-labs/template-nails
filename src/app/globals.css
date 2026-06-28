@@ -1547,6 +1547,18 @@ body {
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
+.testimonials__empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+.testimonials__empty-text {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-md);
+}
 .testimonials__footer {
   text-align: center;
   margin-top: 3rem;
