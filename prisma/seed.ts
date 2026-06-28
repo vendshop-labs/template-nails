@@ -102,11 +102,18 @@ async function main() {
     { id: `master-monika-${store.id}`,   name: 'Monika Horváthová', role: 'Nail technician', photo: null, sortOrder: 1 },
   ];
 
+  const isCdnUrl = (url: string | null) =>
+    !!url && (url.includes('unsplash.com') || url.includes('ui-avatars.com') || url.includes('picsum.photos'));
+
   for (const m of masterData) {
+    const existing = await db.serviceMaster.findUnique({ where: { id: m.id }, select: { photo: true } });
     await db.serviceMaster.upsert({
       where: { id: m.id },
-      update: { name: m.name, role: m.role, sortOrder: m.sortOrder },
-      // photo intentionally excluded from update — admin sets it
+      update: {
+        name: m.name, role: m.role, sortOrder: m.sortOrder,
+        // Reset CDN photos to null; preserve real admin-uploaded photos
+        ...(isCdnUrl(existing?.photo ?? null) ? { photo: null } : {}),
+      },
       create: { storeId: store.id, ...m },
     });
   }
@@ -127,8 +134,11 @@ async function main() {
       where: { storeId: store.id, alt: g.alt },
     });
     if (existing) {
-      // Only update sortOrder — preserve admin-set url
-      await db.galleryImage.update({ where: { id: existing.id }, data: { sortOrder: g.sortOrder } });
+      // Reset CDN urls to ''; preserve real admin-uploaded urls
+      await db.galleryImage.update({
+        where: { id: existing.id },
+        data: { sortOrder: g.sortOrder, ...(isCdnUrl(existing.url) ? { url: '' } : {}) },
+      });
     } else {
       await db.galleryImage.create({ data: { storeId: store.id, url: '', ...g } });
     }
