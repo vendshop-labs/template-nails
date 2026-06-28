@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
 import AdminReviewsClient from './AdminReviewsClient';
 
-const STORE_SLUG = process.env.STORE_SLUG ?? 'electromarket';
+const STORE_SLUG = process.env.STORE_SLUG ?? 'lumiere-nails';
 
 export default async function AdminReviewsPage() {
   const store = await db.store.findUnique({ where: { slug: STORE_SLUG } });
@@ -30,8 +30,8 @@ export default async function AdminReviewsPage() {
     locale: t.locale,
     status: t.status as 'PENDING' | 'APPROVED' | 'REJECTED',
     adminReply: t.adminReply,
-    customerName: t.customer.name ?? 'Customer',
-    customerEmail: t.customer.email,
+    customerName: t.authorName ?? t.customer?.name ?? 'Customer',
+    customerEmail: t.authorEmail ?? t.customer?.email ?? '',
     createdAt: t.createdAt.toISOString(),
   }));
 

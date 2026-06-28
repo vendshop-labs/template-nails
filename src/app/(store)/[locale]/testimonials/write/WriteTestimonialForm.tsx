@@ -1,47 +1,23 @@
 'use client';
 
 import { useState } from 'react';
-import { Link } from '@/i18n/navigation';
-import { useTranslations, useLocale } from 'next-intl';
-import { useCustomer } from '@/lib/useCustomer';
+import Link from 'next/link';
 import styles from './write.module.css';
 
-export default function WriteTestimonialForm() {
-  const t = useTranslations('testimonials');
-  const locale = useLocale();
-  const { customer, loading } = useCustomer();
+interface Props {
+  locale: string;
+}
 
+export default function WriteTestimonialForm({ locale }: Props) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [text, setText] = useState('');
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
+  const [consent, setConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
-
-  if (!loading && !customer) {
-    return (
-      <main className={styles.page}>
-        <div className={styles.card}>
-          <h1 className={styles.title}>{t('writeReview')}</h1>
-          <p className={styles.subtitle}>{t('registeredOnly')}</p>
-          <div className={styles.actions}>
-            <Link href="/register" className={styles.btn}>{t('registerToReview')}</Link>
-            <Link href="/login" className={styles.link}>{t('alreadyRegistered')}</Link>
-          </div>
-        </div>
-      </main>
-    );
-  }
-
-  if (loading) {
-    return (
-      <main className={styles.page}>
-        <div className={styles.card}>
-          <p>...</p>
-        </div>
-      </main>
-    );
-  }
 
   if (submitted) {
     return (
@@ -53,9 +29,11 @@ export default function WriteTestimonialForm() {
               <path d="m9 12 2 2 4-4" />
             </svg>
           </div>
-          <h1 className={styles.title}>{t('successTitle')}</h1>
-          <p className={styles.subtitle}>{t('successPending')}</p>
-          <Link href="/testimonials" className={styles.btn}>{t('viewAll')}</Link>
+          <h1 className={styles.title}>Ďakujeme!</h1>
+          <p className={styles.subtitle}>Vaša recenzia čaká na schválenie. Zverejníme ju čo najskôr.</p>
+          <Link href={`/${locale}/testimonials`} className={styles.btn}>
+            Zobraziť všetky recenzie
+          </Link>
         </div>
       </main>
     );
@@ -65,40 +43,79 @@ export default function WriteTestimonialForm() {
     e.preventDefault();
     setError('');
 
+    if (name.trim().length < 2) {
+      setError('Zadajte meno (min. 2 znaky)');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError('Zadajte platný email');
+      return;
+    }
     if (text.trim().length < 20) {
-      setError(t('errorTextShort'));
+      setError('Recenzia musí mať aspoň 20 znakov');
+      return;
+    }
+    if (!consent) {
+      setError('Súhlas so zverejnením je povinný');
       return;
     }
 
     setSubmitting(true);
     try {
-      const res = await fetch('/api/testimonials', {
+      const res = await fetch('/api/testimonials/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: text.trim(), rating, locale }),
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), rating, text: text.trim(), locale }),
       });
-      const data = await res.json();
+      const data = (await res.json()) as { error?: string };
       if (!res.ok) {
-        setError(data.error ?? 'Failed to submit');
+        setError(data.error ?? 'Chyba pri odosielaní');
       } else {
         setSubmitted(true);
       }
     } catch {
-      setError('Network error');
+      setError('Sieťová chyba. Skúste znova.');
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <main className={styles.page}>
+    <main className={styles.page} style={{ paddingTop: '5rem' }}>
       <div className={styles.card}>
-        <h1 className={styles.title}>{t('writeReview')}</h1>
-        <p className={styles.greeting}>{t('greeting', { name: customer!.name ?? customer!.email })}</p>
+        <h1 className={styles.title}>Napísať recenziu</h1>
+        <p className={styles.subtitle}>Podeľte sa o svoju skúsenosť s Lumière Nails</p>
 
         <form className={styles.form} onSubmit={handleSubmit}>
+
+          <label className={styles.label}>
+            <span className={styles.labelText}>Meno *</span>
+            <input
+              className={styles.input}
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Jana Nováková"
+              required
+              minLength={2}
+              maxLength={80}
+            />
+          </label>
+
+          <label className={styles.label}>
+            <span className={styles.labelText}>Email *</span>
+            <input
+              className={styles.input}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="jana@example.com"
+              required
+            />
+          </label>
+
           <div className={styles.ratingGroup}>
-            <span className={styles.ratingLabel}>{t('ratingLabel')}</span>
+            <span className={styles.ratingLabel}>Hodnotenie *</span>
             <div className={styles.starPicker}>
               {[1, 2, 3, 4, 5].map((v) => (
                 <button
@@ -108,7 +125,7 @@ export default function WriteTestimonialForm() {
                   onMouseEnter={() => setHoverRating(v)}
                   onMouseLeave={() => setHoverRating(0)}
                   onClick={() => setRating(v)}
-                  aria-label={`${v} star${v > 1 ? 's' : ''}`}
+                  aria-label={`${v} hviezdičk${v === 1 ? 'a' : v < 5 ? 'y' : 'ičiek'}`}
                 >
                   ★
                 </button>
@@ -117,12 +134,12 @@ export default function WriteTestimonialForm() {
           </div>
 
           <label className={styles.label}>
-            <span className={styles.labelText}>{t('textLabel')}</span>
+            <span className={styles.labelText}>Vaša recenzia * (min. 20 znakov)</span>
             <textarea
               className={styles.textarea}
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder={t('textPlaceholder')}
+              placeholder="Povedzte nám, ako ste boli spokojná..."
               minLength={20}
               maxLength={2000}
               rows={5}
@@ -131,14 +148,26 @@ export default function WriteTestimonialForm() {
             <span className={styles.charCount}>{text.length} / 2000</span>
           </label>
 
+          <label className={styles.consentLabel}>
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              required
+            />
+            <span>Súhlasím so zverejnením recenzie na stránke Lumière Nails</span>
+          </label>
+
           {error && <p className={styles.error}>{error}</p>}
 
-          <button type="submit" className={styles.btn} disabled={submitting}>
-            {submitting ? '...' : t('submit')}
+          <button type="submit" className={styles.btn} disabled={submitting || !consent}>
+            {submitting ? 'Odosielam...' : 'Odoslať recenziu'}
           </button>
         </form>
 
-        <Link href="/testimonials" className={styles.backLink}>← {t('backToReviews')}</Link>
+        <Link href={`/${locale}/testimonials`} className={styles.backLink}>
+          ← Späť na recenzie
+        </Link>
       </div>
     </main>
   );

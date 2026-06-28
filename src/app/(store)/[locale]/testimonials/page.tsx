@@ -1,29 +1,36 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { db } from '@/lib/db';
+import { setRequestLocale } from 'next-intl/server';
 import TestimonialCard from '@/components/ui/TestimonialCard';
+import GoldDivider from '@/components/ui/GoldDivider';
 
-async function getTestimonials() {
-  try {
-    const storeSlug = process.env.STORE_SLUG ?? 'kate-barber';
-    const store = await db.store.findUnique({ where: { slug: storeSlug } });
-    if (!store) {
-      console.error('[testimonials] Store not found:', storeSlug);
-      return [];
-    }
-    const results = await db.testimonial.findMany({
-      where: { storeId: store.id, status: 'APPROVED' },
-      orderBy: { createdAt: 'desc' },
-      include: { customer: { select: { name: true } } },
-    });
-    return results;
-  } catch (err) {
-    console.error('[testimonials] DB error:', err);
-    return [];
-  }
-}
+const STORE_SLUG = process.env.STORE_SLUG ?? 'lumiere-nails';
 
-export default async function TestimonialsPage() {
-  const testimonials = await getTestimonials();
+export const metadata: Metadata = {
+  title: 'Recenzie | Lumière Nails',
+  description: 'Prečítajte si recenzie spokojných klientiek Lumière Nails štúdia v Trenčíne.',
+  robots: { index: true, follow: true },
+};
+
+export const revalidate = 60;
+
+export default async function TestimonialsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  const store = await db.store.findUnique({ where: { slug: STORE_SLUG } });
+  const testimonials = store
+    ? await db.testimonial.findMany({
+        where: { storeId: store.id, status: 'APPROVED' },
+        orderBy: { createdAt: 'desc' },
+        include: { customer: { select: { name: true } } },
+      })
+    : [];
 
   const avgRating = testimonials.length
     ? (testimonials.reduce((s, t) => s + t.rating, 0) / testimonials.length).toFixed(1)
@@ -35,22 +42,19 @@ export default async function TestimonialsPage() {
 
         <div className="testimonials-list__header">
           <div>
-            <span className="section-eyebrow">Recenzie</span>
-            <h1 style={{
-              fontSize: 'clamp(2rem, 4vw, 3rem)',
-              color: 'var(--color-text-primary)',
-              marginTop: '0.5rem',
-            }}>
-              Čo hovoria naši klienti
+            <p className="section-label">Recenzie</p>
+            <h1 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.75rem)', color: 'var(--color-text)', marginTop: '0.25rem' }}>
+              Čo hovoria naše klientky
             </h1>
+            <GoldDivider />
             {avgRating && (
-              <p style={{ color: 'var(--color-text-muted)', marginTop: '0.35rem' }}>
-                ⭐ {avgRating} · {testimonials.length} recenzií
+              <p style={{ color: 'var(--color-text-muted)', marginTop: '0.5rem' }}>
+                ⭐ {avgRating} · {testimonials.length} spokojných klientiek
               </p>
             )}
           </div>
-          <Link href="/sk/testimonials/submit" className="btn-primary">
-            Zanechať recenziu
+          <Link href={`/${locale}/testimonials/write`} className="btn-primary">
+            Napísať recenziu →
           </Link>
         </div>
 
@@ -59,7 +63,7 @@ export default async function TestimonialsPage() {
             {testimonials.map((t) => (
               <TestimonialCard
                 key={t.id}
-                name={t.customer.name ?? 'Klient'}
+                name={(t as { authorName?: string | null }).authorName ?? t.customer?.name ?? 'Klient'}
                 content={t.text}
                 rating={t.rating}
                 createdAt={t.createdAt.toISOString()}
@@ -70,13 +74,9 @@ export default async function TestimonialsPage() {
           </div>
         ) : (
           <div className="testimonials-page__empty">
-            <p>Zatiaľ žiadne recenzie.</p>
-            <Link
-              href="/sk/testimonials/submit"
-              className="btn-outline"
-              style={{ marginTop: '1rem', display: 'inline-block' }}
-            >
-              Buďte prvý!
+            <p style={{ color: 'var(--color-text-muted)' }}>Zatiaľ žiadne recenzie.</p>
+            <Link href={`/${locale}/testimonials/write`} className="btn-outline" style={{ marginTop: '1rem', display: 'inline-block' }}>
+              Buďte prvá!
             </Link>
           </div>
         )}

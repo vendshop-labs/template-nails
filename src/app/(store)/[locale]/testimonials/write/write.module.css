@@ -51,3 +51,20 @@
 .link:hover { text-decoration: underline; }
 .backLink { display: block; margin-top: 1.25rem; color: var(--color-text-muted); text-decoration: none; font-size: 0.875rem; }
 .backLink:hover { color: var(--color-primary); }
+
+.input {
+  padding: 12px 14px; border: 1px solid var(--color-border); border-radius: 8px;
+  font-size: 0.95rem; font-family: inherit; color: var(--color-text); background: var(--color-bg);
+  width: 100%; transition: border-color 0.15s ease;
+}
+.input:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent); }
+.input::placeholder { color: var(--color-text-muted); }
+
+.consentLabel {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 0.875rem; color: var(--color-text-secondary); cursor: pointer;
+}
+.consentLabel input[type="checkbox"] {
+  margin-top: 2px; flex-shrink: 0; width: 16px; height: 16px;
+  accent-color: var(--color-primary); cursor: pointer;
+}
