@@ -77,7 +77,8 @@ export default function AdminSettingsPage() {
     mapLng: '',
     facebook: '',
     instagram: '',
-    whatsapp: '',
+    aboutImage: '',
+    whatsappPhone: '',
   });
 
   // Working hours — parsed from openingHours JSON string
@@ -104,6 +105,8 @@ export default function AdminSettingsPage() {
             city: (s.city as string) ?? '',
             mapLat: s.mapLat != null ? String(s.mapLat) : '',
             mapLng: s.mapLng != null ? String(s.mapLng) : '',
+            aboutImage: (s.aboutImage as string) ?? '',
+            whatsappPhone: (s.whatsappPhone as string) ?? '',
           }));
           setHours(parseHours(s.openingHours));
           setLogoUrl((s.logoUrl as string | null) ?? null);
@@ -144,6 +147,8 @@ export default function AdminSettingsPage() {
           openingHours: JSON.stringify(hours),
           mapLat: store.mapLat ? parseFloat(store.mapLat) : null,
           mapLng: store.mapLng ? parseFloat(store.mapLng) : null,
+          aboutImage: store.aboutImage || null,
+          whatsappPhone: store.whatsappPhone || null,
         }),
       });
       if (res.ok) showToast();
@@ -181,7 +186,7 @@ export default function AdminSettingsPage() {
   const sStore = <K extends keyof typeof store>(k: K, v: (typeof store)[K]) =>
     setStore((p) => ({ ...p, [k]: v }));
 
-  const [notif, setNotif]     = useState({ emailOn: true, email: '', reviewsOn: true, telegramOn: false, botToken: '', chatId: '' });
+  const [notif, setNotif]     = useState({ emailOn: true, email: '', reviewsOn: true });
   const [security, setSecurity] = useState({ currentPw: '', newPw: '', confirmPw: '', twoFactor: false });
   const sNotif = <K extends keyof typeof notif>(k: K, v: (typeof notif)[K]) => setNotif((p) => ({ ...p, [k]: v }));
   const sSec   = <K extends keyof typeof security>(k: K, v: (typeof security)[K]) => setSecurity((p) => ({ ...p, [k]: v }));
@@ -272,6 +277,17 @@ export default function AdminSettingsPage() {
               <Field label="Popis">
                 <textarea className={styles.textarea} rows={3} value={store.description} onChange={(e) => sStore('description', e.target.value)} />
               </Field>
+              <div className={styles.field}>
+                <span className={styles.label}>Foto sekcie &quot;O nás&quot; (URL)</span>
+                <input
+                  type="url"
+                  className={styles.input}
+                  value={store.aboutImage}
+                  onChange={(e) => sStore('aboutImage', e.target.value)}
+                  placeholder="https://images.unsplash.com/... alebo /about/salon.jpg"
+                />
+                <span className={styles.hint}>Odporúčaný formát: horizontálny, min. 600×800 px</span>
+              </div>
               <div className={styles.grid2}>
                 <Field label="Telefón">
                   <input className={styles.input} value={store.phone} onChange={(e) => sStore('phone', e.target.value)} />
@@ -312,9 +328,6 @@ export default function AdminSettingsPage() {
                   <input className={styles.input} value={store.instagram} placeholder="https://instagram.com/..." onChange={(e) => sStore('instagram', e.target.value)} />
                 </Field>
               </div>
-              <Field label="WhatsApp">
-                <input className={styles.input} value={store.whatsapp} placeholder="https://wa.me/421..." onChange={(e) => sStore('whatsapp', e.target.value)} />
-              </Field>
 
               <button type="button" className={styles.saveBtn} onClick={saveStore} disabled={saving}>
                 {saving ? tr.settings.savingBtn : tr.settings.saveBtn}
@@ -357,16 +370,19 @@ export default function AdminSettingsPage() {
 
           <div className={styles.block}>
             <div className={styles.blockHead}>
-              <span className={styles.blockTitle}>Telegram</span>
-              <Toggle checked={notif.telegramOn} onChange={(v) => sNotif('telegramOn', v)} />
+              <span className={styles.blockTitle}>WhatsApp</span>
             </div>
-            <Field label="Bot Token">
-              <MaskedInput value={notif.botToken} onChange={(v) => sNotif('botToken', v)} placeholder="••••••••••••" />
-            </Field>
-            <Field label="Chat ID">
-              <input className={styles.input} value={notif.chatId} onChange={(e) => sNotif('chatId', e.target.value)} />
-            </Field>
-            <button type="button" className={styles.testBtn} onClick={() => console.log('[test telegram]')}>Test</button>
+            <div className={styles.field}>
+              <span className={styles.label}>WhatsApp číslo</span>
+              <input
+                type="tel"
+                className={styles.input}
+                value={store.whatsappPhone}
+                onChange={(e) => sStore('whatsappPhone', e.target.value)}
+                placeholder="+421900000000"
+              />
+              <span className={styles.hint}>Číslo sa zobrazí ako tlačidlo WhatsApp na webe pre klientov.</span>
+            </div>
           </div>
 
           <button type="button" className={styles.saveBtn} onClick={showToast}>Uložiť</button>

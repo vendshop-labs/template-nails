@@ -27,6 +27,8 @@ export async function GET() {
       email: true,
       mapLat: true,
       mapLng: true,
+      aboutImage: true,
+      whatsappPhone: true,
     },
   });
 
@@ -42,7 +44,8 @@ export async function PUT(request: Request) {
   const body = await request.json() as Record<string, unknown>;
 
   const allowed = ['name', 'description', 'primaryMode', 'address', 'city',
-                   'openingHours', 'phone', 'email', 'mapLat', 'mapLng'] as const;
+                   'openingHours', 'phone', 'email', 'mapLat', 'mapLng',
+                   'aboutImage', 'whatsappPhone'] as const;
 
   const data: Record<string, unknown> = {};
   for (const key of allowed) {

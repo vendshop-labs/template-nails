@@ -27,6 +27,9 @@ model Store {
   mapLat       Float?
   mapLng       Float?
 
+  aboutImage    String?
+  whatsappPhone String?
+
   themeConfig Json?
   metadata    Json?
 

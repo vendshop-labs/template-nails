@@ -71,7 +71,7 @@ export const CONTACT = {
 };
 
 export const ABOUT = {
-  image:    '/about-barbershop.webp',
+  image:    'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&q=80',
   imageAlt: 'Interiér Lumière Nails štúdia v Trenčíne',
   badge:    'O nás',
   title:    'Krása začína\nstarostlivosťou',

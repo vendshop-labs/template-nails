@@ -3,8 +3,13 @@ import { ABOUT } from '@/lib/constants';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import { BLUR_PLACEHOLDER } from '@/components/ui/BlurImage';
 
-export default function AboutSection() {
+interface AboutSectionProps {
+  aboutImage?: string | null;
+}
+
+export default function AboutSection({ aboutImage }: AboutSectionProps) {
   const titleLines = ABOUT.title.split('\n');
+  const imageSrc = aboutImage || ABOUT.image;
 
   return (
     <section id="o-nas" className="about">
@@ -12,14 +17,14 @@ export default function AboutSection() {
         <ScrollReveal direction="left">
           <div className="about__image-wrap">
             <Image
-              src={ABOUT.image}
+              src={imageSrc}
               alt={ABOUT.imageAlt}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               className="about__image"
               placeholder="blur"
               blurDataURL={BLUR_PLACEHOLDER}
-              unoptimized={ABOUT.image.startsWith('http')}
+              unoptimized={imageSrc.startsWith('http')}
             />
           </div>
         </ScrollReveal>

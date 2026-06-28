@@ -36,6 +36,8 @@ export default async function HomePage({
       openingHours: true,
       mapLat: true,
       mapLng: true,
+      aboutImage: true,
+      whatsappPhone: true,
     },
   });
 
@@ -85,7 +87,7 @@ export default async function HomePage({
         adminReplyAt: t.adminReplyAt?.toISOString() ?? null,
       }))} />
       <BookingSection />
-      <AboutSection />
+      <AboutSection aboutImage={store?.aboutImage} />
       <ContactSection
         address={store?.address}
         city={store?.city}
@@ -95,7 +97,7 @@ export default async function HomePage({
         mapLng={store?.mapLng}
         workingHours={parsedHours}
       />
-      <WhatsAppButton />
+      <WhatsAppButton phone={store?.whatsappPhone} />
     </>
   );
 }
