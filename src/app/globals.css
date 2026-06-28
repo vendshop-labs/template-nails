@@ -1,25 +1,42 @@
 
-/* ===== CRITICAL: force dark base ===== */
+/* ===== BASE ===== */
 html, body {
-  background-color: #0A0A0A !important;
-  color: #FFFFFF;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
   min-height: 100vh;
 }
 
 :root {
-  --color-bg: #0A0A0A;
-  --color-bg-alt: #111111;
-  --color-bg-card: #161616;
-  --color-gold: #C96030;
-  --color-gold-dark: #A84E25;
-  --color-gold-light: #E07848;
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #B0A898;
-  --color-text-muted: #666666;
-  --color-border: rgba(201, 96, 48, 0.15);
-  --color-whatsapp: #25D366;
+  /* Lumière Nails — nude/blush/rose-gold palette */
+  --color-primary:        #b87c6f;
+  --color-primary-dark:   #9a6459;
+  --color-primary-light:  #f5e6e3;
+
+  --color-bg:             #fdf8f5;
+  --color-bg-alt:         #f9ede9;
+  --color-bg-card:        #ffffff;
+  --color-bg-subtle:      #f9ede9;
+
+  --color-text:           #2d1b1b;
+  --color-text-primary:   #2d1b1b;
+  --color-text-secondary: #7a5c5c;
+  --color-text-muted:     #b09090;
+
+  /* Legacy aliases */
+  --color-gold:       #b87c6f;
+  --color-gold-dark:  #9a6459;
+  --color-gold-light: #f5e6e3;
+
+  --color-border:       rgba(184, 124, 111, 0.15);
+  --color-hero-overlay: rgba(45, 27, 27, 0.38);
+
+  --color-whatsapp:      #25D366;
   --color-whatsapp-dark: #20BD5A;
   --transition: 0.3s ease;
+
+  --shadow-sm: 0 1px 3px rgba(45,27,27,0.06);
+  --shadow-md: 0 4px 12px rgba(45,27,27,0.10);
+  --shadow-lg: 0 8px 32px rgba(45,27,27,0.12);
 }
 
 /* ===== RESET ===== */
@@ -150,9 +167,10 @@ body::after {
 }
 
 .header--scrolled {
-  background: rgba(10, 10, 10, 0.95);
+  background: rgba(253, 248, 245, 0.96);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 1px 16px rgba(184, 124, 111, 0.10);
 }
 
 .header--hidden {
@@ -247,7 +265,7 @@ body::after {
   top: 100%;
   left: 0;
   right: 0;
-  background: rgba(10, 10, 10, 0.98);
+  background: rgba(253, 248, 245, 0.98);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--color-border);
   padding: 1.5rem 2rem;
@@ -486,7 +504,7 @@ body::after {
   background: linear-gradient(
     to right,
     var(--color-bg) 0%,
-    rgba(10, 10, 10, 0.35) 40%,
+    rgba(253, 248, 245, 0.35) 40%,
     transparent 100%
   );
 }
@@ -515,7 +533,7 @@ body::after {
     background: linear-gradient(
       to bottom,
       var(--color-bg) 0%,
-      rgba(10, 10, 10, 0.2) 15%,
+      rgba(253, 248, 245, 0.2) 15%,
       transparent 40%
     );
   }
@@ -702,7 +720,7 @@ body::after {
 .gallery-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(10,10,10,0.6), transparent);
+  background: linear-gradient(to top, rgba(45,27,27,0.55), transparent);
   opacity: 0;
   transition: var(--transition);
 }
@@ -823,8 +841,8 @@ body::after {
   padding: 6rem 2rem;
   position: relative;
   background:
-    linear-gradient(to bottom, rgba(10,10,10,0.92), rgba(10,10,10,0.85)),
-    url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1920&q=80')
+    linear-gradient(to bottom, rgba(45,27,27,0.82), rgba(45,27,27,0.72)),
+    url('https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1920&q=80')
     center/cover no-repeat fixed;
 }
 
@@ -852,7 +870,7 @@ body::after {
 .booking__field input,
 .booking__field textarea {
   width: 100%;
-  background: rgba(22, 22, 22, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(201, 96, 48, 0.2);
   border-radius: 4px;
   padding: 0.85rem 1rem;
@@ -868,7 +886,7 @@ body::after {
 .booking__field input:focus,
 .booking__field textarea:focus {
   border-color: var(--color-gold, #C96030);
-  background: rgba(30, 30, 30, 0.9);
+  background: rgba(248, 236, 232, 0.9);
 }
 .booking__field input::placeholder,
 .booking__field textarea::placeholder {
@@ -889,7 +907,7 @@ body::after {
 .booking__select,
 .booking__textarea {
   width: 100%;
-  background: rgba(22, 22, 22, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(201, 96, 48, 0.2);
   color: var(--color-text-primary);
   padding: 0.85rem 1rem;
@@ -904,16 +922,16 @@ body::after {
 .booking__select:focus,
 .booking__textarea:focus {
   border-color: var(--color-gold);
-  background: rgba(30, 30, 30, 0.9);
+  background: rgba(248, 236, 232, 0.9);
 }
 
-.booking__select { cursor: pointer; color-scheme: dark; }
-.booking__select option { background: #111111; color: #ffffff; }
+.booking__select { cursor: pointer; color-scheme: light; }
+.booking__select option { background: #fff7f4; color: #2d1b1b; }
 .booking__textarea { resize: vertical; min-height: 72px; }
 
 .booking__picker-wrap {
-  background: rgba(22, 22, 22, 0.6);
-  border: 1px solid rgba(201, 96, 48, 0.2);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(184, 124, 111, 0.2);
   padding: 1.25rem;
   backdrop-filter: blur(4px);
 }
@@ -1256,8 +1274,8 @@ body::after {
 
 /* ===== FOOTER ===== */
 .footer {
-  background: #0a0a0a;
-  border-top: 1px solid rgba(201,96,48,0.2);
+  background: var(--color-bg-alt);
+  border-top: 1px solid var(--color-border);
   padding-top: 4rem;
 }
 .footer__inner {
@@ -1272,14 +1290,14 @@ body::after {
   font-family: var(--font-display);
   font-size: 1.25rem;
   font-weight: 700;
-  color: #F0EBE3;
+  color: var(--color-text-primary);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   margin-bottom: 0.75rem;
 }
-.footer__logo-accent { color: #C96030; }
+.footer__logo-accent { color: var(--color-gold); }
 .footer__tagline {
-  color: #6B7280;
+  color: var(--color-text-muted);
   font-size: 0.875rem;
   line-height: 1.6;
   margin-bottom: 1.5rem;
@@ -1287,35 +1305,35 @@ body::after {
 .footer__socials { display: flex; gap: 0.75rem; }
 .footer__social-link {
   width: 40px; height: 40px;
-  border: 1px solid rgba(201,96,48,0.3);
+  border: 1px solid var(--color-border);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  color: #9CA3AF;
+  color: var(--color-text-muted);
   transition: border-color var(--transition), color var(--transition);
 }
-.footer__social-link:hover { color: #C96030; border-color: #C96030; }
+.footer__social-link:hover { color: var(--color-gold); border-color: var(--color-gold); }
 .footer__heading {
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #C96030;
+  color: var(--color-gold);
   margin-bottom: 1.25rem;
 }
 .footer__links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-.footer__links a { color: #9CA3AF; font-size: 0.9rem; transition: color 0.2s; text-decoration: none; }
-.footer__links a:hover { color: #F0EBE3; }
+.footer__links a { color: var(--color-text-secondary); font-size: 0.9rem; transition: color 0.2s; text-decoration: none; }
+.footer__links a:hover { color: var(--color-text-primary); }
 .footer__hours { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-.footer__hours li { display: flex; justify-content: space-between; gap: 1rem; color: #9CA3AF; font-size: 0.875rem; }
-.footer__hours span:first-child { color: #D1D5DB; }
-.footer__closed { color: #4B5563 !important; }
+.footer__hours li { display: flex; justify-content: space-between; gap: 1rem; color: var(--color-text-secondary); font-size: 0.875rem; }
+.footer__hours span:first-child { color: var(--color-text-primary); }
+.footer__closed { color: var(--color-text-muted) !important; }
 .footer__contact { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
-.footer__contact li { display: flex; align-items: flex-start; gap: 0.6rem; color: #9CA3AF; font-size: 0.875rem; }
-.footer__contact svg { flex-shrink: 0; margin-top: 2px; color: #C96030; }
-.footer__contact a { color: #9CA3AF; transition: color 0.2s; text-decoration: none; }
-.footer__contact a:hover { color: #C96030; }
+.footer__contact li { display: flex; align-items: flex-start; gap: 0.6rem; color: var(--color-text-secondary); font-size: 0.875rem; }
+.footer__contact svg { flex-shrink: 0; margin-top: 2px; color: var(--color-gold); }
+.footer__contact a { color: var(--color-text-secondary); transition: color 0.2s; text-decoration: none; }
+.footer__contact a:hover { color: var(--color-gold); }
 .footer__bottom {
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid var(--color-border);
   max-width: 1280px;
   margin: 0 auto;
   padding: 1.25rem 2rem;
@@ -1324,12 +1342,12 @@ body::after {
   align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem;
-  color: #4B5563;
+  color: var(--color-text-muted);
   font-size: 0.8rem;
 }
 .footer__bottom-links { display: flex; gap: 0.75rem; align-items: center; }
-.footer__bottom-links a { color: #4B5563; transition: color 0.2s; text-decoration: none; }
-.footer__bottom-links a:hover { color: #9CA3AF; }
+.footer__bottom-links a { color: var(--color-text-muted); transition: color 0.2s; text-decoration: none; }
+.footer__bottom-links a:hover { color: var(--color-text-secondary); }
 @media (max-width: 900px) {
   .footer__inner { grid-template-columns: 1fr 1fr; }
 }
@@ -1361,33 +1379,32 @@ body::after {
   box-shadow: 0 6px 30px rgba(37, 211, 102, 0.5);
 }
 
-/* ===== FORCE DARK OVERRIDE (last rule wins) ===== */
+/* ===== LUMIÈRE NAILS — LIGHT BASE (last rule wins) ===== */
 html {
-  background-color: #0A0A0A !important;
-  color-scheme: dark;
+  background-color: #fdf8f5;
+  color-scheme: light;
 }
 body {
-  background-color: #0A0A0A !important;
-  color: #FFFFFF !important;
+  background-color: #fdf8f5;
+  color: #2d1b1b;
 }
 .hero,
 .services,
 .team,
-.gallery,
 .about,
-.contact,
-.footer {
-  background-color: #0A0A0A !important;
+.contact {
+  background-color: #fdf8f5 !important;
 }
+.gallery,
 .stats-bar,
 .why-us,
 .testimonials {
-  background-color: #111111 !important;
+  background-color: #f9ede9 !important;
 }
 .service-card,
 .why-us__card,
 .testimonial-card {
-  background-color: #161616 !important;
+  background-color: #ffffff !important;
 }
 
 /* ── TestimonialCard BEM sub-elements ── */
@@ -1587,8 +1604,8 @@ body {
 .admin-page {
   padding: 2rem;
   min-height: 100vh;
-  background: #111111;
-  color: var(--color-text-primary, #fff);
+  background: var(--color-bg);
+  color: var(--color-text-primary);
 }
 .admin-page__header {
   display: flex;
@@ -1734,9 +1751,9 @@ body {
 .skeleton {
   background: linear-gradient(
     90deg,
-    #1e1e1e 25%,
-    #2c2c2c 50%,
-    #1e1e1e 75%
+    #f0e4e0 25%,
+    #ecdad6 50%,
+    #f0e4e0 75%
   );
   background-size: 600px 100%;
   animation: shimmer 1.6s ease-in-out infinite;

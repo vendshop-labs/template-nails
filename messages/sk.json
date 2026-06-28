@@ -27,7 +27,7 @@
     "servicesGallery": "Galéria",
     "servicesContact": "Kontakt",
     "servicesBookNow": "Rezervovať",
-    "servicesSubtitle": "Studio"
+    "servicesSubtitle": "Nails"
   },
   "categories": {
     "title": "Kategórie",
@@ -564,10 +564,10 @@
   },
   "booking": {
     "title": "Rezervujte si termín",
-    "selectService": "Vyberte službu",
-    "selectMaster": "Vyberte barbera",
+    "selectService": "Vybrať službu",
+    "selectMaster": "Vybrať techniku",
     "selectDate": "Vyberte dátum",
-    "selectTime": "Vyberte čas",
+    "selectTime": "Vybrať čas",
     "yourName": "Vaše meno",
     "yourPhone": "Telefónne číslo",
     "note": "Poznámka (nepovinné)",
@@ -576,7 +576,7 @@
     "confirmation": "Rezervácia potvrdená! Ozveme sa vám."
   },
   "team": {
-    "title": "Naši majstri"
+    "title": "Naše techniky"
   },
   "gallery": {
     "title": "Naša práca"

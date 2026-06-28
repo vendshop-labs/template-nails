@@ -564,19 +564,19 @@
   },
   "booking": {
     "title": "Book Your Appointment",
-    "selectService": "Choose Service",
-    "selectMaster": "Choose Master",
+    "selectService": "Select service",
+    "selectMaster": "Select technician",
     "selectDate": "Select Date",
-    "selectTime": "Select Time",
+    "selectTime": "Select time",
     "yourName": "Your Name",
     "yourPhone": "Phone Number",
     "note": "Note (optional)",
-    "submit": "Book Appointment",
+    "submit": "Book now",
     "whatsappFallback": "Or book via WhatsApp",
     "confirmation": "Appointment confirmed! We will contact you shortly."
   },
   "team": {
-    "title": "Our Masters"
+    "title": "Our Technicians"
   },
   "gallery": {
     "title": "Our Work"
