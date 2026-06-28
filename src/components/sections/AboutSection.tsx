@@ -9,23 +9,26 @@ interface AboutSectionProps {
 
 export default function AboutSection({ aboutImage }: AboutSectionProps) {
   const titleLines = ABOUT.title.split('\n');
-  const imageSrc = aboutImage || ABOUT.image;
 
   return (
     <section id="o-nas" className="about">
       <div className="about__grid">
         <ScrollReveal direction="left">
           <div className="about__image-wrap">
-            <Image
-              src={imageSrc}
-              alt={ABOUT.imageAlt}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="about__image"
-              placeholder="blur"
-              blurDataURL={BLUR_PLACEHOLDER}
-              unoptimized={imageSrc.startsWith('http')}
-            />
+            {aboutImage ? (
+              <Image
+                src={aboutImage}
+                alt={ABOUT.imageAlt}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="about__image"
+                placeholder="blur"
+                blurDataURL={BLUR_PLACEHOLDER}
+                unoptimized={aboutImage.startsWith('http')}
+              />
+            ) : (
+              <div className="about__image-placeholder" aria-label={ABOUT.imageAlt} />
+            )}
           </div>
         </ScrollReveal>
 
