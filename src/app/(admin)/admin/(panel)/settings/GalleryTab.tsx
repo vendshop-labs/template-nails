@@ -175,8 +175,15 @@ export default function GalleryTab() {
         <div className={styles.galleryGrid}>
           {images.map((img, index) => (
             <div key={img.id} className={`${styles.galleryCard} ${!img.active ? styles.galleryCardInactive : ''}`}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.url} alt={img.alt} />
+              {img.url ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img src={img.url} alt={img.alt} />
+              ) : (
+                <div className={styles.galleryPlaceholder}>
+                  <span>📷</span>
+                  <span className={styles.galleryPlaceholderTitle}>{img.alt}</span>
+                </div>
+              )}
               <div className={styles.galleryCardActions}>
                 {/* Sort buttons */}
                 <button

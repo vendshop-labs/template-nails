@@ -465,6 +465,28 @@
 
 .galleryCardInactive { opacity: 0.5; }
 
+.galleryPlaceholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--color-bg-subtle);
+  border-bottom: 1px dashed var(--color-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--color-text-muted);
+  font-size: 1.5rem;
+}
+
+.galleryPlaceholderTitle {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: 0 8px;
+}
+
 .galleryCardActions {
   display: flex;
   gap: 6px;

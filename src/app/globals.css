@@ -710,6 +710,25 @@ body::after {
 .gallery-grid--3 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 250px); }
 .gallery-grid--4 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 200px); }
 
+.gallery-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-bg-alt);
+  border: 2px dashed var(--color-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.gallery-placeholder__icon { font-size: 2rem; line-height: 1; }
+.gallery-placeholder__text {
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 0 0.75rem;
+  color: var(--color-text-secondary);
+}
+
 .gallery-grid--masonry {
   display: block;
   columns: 3;
@@ -784,6 +803,19 @@ body::after {
   transition: filter 0.3s ease;
 }
 .team-card:hover .team-photo { filter: grayscale(0%); }
+
+.team-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  font-family: var(--font-display);
+}
 
 .team-name {
   font-family: var(--font-display);

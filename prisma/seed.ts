@@ -96,39 +96,30 @@ async function main() {
   console.log('✅ Services:', serviceData.length);
 
   // ============ TECHNICIANS ============
+  // NOTE: seed creates structure only — photo is set via admin panel
   const masterData = [
-    {
-      id: `master-kristina-${store.id}`,
-      name: 'Kristína Malá',
-      role: 'Nail technician',
-      photo: 'https://ui-avatars.com/api/?name=Kristina+Mala&background=f5e6e3&color=b87c6f&size=400&rounded=true',
-      sortOrder: 0,
-    },
-    {
-      id: `master-monika-${store.id}`,
-      name: 'Monika Horváthová',
-      role: 'Nail technician',
-      photo: 'https://ui-avatars.com/api/?name=Monika+Horvathova&background=f5e6e3&color=b87c6f&size=400&rounded=true',
-      sortOrder: 1,
-    },
+    { id: `master-kristina-${store.id}`, name: 'Kristína Malá',     role: 'Nail technician', photo: null, sortOrder: 0 },
+    { id: `master-monika-${store.id}`,   name: 'Monika Horváthová', role: 'Nail technician', photo: null, sortOrder: 1 },
   ];
 
   for (const m of masterData) {
     await db.serviceMaster.upsert({
       where: { id: m.id },
-      update: { name: m.name, role: m.role, photo: m.photo, sortOrder: m.sortOrder },
+      update: { name: m.name, role: m.role, sortOrder: m.sortOrder },
+      // photo intentionally excluded from update — admin sets it
       create: { storeId: store.id, ...m },
     });
   }
   console.log('✅ Technicians:', masterData.length);
 
   // ============ GALLERY ============
+  // NOTE: seed creates structure only — url is set via admin panel
   const galleryData = [
-    { alt: 'Gélová manikúra',    url: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80', sortOrder: 0 },
-    { alt: 'Nail Art design',    url: 'https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=600&q=80', sortOrder: 1 },
-    { alt: 'Pedikúra',           url: 'https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=600&q=80', sortOrder: 2 },
-    { alt: 'Nechtová modeláž',   url: 'https://images.unsplash.com/photo-1604655855765-7b5156b1f8a3?w=600&q=80', sortOrder: 3 },
-    { alt: 'Japonská manikúra',  url: 'https://images.unsplash.com/photo-1583736902935-6b52b2b2b884?w=600&q=80', sortOrder: 4 },
+    { alt: 'Gélová manikúra',   sortOrder: 0 },
+    { alt: 'Nail Art design',   sortOrder: 1 },
+    { alt: 'Pedikúra klasická', sortOrder: 2 },
+    { alt: 'Nechtová modeláž',  sortOrder: 3 },
+    { alt: 'Japonská manikúra', sortOrder: 4 },
   ];
 
   for (const g of galleryData) {
@@ -136,14 +127,10 @@ async function main() {
       where: { storeId: store.id, alt: g.alt },
     });
     if (existing) {
-      await db.galleryImage.update({
-        where: { id: existing.id },
-        data: { url: g.url, sortOrder: g.sortOrder },
-      });
+      // Only update sortOrder — preserve admin-set url
+      await db.galleryImage.update({ where: { id: existing.id }, data: { sortOrder: g.sortOrder } });
     } else {
-      await db.galleryImage.create({
-        data: { storeId: store.id, ...g },
-      });
+      await db.galleryImage.create({ data: { storeId: store.id, url: '', ...g } });
     }
   }
   console.log('✅ Gallery:', galleryData.length);

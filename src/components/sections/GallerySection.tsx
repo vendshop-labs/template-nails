@@ -34,18 +34,27 @@ export default function GallerySection({ images, layout }: GallerySectionProps) 
         <div className={gridClass}>
           {items.map((image, index) => (
             <div key={image.id} className="gallery-item">
-              <Image
-                src={image.url}
-                alt={image.alt}
-                fill
-                sizes="(max-width: 768px) 50vw, 33vw"
-                className="gallery-img"
-                priority={index === 0}
-                unoptimized={image.url.startsWith('http')}
-                placeholder="blur"
-                blurDataURL={BLUR_PLACEHOLDER}
-              />
-              <div className="gallery-overlay" />
+              {image.url ? (
+                <>
+                  <Image
+                    src={image.url}
+                    alt={image.alt}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                    className="gallery-img"
+                    priority={index === 0}
+                    unoptimized={image.url.startsWith('http')}
+                    placeholder="blur"
+                    blurDataURL={BLUR_PLACEHOLDER}
+                  />
+                  <div className="gallery-overlay" />
+                </>
+              ) : (
+                <div className="gallery-placeholder" aria-label={image.alt}>
+                  <span className="gallery-placeholder__icon">🌸</span>
+                  <span className="gallery-placeholder__text">{image.alt}</span>
+                </div>
+              )}
             </div>
           ))}
         </div>
