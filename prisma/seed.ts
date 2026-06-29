@@ -11,6 +11,40 @@ const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
 const db = new PrismaClient({ adapter });
 
+const LUMIERE_THEME = {
+  colors: {
+    bg:            '#fdf8f5',
+    primary:       '#b87c6f',
+    primaryDark:   '#9a6459',
+    primaryLight:  '#f5e6e3',
+    text:          '#2d1b1b',
+    textSecondary: '#7a5c5c',
+    textMuted:     '#b09090',
+    border:        'rgba(184,124,111,0.2)',
+    bgSubtle:      '#f9ede9',
+    success:       '#16a34a',
+    error:         '#ef4444',
+    contrast:      '#ffffff',
+    overlay:       '#2d1b1b',
+    overlayAlpha:  'rgba(45,27,27,0.55)',
+    headerBg:      'rgba(253,248,245,0.96)',
+    bgDark:        '#2d1b1b',
+    warning:       '#fbbf24',
+    successLight:  '#dcfce7',
+    errorLight:    '#fef2f2',
+    infoLight:     '#eff6ff',
+    surface:       '#ffffff',
+    bgAlt:         '#f5ede9',
+    bgCard:        '#ffffff',
+  },
+  layout: {
+    heroType:     'split',
+    cardStyle:    'border',
+    navPosition:  'top',
+    borderRadius: 'rounded',
+  },
+} as const;
+
 async function main() {
   console.log('🌸 Seeding Lumière Nails...');
 
@@ -25,6 +59,7 @@ async function main() {
       city: 'Trenčín',
       instagramUrl: 'https://instagram.com/lumiere.nails',
       googleRating: '4.9',
+      themeConfig: LUMIERE_THEME as unknown as Record<string, unknown>,
     },
     create: {
       name: 'Lumière Nails',
@@ -46,36 +81,7 @@ async function main() {
         sat: { open: '09:00', close: '15:00' },
         sun: null,
       }),
-      themeConfig: {
-        colors: {
-          bg:            '#fdf8f5',
-          primary:       '#b87c6f',
-          primaryDark:   '#9a6459',
-          primaryLight:  '#f5e6e3',
-          text:          '#2d1b1b',
-          textSecondary: '#7a5c5c',
-          textMuted:     '#b09090',
-          border:        'rgba(184,124,111,0.15)',
-          bgSubtle:      '#f9ede9',
-          success:       '#16a34a',
-          error:         '#ef4444',
-          contrast:      '#ffffff',
-          overlay:       '#2d1b1b',
-          overlayAlpha:  'rgba(45,27,27,0.38)',
-          headerBg:      'rgba(253,248,245,0.96)',
-          bgDark:        '#f9ede9',
-          warning:       '#fbbf24',
-          successLight:  '#dcfce7',
-          errorLight:    '#fef2f2',
-          infoLight:     '#eff6ff',
-        },
-        layout: {
-          heroType:     'split',
-          cardStyle:    'border',
-          navPosition:  'top',
-          borderRadius: 'sharp',
-        },
-      },
+      themeConfig: LUMIERE_THEME as unknown as Record<string, unknown>,
     },
   });
   console.log('✅ Store:', store.slug);
