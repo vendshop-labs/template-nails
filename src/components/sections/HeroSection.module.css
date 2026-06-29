@@ -35,6 +35,20 @@
   );
 }
 
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.dot {
+  color: var(--color-text-muted);
+  user-select: none;
+}
+
 .instagramLink {
   display: inline-flex;
   align-items: center;
