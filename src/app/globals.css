@@ -19,14 +19,14 @@ html, body {
   --color-bg-subtle:      #f9ede9;
 
   --color-text:           #2d1b1b;
-  --color-text-primary:   #2d1b1b;
+  --color-text-primary:   var(--color-text);
   --color-text-secondary: #7a5c5c;
   --color-text-muted:     #b09090;
 
-  /* Legacy aliases */
-  --color-gold:       #b87c6f;
-  --color-gold-dark:  #9a6459;
-  --color-gold-light: #f5e6e3;
+  /* Legacy aliases — proxy to theme vars so admin color changes propagate */
+  --color-gold:       var(--color-primary);
+  --color-gold-dark:  var(--color-primary-dark);
+  --color-gold-light: var(--color-primary-light);
 
   --color-border:       rgba(184, 124, 111, 0.15);
   --color-hero-overlay: rgba(45, 27, 27, 0.38);
@@ -460,8 +460,8 @@ body::after {
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.75rem;
-  border: 1px solid var(--color-gold, #C96030);
-  color: var(--color-gold, #C96030);
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
   background: transparent;
   font-size: 0.8rem;
   font-weight: 700;
@@ -473,7 +473,7 @@ body::after {
   font-family: var(--font-body);
 }
 .btn-outline:hover {
-  background: var(--color-gold, #C96030);
+  background: var(--color-gold);
   color: #ffffff;
 }
 
@@ -896,7 +896,7 @@ body::after {
   font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--color-text-secondary, #B0A898);
+  color: var(--color-text-secondary);
 }
 .booking__field input,
 .booking__field textarea {
@@ -905,7 +905,7 @@ body::after {
   border: 1px solid rgba(201, 96, 48, 0.2);
   border-radius: 4px;
   padding: 0.85rem 1rem;
-  color: var(--color-text-primary, #FFFFFF);
+  color: var(--color-text-primary);
   font-size: 0.95rem;
   font-family: var(--font-body);
   outline: none;
@@ -916,12 +916,12 @@ body::after {
 .booking__field textarea { resize: vertical; min-height: 100px; }
 .booking__field input:focus,
 .booking__field textarea:focus {
-  border-color: var(--color-gold, #C96030);
+  border-color: var(--color-gold);
   background: rgba(248, 236, 232, 0.9);
 }
 .booking__field input::placeholder,
 .booking__field textarea::placeholder {
-  color: var(--color-text-muted, #666666);
+  color: var(--color-text-muted);
 }
 
 .booking__label {
@@ -1459,7 +1459,7 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: var(--color-gold, #C96030);
+  background: var(--color-gold);
   color: #fff;
   display: flex;
   align-items: center;
@@ -1469,13 +1469,13 @@ body {
   flex-shrink: 0;
 }
 .testimonial-card__name {
-  color: var(--color-text-primary, #fff);
+  color: var(--color-text-primary);
   font-weight: 600;
   font-size: 0.95rem;
   margin: 0;
 }
 .testimonial-card__date {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 0.78rem;
   margin: 0;
 }
@@ -1485,7 +1485,7 @@ body {
   margin-left: auto;
 }
 .testimonial-card__content {
-  color: var(--color-text-secondary, #B0A898);
+  color: var(--color-text-secondary);
   font-size: 0.95rem;
   line-height: 1.7;
   font-style: italic;
@@ -1494,7 +1494,7 @@ body {
 }
 .testimonial-card__reply {
   background: rgba(201, 96, 48, 0.06);
-  border-left: 2px solid var(--color-gold, #C96030);
+  border-left: 2px solid var(--color-gold);
   border-radius: 0 8px 8px 0;
   padding: 0.875rem 1rem;
   display: flex;
@@ -1505,7 +1505,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  color: var(--color-gold, #C96030);
+  color: var(--color-gold);
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -1513,13 +1513,13 @@ body {
 }
 .testimonial-card__reply-date {
   margin-left: auto;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-weight: 400;
   text-transform: none;
   letter-spacing: 0;
 }
 .testimonial-card__reply-text {
-  color: var(--color-text-secondary, #B0A898);
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
   line-height: 1.6;
   margin: 0;
@@ -1575,7 +1575,7 @@ body {
 @media (max-width: 960px) { .testimonials-page__grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 768px) { .testimonials-page__grid { grid-template-columns: 1fr; } }
 .testimonials-page__empty {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   text-align: center;
   padding: 3rem;
 }
@@ -1592,7 +1592,7 @@ body {
 }
 .testimonials-page__form-section h2 {
   font-size: 1.75rem;
-  color: var(--color-text-primary, #fff);
+  color: var(--color-text-primary);
   margin-bottom: 1.5rem;
 }
 .testimonials-page__auth-gate {
@@ -1604,7 +1604,7 @@ body {
   padding: 3rem 1rem;
   border: 1px solid var(--color-border, rgba(201,96,48,0.15));
   border-radius: 12px;
-  color: var(--color-text-secondary, #B0A898);
+  color: var(--color-text-secondary);
 }
 .testimonials-page__success {
   display: flex;
@@ -1613,18 +1613,18 @@ body {
   gap: 0.75rem;
   text-align: center;
   padding: 3rem 1rem;
-  color: var(--color-text-secondary, #B0A898);
+  color: var(--color-text-secondary);
 }
 .testimonials-page__success h3 {
-  color: var(--color-text-primary, #fff);
+  color: var(--color-text-primary);
   font-size: 1.25rem;
 }
 .testimonials-page__logged-as {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 0.875rem;
   margin-bottom: 1.25rem;
 }
-.testimonials-page__logged-as strong { color: var(--color-gold, #C96030); }
+.testimonials-page__logged-as strong { color: var(--color-gold); }
 .testimonials-page__form { display: flex; flex-direction: column; gap: 1.25rem; }
 .testimonials-page__rating { display: flex; gap: 0.25rem; margin-top: 0.25rem; }
 .testimonials-page__star {
@@ -1637,8 +1637,8 @@ body {
   line-height: 1;
   padding: 0;
 }
-.testimonials-page__star.active { color: var(--color-gold, #C96030); }
-.testimonials-page__star:hover { transform: scale(1.15); color: var(--color-gold, #C96030); }
+.testimonials-page__star.active { color: var(--color-gold); }
+.testimonials-page__star:hover { transform: scale(1.15); color: var(--color-gold); }
 @media (max-width: 700px) { .testimonials-page__grid { grid-template-columns: 1fr; } }
 
 .testimonials-list__header {
@@ -1650,7 +1650,7 @@ body {
   margin-bottom: 2.5rem;
 }
 .testimonials-submit__back {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 0.875rem;
   text-decoration: none;
   transition: color 0.2s;
@@ -1658,7 +1658,7 @@ body {
   align-items: center;
   gap: 0.35rem;
 }
-.testimonials-submit__back:hover { color: var(--color-gold, #C96030); }
+.testimonials-submit__back:hover { color: var(--color-gold); }
 
 /* ── Admin page layout ── */
 .admin-page {
@@ -1678,7 +1678,7 @@ body {
 .admin-page__header h1 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-text-primary, #fff);
+  color: var(--color-text-primary);
 }
 
 /* ── Admin Testimonials page ── */
@@ -1694,16 +1694,16 @@ body {
 }
 .admin-testimonials__meta {
   display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
-  color: var(--color-text-primary, #fff); font-size: 0.9rem;
+  color: var(--color-text-primary); font-size: 0.9rem;
 }
 .admin-testimonials__content {
-  color: var(--color-text-secondary, #B0A898);
+  color: var(--color-text-secondary);
   font-style: italic; font-size: 0.9rem; margin: 0;
 }
 .admin-testimonials__reply { display: flex; flex-direction: column; gap: 0.5rem; }
 .admin-testimonials__reply label {
   font-size: 0.75rem; text-transform: uppercase;
-  letter-spacing: 0.08em; color: var(--color-gold, #C96030);
+  letter-spacing: 0.08em; color: var(--color-gold);
 }
 .admin-testimonials__reply textarea {
   background: var(--color-surface);
@@ -1712,20 +1712,20 @@ body {
   font-size: 0.85rem; resize: vertical; font-family: inherit;
 }
 .admin-testimonials__actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.admin-testimonials__date { color: var(--color-text-muted, #666); font-size: 0.8rem; }
+.admin-testimonials__date { color: var(--color-text-muted); font-size: 0.8rem; }
 .admin-filter { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
 .admin-filter__btn {
   padding: 0.4rem 1rem; border-radius: 20px;
   border: 1px solid var(--color-border, rgba(201,96,48,0.15));
-  background: none; color: var(--color-text-muted, #666);
+  background: none; color: var(--color-text-muted);
   cursor: pointer; font-size: 0.85rem; transition: all 0.2s;
 }
 .admin-filter__btn.active {
-  background: var(--color-gold, #C96030); color: #fff;
-  border-color: var(--color-gold, #C96030);
+  background: var(--color-gold); color: #fff;
+  border-color: var(--color-gold);
 }
 .admin-badge {
-  background: var(--color-gold, #C96030); color: #fff;
+  background: var(--color-gold); color: #fff;
   font-size: 0.75rem; border-radius: 10px;
   padding: 0.1rem 0.5rem; margin-left: 0.5rem; vertical-align: middle;
 }
@@ -1740,13 +1740,13 @@ body {
 /* ── Admin Services page ── */
 .admin-services__form {
   background: rgba(255,255,255,0.03);
-  border: 1px solid var(--color-gold, #C96030);
+  border: 1px solid var(--color-gold);
   border-radius: 10px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
 }
 .admin-services__form h3 {
-  color: var(--color-text-primary, #fff);
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
   font-size: 1rem;
 }
@@ -1775,11 +1775,11 @@ body {
   gap: 0.2rem;
   min-width: 0;
 }
-.admin-services__name { color: var(--color-text-primary, #fff); font-weight: 600; }
-.admin-services__desc { color: var(--color-text-muted, #666); font-size: 0.8rem; }
-.admin-services__meta { color: var(--color-text-muted, #666); font-size: 0.75rem; }
+.admin-services__name { color: var(--color-text-primary); font-weight: 600; }
+.admin-services__desc { color: var(--color-text-muted); font-size: 0.8rem; }
+.admin-services__meta { color: var(--color-text-muted); font-size: 0.75rem; }
 .admin-services__price {
-  color: var(--color-gold, #C96030);
+  color: var(--color-gold);
   font-size: 1.2rem;
   font-weight: 700;
   min-width: 52px;
@@ -1794,7 +1794,7 @@ body {
   0%, 100% { opacity: 0.25; }
   50% { opacity: 0.5; }
 }
-.service-card__duration { color: var(--color-text-muted, #666); font-size: 0.8rem; margin-top: 0.4rem; }
+.service-card__duration { color: var(--color-text-muted); font-size: 0.8rem; margin-top: 0.4rem; }
 
 @media (max-width: 900px) { .admin-services__form-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 600px) {
