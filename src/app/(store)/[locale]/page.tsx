@@ -1,5 +1,6 @@
 import { setRequestLocale } from 'next-intl/server';
 import { db } from '@/lib/db';
+import { formatWorkingHoursShort } from '@/lib/formatWorkingHours';
 import HeroSection from '@/components/sections/HeroSection';
 import DecorativeDivider from '@/components/ui/DecorativeDivider';
 import StatsBar from '@/components/sections/StatsBar';
@@ -50,19 +51,7 @@ export default async function HomePage({
     catch { return null; }
   })();
 
-  type HoursEntry = { open: string; close: string } | null;
-  const workingHoursLabel = (() => {
-    if (!parsedHours || typeof parsedHours !== 'object') return null;
-    const h = parsedHours as Record<string, HoursEntry>;
-    const mon = h.mon;
-    if (!mon) return null;
-    const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri'] as const;
-    const allSame = weekdays.every((d) => {
-      const day = h[d];
-      return day && day.open === mon.open && day.close === mon.close;
-    });
-    return allSame ? `Po–Pia ${mon.open}–${mon.close}` : `${mon.open}–${mon.close}`;
-  })();
+  const workingHoursLabel = formatWorkingHoursShort(parsedHours) || null;
 
   const [heroConfig, galleryImages, dbTestimonials, dbMasters] = store
     ? await Promise.all([

@@ -80,9 +80,9 @@ export default function HeroSection({ config, store }: HeroSectionProps) {
               <span className={styles.dot}>·</span>
             </>
           )}
-          {(store?.workingHoursLabel ?? 'Po–Pia 09:00–18:00') && (
+          {store?.workingHoursLabel && (
             <>
-              <span>🕐 {store?.workingHoursLabel ?? 'Po–Pia 09:00–18:00'}</span>
+              <span>🕐 {store.workingHoursLabel}</span>
               <span className={styles.dot}>·</span>
             </>
           )}
