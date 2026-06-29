@@ -10,7 +10,7 @@ function parseTime(t: string): number {
 
 function generateSlots(startMin: number, endMin: number, intervalMin: number): string[] {
   const slots: string[] = [];
-  for (let t = startMin; t < endMin; t += intervalMin) {
+  for (let t = startMin; t + intervalMin <= endMin; t += intervalMin) {
     const h = Math.floor(t / 60).toString().padStart(2, '0');
     const m = (t % 60).toString().padStart(2, '0');
     slots.push(`${h}:${m}`);

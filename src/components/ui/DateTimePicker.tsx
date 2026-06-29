@@ -14,16 +14,15 @@ const SK_MONTHS = ['jan', 'feb', 'mar', 'apr', 'máj', 'jún', 'júl', 'aug', 's
 
 function generateTimeSlots(dayOfWeek: number): string[] {
   if (dayOfWeek === 0) return [];
-  const endHour = dayOfWeek === 6 ? 14 : 18;
-  const endMin  = dayOfWeek === 6 ? 30 : 0;
+  const closeHour  = dayOfWeek === 6 ? 14 : 18;
+  const closeMin   = dayOfWeek === 6 ? 30 : 0;
+  const closeTotal = closeHour * 60 + closeMin;
+  const SLOT       = 30;
   const slots: string[] = [];
-  let h = 9, m = 0;
-  while (true) {
-    const time = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
-    slots.push(time);
-    if (h === endHour && m === endMin) break;
-    m += 30;
-    if (m >= 60) { m = 0; h++; }
+  let t = 9 * 60;
+  while (t + SLOT <= closeTotal) {
+    slots.push(`${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`);
+    t += SLOT;
   }
   return slots;
 }
