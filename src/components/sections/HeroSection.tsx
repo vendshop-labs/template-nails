@@ -1,6 +1,7 @@
 import Image from 'next/image';
-import { STORE_NAME, WHATSAPP_LINKS, CONTACT } from '@/lib/constants';
+import { WHATSAPP_LINKS, CONTACT } from '@/lib/constants';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
+import styles from './HeroSection.module.css';
 
 interface HeroConfig {
   title?: string | null;
@@ -26,71 +27,72 @@ export default function HeroSection({ config }: HeroSectionProps) {
   const imageSrc = config?.imageUrl || null;
 
   return (
-    <section className="hero">
-      {imageSrc ? (
-        <div className="hero__bg">
-          <Image
-            src={imageSrc}
-            alt={`${STORE_NAME} — nechtové štúdio Trenčín`}
-            fill
-            priority
-            fetchPriority="high"
-            sizes="100vw"
-            quality={85}
-            unoptimized={imageSrc.startsWith('http')}
-            style={{ objectFit: 'cover', objectPosition: 'center' }}
-          />
-          <div className="hero__overlay" />
+    <section className={styles.hero}>
+      {/* Левая колонка — контент */}
+      <div className={styles.heroLeft}>
+        <p className="hero__tagline">
+          <span className="hero__tagline-line" />
+          Est. 2024 — Trenčín
+        </p>
+
+        <h1 className="hero__title">{title}</h1>
+
+        <p className="hero__subtitle">{subtitle}</p>
+
+        <div className="hero__chips">
+          <span className="hero__chip">💅 Manikúra</span>
+          <span className="hero__chip">✨ Gél nechty</span>
+          <span className="hero__chip">🌸 Nail art</span>
+          <span className="hero__chip">🎓 Kurzy</span>
         </div>
-      ) : (
-        <div className="hero__image-gradient" />
-      )}
 
-      <div className="hero__inner">
-        <div className="hero__content">
-          <p className="hero__tagline">
-            <span className="hero__tagline-line" />
-            Est. 2024 — Trenčín
-          </p>
+        <p className="hero__price-anchor">
+          Manikúra od <strong>€18</strong> · Gél od <strong>€35</strong>
+        </p>
 
-          <h1 className="hero__title">{title}</h1>
-
-          <p className="hero__subtitle">{subtitle}</p>
-
-          <div className="hero__chips">
-            <span className="hero__chip">💅 Manikúra</span>
-            <span className="hero__chip">✨ Gél nechty</span>
-            <span className="hero__chip">🌸 Nail art</span>
-            <span className="hero__chip">🎓 Kurzy</span>
-          </div>
-
-          <p className="hero__price-anchor">
-            Manikúra od <strong>€18</strong> · Gél od <strong>€35</strong>
-          </p>
-
-          <div className="hero__buttons">
-            <a href="#rezervacia" className="btn-primary">
-              {ctaText}
-            </a>
-            <a
-              href={WHATSAPP_LINKS.booking}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-whatsapp"
-            >
-              <WhatsAppIcon size={18} />
-              WhatsApp
-            </a>
-          </div>
-
-          <p className="hero__trust">
-            ⭐ Google 4.9 &nbsp;·&nbsp; 🕐 Po–Pia 09:00–18:00 &nbsp;·&nbsp; 📍 Trenčín
-            &nbsp;·&nbsp;{' '}
-            <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className="hero__instagram">
-              Instagram
-            </a>
-          </p>
+        <div className="hero__buttons">
+          <a href="#rezervacia" className="btn-primary">
+            {ctaText}
+          </a>
+          <a
+            href={WHATSAPP_LINKS.booking}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-whatsapp"
+          >
+            <WhatsAppIcon size={18} />
+            WhatsApp
+          </a>
         </div>
+
+        <p className="hero__trust">
+          ⭐ Google 4.9 &nbsp;·&nbsp; 🕐 Po–Pia 09:00–18:00 &nbsp;·&nbsp; 📍 Trenčín
+          &nbsp;·&nbsp;{' '}
+          <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className="hero__instagram">
+            Instagram
+          </a>
+        </p>
+      </div>
+
+      {/* Правая колонка — изображение */}
+      <div className={styles.heroRight}>
+        {imageSrc ? (
+          <div className={styles.heroImageWrap}>
+            <Image
+              src={imageSrc}
+              alt="Lumière Nails — nechtové štúdio Trenčín"
+              fill
+              priority
+              fetchPriority="high"
+              sizes="50vw"
+              quality={85}
+              unoptimized={imageSrc.startsWith('http')}
+              style={{ objectFit: 'cover', objectPosition: 'center' }}
+            />
+          </div>
+        ) : (
+          <div className={styles.heroGradient} />
+        )}
       </div>
     </section>
   );
