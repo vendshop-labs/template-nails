@@ -1,3 +1,5 @@
+import styles from './TestimonialCard.module.css';
+
 interface TestimonialCardProps {
   name: string;
   content: string;
@@ -64,31 +66,9 @@ export default function TestimonialCard({
       <p className="testimonial-card__content">&ldquo;{content}&rdquo;</p>
 
       {adminReply && (
-        <div className="testimonial-card__reply">
-          <div className="testimonial-card__reply-header">
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="var(--color-gold, #C96030)"
-              strokeWidth="2"
-              aria-hidden="true"
-            >
-              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
-            </svg>
-            <span>Odpoveď majiteľa</span>
-            {adminReplyAt && (
-              <span className="testimonial-card__reply-date">
-                {new Date(adminReplyAt).toLocaleDateString('sk-SK', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                })}
-              </span>
-            )}
-          </div>
-          <p className="testimonial-card__reply-text">{adminReply}</p>
+        <div className={styles.ownerReply}>
+          <span className={styles.ownerLabel}>✍️ Lumière Nails</span>
+          <p className={styles.ownerText}>{adminReply}</p>
         </div>
       )}
     </div>
