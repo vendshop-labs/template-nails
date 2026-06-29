@@ -34,7 +34,7 @@
 
 .error {
   margin: 0; padding: 8px 12px; border-radius: 6px;
-  background: color-mix(in srgb, #dc2626 10%, var(--color-bg)); color: #dc2626; font-size: 0.85rem; text-align: center;
+  background: var(--color-error-bg); color: var(--color-error); font-size: 0.85rem; text-align: center;
 }
 
 .btn {

@@ -33,6 +33,9 @@ html, body {
 
   --color-whatsapp:      #25D366;
   --color-whatsapp-dark: #20BD5A;
+  --color-error:         #f87171;
+  --color-error-bg:      rgba(220, 38, 38, 0.10);
+  --color-error-bg-hover: rgba(220, 38, 38, 0.25);
   --transition: 0.3s ease;
 
   --shadow-sm: 0 1px 3px rgba(45,27,27,0.06);

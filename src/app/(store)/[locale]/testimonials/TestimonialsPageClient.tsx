@@ -171,7 +171,7 @@ export default function TestimonialsPageClient({ testimonials, total }: Props) {
               </div>
 
               {error && (
-                <p style={{ color: '#f87171', fontSize: '0.875rem' }}>{error}</p>
+                <p style={{ color: 'var(--color-error)', fontSize: '0.875rem' }}>{error}</p>
               )}
 
               <button

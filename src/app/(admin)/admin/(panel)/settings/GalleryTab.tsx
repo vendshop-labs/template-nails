@@ -119,7 +119,7 @@ export default function GalleryTab() {
     }
   };
 
-  if (loading) return <p style={{ color: '#888', fontSize: 14 }}>Načítavam...</p>;
+  if (loading) return <p className={styles.muted}>Načítavam...</p>;
 
   return (
     <>
@@ -144,11 +144,11 @@ export default function GalleryTab() {
           <input ref={fileRef} type="file" accept="image/*" multiple onChange={handleUpload} />
           {uploading === 'new' ? 'Nahrávam...' : '↑ Nahrať súbor'}
         </label>
-        <span style={{ fontSize: 13, color: '#888' }}>{images.length} fotografií</span>
+        <span className={styles.muted}>{images.length} fotografií</span>
       </div>
 
       {images.length === 0 ? (
-        <p style={{ color: '#888', fontSize: 14 }}>Galéria je prázdna.</p>
+        <p className={styles.muted}>Galéria je prázdna.</p>
       ) : (
         <div className={styles.galleryGrid}>
           {images.map((img, index) => (
