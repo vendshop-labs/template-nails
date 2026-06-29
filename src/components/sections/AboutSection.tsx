@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import { ABOUT } from '@/lib/constants';
 import ScrollReveal from '@/components/ui/ScrollReveal';
-import { BLUR_PLACEHOLDER } from '@/components/ui/BlurImage';
 
 interface AboutSectionProps {
   aboutImage?: string | null;
+  description?: string | null;
 }
 
-export default function AboutSection({ aboutImage }: AboutSectionProps) {
+export default function AboutSection({ aboutImage, description }: AboutSectionProps) {
   const titleLines = ABOUT.title.split('\n');
 
   return (
@@ -21,10 +21,8 @@ export default function AboutSection({ aboutImage }: AboutSectionProps) {
                 alt={ABOUT.imageAlt}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="about__image"
-                placeholder="blur"
-                blurDataURL={BLUR_PLACEHOLDER}
                 unoptimized={aboutImage.startsWith('http')}
+                style={{ objectFit: 'cover', objectPosition: 'center' }}
               />
             ) : (
               <div className="about__image-placeholder" aria-label={ABOUT.imageAlt} />
@@ -44,23 +42,27 @@ export default function AboutSection({ aboutImage }: AboutSectionProps) {
                 </>
               )}
             </h3>
-            {ABOUT.paragraphs.map((text, i) => {
-              if (ABOUT.highlightText && text.includes(ABOUT.highlightText)) {
-                const [before, after] = text.split(ABOUT.highlightText);
+            {description ? (
+              <p className="about__text">{description}</p>
+            ) : (
+              ABOUT.paragraphs.map((text, i) => {
+                if (ABOUT.highlightText && text.includes(ABOUT.highlightText)) {
+                  const [before, after] = text.split(ABOUT.highlightText);
+                  return (
+                    <p key={i} className="about__text">
+                      {before}
+                      <strong>{ABOUT.highlightText}</strong>
+                      {after}
+                    </p>
+                  );
+                }
                 return (
                   <p key={i} className="about__text">
-                    {before}
-                    <strong>{ABOUT.highlightText}</strong>
-                    {after}
+                    {text}
                   </p>
                 );
-              }
-              return (
-                <p key={i} className="about__text">
-                  {text}
-                </p>
-              );
-            })}
+              })
+            )}
           </div>
         </ScrollReveal>
       </div>

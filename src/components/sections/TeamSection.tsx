@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import GoldDivider from '@/components/ui/GoldDivider';
 import ScrollReveal from '@/components/ui/ScrollReveal';
-import { BLUR_PLACEHOLDER } from '@/components/ui/BlurImage';
+
 
 
 interface Master {
@@ -36,9 +36,8 @@ export default function TeamSection({ masters }: { masters: Master[] }) {
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="team-photo"
-                    placeholder="blur"
-                    blurDataURL={BLUR_PLACEHOLDER}
                     unoptimized={member.photo.startsWith('http')}
+                    style={{ objectFit: 'cover', objectPosition: 'top center' }}
                   />
                 ) : (
                   <div className="team-photo-placeholder">

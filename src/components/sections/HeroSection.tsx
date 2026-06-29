@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { STORE_NAME, WHATSAPP_LINKS, CONTACT } from '@/lib/constants';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
-import { BLUR_PLACEHOLDER } from '@/components/ui/BlurImage';
 
 interface HeroConfig {
   title?: string | null;
@@ -28,8 +27,26 @@ export default function HeroSection({ config }: HeroSectionProps) {
 
   return (
     <section className="hero">
+      {imageSrc ? (
+        <div className="hero__bg">
+          <Image
+            src={imageSrc}
+            alt={`${STORE_NAME} — nechtové štúdio Trenčín`}
+            fill
+            priority
+            fetchPriority="high"
+            sizes="100vw"
+            quality={85}
+            unoptimized={imageSrc.startsWith('http')}
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+          />
+          <div className="hero__overlay" />
+        </div>
+      ) : (
+        <div className="hero__image-gradient" />
+      )}
+
       <div className="hero__inner">
-        {/* LEFT — text */}
         <div className="hero__content">
           <p className="hero__tagline">
             <span className="hero__tagline-line" />
@@ -40,7 +57,6 @@ export default function HeroSection({ config }: HeroSectionProps) {
 
           <p className="hero__subtitle">{subtitle}</p>
 
-          {/* Service chips */}
           <div className="hero__chips">
             <span className="hero__chip">💅 Manikúra</span>
             <span className="hero__chip">✨ Gél nechty</span>
@@ -48,7 +64,6 @@ export default function HeroSection({ config }: HeroSectionProps) {
             <span className="hero__chip">🎓 Kurzy</span>
           </div>
 
-          {/* Price anchor */}
           <p className="hero__price-anchor">
             Manikúra od <strong>€18</strong> · Gél od <strong>€35</strong>
           </p>
@@ -75,28 +90,6 @@ export default function HeroSection({ config }: HeroSectionProps) {
               Instagram
             </a>
           </p>
-        </div>
-
-        {/* RIGHT — image */}
-        <div className="hero__image-wrap">
-          {imageSrc ? (
-            <Image
-              src={imageSrc}
-              alt={`${STORE_NAME} — nechtové štúdio Trenčín`}
-              fill
-              className="hero__image"
-              priority
-              fetchPriority="high"
-              sizes="(max-width: 768px) 100vw, 42vw"
-              quality={85}
-              unoptimized={imageSrc.startsWith('http')}
-              placeholder="blur"
-              blurDataURL={BLUR_PLACEHOLDER}
-            />
-          ) : (
-            <div className="hero__image-gradient" />
-          )}
-          <div className="hero__overlay" />
         </div>
       </div>
     </section>
