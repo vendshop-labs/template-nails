@@ -7,6 +7,9 @@ import {
   validateImageFile,
   GALLERY_VARIANTS,
   PRODUCT_VARIANTS,
+  HERO_VARIANTS,
+  ABOUT_VARIANTS,
+  AVATAR_VARIANTS,
   type ImageVariant,
 } from '@/lib/image-utils';
 
@@ -15,6 +18,14 @@ const STORE_SLUG = process.env.STORE_SLUG ?? 'kate-barber';
 const PURPOSE_VARIANTS: Record<string, ImageVariant[]> = {
   gallery: GALLERY_VARIANTS,
   product: PRODUCT_VARIANTS,
+};
+
+const TYPE_VARIANTS: Record<string, ImageVariant[]> = {
+  hero:    HERO_VARIANTS,
+  about:   ABOUT_VARIANTS,
+  gallery: GALLERY_VARIANTS,
+  avatar:  AVATAR_VARIANTS,
+  general: GALLERY_VARIANTS,
 };
 
 async function saveToBlob(
@@ -45,6 +56,7 @@ export async function POST(request: Request) {
   const formData = await request.formData();
   const file = formData.get('file') as File | null;
   const purpose = (formData.get('purpose') as string) ?? 'gallery';
+  const type = (formData.get('type') as string) ?? '';
 
   if (!file) {
     return NextResponse.json({ error: 'No file provided' }, { status: 400 });
@@ -55,7 +67,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: validationError }, { status: 400 });
   }
 
-  const variants = PURPOSE_VARIANTS[purpose] ?? GALLERY_VARIANTS;
+  const variants = TYPE_VARIANTS[type] ?? PURPOSE_VARIANTS[purpose] ?? GALLERY_VARIANTS;
 
   try {
     const inputBuffer = Buffer.from(await file.arrayBuffer());

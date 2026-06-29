@@ -27,6 +27,7 @@ async function uploadPhoto(file: File): Promise<string> {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('purpose', 'master');
+  formData.append('type', 'avatar');
   const res = await fetch('/api/admin/upload', { method: 'POST', body: formData });
   if (!res.ok) throw new Error('Upload failed');
   const { url } = (await res.json()) as { url: string };

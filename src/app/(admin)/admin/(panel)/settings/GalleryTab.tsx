@@ -15,6 +15,7 @@ async function uploadFile(file: File): Promise<string> {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('purpose', 'gallery');
+  formData.append('type', 'gallery');
   const res = await fetch('/api/admin/upload', { method: 'POST', body: formData });
   if (!res.ok) {
     const err = (await res.json()) as { error?: string; details?: string };

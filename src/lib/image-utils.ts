@@ -25,6 +25,18 @@ export const PRODUCT_VARIANTS: ImageVariant[] = [
   { suffix: '-thumb', maxWidth: 300, maxHeight: 200, quality: 75, fit: 'cover' },
 ];
 
+export const HERO_VARIANTS: ImageVariant[] = [
+  { suffix: '-full', maxWidth: 1920, maxHeight: 1080, quality: 85, fit: 'cover' },
+];
+
+export const ABOUT_VARIANTS: ImageVariant[] = [
+  { suffix: '-full', maxWidth: 1200, maxHeight: 800, quality: 85, fit: 'cover' },
+];
+
+export const AVATAR_VARIANTS: ImageVariant[] = [
+  { suffix: '-full', maxWidth: 400, maxHeight: 400, quality: 85, fit: 'cover' },
+];
+
 export async function processImage(
   inputBuffer: Buffer,
   variant: ImageVariant,
