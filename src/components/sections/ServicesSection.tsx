@@ -34,7 +34,7 @@ export default function ServicesSection() {
         <h2 className="section-title">Čo pre vás pripravíme</h2>
         <GoldDivider />
         <p className="section-subtitle">
-          Od klasického strihu po kompletný grooming — postaráme sa o vás od hlavy po bradu.
+          Od klasickej manikúry po nail art — postaráme sa o vaše ruky a nechty do detailu.
         </p>
       </ScrollReveal>
 

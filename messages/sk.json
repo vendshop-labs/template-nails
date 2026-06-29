@@ -178,7 +178,7 @@
     "wholesale": "Veľkoobchodné podmienky",
     "deliveryEU": "Rýchle doručenie po celej EÚ",
     "deliveryB2B": "Hromadné objednávky a individuálna dodávka",
-    "aboutDescServices": "Profesionálna barbershop a vlasový salón v centre Trenčína. Pánske strihy, bradenie a styling na najvyššej úrovni.",
+    "aboutDescServices": "Prémiové nechtové štúdio v centre Trenčína. Gélová manikúra, nail art a pedikúra na najvyššej úrovni.",
     "servicesNavTitle": "Navigácia",
     "servicesHoursTitle": "Pracovná doba",
     "servicesClosed": "Zatvorené",
@@ -554,10 +554,10 @@
   },
   "services": {
     "title": "Naše služby",
-    "haircut": "Pánsky strih",
-    "beard": "Úprava brady",
-    "hairBeard": "Strih + brada",
-    "styling": "Styling",
+    "haircut": "Klasická manikúra",
+    "beard": "Gélová manikúra",
+    "hairBeard": "Gélová + nail art",
+    "styling": "Pedikúra",
     "bookNow": "Rezervovať",
     "duration": "{min} min",
     "from": "od"

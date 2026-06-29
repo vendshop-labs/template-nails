@@ -16,7 +16,7 @@ export default function CoursesSection({ courses = [] }: Props) {
         <h2 className="section-title">Learn from the Masters</h2>
         <GoldDivider />
         <p className="section-subtitle">
-          Professional barbering courses taught by industry experts.
+          Professional nail art and manicure courses taught by industry experts.
         </p>
       </ScrollReveal>
 

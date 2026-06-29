@@ -1,12 +1,41 @@
 import { WHATSAPP_LINKS, CONTACT, STORE_NAME_FALLBACK, STORE_TAGLINE } from '@/lib/constants';
 
+type DayHours = { open: string; close: string } | null;
+type WorkingHoursMap = Record<string, DayHours>;
+
+const DAYS_SK: Record<string, string> = {
+  mon: 'Pondelok', tue: 'Utorok', wed: 'Streda',
+  thu: 'Štvrtok', fri: 'Piatok', sat: 'Sobota', sun: 'Nedeľa',
+};
+const DAY_ORDER = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+function formatFooterHours(wh: unknown): { label: string; hours: string }[] {
+  if (!wh || typeof wh !== 'object' || Array.isArray(wh)) return [];
+  const map = wh as WorkingHoursMap;
+  const result: { label: string; hours: string }[] = [];
+  let i = 0;
+  while (i < DAY_ORDER.length) {
+    const day = DAY_ORDER[i];
+    const h = map[day];
+    if (!h) { result.push({ label: DAYS_SK[day] ?? day, hours: 'Zatvorené' }); i++; continue; }
+    let j = i + 1;
+    while (j < DAY_ORDER.length && map[DAY_ORDER[j]]?.open === h.open && map[DAY_ORDER[j]]?.close === h.close) j++;
+    const label = j - i > 1 ? `${DAYS_SK[day]} – ${DAYS_SK[DAY_ORDER[j - 1]]}` : DAYS_SK[day] ?? day;
+    result.push({ label, hours: `${h.open} – ${h.close}` });
+    i = j;
+  }
+  return result;
+}
+
 interface FooterProps {
   locale?: string;
   legalEnabled?: boolean;
   storeName?: string;
+  workingHours?: unknown;
 }
 
-export default function Footer({ locale, legalEnabled, storeName }: FooterProps) {
+export default function Footer({ locale, legalEnabled, storeName, workingHours }: FooterProps) {
+  const hoursRows = formatFooterHours(workingHours);
   const currentYear = new Date().getFullYear();
   const showLegal = locale === 'de' && legalEnabled;
 
@@ -63,9 +92,18 @@ export default function Footer({ locale, legalEnabled, storeName }: FooterProps)
         <div className="footer__col">
           <h4 className="footer__heading">Otváracie hodiny</h4>
           <ul className="footer__hours">
-            <li><span>Pondelok – Piatok</span><span>9:00 – 20:00</span></li>
-            <li><span>Sobota</span><span>9:00 – 18:00</span></li>
-            <li><span>Nedeľa</span><span className="footer__closed">Zatvorené</span></li>
+            {hoursRows.length > 0 ? hoursRows.map((row) => (
+              <li key={row.label}>
+                <span>{row.label}</span>
+                <span className={row.hours === 'Zatvorené' ? 'footer__closed' : undefined}>{row.hours}</span>
+              </li>
+            )) : (
+              <>
+                <li><span>Pondelok – Piatok</span><span>09:00 – 18:00</span></li>
+                <li><span>Sobota</span><span>09:00 – 15:00</span></li>
+                <li><span>Nedeľa</span><span className="footer__closed">Zatvorené</span></li>
+              </>
+            )}
           </ul>
         </div>
 

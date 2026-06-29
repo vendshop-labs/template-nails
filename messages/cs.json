@@ -178,7 +178,7 @@
     "wholesale": "Velkoobchodní podmínky",
     "deliveryEU": "Rychlé doručení po celé EU",
     "deliveryB2B": "Hromadné objednávky a individuální dodávka",
-    "aboutDescServices": "Profesionální barbershop a kadeřnický salón v centru Trenčína. Pánské střihy, holení vousů a styling na nejvyšší úrovni.",
+    "aboutDescServices": "Prémiový nehtový salon v centru Trenčína. Gelová manikúra, nail art a pedikúra na nejvyšší úrovni.",
     "servicesNavTitle": "Navigace",
     "servicesHoursTitle": "Pracovní doba",
     "servicesClosed": "Zavřeno",
@@ -565,7 +565,7 @@
   "booking": {
     "title": "Zarezervujte termín",
     "selectService": "Vyberte službu",
-    "selectMaster": "Vyberte barbera",
+    "selectMaster": "Vyberte techniku",
     "selectDate": "Vyberte datum",
     "selectTime": "Vyberte čas",
     "yourName": "Vaše jméno",

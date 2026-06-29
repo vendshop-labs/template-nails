@@ -113,12 +113,17 @@ export default async function LocaleLayout({
   const storeSlug = process.env.STORE_SLUG ?? 'lumiere-nails';
   const store = await db.store.findUnique({
     where: { slug: storeSlug },
-    select: { id: true, name: true },
+    select: { id: true, name: true, openingHours: true },
   });
   const legalConfig = (locale === 'de' && store)
     ? await db.legalConfig.findUnique({ where: { storeId: store.id } })
     : null;
   const legalEnabled = legalConfig?.enabled ?? false;
+
+  const parsedFooterHours = (() => {
+    try { return store?.openingHours ? JSON.parse(store.openingHours) as unknown : null; }
+    catch { return null; }
+  })();
 
   return (
     <html lang={locale} data-vertical={config.vertical.vertical} className={`${playfair.variable} ${dmSans.variable}`}>
@@ -156,7 +161,7 @@ export default async function LocaleLayout({
               <PresenceProvider presence={config.presence}>
                 <Header logoUrl={config.logoUrl} storeName={store?.name ?? undefined} />
                 <main>{children}</main>
-                <Footer locale={locale} legalEnabled={legalEnabled} storeName={store?.name ?? undefined} />
+                <Footer locale={locale} legalEnabled={legalEnabled} storeName={store?.name ?? undefined} workingHours={parsedFooterHours} />
                 <CookieBanner />
               </PresenceProvider>
             </VerticalProvider>
