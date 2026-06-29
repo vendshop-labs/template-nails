@@ -1723,9 +1723,9 @@ body {
   letter-spacing: 0.08em; color: var(--color-gold, #C96030);
 }
 .admin-testimonials__reply textarea {
-  background: rgba(22,22,22,0.8);
-  border: 1px solid var(--color-border, rgba(201,96,48,0.15));
-  border-radius: 6px; padding: 0.6rem; color: var(--color-text-primary, #fff);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px; padding: 0.6rem; color: var(--color-text);
   font-size: 0.85rem; resize: vertical; font-family: inherit;
 }
 .admin-testimonials__actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
