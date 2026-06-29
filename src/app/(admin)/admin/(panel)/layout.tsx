@@ -16,7 +16,9 @@ export default async function AdminPanelLayout({ children }: { children: React.R
         storeName={store?.name ?? 'Store'}
         vertical={store?.vertical ?? 'ECOMMERCE'}
       />
-      <main className={styles.content}>{children}</main>
+      <main className={styles.content}>
+        <div className={styles.pageContent}>{children}</div>
+      </main>
     </div>
   );
 }
