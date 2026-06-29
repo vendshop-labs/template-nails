@@ -187,6 +187,12 @@ export default function AdminSettingsPage() {
       if (!res.ok) throw new Error('Upload failed');
       const { url } = (await res.json()) as { url: string };
       sStore('aboutImage', url);
+      // Auto-save to DB immediately (don't rely on user clicking Save)
+      await fetch('/api/admin/store-info', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ aboutImage: url }),
+      });
     } catch {
       // silent
     } finally {
