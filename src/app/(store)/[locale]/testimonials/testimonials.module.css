@@ -34,3 +34,15 @@
 .btn:hover { opacity: 0.9; }
 .backLink { display: block; margin-top: 1rem; color: var(--color-text-muted); text-decoration: none; font-size: 0.875rem; }
 .backLink:hover { color: var(--color-primary); }
+
+.backBtn {
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 2rem;
+  opacity: 0.8;
+  text-decoration: none;
+}
+.backBtn:hover { opacity: 1; }

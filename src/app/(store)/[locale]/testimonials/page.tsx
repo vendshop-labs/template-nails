@@ -4,6 +4,7 @@ import { db } from '@/lib/db';
 import { setRequestLocale } from 'next-intl/server';
 import TestimonialCard from '@/components/ui/TestimonialCard';
 import GoldDivider from '@/components/ui/GoldDivider';
+import styles from './testimonials.module.css';
 
 const STORE_SLUG = process.env.STORE_SLUG ?? 'lumiere-nails';
 
@@ -39,6 +40,10 @@ export default async function TestimonialsPage({
   return (
     <main style={{ paddingTop: '5rem', minHeight: '100vh' }}>
       <section className="testimonials-page__section">
+
+        <Link href={`/${locale}#recenzie`} className={styles.backBtn}>
+          ← Späť na hlavnú
+        </Link>
 
         <div className="testimonials-list__header">
           <div>

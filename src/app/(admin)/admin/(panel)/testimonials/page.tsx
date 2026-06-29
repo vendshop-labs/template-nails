@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import styles from './testimonials.module.css';
 
 type Status = 'PENDING' | 'APPROVED' | 'REJECTED';
 
@@ -121,6 +122,7 @@ export default function AdminTestimonialsPage() {
                 onChange={(e) =>
                   setReplyDraft((p) => ({ ...p, [t.id]: e.target.value }))
                 }
+                className={styles.replyTextarea}
               />
               <button
                 type="button"

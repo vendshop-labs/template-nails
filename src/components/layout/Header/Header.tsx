@@ -13,7 +13,7 @@ export default function Header({ logoUrl, storeName }: { logoUrl?: string; store
     { href: `/${locale}/#sluzby`,        label: 'Služby' },
     { href: `/${locale}/#galeria`,       label: 'Galéria' },
     { href: `/${locale}/#tim`,           label: 'Tím' },
-    { href: `/${locale}/testimonials`,   label: 'Recenzie' },
+    { href: `/${locale}/#recenzie`,        label: 'Recenzie' },
     { href: `/${locale}/#kontakt`,       label: 'Kontakt' },
   ];
 
