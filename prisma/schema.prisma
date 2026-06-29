@@ -30,6 +30,8 @@ model Store {
   aboutImage     String?
   whatsappPhone  String?
   galleryLayout  String  @default("grid-3")
+  instagramUrl   String?
+  googleRating   String?
 
   themeConfig Json?
   metadata    Json?
@@ -406,8 +408,11 @@ model Testimonial {
   adminReply    String?
   adminReplyAt  DateTime?
 
-  customerId String
-  customer   Customer @relation(fields: [customerId], references: [id])
+  authorName    String?
+  authorEmail   String?
+
+  customerId String?
+  customer   Customer? @relation(fields: [customerId], references: [id])
 
   storeId String
   store   Store @relation(fields: [storeId], references: [id])

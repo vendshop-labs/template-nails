@@ -23,6 +23,8 @@ async function main() {
       email: 'info@lumiere-nails.sk',
       address: 'Mierové námestie 1',
       city: 'Trenčín',
+      instagramUrl: 'https://instagram.com/lumiere.nails',
+      googleRating: '4.9',
     },
     create: {
       name: 'Lumière Nails',
@@ -33,6 +35,8 @@ async function main() {
       email: 'info@lumiere-nails.sk',
       address: 'Mierové námestie 1',
       city: 'Trenčín',
+      instagramUrl: 'https://instagram.com/lumiere.nails',
+      googleRating: '4.9',
       openingHours: JSON.stringify({
         mon: { open: '09:00', close: '18:00' },
         tue: { open: '09:00', close: '18:00' },

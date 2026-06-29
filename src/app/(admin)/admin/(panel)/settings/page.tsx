@@ -76,7 +76,8 @@ export default function AdminSettingsPage() {
     mapLat: '',
     mapLng: '',
     facebook: '',
-    instagram: '',
+    instagramUrl: '',
+    googleRating: '',
     aboutImage: '',
     whatsappPhone: '',
   });
@@ -110,6 +111,8 @@ export default function AdminSettingsPage() {
             mapLng: s.mapLng != null ? String(s.mapLng) : '',
             aboutImage: (s.aboutImage as string) ?? '',
             whatsappPhone: (s.whatsappPhone as string) ?? '',
+            instagramUrl: (s.instagramUrl as string) ?? '',
+            googleRating: (s.googleRating as string) ?? '',
           }));
           setHours(parseHours(s.openingHours));
           setLogoUrl((s.logoUrl as string | null) ?? null);
@@ -152,6 +155,8 @@ export default function AdminSettingsPage() {
           mapLng: store.mapLng ? parseFloat(store.mapLng) : null,
           aboutImage: store.aboutImage || null,
           whatsappPhone: store.whatsappPhone || null,
+          instagramUrl: store.instagramUrl || null,
+          googleRating: store.googleRating || null,
         }),
       });
       if (res.ok) showToast();
@@ -373,11 +378,11 @@ export default function AdminSettingsPage() {
               </div>
 
               <div className={styles.grid2}>
-                <Field label="Facebook">
-                  <input className={styles.input} value={store.facebook} placeholder="https://facebook.com/..." onChange={(e) => sStore('facebook', e.target.value)} />
+                <Field label="Instagram URL">
+                  <input className={styles.input} value={store.instagramUrl} placeholder="https://instagram.com/lumiere.nails" onChange={(e) => sStore('instagramUrl', e.target.value)} />
                 </Field>
-                <Field label="Instagram">
-                  <input className={styles.input} value={store.instagram} placeholder="https://instagram.com/..." onChange={(e) => sStore('instagram', e.target.value)} />
+                <Field label="Google hodnotenie">
+                  <input className={styles.input} value={store.googleRating} placeholder="4.9" onChange={(e) => sStore('googleRating', e.target.value)} />
                 </Field>
               </div>
 

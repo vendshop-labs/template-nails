@@ -37,14 +37,31 @@ export default async function HomePage({
       mapLat: true,
       mapLng: true,
       aboutImage: true,
+      description: true,
       whatsappPhone: true,
       galleryLayout: true,
+      instagramUrl: true,
+      googleRating: true,
     },
   });
 
   const parsedHours = (() => {
     try { return store?.openingHours ? JSON.parse(store.openingHours) as unknown : null; }
     catch { return null; }
+  })();
+
+  type HoursEntry = { open: string; close: string } | null;
+  const workingHoursLabel = (() => {
+    if (!parsedHours || typeof parsedHours !== 'object') return null;
+    const h = parsedHours as Record<string, HoursEntry>;
+    const mon = h.mon;
+    if (!mon) return null;
+    const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri'] as const;
+    const allSame = weekdays.every((d) => {
+      const day = h[d];
+      return day && day.open === mon.open && day.close === mon.close;
+    });
+    return allSame ? `Po–Pia ${mon.open}–${mon.close}` : `${mon.open}–${mon.close}`;
   })();
 
   const [heroConfig, galleryImages, dbTestimonials, dbMasters] = store
@@ -71,7 +88,15 @@ export default async function HomePage({
 
   return (
     <>
-      <HeroSection config={heroConfig} />
+      <HeroSection
+        config={heroConfig}
+        store={{
+          city: store?.city,
+          instagramUrl: store?.instagramUrl,
+          googleRating: store?.googleRating,
+          workingHoursLabel,
+        }}
+      />
       <DecorativeDivider />
       <StatsBar />
       <ServicesSection />
@@ -91,7 +116,7 @@ export default async function HomePage({
         }))}
       />
       <BookingSection />
-      <AboutSection aboutImage={store?.aboutImage} />
+      <AboutSection aboutImage={store?.aboutImage} description={store?.description} />
       <ContactSection
         address={store?.address}
         city={store?.city}
