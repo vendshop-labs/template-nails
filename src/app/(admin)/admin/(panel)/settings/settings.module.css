@@ -648,6 +648,49 @@
   border: 2px solid var(--color-primary);
 }
 
+/* ── Per-card photo upload overlay ───────────────────── */
+.cardImageWrap {
+  position: relative;
+}
+
+.changePhotoOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  cursor: pointer;
+  border-radius: 8px;
+  color: var(--color-surface);
+  font-size: 0.85rem;
+  font-weight: 600;
+  gap: 4px;
+}
+
+.cardImageWrap:hover .changePhotoOverlay { opacity: 1; }
+.hiddenInput { display: none; }
+
+/* ── Avatar wrap (masters row) ───────────────────────── */
+.avatarWrap {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.avatarWrap .masterPhoto,
+.avatarWrap .masterPhotoPlaceholder {
+  flex-shrink: 0;
+}
+
+.avatarWrap .changePhotoOverlay {
+  border-radius: 50%;
+  font-size: 1rem;
+}
+
 @media (max-width: 560px) {
   .page { padding: 20px 16px 40px; }
   .grid2 { grid-template-columns: 1fr; }

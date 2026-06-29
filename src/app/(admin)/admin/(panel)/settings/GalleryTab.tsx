@@ -105,6 +105,26 @@ export default function GalleryTab() {
     setImages((prev) => prev.filter((i) => i.id !== img.id));
   };
 
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(id);
+    try {
+      const url = await uploadFile(file);
+      await fetch('/api/admin/gallery', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, url }),
+      });
+      setImages((prev) => prev.map((img) => (img.id === id ? { ...img, url } : img)));
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Chyba pri nahrávaní');
+    } finally {
+      setUploading(null);
+      e.target.value = '';
+    }
+  };
+
   const handleLayoutChange = async (layout: string) => {
     setGalleryLayout(layout);
     setSavingLayout(true);
@@ -142,7 +162,7 @@ export default function GalleryTab() {
       <div className={styles.galleryToolbar}>
         <label className={styles.uploadLabel}>
           <input ref={fileRef} type="file" accept="image/*" multiple onChange={handleUpload} />
-          {uploading === 'new' ? 'Nahrávam...' : '↑ Nahrať súbor'}
+          {uploading === 'new' ? 'Nahrávam...' : '+ Pridať fotografiu'}
         </label>
         <span className={styles.muted}>{images.length} fotografií</span>
       </div>
@@ -153,15 +173,26 @@ export default function GalleryTab() {
         <div className={styles.galleryGrid}>
           {images.map((img, index) => (
             <div key={img.id} className={`${styles.galleryCard} ${!img.active ? styles.galleryCardInactive : ''}`}>
-              {img.url ? (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img src={img.url} alt={img.alt} />
-              ) : (
-                <div className={styles.galleryPlaceholder}>
-                  <span>📷</span>
-                  <span className={styles.galleryPlaceholderTitle}>{img.alt}</span>
-                </div>
-              )}
+              <div className={styles.cardImageWrap}>
+                {img.url ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img src={img.url} alt={img.alt} />
+                ) : (
+                  <div className={styles.galleryPlaceholder}>
+                    <span>📷</span>
+                    <span className={styles.galleryPlaceholderTitle}>{img.alt}</span>
+                  </div>
+                )}
+                <label className={styles.changePhotoOverlay}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className={styles.hiddenInput}
+                    onChange={(e) => handleImageChange(e, img.id)}
+                  />
+                  <span>{uploading === img.id ? 'Nahrávam...' : '📷 Zmeniť foto'}</span>
+                </label>
+              </div>
               <div className={styles.galleryCardActions}>
                 {/* Sort buttons */}
                 <button

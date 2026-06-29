@@ -37,6 +37,7 @@ export default function MastersTab() {
   const [masters, setMasters] = useState<Master[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [replacingPhoto, setReplacingPhoto] = useState<string | null>(null);
   const [showAdd, setShowAdd] = useState(false);
   const [addForm, setAddForm] = useState<MasterForm>(EMPTY_FORM);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -62,6 +63,26 @@ export default function MastersTab() {
     if (!file) return;
     setAdd('photoFile', file);
     setAdd('photoUrl', URL.createObjectURL(file));
+  };
+
+  const handleMasterPhoto = async (e: React.ChangeEvent<HTMLInputElement>, masterId: string) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setReplacingPhoto(masterId);
+    try {
+      const photo = await uploadPhoto(file);
+      await fetch(`/api/admin/masters/${masterId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ photo }),
+      });
+      setMasters((prev) => prev.map((m) => (m.id === masterId ? { ...m, photo } : m)));
+    } catch {
+      alert('Chyba pri nahrávaní fotografie');
+    } finally {
+      setReplacingPhoto(null);
+      e.target.value = '';
+    }
   };
 
   const handleEditPhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,7 +149,7 @@ export default function MastersTab() {
     setMasters((prev) => prev.filter((x) => x.id !== m.id));
   };
 
-  if (loading) return <p style={{ color: '#888', fontSize: 14 }}>Načítavam...</p>;
+  if (loading) return <p className={styles.muted}>Načítavam...</p>;
 
   return (
     <>
@@ -180,7 +201,7 @@ export default function MastersTab() {
 
       {/* List */}
       <div className={styles.masterList}>
-        {masters.length === 0 && <p style={{ color: '#888', fontSize: 14 }}>Žiadni majstri.</p>}
+        {masters.length === 0 && <p className={styles.muted}>Žiadni majstri.</p>}
         {masters.map((m) => (
           <div key={m.id}>
             {editingId === m.id ? (
@@ -223,12 +244,23 @@ export default function MastersTab() {
             ) : (
               /* Master row */
               <div className={`${styles.masterRow} ${!m.active ? styles.masterInactive : ''}`}>
-                {m.photo ? (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img src={m.photo} alt={m.name} className={styles.masterPhoto} />
-                ) : (
-                  <div className={styles.masterPhotoPlaceholder}>{m.name[0]}</div>
-                )}
+                <div className={styles.avatarWrap}>
+                  {m.photo ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={m.photo} alt={m.name} className={styles.masterPhoto} />
+                  ) : (
+                    <div className={styles.masterPhotoPlaceholder}>{m.name[0]}</div>
+                  )}
+                  <label className={styles.changePhotoOverlay}>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className={styles.hiddenInput}
+                      onChange={(e) => handleMasterPhoto(e, m.id)}
+                    />
+                    <span>{replacingPhoto === m.id ? '⏳' : '📷'}</span>
+                  </label>
+                </div>
                 <div className={styles.masterInfo}>
                   <div className={styles.masterName}>{m.name}</div>
                   <div className={styles.masterRole}>{m.role}</div>
