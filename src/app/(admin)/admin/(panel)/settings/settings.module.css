@@ -691,6 +691,57 @@
   font-size: 1rem;
 }
 
+/* ── About image upload ───────────────────────────────── */
+.aboutImageWrap {
+  width: 100%;
+}
+
+.uploadArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 28px 20px;
+  border: 2px dashed var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.uploadArea:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.uploadArea small {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.aboutPreview {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.aboutPreviewImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.aboutPreview .changePhotoOverlay {
+  border-radius: 8px;
+}
+
+.aboutPreview:hover .changePhotoOverlay { opacity: 1; }
+
 @media (max-width: 560px) {
   .page { padding: 20px 16px 40px; }
   .grid2 { grid-template-columns: 1fr; }

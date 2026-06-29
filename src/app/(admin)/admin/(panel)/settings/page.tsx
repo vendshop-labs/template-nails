@@ -88,6 +88,9 @@ export default function AdminSettingsPage() {
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [logoUploading, setLogoUploading] = useState(false);
 
+  // About image
+  const [aboutImageUploading, setAboutImageUploading] = useState(false);
+
   useEffect(() => {
     fetch('/api/admin/store-info')
       .then((r) => r.json() as Promise<{ store?: Record<string, unknown> }>)
@@ -170,6 +173,26 @@ export default function AdminSettingsPage() {
     if (data.url) setLogoUrl(data.url);
     setLogoUploading(false);
     e.target.value = '';
+  };
+
+  const handleAboutImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setAboutImageUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('purpose', 'gallery');
+      const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
+      if (!res.ok) throw new Error('Upload failed');
+      const { url } = (await res.json()) as { url: string };
+      sStore('aboutImage', url);
+    } catch {
+      // silent
+    } finally {
+      setAboutImageUploading(false);
+      e.target.value = '';
+    }
   };
 
   const handleLogoRemove = async () => {
@@ -278,14 +301,37 @@ export default function AdminSettingsPage() {
                 <textarea className={styles.textarea} rows={3} value={store.description} onChange={(e) => sStore('description', e.target.value)} />
               </Field>
               <div className={styles.field}>
-                <span className={styles.label}>Foto sekcie &quot;O nás&quot; (URL)</span>
-                <input
-                  type="url"
-                  className={styles.input}
-                  value={store.aboutImage}
-                  onChange={(e) => sStore('aboutImage', e.target.value)}
-                  placeholder="https://images.unsplash.com/... alebo /about/salon.jpg"
-                />
+                <span className={styles.label}>Foto sekcie &quot;O nás&quot;</span>
+                <div className={styles.aboutImageWrap}>
+                  {store.aboutImage ? (
+                    <div className={styles.aboutPreview}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={store.aboutImage} alt="O nás" className={styles.aboutPreviewImg} />
+                      <label className={styles.changePhotoOverlay}>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className={styles.hiddenInput}
+                          onChange={handleAboutImageUpload}
+                          disabled={aboutImageUploading}
+                        />
+                        <span>{aboutImageUploading ? 'Nahrávam...' : '📷 Zmeniť foto'}</span>
+                      </label>
+                    </div>
+                  ) : (
+                    <label className={styles.uploadArea}>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className={styles.hiddenInput}
+                        onChange={handleAboutImageUpload}
+                        disabled={aboutImageUploading}
+                      />
+                      <span>{aboutImageUploading ? 'Nahrávam...' : '📷 Nahrať foto pre sekciu O nás'}</span>
+                      <small>Odporúčaný rozmer: 800×600px</small>
+                    </label>
+                  )}
+                </div>
                 <span className={styles.hint}>Odporúčaný formát: horizontálny, min. 600×800 px</span>
               </div>
               <div className={styles.grid2}>
