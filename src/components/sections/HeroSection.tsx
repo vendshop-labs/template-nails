@@ -18,14 +18,13 @@ const DEFAULTS = {
   title:    'Vaše nechty. Váš štýl.',
   subtitle: 'Prémiová manikúra, gélové nechty a nail art v Trenčíne.',
   ctaText:  'Rezervovať termín',
-  imageUrl: '/hero-barbershop.webp',
 };
 
 export default function HeroSection({ config }: HeroSectionProps) {
   const title    = config?.title    || DEFAULTS.title;
   const subtitle = config?.subtitle || DEFAULTS.subtitle;
   const ctaText  = config?.ctaText  || DEFAULTS.ctaText;
-  const imageSrc = config?.imageUrl || DEFAULTS.imageUrl;
+  const imageSrc = config?.imageUrl || null;
 
   return (
     <section className="hero">
@@ -80,19 +79,23 @@ export default function HeroSection({ config }: HeroSectionProps) {
 
         {/* RIGHT — image */}
         <div className="hero__image-wrap">
-          <Image
-            src={imageSrc}
-            alt={`${STORE_NAME} — nechtové štúdio Trenčín`}
-            fill
-            className="hero__image"
-            priority
-            fetchPriority="high"
-            sizes="(max-width: 768px) 100vw, 42vw"
-            quality={85}
-            unoptimized={imageSrc.startsWith('http')}
-            placeholder="blur"
-            blurDataURL={BLUR_PLACEHOLDER}
-          />
+          {imageSrc ? (
+            <Image
+              src={imageSrc}
+              alt={`${STORE_NAME} — nechtové štúdio Trenčín`}
+              fill
+              className="hero__image"
+              priority
+              fetchPriority="high"
+              sizes="(max-width: 768px) 100vw, 42vw"
+              quality={85}
+              unoptimized={imageSrc.startsWith('http')}
+              placeholder="blur"
+              blurDataURL={BLUR_PLACEHOLDER}
+            />
+          ) : (
+            <div className="hero__image-gradient" />
+          )}
           <div className="hero__overlay" />
         </div>
       </div>

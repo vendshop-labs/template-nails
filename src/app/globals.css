@@ -503,6 +503,17 @@ body::after {
   object-position: center top;
 }
 
+.hero__image-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-light) 0%,
+    var(--color-bg-alt) 50%,
+    var(--color-bg-subtle) 100%
+  );
+}
+
 .hero__overlay {
   position: absolute;
   inset: 0;
