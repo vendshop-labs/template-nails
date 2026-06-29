@@ -11,14 +11,12 @@ export default async function AdminPanelLayout({ children }: { children: React.R
   });
 
   return (
-    <div className={styles.shell}>
+    <div className={styles.adminWrapper}>
       <AdminSidebar
         storeName={store?.name ?? 'Store'}
         vertical={store?.vertical ?? 'ECOMMERCE'}
       />
-      <main className={styles.content}>
-        <div className={styles.pageContent}>{children}</div>
-      </main>
+      <main className={styles.main}>{children}</main>
     </div>
   );
 }
