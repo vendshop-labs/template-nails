@@ -30,13 +30,13 @@ interface Props {
 }
 
 const inputStyle: React.CSSProperties = {
-  background: '#0a0a0a',
-  border: '1px solid rgba(255,255,255,0.1)',
-  color: '#F5F0E8',
+  background: 'var(--color-surface)',
+  border: '1px solid var(--color-border)',
+  color: 'var(--color-text-primary)',
   borderRadius: '6px',
   padding: '0.3rem 0.5rem',
   fontSize: '0.875rem',
-  colorScheme: 'dark',
+  colorScheme: 'light',
   fontFamily: 'inherit',
 };
 
@@ -68,15 +68,14 @@ export default function WorkingHoursEditor({ value, onChange }: Props) {
               alignItems: 'center',
               gap: '0.75rem',
               padding: '0.6rem 0.75rem',
-              background: '#111',
-              border: '1px solid rgba(255,255,255,0.08)',
+              background: 'var(--color-surface)',
+              border: '1px solid var(--color-border)',
               borderRadius: '8px',
             }}
           >
-            {/* Day label */}
             <span
               style={{
-                color: isOpen ? '#F5F0E8' : '#666',
+                color: isOpen ? 'var(--color-text-primary)' : 'var(--color-text-muted)',
                 fontWeight: isOpen ? 500 : 400,
                 fontSize: '0.9rem',
               }}
@@ -84,7 +83,6 @@ export default function WorkingHoursEditor({ value, onChange }: Props) {
               {label}
             </span>
 
-            {/* Toggle */}
             <label
               style={{
                 position: 'relative',
@@ -105,7 +103,7 @@ export default function WorkingHoursEditor({ value, onChange }: Props) {
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: isOpen ? '#B87333' : '#333',
+                  background: isOpen ? 'var(--color-primary)' : 'var(--color-text-muted)',
                   borderRadius: '11px',
                   transition: 'background 0.2s',
                 }}
@@ -124,7 +122,6 @@ export default function WorkingHoursEditor({ value, onChange }: Props) {
               />
             </label>
 
-            {/* Time inputs or "Zatvorené" */}
             {isOpen ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <input
@@ -133,7 +130,7 @@ export default function WorkingHoursEditor({ value, onChange }: Props) {
                   onChange={(e) => updateTime(key, 'open', e.target.value)}
                   style={inputStyle}
                 />
-                <span style={{ color: '#666' }}>—</span>
+                <span style={{ color: 'var(--color-text-muted)' }}>—</span>
                 <input
                   type="time"
                   value={hours!.close}
@@ -142,7 +139,7 @@ export default function WorkingHoursEditor({ value, onChange }: Props) {
                 />
               </div>
             ) : (
-              <span style={{ color: '#555', fontSize: '0.85rem' }}>Zatvorené</span>
+              <span style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>Zatvorené</span>
             )}
           </div>
         );

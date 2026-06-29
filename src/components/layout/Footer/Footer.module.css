@@ -118,7 +118,7 @@
   align-items: flex-start;
   gap: 10px;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
+  color: color-mix(in srgb, var(--color-contrast) 70%, transparent);
   text-decoration: none;
   line-height: 1.4;
 }
@@ -144,7 +144,7 @@
 
 /* ── Bottom bar ───────────────────────────────────── */
 .bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid color-mix(in srgb, var(--color-contrast) 10%, transparent);
 }
 
 .bottomInner {
@@ -233,7 +233,7 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 24px 24px;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid color-mix(in srgb, var(--color-contrast) 6%, transparent);
 }
 .hoursTitle {
   font-size: 14px;
@@ -288,7 +288,7 @@
 
 .footerDark .bottom {
   background: var(--color-bg);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid color-mix(in srgb, var(--color-contrast) 8%, transparent);
 }
 
 .footerDark .rights {

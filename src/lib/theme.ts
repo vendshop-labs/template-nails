@@ -9,6 +9,9 @@ export interface ThemeConfig {
     textMuted:     string;
     border:        string;
     bgSubtle:      string;
+    surface?:      string;
+    bgAlt?:        string;
+    bgCard?:       string;
     success:       string;
     error:         string;
     contrast:      string;
@@ -40,6 +43,9 @@ export const DEFAULT_THEME: ThemeConfig = {
     textMuted:     '#6b7280',
     border:        '#e5e7eb',
     bgSubtle:      '#f1f5f9',
+    surface:       '#ffffff',
+    bgAlt:         '#f8fafc',
+    bgCard:        '#ffffff',
     success:       '#16a34a',
     error:         '#ef4444',
     contrast:      '#ffffff',
@@ -71,6 +77,9 @@ export const DARK_THEME: ThemeConfig = {
     textMuted:     '#666666',
     border:        'rgba(201, 96, 48, 0.15)',
     bgSubtle:      '#111111',
+    surface:       '#1a1a1a',
+    bgAlt:         '#0d0d0d',
+    bgCard:        '#1a1a1a',
     success:       '#16a34a',
     error:         '#ef4444',
     contrast:      '#FFFFFF',
@@ -130,6 +139,9 @@ export function themeToCssVars(theme: ThemeConfig): Record<string, string> {
     '--color-text-muted':     theme.colors.textMuted,
     '--color-border':         theme.colors.border,
     '--color-bg-subtle':      theme.colors.bgSubtle,
+    '--color-surface':        theme.colors.surface        ?? '#ffffff',
+    '--color-bg-alt':         theme.colors.bgAlt          ?? theme.colors.bgSubtle,
+    '--color-bg-card':        theme.colors.bgCard         ?? theme.colors.surface ?? '#ffffff',
     '--color-success':        theme.colors.success,
     '--color-error':          theme.colors.error,
     '--color-contrast':       theme.colors.contrast,
