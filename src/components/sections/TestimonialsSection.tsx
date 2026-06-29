@@ -2,6 +2,7 @@ import Link from 'next/link';
 import TestimonialCard from '@/components/ui/TestimonialCard';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import GoldDivider from '@/components/ui/GoldDivider';
+import styles from './TestimonialsSection.module.css';
 
 export interface TestimonialItem {
   id: string;
@@ -31,9 +32,6 @@ export default function TestimonialsSection({ testimonials, locale = 'sk' }: Tes
       {testimonials.length === 0 ? (
         <ScrollReveal direction="up" className="testimonials__empty">
           <p className="testimonials__empty-text">Zatiaľ tu nie sú recenzie. Buďte prvá!</p>
-          <Link href={`/${locale}/testimonials/write`} className="btn-primary">
-            Napísať recenziu →
-          </Link>
         </ScrollReveal>
       ) : (
         <div className="testimonials__grid">
@@ -52,16 +50,14 @@ export default function TestimonialsSection({ testimonials, locale = 'sk' }: Tes
         </div>
       )}
 
-      {testimonials.length > 0 && (
-        <div className="testimonials__footer">
-          <Link href={`/${locale}/testimonials`} className="btn-outline">
-            Všetky recenzie →
-          </Link>
-          <Link href={`/${locale}/testimonials/write`} className="btn-primary">
-            Napísať recenziu →
-          </Link>
-        </div>
-      )}
+      <div className={styles.actions}>
+        <Link href={`/${locale}/testimonials`} className={styles.btnOutline}>
+          Všetky recenzie →
+        </Link>
+        <Link href={`/${locale}/testimonials/write`} className={styles.btnPrimary}>
+          Napísať recenziu →
+        </Link>
+      </div>
     </section>
   );
 }
