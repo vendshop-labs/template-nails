@@ -40,7 +40,7 @@ export default function HeroSection({ config, store }: HeroSectionProps) {
       <div className={styles.heroLeft}>
         <p className="hero__tagline">
           <span className="hero__tagline-line" />
-          Est. 2024 — Trenčín
+          Est. 2024 — {store?.city ?? 'Trenčín'}
         </p>
 
         <h1 className="hero__title">{title}</h1>
@@ -86,9 +86,9 @@ export default function HeroSection({ config, store }: HeroSectionProps) {
               <span className={styles.dot}>·</span>
             </>
           )}
-          {(store?.city ?? CONTACT.city) && (
+          {store?.city && (
             <>
-              <span>📍 {store?.city ?? CONTACT.city}</span>
+              <span>📍 {store.city}</span>
               <span className={styles.dot}>·</span>
             </>
           )}
