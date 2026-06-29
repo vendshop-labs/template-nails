@@ -15,8 +15,7 @@ const SK_MONTHS = ['jan', 'feb', 'mar', 'apr', 'máj', 'jún', 'júl', 'aug', 's
 function generateTimeSlots(dayOfWeek: number): string[] {
   if (dayOfWeek === 0) return [];
   const closeHour  = dayOfWeek === 6 ? 14 : 18;
-  const closeMin   = dayOfWeek === 6 ? 30 : 0;
-  const closeTotal = closeHour * 60 + closeMin;
+  const closeTotal = closeHour * 60; // closes on the hour — 14:00 Sat, 18:00 weekdays
   const SLOT       = 30;
   const slots: string[] = [];
   let t = 9 * 60;
