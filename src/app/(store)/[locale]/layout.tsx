@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { Playfair_Display, DM_Sans } from 'next/font/google';
 import { routing, type Locale } from '@/i18n/routing';
 import Header from '@/components/layout/Header/Header';
@@ -29,45 +29,68 @@ const dmSans = DM_Sans({
   variable: '--font-dm-sans',
 });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const config = await getStoreConfig();
+const STORE_SLUG = process.env.STORE_SLUG ?? 'lumiere-nails';
+
+const OG_LOCALE_MAP: Record<string, string> = {
+  sk: 'sk_SK', en: 'en_US', de: 'de_DE', cs: 'cs_CZ',
+  uk: 'uk_UA', pl: 'pl_PL', ru: 'ru_RU',
+};
+
+const COUNTRY_MAP: Record<string, string> = {
+  sk: 'SK', de: 'DE', cs: 'CZ', uk: 'UA', pl: 'PL', en: 'GB', ru: 'RU',
+};
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ locale: string }> }
+): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'seo' });
   const baseUrl = getBaseUrl();
 
+  const store = await db.store.findUnique({
+    where: { slug: STORE_SLUG },
+    select: { name: true, city: true },
+  });
+
+  const storeName = store?.name ?? 'Lumière Nails';
+  const city = store?.city ?? '';
+
   const languages: Record<string, string> = {};
-  for (const locale of routing.locales) {
-    languages[locale] = `${baseUrl}/${locale}`;
+  for (const l of routing.locales) {
+    languages[l] = `${baseUrl}/${l}`;
   }
 
-  const seoTitle = 'Lumière Nails Trenčín | Gélová manikúra, Nail Art, Pedikúra';
-  const seoDesc = 'Prémiové nechtové štúdio v Trenčíne. Online rezervácia 24/7. Gélová manikúra, nail art, nechtová modeláž, pedikúra.';
+  const title = t('title', { storeName, city });
+  const description = t('description', { storeName, city });
+  const ogLocale = OG_LOCALE_MAP[locale] ?? 'en_US';
 
   return {
     title: {
-      default: seoTitle,
-      template: `%s | Lumière Nails`,
+      default: title,
+      template: `%s | ${storeName}`,
     },
-    description: seoDesc,
+    description,
     metadataBase: new URL(baseUrl),
     alternates: {
-      canonical: baseUrl,
+      canonical: `${baseUrl}/${locale}`,
       languages,
     },
     openGraph: {
       type: 'website',
-      siteName: 'Lumière Nails',
-      title: seoTitle,
-      description: seoDesc,
-      url: baseUrl,
-      locale: 'sk_SK',
-      alternateLocale: ['en_US', 'de_DE', 'cs_CZ', 'ru_RU'],
+      locale: ogLocale,
+      alternateLocale: Object.values(OG_LOCALE_MAP).filter(l => l !== ogLocale),
+      siteName: storeName,
+      title,
+      description,
+      url: `${baseUrl}/${locale}`,
       images: [
-        { url: '/og-lumiere.jpg', width: 1200, height: 630, alt: 'Lumière Nails Trenčín' },
+        { url: '/og-lumiere.jpg', width: 1200, height: 630, alt: storeName },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: seoTitle,
-      description: seoDesc,
+      title,
+      description,
       images: ['/og-lumiere.jpg'],
     },
     robots: {
@@ -109,11 +132,11 @@ export default async function LocaleLayout({
   const config = await getStoreConfig();
   const siteUrl = getBaseUrl();
   const cssVars = themeToCssVars(config.theme ?? DEFAULT_THEME);
+  const tSeo = await getTranslations({ locale, namespace: 'seo' });
 
-  const storeSlug = process.env.STORE_SLUG ?? 'lumiere-nails';
   const store = await db.store.findUnique({
-    where: { slug: storeSlug },
-    select: { id: true, name: true, openingHours: true },
+    where: { slug: STORE_SLUG },
+    select: { id: true, name: true, openingHours: true, city: true, address: true, phone: true, email: true },
   });
   const legalConfig = (locale === 'de' && store)
     ? await db.legalConfig.findUnique({ where: { storeId: store.id } })
@@ -136,17 +159,17 @@ export default async function LocaleLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'BeautySalon',
-              name: 'Lumière Nails',
-              description: 'Prémiové nechtové štúdio v Trenčíne — gélová manikúra, nail art, pedikúra.',
+              name: store?.name ?? 'Lumière Nails',
+              description: tSeo('jsonLdDescription', { storeName: store?.name ?? 'Lumière Nails', city: store?.city ?? '' }),
               url: siteUrl,
-              telephone: '+421900000000',
-              email: 'info@lumiere-nails.sk',
+              telephone: store?.phone ?? '',
+              email: store?.email ?? '',
               address: {
                 '@type': 'PostalAddress',
-                streetAddress: 'Mierové námestie 1',
-                addressLocality: 'Trenčín',
+                streetAddress: store?.address ?? '',
+                addressLocality: store?.city ?? '',
                 postalCode: '911 01',
-                addressCountry: 'SK',
+                addressCountry: COUNTRY_MAP[locale] ?? 'SK',
               },
               openingHours: ['Mo-Fr 09:00-18:00', 'Sa 09:00-15:00'],
               priceRange: '€€',

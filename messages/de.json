@@ -598,5 +598,10 @@
     "privacyLink": "Datenschutzerklärung",
     "reject": "Ablehnen",
     "acceptAll": "Alle akzeptieren"
+  },
+  "seo": {
+    "title": "Nagelstudio {city} | Maniküre, Gel-Nägel, Nail Art – {storeName}",
+    "description": "Premium Nagelstudio in {city}. Maniküre, Gel-Nägel, Pediküre und Nail Art. Jetzt Termin buchen.",
+    "jsonLdDescription": "Premium Nagelstudio in {city}. Maniküre, Gel-Nägel, Pediküre und Nail Art."
   }
 }

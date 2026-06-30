@@ -598,5 +598,10 @@
     "privacyLink": "zásadách ochrany soukromí",
     "reject": "Odmítnout",
     "acceptAll": "Přijmout vše"
+  },
+  "seo": {
+    "title": "Nehtové studio {city} | Manikúra, Gelové nehty, Nail Art – {storeName}",
+    "description": "Prémiové nehtové studio v {city}. Manikúra, gelové nehty, pedikúra a nail art. Rezervujte termín online.",
+    "jsonLdDescription": "Prémiové nehtové studio v {city}. Manikúra, gelové nehty, pedikúra a nail art."
   }
 }

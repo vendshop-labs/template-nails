@@ -598,5 +598,10 @@
     "privacyLink": "Privacy Policy",
     "reject": "Reject",
     "acceptAll": "Accept all"
+  },
+  "seo": {
+    "title": "Nail Studio {city} | Manicure, Gel Nails, Nail Art – {storeName}",
+    "description": "Premium nail studio in {city}. Manicure, gel nails, pedicure and nail art. Book your appointment online.",
+    "jsonLdDescription": "Premium nail studio in {city}. Manicure, gel nails, pedicure and nail art."
   }
 }

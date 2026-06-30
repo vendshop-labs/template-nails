@@ -598,5 +598,10 @@
     "privacyLink": "polityce prywatności",
     "reject": "Odrzuć",
     "acceptAll": "Zaakceptuj wszystko"
+  },
+  "seo": {
+    "title": "Salon paznokci {city} | Manicure, Żelowe paznokcie, Nail Art – {storeName}",
+    "description": "Premium salon paznokci w {city}. Manicure, żelowe paznokcie, pedicure i nail art. Zarezerwuj wizytę online.",
+    "jsonLdDescription": "Premium salon paznokci w {city}. Manicure, żelowe paznokcie, pedicure i nail art."
   }
 }
