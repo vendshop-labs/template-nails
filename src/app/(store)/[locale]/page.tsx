@@ -105,7 +105,7 @@ export default async function HomePage({
           adminReplyAt: t.adminReplyAt?.toISOString() ?? null,
         }))}
       />
-      <BookingSection />
+      <BookingSection locale={locale} />
       <AboutSection aboutImage={store?.aboutImage} description={store?.description} />
       <ContactSection
         locale={locale}

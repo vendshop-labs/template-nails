@@ -1,21 +1,24 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { getDayName } from '@/lib/day-utils';
 
 interface DateTimePickerProps {
+  locale?: string;
   onSelect: (date: string, time: string) => void;
   onDayChange?: (date: string) => void;
   bookedSlots?: string[];
   loading?: boolean;
 }
 
-const SK_DAYS   = ['Ned', 'Pon', 'Uto', 'Str', 'Štv', 'Pia', 'Sob'];
-const SK_MONTHS = ['jan', 'feb', 'mar', 'apr', 'máj', 'jún', 'júl', 'aug', 'sep', 'okt', 'nov', 'dec'];
+// Sunday=0, Monday=1, ... Saturday=6
+const KEY_ORDER = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
 function generateTimeSlots(dayOfWeek: number): string[] {
   if (dayOfWeek === 0) return [];
   const closeHour  = dayOfWeek === 6 ? 14 : 18;
-  const closeTotal = closeHour * 60; // closes on the hour — 14:00 Sat, 18:00 weekdays
+  const closeTotal = closeHour * 60;
   const SLOT       = 30;
   const slots: string[] = [];
   let t = 9 * 60;
@@ -26,15 +29,17 @@ function generateTimeSlots(dayOfWeek: number): string[] {
   return slots;
 }
 
-// How many skeleton cells to show (matches typical slot count, prevents layout shift)
 const SKELETON_COUNT = 10;
 
 export default function DateTimePicker({
+  locale = 'sk',
   onSelect,
   onDayChange,
   bookedSlots = [],
   loading = false,
 }: DateTimePickerProps) {
+  const t = useTranslations('booking');
+
   const days = Array.from({ length: 7 }, (_, i) => {
     const date = new Date();
     date.setDate(date.getDate() + i);
@@ -81,6 +86,8 @@ export default function DateTimePicker({
           if (isSelected) cls += ' date-picker__day--selected';
           if (isSunday)   cls += ' date-picker__day--disabled';
 
+          const dayKey = KEY_ORDER[day.getDay()];
+
           return (
             <button
               key={day.toDateString()}
@@ -88,10 +95,14 @@ export default function DateTimePicker({
               className={cls}
               onClick={() => handleDaySelect(day)}
             >
-              <span className="date-picker__day-name">{SK_DAYS[day.getDay()]}</span>
+              <span className="date-picker__day-name">
+                {getDayName(locale, dayKey, 'short')}
+              </span>
               <span className="date-picker__day-number">{day.getDate()}</span>
               <span className="date-picker__day-month">
-                {isSunday ? 'zatv.' : SK_MONTHS[day.getMonth()]}
+                {isSunday
+                  ? t('closed')
+                  : new Intl.DateTimeFormat(locale, { month: 'short' }).format(day)}
               </span>
             </button>
           );
@@ -100,12 +111,11 @@ export default function DateTimePicker({
 
       <div key={timesKey} className="date-picker__times">
         {loading ? (
-          // Skeleton — same grid as slots, prevents layout shift
           Array.from({ length: SKELETON_COUNT }, (_, i) => (
             <div key={i} className="date-picker__skeleton" />
           ))
         ) : timeSlots.length === 0 ? (
-          <p className="date-picker__closed">Zatvorené</p>
+          <p className="date-picker__closed">{t('closedFull')}</p>
         ) : (
           timeSlots.map((slot) => {
             const isBooked      = bookedSlots.includes(slot);
@@ -123,11 +133,11 @@ export default function DateTimePicker({
                 className={cls}
                 onClick={() => handleTimeSelect(slot)}
                 disabled={isUnavailable}
-                title={isBooked ? 'Obsadené' : isPast ? 'Uplynulý čas' : undefined}
+                title={isBooked ? t('slotBooked') : isPast ? t('slotPast') : undefined}
               >
                 {slot}
-                {isBooked && <span className="date-picker__time-booked-label">obsadené</span>}
-                {isPast && !isBooked && <span className="date-picker__time-booked-label">minulosť</span>}
+                {isBooked && <span className="date-picker__time-booked-label">{t('slotBookedLabel')}</span>}
+                {isPast && !isBooked && <span className="date-picker__time-booked-label">{t('slotPastLabel')}</span>}
               </button>
             );
           })
@@ -136,7 +146,7 @@ export default function DateTimePicker({
 
       {selectedTime && !loading && (
         <p className="date-picker__selected-info">
-          ✓ {SK_DAYS[selectedDay.getDay()]} {selectedDay.getDate()}. {SK_MONTHS[selectedDay.getMonth()]} o {selectedTime}
+          ✓ {getDayName(locale, KEY_ORDER[selectedDay.getDay()], 'short')} {selectedDay.getDate()}. {new Intl.DateTimeFormat(locale, { month: 'short' }).format(selectedDay)} {t('selectedInfo')} {selectedTime}
         </p>
       )}
     </div>

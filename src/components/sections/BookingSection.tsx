@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import GoldDivider from '@/components/ui/GoldDivider';
 import DateTimePicker from '@/components/ui/DateTimePicker';
@@ -22,25 +23,32 @@ type DbMaster = {
 };
 
 const WA_HREF = `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '421900000000'}`;
-const STEP_LABELS = ['Služba', 'Technik', 'Termín', 'Kontakt'] as const;
 
-export default function BookingSection() {
+interface BookingSectionProps {
+  locale?: string;
+}
+
+export default function BookingSection({ locale = 'sk' }: BookingSectionProps) {
+  const t = useTranslations('booking');
+
+  const STEP_LABELS = [t('stepService'), t('stepTechnician'), t('stepDateTime'), t('stepContact')];
+
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
 
   const [services, setServices] = useState<DbService[]>([]);
-  const [masters, setMasters]   = useState<DbMaster[]>([]);
+  const [masters,  setMasters]  = useState<DbMaster[]>([]);
 
   const [selectedService, setSelectedService] = useState<DbService | null>(null);
   const [selectedMaster,  setSelectedMaster]  = useState<DbMaster | null>(null);
-  const [selectedDate,    setSelectedDate]     = useState('');
-  const [selectedTime,    setSelectedTime]     = useState('');
+  const [selectedDate,    setSelectedDate]    = useState('');
+  const [selectedTime,    setSelectedTime]    = useState('');
 
-  const [name,         setName]         = useState('');
-  const [phone,        setPhone]        = useState('');
-  const [note,         setNote]         = useState('');
-  const [submitting,   setSubmitting]   = useState(false);
-  const [submitError,  setSubmitError]  = useState('');
-  const [confirmed,    setConfirmed]    = useState(false);
+  const [name,        setName]        = useState('');
+  const [phone,       setPhone]       = useState('');
+  const [note,        setNote]        = useState('');
+  const [submitting,  setSubmitting]  = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [confirmed,   setConfirmed]   = useState(false);
 
   const [bookedSlots,  setBookedSlots]  = useState<string[]>([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
@@ -80,7 +88,7 @@ export default function BookingSection() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim() || !phone.trim()) {
-      setSubmitError('Vyplňte meno a telefón.');
+      setSubmitError(t('errorRequired'));
       return;
     }
     setSubmitting(true);
@@ -103,18 +111,18 @@ export default function BookingSection() {
       if (res.status === 409) {
         await fetchSlots(selectedDate);
         setSelectedTime('');
-        setSubmitError('Tento termín bol medzičasom obsadený. Vráťte sa a vyberte iný čas.');
+        setSubmitError(t('errorSlotTaken'));
         setSubmitting(false);
         return;
       }
       if (!res.ok) {
-        setSubmitError('Chyba pri ukladaní. Skúste znovu.');
+        setSubmitError(t('errorSave'));
         setSubmitting(false);
         return;
       }
       setConfirmed(true);
     } catch {
-      setSubmitError('Sieťová chyba. Skúste znovu.');
+      setSubmitError(t('errorNetwork'));
     } finally {
       setSubmitting(false);
     }
@@ -125,8 +133,8 @@ export default function BookingSection() {
     return (
       <section id="rezervacia" className="booking">
         <ScrollReveal direction="up" className="section-header">
-          <p className="section-label">Rezervácia potvrdená</p>
-          <h2 className="section-title">Tešíme sa na vás!</h2>
+          <p className="section-label">{t('confirmedLabel')}</p>
+          <h2 className="section-title">{t('confirmedTitle')}</h2>
           <GoldDivider />
         </ScrollReveal>
 
@@ -144,18 +152,18 @@ export default function BookingSection() {
             }}>
               {selectedService && (
                 <div style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>
-                  <span style={{ color: 'var(--color-text-muted)' }}>Služba: </span>
+                  <span style={{ color: 'var(--color-text-muted)' }}>{t('labelService')} </span>
                   <strong style={{ color: 'var(--color-text-primary)' }}>{selectedService.nameKey}</strong>
                 </div>
               )}
               {selectedMaster && (
                 <div style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>
-                  <span style={{ color: 'var(--color-text-muted)' }}>Technika: </span>
+                  <span style={{ color: 'var(--color-text-muted)' }}>{t('labelTechnician')} </span>
                   <strong style={{ color: 'var(--color-text-primary)' }}>{selectedMaster.name}</strong>
                 </div>
               )}
               <div style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>
-                <span style={{ color: 'var(--color-text-muted)' }}>Termín: </span>
+                <span style={{ color: 'var(--color-text-muted)' }}>{t('labelDateTime')} </span>
                 <strong style={{ color: 'var(--color-text-primary)' }}>{selectedDate} · {selectedTime}</strong>
               </div>
             </div>
@@ -168,13 +176,11 @@ export default function BookingSection() {
                 className="btn-whatsapp"
               >
                 <WhatsAppIcon size={18} />
-                Máte otázky? Napíšte nám
+                {t('whatsappQuestion')}
               </a>
             </div>
 
-            <p className="booking__note">
-              Ozveme sa vám do 30 minút na potvrdenie termínu.
-            </p>
+            <p className="booking__note">{t('confirmNote')}</p>
           </div>
         </ScrollReveal>
       </section>
@@ -185,12 +191,10 @@ export default function BookingSection() {
   return (
     <section id="rezervacia" className="booking">
       <ScrollReveal direction="up" className="section-header">
-        <p className="section-label">Online rezervácia</p>
-        <h2 className="section-title">Zarezervujte si termín</h2>
+        <p className="section-label">{t('sectionLabel')}</p>
+        <h2 className="section-title">{t('title')}</h2>
         <GoldDivider />
-        <p className="section-subtitle">
-          Vyberte si z našich služieb a zarezervujte termín — bez čakania, 24/7.
-        </p>
+        <p className="section-subtitle">{t('subtitle')}</p>
       </ScrollReveal>
 
       <ScrollReveal direction="up" delay={200}>
@@ -251,7 +255,7 @@ export default function BookingSection() {
             <div>
               {services.length === 0 ? (
                 <p style={{ color: 'var(--color-text-muted)', textAlign: 'center', padding: '2.5rem 0' }}>
-                  Načítavam služby…
+                  {t('loadingServices')}
                 </p>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
@@ -308,7 +312,7 @@ export default function BookingSection() {
                     color: 'var(--color-text-muted)', fontFamily: 'inherit',
                   }}
                 >
-                  Bez preferencie
+                  {t('noPreference')}
                 </button>
 
                 {masters.map((m) => (
@@ -350,7 +354,7 @@ export default function BookingSection() {
                 onClick={() => setStep(1)}
                 style={{ marginTop: '1.25rem', background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '0.85rem', fontFamily: 'inherit' }}
               >
-                ← Späť
+                {t('back')}
               </button>
             </div>
           )}
@@ -360,6 +364,7 @@ export default function BookingSection() {
             <div>
               <div className="booking__picker-wrap">
                 <DateTimePicker
+                  locale={locale}
                   onSelect={(date, time) => { setSelectedDate(date); setSelectedTime(time); }}
                   onDayChange={(date) => { setSelectedTime(''); void fetchSlots(date); }}
                   bookedSlots={bookedSlots}
@@ -372,7 +377,7 @@ export default function BookingSection() {
                   onClick={() => setStep(2)}
                   style={{ background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '0.85rem', fontFamily: 'inherit' }}
                 >
-                  ← Späť
+                  {t('back')}
                 </button>
                 <button
                   onClick={() => setStep(4)}
@@ -380,7 +385,7 @@ export default function BookingSection() {
                   className="booking__btn-submit"
                   style={{ flex: 'none', padding: '0.85rem 2rem', opacity: !selectedDate || !selectedTime ? 0.45 : 1, cursor: !selectedDate || !selectedTime ? 'not-allowed' : 'pointer' }}
                 >
-                  Ďalej →
+                  {t('next')}
                 </button>
               </div>
             </div>
@@ -398,37 +403,37 @@ export default function BookingSection() {
               }}>
                 {selectedService && (
                   <div>
-                    <span style={{ color: 'var(--color-text-muted)' }}>Služba: </span>
+                    <span style={{ color: 'var(--color-text-muted)' }}>{t('labelService')} </span>
                     <strong style={{ color: 'var(--color-text-primary)' }}>{selectedService.nameKey}</strong>
                     <span style={{ color: 'var(--color-gold)', marginLeft: '0.5rem', fontWeight: 700 }}>€{selectedService.price}</span>
                   </div>
                 )}
                 {selectedMaster && (
                   <div>
-                    <span style={{ color: 'var(--color-text-muted)' }}>Technika: </span>
+                    <span style={{ color: 'var(--color-text-muted)' }}>{t('labelTechnician')} </span>
                     <strong style={{ color: 'var(--color-text-primary)' }}>{selectedMaster.name}</strong>
                   </div>
                 )}
                 <div>
-                  <span style={{ color: 'var(--color-text-muted)' }}>Termín: </span>
+                  <span style={{ color: 'var(--color-text-muted)' }}>{t('labelDateTime')} </span>
                   <strong style={{ color: 'var(--color-text-primary)' }}>{selectedDate} · {selectedTime}</strong>
                 </div>
               </div>
 
               <div className="booking__form-row">
                 <div>
-                  <label className="booking__label">Meno</label>
+                  <label className="booking__label">{t('labelName')}</label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Vaše meno"
+                    placeholder={t('placeholderName')}
                     required
                     className="booking__input"
                   />
                 </div>
                 <div>
-                  <label className="booking__label">Telefón</label>
+                  <label className="booking__label">{t('labelPhone')}</label>
                   <input
                     type="tel"
                     value={phone}
@@ -441,11 +446,11 @@ export default function BookingSection() {
               </div>
 
               <div>
-                <label className="booking__label">Poznámka (nepovinné)</label>
+                <label className="booking__label">{t('labelNote')}</label>
                 <textarea
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
-                  placeholder="Špeciálne požiadavky alebo poznámky…"
+                  placeholder={t('placeholderNote')}
                   className="booking__textarea"
                 />
               </div>
@@ -464,7 +469,7 @@ export default function BookingSection() {
                     padding: '1rem 1.5rem', cursor: 'pointer', fontFamily: 'inherit',
                   }}
                 >
-                  ← Späť
+                  {t('back')}
                 </button>
                 <button
                   type="submit"
@@ -472,13 +477,11 @@ export default function BookingSection() {
                   disabled={submitting}
                   style={{ flex: 1 }}
                 >
-                  {submitting ? 'Ukladám…' : 'Potvrdiť rezerváciu'}
+                  {submitting ? t('submitting') : t('submit')}
                 </button>
               </div>
 
-              <p className="booking__note">
-                Ozveme sa vám do 30 minút na potvrdenie termínu.
-              </p>
+              <p className="booking__note">{t('confirmNote')}</p>
             </form>
           )}
 
