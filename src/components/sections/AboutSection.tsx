@@ -47,23 +47,18 @@ export default function AboutSection({ aboutImage, description }: AboutSectionPr
             {description ? (
               <p className="about__text">{description}</p>
             ) : (
-              ABOUT.paragraphs.map((text, i) => {
-                if (ABOUT.highlightText && text.includes(ABOUT.highlightText)) {
-                  const [before, after] = text.split(ABOUT.highlightText);
-                  return (
-                    <p key={i} className="about__text">
-                      {before}
-                      <strong>{ABOUT.highlightText}</strong>
-                      {after}
-                    </p>
-                  );
-                }
-                return (
-                  <p key={i} className="about__text">
-                    {text}
-                  </p>
-                );
-              })
+              <>
+                <p className="about__text">{t('paragraph1')}</p>
+                <p className="about__text">
+                  {(() => {
+                    const highlight = t('paragraph2Highlight');
+                    const full = t('paragraph2');
+                    const [before, after] = full.split(highlight);
+                    return <>{before}<strong>{highlight}</strong>{after}</>;
+                  })()}
+                </p>
+                <p className="about__text">{t('paragraph3')}</p>
+              </>
             )}
           </div>
         </ScrollReveal>

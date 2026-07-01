@@ -193,6 +193,7 @@
     "terms": "Obchodné podmienky",
     "impressum": "Impressum",
     "datenschutz": "Ochrana údajov",
+    "tagline": "Prémiové nechtové štúdio v Trenčíne.",
     "aboutLink": "O nás"
   },
   "tags": {
@@ -542,9 +543,12 @@
     "errorTextShort": "Recenzia musí mať aspoň 20 znakov",
     "successTitle": "Ďakujeme!",
     "successPending": "Vaša recenzia bola odoslaná a čaká na overenie.",
+    "label": "Recenzie",
     "title": "Čo hovoria klientky",
     "beFirst": "Buďte prvá!",
-    "empty": "Zatiaľ žiadne recenzie."
+    "empty": "Zatiaľ žiadne recenzie.",
+    "subtitle": "Recenzie od našich klientiek",
+    "rating": "{rating} z {max} hviezd"
   },
   "auth": {
     "login": "Prihlásiť sa",
@@ -634,7 +638,8 @@
   "team": {
     "title": "Naše techniky",
     "subtitle": "Majstri svojho remesla",
-    "experience": "rokov skúseností"
+    "experience": "rokov skúseností",
+    "description": "Každý z nás prináša unikátny štýl a roky skúseností."
   },
   "gallery": {
     "title": "Naša práca",
@@ -654,11 +659,27 @@
   },
   "about": {
     "badge": "O nás",
-    "title": "Krása začína\nstarostlivosťou"
+    "title": "Krása začína\nstarostlivosťou",
+    "paragraph1": "Lumière Nails vzniklo z lásky ku kráse a detailu. Naše techniky prinášajú do Trenčína to najlepšie z nail art sveta.",
+    "paragraph2": "Každý termín je pre nás umenie — venujeme sa každej klientke individuálne, pretože veríme, že každá žena si zaslúži cítiť sa výnimočne.",
+    "paragraph2Highlight": "každá žena si zaslúži cítiť sa výnimočne",
+    "paragraph3": "Navštívte nás a odíďte s dokonalými nechtami a úsmevom."
   },
   "whyUs": {
     "title": "Prečo my",
-    "subtitle": "Čo nás robí výnimočnými"
+    "subtitle": "Čo nás robí výnimočnými",
+    "preciseTitle": "Precízna práca",
+    "preciseDesc": "Každý nechtík tvarujeme s plnou pozornosťou — výsledok musí byť dokonalý.",
+    "locationTitle": "Sme v centre",
+    "locationDesc": "Nájdeš nás na Mierovom námestí, priamo v srdci mesta.",
+    "trendsTitle": "Sledujeme trendy",
+    "trendsDesc": "Najnovšie techniky nail artu aj klasika v podaní profesionálnych techničiek.",
+    "prosTitle": "Sme profesionálky",
+    "prosDesc": "Každá technička má minimálne 3 roky skúseností s nechtami.",
+    "bookingTitle": "Rezervácia na 3 kliky",
+    "bookingDesc": "WhatsApp alebo formulár — termín za pár sekúnd.",
+    "googleTitle": "4.9 na Google",
+    "googleDesc": "Stovky spokojných klientiek. Prečítaj si recenzie."
   },
   "stats": {
     "yearsExp": "Rokov skúseností",
@@ -696,5 +717,10 @@
     "closed": "Zatvorené",
     "writeUs": "Napíšte nám",
     "mapTitle": "Mapa – {storeName}"
+  },
+  "whatsapp": {
+    "booking": "Dobrý deň, chcel by som si rezervovať termín.",
+    "location": "Dobrý deň, kde presne sa nachádzate?",
+    "general": "Dobrý deň, mám otázku."
   }
 }

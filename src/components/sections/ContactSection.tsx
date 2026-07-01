@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { useTranslations } from 'next-intl';
-import { CONTACT, HOURS, STORE_NAME_FALLBACK, WHATSAPP_LINKS } from '@/lib/constants';
+import { CONTACT, HOURS, STORE_NAME_FALLBACK, WHATSAPP_NUMBER } from '@/lib/constants';
 import { getDayName } from '@/lib/day-utils';
 import GoldDivider from '@/components/ui/GoldDivider';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
@@ -76,6 +76,7 @@ export default function ContactSection({
   workingHours,
 }: ContactSectionProps) {
   const t = useTranslations('contact');
+  const tw = useTranslations('whatsapp');
 
   const displayAddress = address ?? CONTACT.address;
   const displayCity    = city    ?? CONTACT.city;
@@ -145,7 +146,7 @@ export default function ContactSection({
             </div>
 
             <a
-              href={WHATSAPP_LINKS.location}
+              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(tw('location'))}`}
               target="_blank"
               rel="noopener noreferrer"
               className="contact-wa-btn"

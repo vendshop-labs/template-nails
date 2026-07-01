@@ -193,6 +193,7 @@
     "terms": "Obchodní podmínky",
     "impressum": "Impressum",
     "datenschutz": "Ochrana dat",
+    "tagline": "Prémiové studio nehtů v centru města.",
     "aboutLink": "O nás"
   },
   "tags": {
@@ -542,9 +543,12 @@
     "errorTextShort": "Recenze musí mít alespoň 20 znaků",
     "successTitle": "Děkujeme!",
     "successPending": "Vaše recenze byla odeslána a čeká na schválení.",
+    "label": "Recenze",
     "title": "Co říkají klientky",
     "beFirst": "Buďte první!",
-    "empty": "Zatím žádné recenze."
+    "empty": "Zatím žádné recenze.",
+    "subtitle": "Recenze od našich klientek",
+    "rating": "{rating} z {max} hvězd"
   },
   "auth": {
     "login": "Přihlásit se",
@@ -634,7 +638,8 @@
   "team": {
     "title": "Naši mistři",
     "subtitle": "Mistři svého řemesla",
-    "experience": "let zkušeností"
+    "experience": "let zkušeností",
+    "description": "Každá z nás přináší jedinečný styl a roky zkušeností."
   },
   "gallery": {
     "title": "Naše práce",
@@ -654,11 +659,27 @@
   },
   "about": {
     "badge": "O nás",
-    "title": "Krása začíná\npéčí"
+    "title": "Krása začíná\npéčí",
+    "paragraph1": "Lumière Nails vzniklo z lásky ke kráse a detailu. Naše techniky přinášejí to nejlepší z nail art světa.",
+    "paragraph2": "Každý termín je pro nás umění — věnujeme se každé klientce individuálně, protože věříme, že každá žena si zaslouží cítit se výjimečně.",
+    "paragraph2Highlight": "každá žena si zaslouží cítit se výjimečně",
+    "paragraph3": "Navštivte nás a odejděte s dokonalými nehty a úsměvem."
   },
   "whyUs": {
     "title": "Proč my",
-    "subtitle": "Co nás dělá výjimečnými"
+    "subtitle": "Co nás dělá výjimečnými",
+    "preciseTitle": "Precizní práce",
+    "preciseDesc": "Každý nehet tvarujeme s plnou pozorností — výsledek musí být dokonalý.",
+    "locationTitle": "Jsme v centru",
+    "locationDesc": "Najdete nás přímo v srdci města.",
+    "trendsTitle": "Sledujeme trendy",
+    "trendsDesc": "Nejnovější techniky nail artu i klasika v podání profesionálních techniček.",
+    "prosTitle": "Jsme profesionálky",
+    "prosDesc": "Každá technička má minimálně 3 roky zkušeností s nehty.",
+    "bookingTitle": "Rezervace na 3 kliknutí",
+    "bookingDesc": "WhatsApp nebo formulář — termín za pár sekund.",
+    "googleTitle": "4,9 na Google",
+    "googleDesc": "Stovky spokojených klientek. Přečtěte si recenze."
   },
   "stats": {
     "yearsExp": "Let zkušeností",
@@ -696,5 +717,10 @@
     "closed": "Zavřeno",
     "writeUs": "Napište nám",
     "mapTitle": "Mapa – {storeName}"
+  },
+  "whatsapp": {
+    "booking": "Dobrý den, rád bych si rezervoval termín.",
+    "location": "Dobrý den, kde přesně se nacházíte?",
+    "general": "Dobrý den, mám dotaz."
   }
 }

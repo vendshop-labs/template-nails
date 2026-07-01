@@ -193,6 +193,7 @@
     "terms": "Terms & Conditions",
     "impressum": "Impressum",
     "datenschutz": "Privacy Policy",
+    "tagline": "Premium nail studio in the heart of the city.",
     "aboutLink": "About us"
   },
   "tags": {
@@ -542,9 +543,12 @@
     "errorTextShort": "Review must be at least 20 characters",
     "successTitle": "Thank You!",
     "successPending": "Your review has been submitted and is pending moderation.",
+    "label": "Reviews",
     "title": "What our clients say",
     "beFirst": "Be the first!",
-    "empty": "No reviews yet."
+    "empty": "No reviews yet.",
+    "subtitle": "Reviews from our clients",
+    "rating": "{rating} out of {max} stars"
   },
   "auth": {
     "login": "Sign In",
@@ -634,7 +638,8 @@
   "team": {
     "title": "Our Technicians",
     "subtitle": "Masters of their craft",
-    "experience": "years of experience"
+    "experience": "years of experience",
+    "description": "Each of us brings a unique style and years of experience."
   },
   "gallery": {
     "title": "Our Work",
@@ -654,11 +659,27 @@
   },
   "about": {
     "badge": "About us",
-    "title": "Beauty starts\nwith care"
+    "title": "Beauty starts\nwith care",
+    "paragraph1": "Lumière Nails was born from a love of beauty and detail. Our technicians bring the best of the nail art world to you.",
+    "paragraph2": "Every appointment is art for us — we care for each client individually, because we believe every woman deserves to feel special.",
+    "paragraph2Highlight": "every woman deserves to feel special",
+    "paragraph3": "Visit us and leave with perfect nails and a smile."
   },
   "whyUs": {
     "title": "Why us",
-    "subtitle": "What makes us special"
+    "subtitle": "What makes us special",
+    "preciseTitle": "Precise Work",
+    "preciseDesc": "Every nail is shaped with full attention — the result must be perfect.",
+    "locationTitle": "Central Location",
+    "locationDesc": "Find us right in the heart of the city.",
+    "trendsTitle": "We Follow Trends",
+    "trendsDesc": "Latest nail art techniques and classics by professional nail technicians.",
+    "prosTitle": "We Are Professionals",
+    "prosDesc": "Every technician has at least 3 years of nail experience.",
+    "bookingTitle": "Book in 3 Clicks",
+    "bookingDesc": "WhatsApp or form — appointment in seconds.",
+    "googleTitle": "4.9 on Google",
+    "googleDesc": "Hundreds of happy clients. Read the reviews."
   },
   "stats": {
     "yearsExp": "Years of experience",
@@ -696,5 +717,10 @@
     "closed": "Closed",
     "writeUs": "Write to us",
     "mapTitle": "Map – {storeName}"
+  },
+  "whatsapp": {
+    "booking": "Hello, I would like to book an appointment.",
+    "location": "Hello, where exactly are you located?",
+    "general": "Hello, I have a question."
   }
 }

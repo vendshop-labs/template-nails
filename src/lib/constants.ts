@@ -126,10 +126,10 @@ export const BARBERS = TECHNICIANS;
 export const SERVICE_OPTIONS: string[] = SERVICES.map(s => `${s.name} — ${s.price}`);
 
 export const WHY_US_ITEMS: WhyUsItem[] = [
-  { icon: 'scissors', title: 'Precízna práca',        description: 'Každý nechtík tvarujeme s plnou pozornosťou — výsledok musí byť dokonalý.'                 },
-  { icon: 'location', title: 'Sme v centre Trenčína', description: 'Nájdeš nás na Mierovom námestí, priamo v srdci mesta.'                                      },
-  { icon: 'trend',    title: 'Sledujeme trendy',      description: 'Najnovšie techniky nail artu aj klasika v podaní profesionálnych techničiek.'                },
-  { icon: 'star',     title: 'Sme profesionálky',     description: 'Každá technička má minimálne 3 roky skúseností s nechtami.'                                 },
-  { icon: 'click',    title: 'Rezervácia na 3 kliky', description: 'WhatsApp alebo formulár — termín za pár sekúnd.'                                             },
-  { icon: 'medal',    title: '4.9 na Google',         description: 'Stovky spokojných klientiek. Prečítaj si recenzie.'                                          },
+  { icon: 'scissors', key: 'precise',  title: 'Precízna práca',        description: 'Každý nechtík tvarujeme s plnou pozornosťou — výsledok musí byť dokonalý.'  },
+  { icon: 'location', key: 'location', title: 'Sme v centre Trenčína', description: 'Nájdeš nás na Mierovom námestí, priamo v srdci mesta.'                      },
+  { icon: 'trend',    key: 'trends',   title: 'Sledujeme trendy',      description: 'Najnovšie techniky nail artu aj klasika v podaní profesionálnych techničiek.' },
+  { icon: 'star',     key: 'pros',     title: 'Sme profesionálky',     description: 'Každá technička má minimálne 3 roky skúseností s nechtami.'                  },
+  { icon: 'click',    key: 'booking',  title: 'Rezervácia na 3 kliky', description: 'WhatsApp alebo formulár — termín za pár sekúnd.'                             },
+  { icon: 'medal',    key: 'google',   title: '4.9 na Google',         description: 'Stovky spokojných klientiek. Prečítaj si recenzie.'                          },
 ];

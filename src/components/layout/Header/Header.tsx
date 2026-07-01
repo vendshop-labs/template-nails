@@ -3,12 +3,14 @@
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { WHATSAPP_LINKS } from '@/lib/constants';
+import { WHATSAPP_NUMBER } from '@/lib/constants';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 
 export default function Header({ logoUrl, storeName }: { logoUrl?: string; storeName?: string }) {
   const locale = useLocale();
   const t = useTranslations('nav');
+  const tw = useTranslations('whatsapp');
+  const waBookingHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(tw('booking'))}`;
 
   const NAV_LINKS = [
     { href: `/${locale}/#sluzby`,   label: t('services') },
@@ -76,7 +78,7 @@ export default function Header({ logoUrl, storeName }: { logoUrl?: string; store
             {t('booking')}
           </a>
           <a
-            href={WHATSAPP_LINKS.booking}
+            href={waBookingHref}
             target="_blank"
             rel="noopener noreferrer"
             className="header__btn-whatsapp"
@@ -114,7 +116,7 @@ export default function Header({ logoUrl, storeName }: { logoUrl?: string; store
               {t('booking')}
             </a>
             <a
-              href={WHATSAPP_LINKS.booking}
+              href={waBookingHref}
               target="_blank"
               rel="noopener noreferrer"
               className="header__mobile-btn-wa"

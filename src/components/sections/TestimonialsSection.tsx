@@ -25,9 +25,9 @@ export default function TestimonialsSection({ testimonials, locale = 'sk' }: Tes
   return (
     <section id="recenzie" className="testimonials">
       <ScrollReveal direction="up" className="section-header">
-        <p className="section-label">Recenzie</p>
+        <p className="section-label">{t('label')}</p>
         <h2 className="section-title">{t('title')}</h2>
-        <p className="section-subtitle">Recenzie od našich klientiek</p>
+        <p className="section-subtitle">{t('subtitle')}</p>
         <GoldDivider />
       </ScrollReveal>
 
@@ -37,15 +37,17 @@ export default function TestimonialsSection({ testimonials, locale = 'sk' }: Tes
         </ScrollReveal>
       ) : (
         <div className="testimonials__grid">
-          {testimonials.map((t, i) => (
-            <ScrollReveal key={t.id} direction="up" delay={i * 120}>
+          {testimonials.map((item, i) => (
+            <ScrollReveal key={item.id} direction="up" delay={i * 120}>
               <TestimonialCard
-                name={t.name}
-                content={t.content}
-                rating={t.rating}
-                createdAt={t.createdAt}
-                adminReply={t.adminReply}
-                adminReplyAt={t.adminReplyAt}
+                name={item.name}
+                content={item.content}
+                rating={item.rating}
+                createdAt={item.createdAt}
+                locale={locale}
+                ratingLabel={t('rating', { rating: item.rating, max: 5 })}
+                adminReply={item.adminReply}
+                adminReplyAt={item.adminReplyAt}
               />
             </ScrollReveal>
           ))}

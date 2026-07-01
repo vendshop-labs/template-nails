@@ -5,13 +5,15 @@ interface TestimonialCardProps {
   content: string;
   rating: number;
   createdAt: string | Date;
+  locale?: string;
+  ratingLabel?: string;
   adminReply?: string | null;
   adminReplyAt?: string | Date | null;
 }
 
-function Stars({ rating }: { rating: number }) {
+function Stars({ rating, ratingLabel }: { rating: number; ratingLabel?: string }) {
   return (
-    <div className="testimonial-card__stars" aria-label={`${rating} z 5 hviezd`}>
+    <div className="testimonial-card__stars" aria-label={ratingLabel ?? `${rating}/5`}>
       {[1, 2, 3, 4, 5].map((i) => (
         <svg
           key={i}
@@ -36,10 +38,12 @@ export default function TestimonialCard({
   content,
   rating,
   createdAt,
+  locale = 'sk',
+  ratingLabel,
   adminReply,
   adminReplyAt,
 }: TestimonialCardProps) {
-  const date = new Date(createdAt).toLocaleDateString('sk-SK', {
+  const date = new Date(createdAt).toLocaleDateString(locale, {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
@@ -60,7 +64,7 @@ export default function TestimonialCard({
           <p className="testimonial-card__name">{name}</p>
           <p className="testimonial-card__date">{date}</p>
         </div>
-        <Stars rating={rating} />
+        <Stars rating={rating} ratingLabel={ratingLabel} />
       </div>
 
       <p className="testimonial-card__content">&ldquo;{content}&rdquo;</p>

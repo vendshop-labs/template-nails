@@ -111,6 +111,7 @@ export interface Stat {
 
 export interface WhyUsItem {
   icon: string;
+  key: string;
   title: string;
   description: string;
 }

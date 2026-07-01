@@ -53,12 +53,12 @@ function getIcon(icon: string) {
   }
 }
 
-function WhyUsCard({ item }: { item: WhyUsItem }) {
+function WhyUsCard({ item, t }: { item: WhyUsItem; t: (key: string) => string }) {
   return (
     <div className="why-us__card">
       <div className="why-us__icon">{getIcon(item.icon)}</div>
-      <h3 className="why-us__card-title">{item.title}</h3>
-      <p className="why-us__card-desc">{item.description}</p>
+      <h3 className="why-us__card-title">{t(`${item.key}Title`)}</h3>
+      <p className="why-us__card-desc">{t(`${item.key}Desc`)}</p>
     </div>
   );
 }
@@ -76,7 +76,7 @@ export default function WhyUsSection() {
       <div className="why-us__grid">
         {WHY_US_ITEMS.map((item, i) => (
           <ScrollReveal key={item.icon} direction="up" delay={i * 100}>
-            <WhyUsCard item={item} />
+            <WhyUsCard item={item} t={t} />
           </ScrollReveal>
         ))}
       </div>

@@ -193,6 +193,7 @@
     "terms": "AGB",
     "impressum": "Impressum",
     "datenschutz": "Datenschutz",
+    "tagline": "Premium-Nagelstudio im Herzen der Stadt.",
     "aboutLink": "Über uns"
   },
   "tags": {
@@ -542,9 +543,12 @@
     "errorTextShort": "Bewertung muss mindestens 20 Zeichen lang sein",
     "successTitle": "Vielen Dank!",
     "successPending": "Ihre Bewertung wurde eingereicht und wird geprüft.",
+    "label": "Bewertungen",
     "title": "Was unsere Kundinnen sagen",
     "beFirst": "Seien Sie die Erste!",
-    "empty": "Noch keine Bewertungen."
+    "empty": "Noch keine Bewertungen.",
+    "subtitle": "Bewertungen unserer Kundinnen",
+    "rating": "{rating} von {max} Sternen"
   },
   "auth": {
     "login": "Anmelden",
@@ -634,7 +638,8 @@
   "team": {
     "title": "Unsere Meister",
     "subtitle": "Meister ihres Fachs",
-    "experience": "Jahre Erfahrung"
+    "experience": "Jahre Erfahrung",
+    "description": "Jede von uns bringt einen einzigartigen Stil und jahrelange Erfahrung mit."
   },
   "gallery": {
     "title": "Unsere Arbeit",
@@ -654,11 +659,27 @@
   },
   "about": {
     "badge": "Über uns",
-    "title": "Schönheit beginnt\nmit Pflege"
+    "title": "Schönheit beginnt\nmit Pflege",
+    "paragraph1": "Lumière Nails entstand aus der Liebe zur Schönheit und zum Detail. Unsere Technikerinnen bringen das Beste der Nail-Art-Welt zu Ihnen.",
+    "paragraph2": "Jeder Termin ist für uns Kunst — wir widmen uns jeder Kundin individuell, denn wir glauben, dass jede Frau sich besonders fühlen sollte.",
+    "paragraph2Highlight": "jede Frau sich besonders fühlen sollte",
+    "paragraph3": "Besuchen Sie uns und gehen Sie mit perfekten Nägeln und einem Lächeln."
   },
   "whyUs": {
     "title": "Warum wir",
-    "subtitle": "Was uns besonders macht"
+    "subtitle": "Was uns besonders macht",
+    "preciseTitle": "Präzise Arbeit",
+    "preciseDesc": "Jeder Nagel wird mit voller Aufmerksamkeit geformt — das Ergebnis muss perfekt sein.",
+    "locationTitle": "Zentrale Lage",
+    "locationDesc": "Sie finden uns direkt im Stadtzentrum.",
+    "trendsTitle": "Wir folgen Trends",
+    "trendsDesc": "Neueste Nail-Art-Techniken und Klassiker von professionellen Technikerinnen.",
+    "prosTitle": "Wir sind Profis",
+    "prosDesc": "Jede Technikerin hat mindestens 3 Jahre Erfahrung mit Nägeln.",
+    "bookingTitle": "Buchung in 3 Klicks",
+    "bookingDesc": "WhatsApp oder Formular — Termin in wenigen Sekunden.",
+    "googleTitle": "4,9 bei Google",
+    "googleDesc": "Hunderte zufriedene Kundinnen. Lesen Sie die Bewertungen."
   },
   "stats": {
     "yearsExp": "Jahre Erfahrung",
@@ -696,5 +717,10 @@
     "closed": "Geschlossen",
     "writeUs": "Schreiben Sie uns",
     "mapTitle": "Karte – {storeName}"
+  },
+  "whatsapp": {
+    "booking": "Hallo, ich möchte gerne einen Termin buchen.",
+    "location": "Hallo, wo genau befinden Sie sich?",
+    "general": "Hallo, ich habe eine Frage."
   }
 }

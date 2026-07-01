@@ -23,7 +23,7 @@ export default function TeamSection({ masters }: { masters: Master[] }) {
         <p className="section-label">{t('title')}</p>
         <h2 className="section-title">{t('subtitle')}</h2>
         <GoldDivider />
-        <p className="section-subtitle">Každý z nás prináša unikátny štýl a roky skúseností.</p>
+        <p className="section-subtitle">{t('description')}</p>
       </ScrollReveal>
 
       <div className="team-grid">

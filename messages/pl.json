@@ -193,6 +193,7 @@
     "terms": "Regulamin",
     "impressum": "Impressum",
     "datenschutz": "Ochrona danych",
+    "tagline": "Ekskluzywne studio paznokci w centrum miasta.",
     "aboutLink": "O nas"
   },
   "tags": {
@@ -542,9 +543,12 @@
     "errorTextShort": "Opinia musi mieć co najmniej 20 znaków",
     "successTitle": "Dziękujemy!",
     "successPending": "Twoja opinia została wysłana i oczekuje na weryfikację.",
+    "label": "Opinie",
     "title": "Co mówią klientki",
     "beFirst": "Bądź pierwsza!",
-    "empty": "Brak recenzji."
+    "empty": "Brak recenzji.",
+    "subtitle": "Opinie naszych klientek",
+    "rating": "{rating} z {max} gwiazdek"
   },
   "auth": {
     "login": "Zaloguj się",
@@ -634,7 +638,8 @@
   "team": {
     "title": "Nasi mistrzowie",
     "subtitle": "Mistrzowie swojego fachu",
-    "experience": "lat doświadczenia"
+    "experience": "lat doświadczenia",
+    "description": "Każda z nas wnosi wyjątkowy styl i lata doświadczenia."
   },
   "gallery": {
     "title": "Nasze prace",
@@ -654,11 +659,27 @@
   },
   "about": {
     "badge": "O nas",
-    "title": "Piękno zaczyna się\nod pielęgnacji"
+    "title": "Piękno zaczyna się\nod pielęgnacji",
+    "paragraph1": "Lumière Nails powstało z miłości do piękna i detalu. Nasze techniczki przynoszą to, co najlepsze ze świata nail art.",
+    "paragraph2": "Każda wizyta to dla nas sztuka — poświęcamy się każdej klientce indywidualnie, bo wierzymy, że każda kobieta zasługuje na wyjątkowość.",
+    "paragraph2Highlight": "każda kobieta zasługuje na wyjątkowość",
+    "paragraph3": "Odwiedź nas i wyjdź z idealnymi paznokciami i uśmiechem."
   },
   "whyUs": {
     "title": "Dlaczego my",
-    "subtitle": "Co nas wyróżnia"
+    "subtitle": "Co nas wyróżnia",
+    "preciseTitle": "Precyzyjna praca",
+    "preciseDesc": "Każdy paznokieć kształtujemy z pełną uwagą — efekt musi być doskonały.",
+    "locationTitle": "Jesteśmy w centrum",
+    "locationDesc": "Znajdziesz nas w samym sercu miasta.",
+    "trendsTitle": "Śledzimy trendy",
+    "trendsDesc": "Najnowsze techniki nail art i klasyka w wykonaniu profesjonalnych techniczek.",
+    "prosTitle": "Jesteśmy profesjonalistkami",
+    "prosDesc": "Każda techniczka ma co najmniej 3 lata doświadczenia.",
+    "bookingTitle": "Rezerwacja w 3 kliknięciach",
+    "bookingDesc": "WhatsApp lub formularz — termin w kilka sekund.",
+    "googleTitle": "4,9 w Google",
+    "googleDesc": "Setki zadowolonych klientek. Przeczytaj opinie."
   },
   "stats": {
     "yearsExp": "Lat doświadczenia",
@@ -696,5 +717,10 @@
     "closed": "Zamknięte",
     "writeUs": "Napisz do nas",
     "mapTitle": "Mapa – {storeName}"
+  },
+  "whatsapp": {
+    "booking": "Dzień dobry, chciałbym zarezerwować wizytę.",
+    "location": "Dzień dobry, gdzie dokładnie się znajdujecie?",
+    "general": "Dzień dobry, mam pytanie."
   }
 }
