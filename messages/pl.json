@@ -353,6 +353,14 @@
     "seoText": "Zakup {category} jest łatwy dzięki ElectroMarket. Nasz katalog oferuje szeroki wybór od wiodących globalnych marek w najlepszych cenach.\n\nOferujemy oficjalną gwarancję, szybką dostawę Nova Poshta na terenie całego kraju i wygodne opcje płatności. Zamów online i otrzymaj narzędzie w ciągu 1–2 dni."
   },
   "hero": {
+    "defaultTitle": "Twoje paznokcie. Twój styl.",
+    "defaultSubtitle": "Premium manicure, paznokcie żelowe i nail art w {city}.",
+    "ctaText": "Zarezerwuj wizytę",
+    "chip1": "💅 Manicure",
+    "chip2": "✨ Paznokcie żelowe",
+    "chip3": "🌸 Nail art",
+    "chip4": "🎓 Kursy",
+    "priceAnchor": "Manicure od {p1} · Żel od {p2}",
     "tagline": "AUTENTYCZNA KUCHNIA WŁOSKA",
     "title": "Smak Włoch w",
     "titleAccent": "każdym",
@@ -526,7 +534,10 @@
     "submit": "Wyślij opinię",
     "errorTextShort": "Opinia musi mieć co najmniej 20 znaków",
     "successTitle": "Dziękujemy!",
-    "successPending": "Twoja opinia została wysłana i oczekuje na weryfikację."
+    "successPending": "Twoja opinia została wysłana i oczekuje na weryfikację.",
+    "title": "Co mówią klientki",
+    "beFirst": "Bądź pierwsza!",
+    "empty": "Brak recenzji."
   },
   "auth": {
     "login": "Zaloguj się",
@@ -560,7 +571,10 @@
     "styling": "Stylizacja",
     "bookNow": "Zarezerwuj",
     "duration": "{min} min",
-    "from": "od"
+    "from": "od",
+    "subtitle": "Co dla Ciebie przygotujemy",
+    "minutes": "min",
+    "bookCta": "Zarezerwuj"
   },
   "booking": {
     "title": "Zarezerwuj wizytę",
@@ -576,10 +590,14 @@
     "confirmation": "Wizyta potwierdzona! Skontaktujemy się wkrótce."
   },
   "team": {
-    "title": "Nasi mistrzowie"
+    "title": "Nasi mistrzowie",
+    "subtitle": "Mistrzowie swojego fachu",
+    "experience": "lat doświadczenia"
   },
   "gallery": {
-    "title": "Nasze prace"
+    "title": "Nasze prace",
+    "subtitle": "Galeria",
+    "viewMore": "Pokaż więcej"
   },
   "courses": {
     "title": "Ucz się od mistrzów",
@@ -591,6 +609,20 @@
     "lessonContent": "Treść lekcji",
     "buyToUnlock": "Kup kurs, aby odblokować wideo i materiały",
     "navLabel": "Kursy"
+  },
+  "about": {
+    "badge": "O nas",
+    "title": "Piękno zaczyna się\nod pielęgnacji"
+  },
+  "whyUs": {
+    "title": "Dlaczego my",
+    "subtitle": "Co nas wyróżnia"
+  },
+  "stats": {
+    "yearsExp": "Lat doświadczenia",
+    "happyClients": "Zadowolonych klientek",
+    "technicians": "Nail technicy",
+    "googleRating": "Ocena Google"
   },
   "CookieBanner": {
     "ariaLabel": "Zgoda na pliki cookie",

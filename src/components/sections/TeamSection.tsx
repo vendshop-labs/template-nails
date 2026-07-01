@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import GoldDivider from '@/components/ui/GoldDivider';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 
@@ -13,13 +14,14 @@ interface Master {
 }
 
 export default function TeamSection({ masters }: { masters: Master[] }) {
+  const t = useTranslations('team');
   if (!masters.length) return null;
 
   return (
     <section id="tim" className="team">
       <ScrollReveal direction="up" className="section-header">
-        <p className="section-label">Náš tím</p>
-        <h2 className="section-title">Majstri svojho remesla</h2>
+        <p className="section-label">{t('title')}</p>
+        <h2 className="section-title">{t('subtitle')}</h2>
         <GoldDivider />
         <p className="section-subtitle">Každý z nás prináša unikátny štýl a roky skúseností.</p>
       </ScrollReveal>

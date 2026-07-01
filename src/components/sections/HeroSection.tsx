@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { WHATSAPP_LINKS, CONTACT } from '@/lib/constants';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import styles from './HeroSection.module.css';
@@ -22,16 +23,11 @@ interface HeroSectionProps {
   store?: StoreInfo | null;
 }
 
-const DEFAULTS = {
-  title:    'Vaše nechty. Váš štýl.',
-  subtitle: 'Prémiová manikúra, gélové nechty a nail art v Trenčíne.',
-  ctaText:  'Rezervovať termín',
-};
-
 export default function HeroSection({ config, store }: HeroSectionProps) {
-  const title    = config?.title    || DEFAULTS.title;
-  const subtitle = config?.subtitle || DEFAULTS.subtitle;
-  const ctaText  = config?.ctaText  || DEFAULTS.ctaText;
+  const t = useTranslations('hero');
+  const title    = config?.title    || t('defaultTitle');
+  const subtitle = config?.subtitle || t('defaultSubtitle', { city: store?.city ?? 'Trenčín' });
+  const ctaText  = config?.ctaText  || t('ctaText');
   const imageSrc = config?.imageUrl || null;
 
   return (
@@ -48,14 +44,14 @@ export default function HeroSection({ config, store }: HeroSectionProps) {
         <p className="hero__subtitle">{subtitle}</p>
 
         <div className="hero__chips">
-          <span className="hero__chip">💅 Manikúra</span>
-          <span className="hero__chip">✨ Gél nechty</span>
-          <span className="hero__chip">🌸 Nail art</span>
-          <span className="hero__chip">🎓 Kurzy</span>
+          <span className="hero__chip">{t('chip1')}</span>
+          <span className="hero__chip">{t('chip2')}</span>
+          <span className="hero__chip">{t('chip3')}</span>
+          <span className="hero__chip">{t('chip4')}</span>
         </div>
 
         <p className="hero__price-anchor">
-          Manikúra od <strong>€18</strong> · Gél od <strong>€35</strong>
+          {t('priceAnchor', { p1: '€18', p2: '€35' })}
         </p>
 
         <div className="hero__buttons">

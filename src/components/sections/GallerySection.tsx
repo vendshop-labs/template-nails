@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { GALLERY_IMAGES } from '@/lib/constants';
 import GoldDivider from '@/components/ui/GoldDivider';
 import ScrollReveal from '@/components/ui/ScrollReveal';
@@ -16,6 +17,7 @@ interface GallerySectionProps {
 }
 
 export default function GallerySection({ images, layout }: GallerySectionProps) {
+  const t = useTranslations('gallery');
   const items = images && images.length > 0
     ? images
     : GALLERY_IMAGES.map((g, i) => ({ id: String(i), url: g.src, alt: g.alt }));
@@ -25,8 +27,8 @@ export default function GallerySection({ images, layout }: GallerySectionProps) 
   return (
     <section id="galeria" className="gallery">
       <ScrollReveal direction="up" className="section-header">
-        <p className="section-label">Naša práca</p>
-        <h2 className="section-title">Galéria</h2>
+        <p className="section-label">{t('title')}</p>
+        <h2 className="section-title">{t('subtitle')}</h2>
         <GoldDivider />
       </ScrollReveal>
 

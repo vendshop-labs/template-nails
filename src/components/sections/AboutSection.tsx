@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { ABOUT } from '@/lib/constants';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 
@@ -8,7 +9,8 @@ interface AboutSectionProps {
 }
 
 export default function AboutSection({ aboutImage, description }: AboutSectionProps) {
-  const titleLines = ABOUT.title.split('\n');
+  const t = useTranslations('about');
+  const titleLines = t('title').split('\n');
 
   return (
     <section id="o-nas" className="about">
@@ -32,7 +34,7 @@ export default function AboutSection({ aboutImage, description }: AboutSectionPr
 
         <ScrollReveal direction="right" delay={150}>
           <div>
-            <p className="about__label">{ABOUT.badge}</p>
+            <p className="about__label">{t('badge')}</p>
             <h3 className="about__title">
               {titleLines[0]}
               {titleLines[1] && (

@@ -353,6 +353,14 @@
     "seoText": "{category} in der Ukraine kaufen — mit ElectroMarket ganz einfach. Unser Katalog bietet eine große Auswahl führender Weltmarken zu besten Preisen.\n\nWir bieten offizielle Garantie, schnelle Lieferung mit Nova Poshta im ganzen Land und bequeme Zahlungsmethoden. Bestellen Sie online — Ihr Werkzeug wird innerhalb von 1–2 Tagen geliefert."
   },
   "hero": {
+    "defaultTitle": "Ihre Nägel. Ihr Stil.",
+    "defaultSubtitle": "Premium Maniküre, Gel-Nägel und Nail Art in {city}.",
+    "ctaText": "Termin buchen",
+    "chip1": "💅 Maniküre",
+    "chip2": "✨ Gel-Nägel",
+    "chip3": "🌸 Nail Art",
+    "chip4": "🎓 Kurse",
+    "priceAnchor": "Maniküre ab {p1} · Gel ab {p2}",
     "tagline": "AUTHENTISCHE ITALIENISCHE KÜCHE",
     "title": "Geschmack Italiens in",
     "titleAccent": "Jedem",
@@ -526,7 +534,10 @@
     "submit": "Bewertung absenden",
     "errorTextShort": "Bewertung muss mindestens 20 Zeichen lang sein",
     "successTitle": "Vielen Dank!",
-    "successPending": "Ihre Bewertung wurde eingereicht und wird geprüft."
+    "successPending": "Ihre Bewertung wurde eingereicht und wird geprüft.",
+    "title": "Was unsere Kundinnen sagen",
+    "beFirst": "Seien Sie die Erste!",
+    "empty": "Noch keine Bewertungen."
   },
   "auth": {
     "login": "Anmelden",
@@ -560,7 +571,10 @@
     "styling": "Styling",
     "bookNow": "Jetzt buchen",
     "duration": "{min} Min",
-    "from": "ab"
+    "from": "ab",
+    "subtitle": "Was wir für Sie anbieten",
+    "minutes": "Min.",
+    "bookCta": "Buchen"
   },
   "booking": {
     "title": "Termin buchen",
@@ -576,10 +590,14 @@
     "confirmation": "Termin bestätigt! Wir melden uns bald."
   },
   "team": {
-    "title": "Unsere Meister"
+    "title": "Unsere Meister",
+    "subtitle": "Meister ihres Fachs",
+    "experience": "Jahre Erfahrung"
   },
   "gallery": {
-    "title": "Unsere Arbeit"
+    "title": "Unsere Arbeit",
+    "subtitle": "Galerie",
+    "viewMore": "Mehr anzeigen"
   },
   "courses": {
     "title": "Von Meistern lernen",
@@ -591,6 +609,20 @@
     "lessonContent": "Kursinhalt",
     "buyToUnlock": "Kaufen Sie den Kurs für Zugang zu Video und Materialien",
     "navLabel": "Kurse"
+  },
+  "about": {
+    "badge": "Über uns",
+    "title": "Schönheit beginnt\nmit Pflege"
+  },
+  "whyUs": {
+    "title": "Warum wir",
+    "subtitle": "Was uns besonders macht"
+  },
+  "stats": {
+    "yearsExp": "Jahre Erfahrung",
+    "happyClients": "Zufriedene Kundinnen",
+    "technicians": "Nail-Technikerinnen",
+    "googleRating": "Google-Bewertung"
   },
   "CookieBanner": {
     "ariaLabel": "Cookie-Zustimmung",

@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import { WHY_US_ITEMS } from '@/lib/constants';
 import type { WhyUsItem } from '@/lib/types';
 import GoldDivider from '@/components/ui/GoldDivider';
@@ -63,11 +64,12 @@ function WhyUsCard({ item }: { item: WhyUsItem }) {
 }
 
 export default function WhyUsSection() {
+  const t = useTranslations('whyUs');
   return (
     <section className="why-us">
       <ScrollReveal direction="up" className="section-header">
-        <p className="section-label">Prečo my</p>
-        <h2 className="section-title">Čo nás robí výnimočnými</h2>
+        <p className="section-label">{t('title')}</p>
+        <h2 className="section-title">{t('subtitle')}</h2>
         <GoldDivider />
       </ScrollReveal>
 

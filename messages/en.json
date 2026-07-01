@@ -353,6 +353,14 @@
     "seoText": "Buying {category} in Ukraine is easy with ElectroMarket. Our catalog features a wide range from leading global brands at the best prices.\n\nWe offer an official warranty, fast Nova Poshta delivery across the country, and convenient payment options. Order online and get your tool delivered within 1–2 days."
   },
   "hero": {
+    "defaultTitle": "Your Nails. Your Style.",
+    "defaultSubtitle": "Premium manicure, gel nails and nail art in {city}.",
+    "ctaText": "Book appointment",
+    "chip1": "💅 Manicure",
+    "chip2": "✨ Gel nails",
+    "chip3": "🌸 Nail art",
+    "chip4": "🎓 Courses",
+    "priceAnchor": "Manicure from {p1} · Gel from {p2}",
     "tagline": "AUTHENTIC ITALIAN CUISINE",
     "title": "Taste of Italy in",
     "titleAccent": "Every",
@@ -526,7 +534,10 @@
     "submit": "Submit Review",
     "errorTextShort": "Review must be at least 20 characters",
     "successTitle": "Thank You!",
-    "successPending": "Your review has been submitted and is pending moderation."
+    "successPending": "Your review has been submitted and is pending moderation.",
+    "title": "What our clients say",
+    "beFirst": "Be the first!",
+    "empty": "No reviews yet."
   },
   "auth": {
     "login": "Sign In",
@@ -560,7 +571,10 @@
     "styling": "Styling",
     "bookNow": "Book Now",
     "duration": "{min} min",
-    "from": "from"
+    "from": "from",
+    "subtitle": "What we offer",
+    "minutes": "min",
+    "bookCta": "Book"
   },
   "booking": {
     "title": "Book Your Appointment",
@@ -576,10 +590,14 @@
     "confirmation": "Appointment confirmed! We will contact you shortly."
   },
   "team": {
-    "title": "Our Technicians"
+    "title": "Our Technicians",
+    "subtitle": "Masters of their craft",
+    "experience": "years of experience"
   },
   "gallery": {
-    "title": "Our Work"
+    "title": "Our Work",
+    "subtitle": "Gallery",
+    "viewMore": "View more"
   },
   "courses": {
     "title": "Learn from the masters",
@@ -591,6 +609,20 @@
     "lessonContent": "Lesson content",
     "buyToUnlock": "Purchase the course to unlock video and materials",
     "navLabel": "Courses"
+  },
+  "about": {
+    "badge": "About us",
+    "title": "Beauty starts\nwith care"
+  },
+  "whyUs": {
+    "title": "Why us",
+    "subtitle": "What makes us special"
+  },
+  "stats": {
+    "yearsExp": "Years of experience",
+    "happyClients": "Happy clients",
+    "technicians": "Nail technicians",
+    "googleRating": "Google rating"
   },
   "CookieBanner": {
     "ariaLabel": "Cookie consent",

@@ -353,6 +353,14 @@
     "seoText": "Koupit {category} na Ukrajině je s ElectroMarket snadné. Náš katalog nabízí široký sortiment od předních světových značek za nejlepší ceny.\n\nNabízíme oficiální záruku, rychlé doručení Nova Pošta po celé zemi a pohodlné způsoby platby. Objednávejte online — vaše nářadí doručíme za 1–2 dny."
   },
   "hero": {
+    "defaultTitle": "Vaše nehty. Váš styl.",
+    "defaultSubtitle": "Prémiová manikúra, gelové nehty a nail art v {city}.",
+    "ctaText": "Rezervovat termín",
+    "chip1": "💅 Manikúra",
+    "chip2": "✨ Gelové nehty",
+    "chip3": "🌸 Nail art",
+    "chip4": "🎓 Kurzy",
+    "priceAnchor": "Manikúra od {p1} · Gel od {p2}",
     "tagline": "AUTENTICKÁ ITALSKÁ KUCHYNĚ",
     "title": "Chuť Itálie v",
     "titleAccent": "Každém",
@@ -526,7 +534,10 @@
     "submit": "Odeslat recenzi",
     "errorTextShort": "Recenze musí mít alespoň 20 znaků",
     "successTitle": "Děkujeme!",
-    "successPending": "Vaše recenze byla odeslána a čeká na schválení."
+    "successPending": "Vaše recenze byla odeslána a čeká na schválení.",
+    "title": "Co říkají klientky",
+    "beFirst": "Buďte první!",
+    "empty": "Zatím žádné recenze."
   },
   "auth": {
     "login": "Přihlásit se",
@@ -560,7 +571,10 @@
     "styling": "Styling",
     "bookNow": "Rezervovat",
     "duration": "{min} min",
-    "from": "od"
+    "from": "od",
+    "subtitle": "Co pro vás připravíme",
+    "minutes": "min",
+    "bookCta": "Rezervovat"
   },
   "booking": {
     "title": "Zarezervujte termín",
@@ -576,10 +590,14 @@
     "confirmation": "Rezervace potvrzena! Ozveme se vám."
   },
   "team": {
-    "title": "Naši mistři"
+    "title": "Naši mistři",
+    "subtitle": "Mistři svého řemesla",
+    "experience": "let zkušeností"
   },
   "gallery": {
-    "title": "Naše práce"
+    "title": "Naše práce",
+    "subtitle": "Galerie",
+    "viewMore": "Zobrazit více"
   },
   "courses": {
     "title": "Učte se od mistrů",
@@ -591,6 +609,20 @@
     "lessonContent": "Obsah lekce",
     "buyToUnlock": "Zakupte kurz pro přístup k videu a materiálům",
     "navLabel": "Kurzy"
+  },
+  "about": {
+    "badge": "O nás",
+    "title": "Krása začíná\npéčí"
+  },
+  "whyUs": {
+    "title": "Proč my",
+    "subtitle": "Co nás dělá výjimečnými"
+  },
+  "stats": {
+    "yearsExp": "Let zkušeností",
+    "happyClients": "Spokojených klientek",
+    "technicians": "Nail techničky",
+    "googleRating": "Google hodnocení"
   },
   "CookieBanner": {
     "ariaLabel": "Souhlas s cookies",
