@@ -353,6 +353,15 @@ export default function AdminSettingsPage() {
                   <input className={styles.input} type="email" value={store.email} onChange={(e) => sStore('email', e.target.value)} />
                 </Field>
               </div>
+              <Field label="WhatsApp">
+                <input
+                  className={styles.input}
+                  type="tel"
+                  value={store.whatsappPhone}
+                  onChange={(e) => sStore('whatsappPhone', e.target.value)}
+                  placeholder="+421900123456"
+                />
+              </Field>
               <Field label="Adresa salóna">
                 <input className={styles.input} value={store.address} onChange={(e) => sStore('address', e.target.value)} placeholder="Hlavná ulica 15" />
               </Field>
@@ -442,7 +451,9 @@ export default function AdminSettingsPage() {
             </div>
           </div>
 
-          <button type="button" className={styles.saveBtn} onClick={showToast}>Uložiť</button>
+          <button type="button" className={styles.saveBtn} onClick={saveStore} disabled={saving}>
+            {saving ? tr.settings.savingBtn : tr.settings.saveBtn}
+          </button>
         </div>
       )}
 
