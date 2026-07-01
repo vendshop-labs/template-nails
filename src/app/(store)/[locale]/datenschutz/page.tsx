@@ -21,8 +21,8 @@ export default async function DatenschutzPage({
   return (
     <main style={{
       maxWidth: 720,
-      margin: '4rem auto',
-      padding: '0 1.5rem 4rem',
+      margin: '0 auto',
+      padding: '5rem 1.5rem 4rem',
       fontFamily: 'inherit',
       lineHeight: 1.7,
     }}>
