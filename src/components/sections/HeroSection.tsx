@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { WHATSAPP_LINKS, CONTACT } from '@/lib/constants';
+import { WHATSAPP_NUMBER, CONTACT } from '@/lib/constants';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import styles from './HeroSection.module.css';
 
@@ -25,6 +25,7 @@ interface HeroSectionProps {
 
 export default function HeroSection({ config, store }: HeroSectionProps) {
   const t = useTranslations('hero');
+  const tw = useTranslations('whatsapp');
   const title    = config?.title    || t('defaultTitle');
   const subtitle = config?.subtitle || t('defaultSubtitle', { city: store?.city ?? 'Trenčín' });
   const ctaText  = config?.ctaText  || t('ctaText');
@@ -59,7 +60,7 @@ export default function HeroSection({ config, store }: HeroSectionProps) {
             {ctaText}
           </a>
           <a
-            href={WHATSAPP_LINKS.booking}
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(tw('booking'))}`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-whatsapp"

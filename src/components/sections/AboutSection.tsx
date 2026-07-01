@@ -10,7 +10,6 @@ interface AboutSectionProps {
 
 export default function AboutSection({ aboutImage, description }: AboutSectionProps) {
   const t = useTranslations('about');
-  const titleLines = t('title').split('\n');
 
   return (
     <section id="o-nas" className="about">
@@ -35,15 +34,7 @@ export default function AboutSection({ aboutImage, description }: AboutSectionPr
         <ScrollReveal direction="right" delay={150}>
           <div>
             <p className="about__label">{t('badge')}</p>
-            <h3 className="about__title">
-              {titleLines[0]}
-              {titleLines[1] && (
-                <>
-                  <br />
-                  {titleLines[1]}
-                </>
-              )}
-            </h3>
+            <h3 className="about__title">{t('title')}</h3>
             {description ? (
               <p className="about__text">{description}</p>
             ) : (

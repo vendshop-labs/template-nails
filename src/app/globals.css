@@ -1213,6 +1213,7 @@ body::after {
   font-family: var(--font-display);
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
+  white-space: pre-line;
 }
 
 .about__text {

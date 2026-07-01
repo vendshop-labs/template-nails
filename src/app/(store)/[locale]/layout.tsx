@@ -184,7 +184,16 @@ export default async function LocaleLayout({
               <PresenceProvider presence={config.presence}>
                 <Header logoUrl={config.logoUrl} storeName={store?.name ?? undefined} />
                 <main>{children}</main>
-                <Footer locale={locale} legalEnabled={legalEnabled} storeName={store?.name ?? undefined} workingHours={parsedFooterHours} />
+                <Footer
+                  locale={locale}
+                  legalEnabled={legalEnabled}
+                  storeName={store?.name ?? undefined}
+                  address={store?.address ?? undefined}
+                  city={store?.city ?? undefined}
+                  phone={store?.phone ?? undefined}
+                  email={store?.email ?? undefined}
+                  workingHours={parsedFooterHours}
+                />
                 <CookieBanner />
               </PresenceProvider>
             </VerticalProvider>

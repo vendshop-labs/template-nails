@@ -43,10 +43,14 @@ interface FooterProps {
   locale?: string;
   legalEnabled?: boolean;
   storeName?: string;
+  address?: string | null;
+  city?: string | null;
+  phone?: string | null;
+  email?: string | null;
   workingHours?: unknown;
 }
 
-export default function Footer({ locale = 'sk', legalEnabled, storeName, workingHours }: FooterProps) {
+export default function Footer({ locale = 'sk', legalEnabled, storeName, address, city, phone, email, workingHours }: FooterProps) {
   const tf = useTranslations('footer');
   const tn = useTranslations('nav');
   const tw = useTranslations('whatsapp');
@@ -140,15 +144,15 @@ export default function Footer({ locale = 'sk', legalEnabled, storeName, working
           <ul className="footer__contact">
             <li>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              {CONTACT.address.replace('\n', ', ')}
+              {[address ?? CONTACT.address, city].filter(Boolean).join(', ')}
             </li>
             <li>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.1 11.77a19.79 19.79 0 01-3.07-8.67A2 2 0 013 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-              <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+              <a href={`tel:${(phone ?? CONTACT.phone).replace(/\s/g, '')}`}>{phone ?? CONTACT.phone}</a>
             </li>
             <li>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              <a href={CONTACT.emailHref}>{CONTACT.email}</a>
+              <a href={`mailto:${email ?? CONTACT.email}`}>{email ?? CONTACT.email}</a>
             </li>
           </ul>
         </div>
@@ -159,13 +163,13 @@ export default function Footer({ locale = 'sk', legalEnabled, storeName, working
       <div className="footer__bottom">
         <p>{tf('rights', { year: currentYear, storeName: displayName })}</p>
         <p className="footer__bottom-links">
-          {locale === 'de' && legalEnabled && (
+          {locale === 'de' && (
             <>
               <a href={`/${locale}/impressum`}>{tf('impressum')}</a>
               <span>·</span>
             </>
           )}
-          <a href={locale === 'de' && legalEnabled ? `/${locale}/datenschutz` : '#'}>{tf('privacy')}</a>
+          <a href={locale === 'de' ? `/${locale}/datenschutz` : '#'}>{tf('privacy')}</a>
           <span>·</span>
           <a href="#">{tf('terms')}</a>
         </p>
