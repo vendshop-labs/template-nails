@@ -26,7 +26,14 @@ export default async function DatenschutzPage({
   const legal = store
     ? await db.legalConfig.findUnique({ where: { storeId: store.id } })
     : null;
-  if (!legal?.enabled) notFound();
+
+  const name    = legal?.companyName || store?.name || 'Lumière Nails';
+  const street  = legal?.street      || store?.address || '';
+  const zip     = legal?.zip         || '';
+  const city    = legal?.city        || store?.city || '';
+  const country = legal?.country     || 'Deutschland';
+  const phone   = legal?.phone       || store?.phone || '';
+  const email   = legal?.email       || store?.email || '';
 
   return (
     <main className={styles.page}>
@@ -39,15 +46,15 @@ export default async function DatenschutzPage({
             Verantwortlicher im Sinne der DSGVO ist:
             <br />
             <br />
-            <strong>{legal.companyName}</strong>
+            <strong>{name}</strong>
             <br />
-            {legal.street}, {legal.zip} {legal.city}, {legal.country}
+            {street}, {zip} {city}, {country}
             <br />
-            E-Mail: <a href={`mailto:${legal.email}`}>{legal.email}</a>
-            {legal.phone && (
+            E-Mail: <a href={`mailto:${email}`}>{email}</a>
+            {phone && (
               <>
                 <br />
-                Telefon: {legal.phone}
+                Telefon: {phone}
               </>
             )}
           </p>
@@ -113,7 +120,7 @@ export default async function DatenschutzPage({
           <p>
             Diese Daten werden ausschließlich für die Terminverwaltung und Kommunikation mit Ihnen
             verwendet. Sie können jederzeit die Löschung Ihrer Daten beantragen unter{' '}
-            <a href={`mailto:${legal.email}`}>{legal.email}</a>.
+            <a href={`mailto:${email}`}>{email}</a>.
           </p>
         </section>
 
@@ -148,7 +155,7 @@ export default async function DatenschutzPage({
           </ul>
           <p>
             Zur Ausübung Ihrer Rechte wenden Sie sich bitte an:{' '}
-            <a href={`mailto:${legal.email}`}>{legal.email}</a>
+            <a href={`mailto:${email}`}>{email}</a>
           </p>
           <p>
             Sie haben außerdem das Recht, sich bei einer Datenschutz-Aufsichtsbehörde über die

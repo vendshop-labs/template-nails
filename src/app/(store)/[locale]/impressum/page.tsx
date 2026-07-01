@@ -26,7 +26,15 @@ export default async function ImpressumPage({
   const legal = store
     ? await db.legalConfig.findUnique({ where: { storeId: store.id } })
     : null;
-  if (!legal?.enabled) notFound();
+
+  const name    = legal?.companyName || store?.name || 'Lumière Nails';
+  const street  = legal?.street      || store?.address || '';
+  const zip     = legal?.zip         || '';
+  const city    = legal?.city        || store?.city || '';
+  const country = legal?.country     || 'Deutschland';
+  const phone   = legal?.phone       || store?.phone || '';
+  const email   = legal?.email       || store?.email || '';
+  const vatId   = legal?.vatId       || '';
 
   return (
     <main className={styles.page}>
@@ -36,25 +44,25 @@ export default async function ImpressumPage({
         <section className={styles.section}>
           <h2 className={styles.heading}>Angaben gemäß § 5 TMG</h2>
           <p>
-            <strong>{legal.companyName}</strong>
+            <strong>{name}</strong>
             <br />
-            {legal.street}
+            {street}
             <br />
-            {legal.zip} {legal.city}
+            {zip} {city}
             <br />
-            {legal.country}
+            {country}
           </p>
           <p>
-            {legal.phone && (
+            {phone && (
               <>
-                Telefon: {legal.phone}
+                Telefon: {phone}
                 <br />
               </>
             )}
             E-Mail:{' '}
-            <a href={`mailto:${legal.email}`}>{legal.email}</a>
+            <a href={`mailto:${email}`}>{email}</a>
           </p>
-          {legal.vatId && <p>USt-IdNr.: {legal.vatId}</p>}
+          {vatId && <p>USt-IdNr.: {vatId}</p>}
         </section>
 
         <section className={styles.section}>
