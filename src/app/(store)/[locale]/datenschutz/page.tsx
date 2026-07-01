@@ -1,11 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { db } from '@/lib/db';
-import styles from '../legal.module.css';
 
 export const revalidate = 300;
-
-const STORE_SLUG = process.env.STORE_SLUG ?? 'lumiere-nails';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -22,155 +18,117 @@ export default async function DatenschutzPage({
   const { locale } = await params;
   if (locale !== 'de') notFound();
 
-  const store = await db.store.findUnique({ where: { slug: STORE_SLUG } });
-  const legal = store
-    ? await db.legalConfig.findUnique({ where: { storeId: store.id } })
-    : null;
-
-  const name    = legal?.companyName || store?.name || 'Lumière Nails';
-  const street  = legal?.street      || store?.address || '';
-  const zip     = legal?.zip         || '';
-  const city    = legal?.city        || store?.city || '';
-  const country = legal?.country     || 'Deutschland';
-  const phone   = legal?.phone       || store?.phone || '';
-  const email   = legal?.email       || store?.email || '';
-
   return (
-    <main className={styles.page}>
-      <div className={styles.container}>
-        <h1 className={styles.title}>Datenschutzerklärung</h1>
+    <main style={{
+      maxWidth: 720,
+      margin: '4rem auto',
+      padding: '0 1.5rem 4rem',
+      fontFamily: 'inherit',
+      lineHeight: 1.7,
+    }}>
+      <h1>Datenschutzerklärung</h1>
+      <p style={{ color: '#888', fontSize: '0.9rem' }}>Stand: Juli 2026</p>
 
-        <section className={styles.section}>
-          <h2 className={styles.heading}>1. Verantwortlicher</h2>
-          <p>
-            Verantwortlicher im Sinne der DSGVO ist:
-            <br />
-            <br />
-            <strong>{name}</strong>
-            <br />
-            {street}, {zip} {city}, {country}
-            <br />
-            E-Mail: <a href={`mailto:${email}`}>{email}</a>
-            {phone && (
-              <>
-                <br />
-                Telefon: {phone}
-              </>
-            )}
-          </p>
-        </section>
+      <h2>1. Verantwortliche Stelle</h2>
+      <p>
+        Lumière Nails<br />
+        Inhaberin: [Vorname Nachname]<br />
+        Friedrichstraße 100, 10117 Berlin<br />
+        Telefon: +49 30 901 820 60<br />
+        E-Mail: info@lumiere-nails.de
+      </p>
 
-        <section className={styles.section}>
-          <h2 className={styles.heading}>2. Grundsätze der Datenverarbeitung</h2>
-          <p>
-            Wir verarbeiten personenbezogene Daten unserer Nutzer grundsätzlich nur, soweit dies zur
-            Bereitstellung einer funktionsfähigen Website sowie unserer Inhalte und Leistungen
-            erforderlich ist. Die Verarbeitung personenbezogener Daten erfolgt regelmäßig nur nach
-            Einwilligung des Nutzers.
-          </p>
-        </section>
+      <h2>2. Erhebung und Verarbeitung personenbezogener Daten</h2>
+      <p>
+        Wir erheben personenbezogene Daten nur, soweit dies für die
+        Bereitstellung unserer Dienstleistungen erforderlich ist.
+      </p>
 
-        <section className={styles.section}>
-          <h2 className={styles.heading}>3. Server-Logfiles</h2>
-          <p>
-            Beim Besuch unserer Website werden automatisch Informationen in sogenannten
-            Server-Logfiles gespeichert:
-          </p>
-          <ul>
-            <li>Browsertyp und Browserversion</li>
-            <li>Verwendetes Betriebssystem</li>
-            <li>Referrer-URL</li>
-            <li>Hostname des zugreifenden Rechners</li>
-            <li>Uhrzeit der Serveranfrage</li>
-            <li>IP-Adresse (anonymisiert)</li>
-          </ul>
-          <p>
-            Diese Daten sind nicht bestimmten Personen zuordenbar und werden nach 30 Tagen
-            automatisch gelöscht.
-          </p>
-        </section>
+      <h3>2.1 Beim Besuch der Website</h3>
+      <p>
+        Beim Aufrufen dieser Website werden automatisch technische Daten
+        übermittelt (IP-Adresse, Browser-Typ, Uhrzeit). Diese Daten werden
+        ausschließlich für den Betrieb der Website verwendet und nach
+        spätestens 7 Tagen gelöscht.
+      </p>
 
-        <section className={styles.section}>
-          <h2 className={styles.heading}>4. Cookies</h2>
-          <p>
-            Unsere Website verwendet funktionale Cookies zur Speicherung Ihrer Spracheinstellung und
-            Cookie-Einwilligung. Diese Cookies sind für den Betrieb der Website technisch notwendig
-            und enthalten keine personenbezogenen Daten.
-          </p>
-        </section>
+      <h3>2.2 Online-Terminbuchung</h3>
+      <p>Bei der Terminbuchung erheben wir:</p>
+      <ul>
+        <li>Vorname / Name</li>
+        <li>Telefonnummer</li>
+        <li>Optionale Anmerkungen</li>
+      </ul>
+      <p>
+        Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).<br />
+        Die Daten werden ausschließlich zur Terminbestätigung verwendet und
+        nach Ablauf des Termins gelöscht. Eine Weitergabe an Dritte erfolgt nicht.
+      </p>
 
-        <section className={styles.section}>
-          <h2 className={styles.heading}>5. Kontakt</h2>
-          <p>
-            Wenn Sie uns per E-Mail kontaktieren, werden die übermittelten Daten zum Zweck der
-            Bearbeitung der Anfrage bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre
-            Einwilligung weiter.
-          </p>
-        </section>
+      <h3>2.3 WhatsApp-Kontakt</h3>
+      <p>
+        Wenn Sie uns über WhatsApp kontaktieren, werden Ihre Nachrichten
+        von WhatsApp (Meta Platforms Ireland Ltd.) verarbeitet.
+        Informationen zum Datenschutz bei WhatsApp:{' '}
+        <a href="https://www.whatsapp.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">
+          whatsapp.com/legal/privacy-policy
+        </a>
+      </p>
 
-        <section className={styles.section}>
-          <h2 className={styles.heading}>6. Terminbuchung</h2>
-          <p>Bei der Buchung eines Termins erheben wir folgende Daten:</p>
-          <ul>
-            <li>Name</li>
-            <li>Telefonnummer</li>
-            <li>E-Mail-Adresse (optional)</li>
-            <li>Gewünschte Leistung und Uhrzeit</li>
-          </ul>
-          <p>
-            Diese Daten werden ausschließlich für die Terminverwaltung und Kommunikation mit Ihnen
-            verwendet. Sie können jederzeit die Löschung Ihrer Daten beantragen unter{' '}
-            <a href={`mailto:${email}`}>{email}</a>.
-          </p>
-        </section>
+      <h2>3. Cookies</h2>
+      <p>
+        Diese Website verwendet ausschließlich technisch notwendige Cookies,
+        die für den Betrieb der Buchungsfunktion erforderlich sind.
+        Es werden keine Tracking-, Analyse- oder Werbe-Cookies eingesetzt.
+      </p>
 
-        <section className={styles.section}>
-          <h2 className={styles.heading}>7. Hosting (Vercel)</h2>
-          <p>
-            Unsere Website wird bei Vercel Inc. (340 Pine Street, Suite 900, San Francisco,
-            CA&nbsp;94104, USA) gehostet. Vercel erhebt und verarbeitet Daten im Rahmen der
-            Bereitstellung der Hosting-Infrastruktur. Weitere Informationen:{' '}
-            <a
-              href="https://vercel.com/legal/privacy-policy"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              https://vercel.com/legal/privacy-policy
-            </a>
-          </p>
-        </section>
+      <h2>4. Google Maps</h2>
+      <p>
+        Zur Darstellung unseres Standorts nutzen wir Google Maps
+        (Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA).<br />
+        Bei Verwendung von Google Maps kann Google Daten über Ihre Nutzung
+        der Kartenfunktionen erheben. Weitere Informationen:{' '}
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+          policies.google.com/privacy
+        </a>
+      </p>
 
-        <section className={styles.section}>
-          <h2 className={styles.heading}>8. Ihre Rechte (DSGVO Art.&nbsp;15–22)</h2>
-          <p>
-            Sie haben gegenüber uns folgende Rechte hinsichtlich Ihrer personenbezogenen Daten:
-          </p>
-          <ul>
-            <li>Auskunftsrecht (Art. 15 DSGVO)</li>
-            <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
-            <li>Recht auf Löschung (Art. 17 DSGVO)</li>
-            <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
-            <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
-            <li>Widerspruchsrecht (Art. 21 DSGVO)</li>
-          </ul>
-          <p>
-            Zur Ausübung Ihrer Rechte wenden Sie sich bitte an:{' '}
-            <a href={`mailto:${email}`}>{email}</a>
-          </p>
-          <p>
-            Sie haben außerdem das Recht, sich bei einer Datenschutz-Aufsichtsbehörde über die
-            Verarbeitung Ihrer personenbezogenen Daten zu beschweren.
-          </p>
-        </section>
+      <h2>5. Hosting</h2>
+      <p>
+        Diese Website wird auf Servern von Vercel Inc.
+        (340 Pine Street Suite 701, San Francisco, CA 94104, USA) gehostet.
+        Vercel verarbeitet Verbindungsdaten gemäß ihrer{' '}
+        <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">
+          Datenschutzerklärung
+        </a>.
+      </p>
 
-        <section className={styles.section}>
-          <h2 className={styles.heading}>9. Aktualität und Änderungen</h2>
-          <p>
-            Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den
-            aktuellen rechtlichen Anforderungen entspricht. Stand: 2026.
-          </p>
-        </section>
-      </div>
+      <h2>6. Ihre Rechte (DSGVO)</h2>
+      <p>Sie haben das Recht auf:</p>
+      <ul>
+        <li><strong>Auskunft</strong> (Art. 15 DSGVO)</li>
+        <li><strong>Berichtigung</strong> (Art. 16 DSGVO)</li>
+        <li><strong>Löschung</strong> (Art. 17 DSGVO)</li>
+        <li><strong>Einschränkung der Verarbeitung</strong> (Art. 18 DSGVO)</li>
+        <li><strong>Datenübertragbarkeit</strong> (Art. 20 DSGVO)</li>
+        <li><strong>Widerspruch</strong> (Art. 21 DSGVO)</li>
+      </ul>
+      <p>
+        Zur Wahrnehmung Ihrer Rechte wenden Sie sich an: info@lumiere-nails.de
+      </p>
+
+      <h2>7. Beschwerderecht</h2>
+      <p>
+        Sie haben das Recht, sich bei der zuständigen Datenschutzbehörde
+        zu beschweren. In Berlin: Berliner Beauftragte für Datenschutz und
+        Informationsfreiheit, Friedrichstr. 219, 10969 Berlin.
+      </p>
+
+      <h2>8. Änderungen dieser Datenschutzerklärung</h2>
+      <p>
+        Wir behalten uns vor, diese Datenschutzerklärung anzupassen,
+        wenn sich rechtliche Anforderungen ändern.
+      </p>
     </main>
   );
 }
