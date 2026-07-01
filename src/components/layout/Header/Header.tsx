@@ -2,19 +2,20 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { WHATSAPP_LINKS } from '@/lib/constants';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 
 export default function Header({ logoUrl, storeName }: { logoUrl?: string; storeName?: string }) {
   const locale = useLocale();
+  const t = useTranslations('nav');
 
   const NAV_LINKS = [
-    { href: `/${locale}/#sluzby`,        label: 'Služby' },
-    { href: `/${locale}/#galeria`,       label: 'Galéria' },
-    { href: `/${locale}/#tim`,           label: 'Tím' },
-    { href: `/${locale}/#recenzie`,        label: 'Recenzie' },
-    { href: `/${locale}/#kontakt`,       label: 'Kontakt' },
+    { href: `/${locale}/#sluzby`,   label: t('services') },
+    { href: `/${locale}/#galeria`,  label: t('gallery') },
+    { href: `/${locale}/#tim`,      label: t('team') },
+    { href: `/${locale}/#recenzie`, label: t('reviews') },
+    { href: `/${locale}/#kontakt`,  label: t('contact') },
   ];
 
   const [scrolled, setScrolled] = useState(false);
@@ -72,7 +73,7 @@ export default function Header({ logoUrl, storeName }: { logoUrl?: string; store
             </a>
           ))}
           <a href={`/${locale}/#rezervacia`} className="header__btn-reserve">
-            Rezervácia
+            {t('booking')}
           </a>
           <a
             href={WHATSAPP_LINKS.booking}
@@ -110,7 +111,7 @@ export default function Header({ logoUrl, storeName }: { logoUrl?: string; store
               className="header__mobile-btn-reserve"
               onClick={() => setMenuOpen(false)}
             >
-              Rezervácia
+              {t('booking')}
             </a>
             <a
               href={WHATSAPP_LINKS.booking}

@@ -574,7 +574,8 @@
     "from": "from",
     "subtitle": "What we offer",
     "minutes": "min",
-    "bookCta": "Book"
+    "bookCta": "Book",
+    "description": "From classic manicure to nail art — we take care of your hands and nails in every detail."
   },
   "booking": {
     "title": "Book Your Appointment",
@@ -635,5 +636,13 @@
     "title": "Nail Studio {city} | Manicure, Gel Nails, Nail Art – {storeName}",
     "description": "Premium nail studio in {city}. Manicure, gel nails, pedicure and nail art. Book your appointment online.",
     "jsonLdDescription": "Premium nail studio in {city}. Manicure, gel nails, pedicure and nail art."
+  },
+  "nav": {
+    "services": "Services",
+    "gallery": "Gallery",
+    "team": "Team",
+    "reviews": "Reviews",
+    "contact": "Contact",
+    "booking": "Booking"
   }
 }

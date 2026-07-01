@@ -574,7 +574,8 @@
     "from": "od",
     "subtitle": "Co pro vás připravíme",
     "minutes": "min",
-    "bookCta": "Rezervovat"
+    "bookCta": "Rezervovat",
+    "description": "Od klasické manikúry po nail art — postaráme se o vaše ruce a nehty do detailu."
   },
   "booking": {
     "title": "Zarezervujte termín",
@@ -635,5 +636,13 @@
     "title": "Nehtové studio {city} | Manikúra, Gelové nehty, Nail Art – {storeName}",
     "description": "Prémiové nehtové studio v {city}. Manikúra, gelové nehty, pedikúra a nail art. Rezervujte termín online.",
     "jsonLdDescription": "Prémiové nehtové studio v {city}. Manikúra, gelové nehty, pedikúra a nail art."
+  },
+  "nav": {
+    "services": "Služby",
+    "gallery": "Galerie",
+    "team": "Tým",
+    "reviews": "Recenze",
+    "contact": "Kontakt",
+    "booking": "Rezervace"
   }
 }

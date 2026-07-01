@@ -35,9 +35,7 @@ export default function ServicesSection() {
         <p className="section-label">{t('title')}</p>
         <h2 className="section-title">{t('subtitle')}</h2>
         <GoldDivider />
-        <p className="section-subtitle">
-          Od klasickej manikúry po nail art — postaráme sa o vaše ruky a nechty do detailu.
-        </p>
+        <p className="section-subtitle">{t('description')}</p>
       </ScrollReveal>
 
       <div className="services__grid">

@@ -574,7 +574,8 @@
     "from": "od",
     "subtitle": "Co dla Ciebie przygotujemy",
     "minutes": "min",
-    "bookCta": "Zarezerwuj"
+    "bookCta": "Zarezerwuj",
+    "description": "Od klasycznego manicure po nail art — zadbamy o Twoje dłonie i paznokcie w każdym detalu."
   },
   "booking": {
     "title": "Zarezerwuj wizytę",
@@ -635,5 +636,13 @@
     "title": "Salon paznokci {city} | Manicure, Żelowe paznokcie, Nail Art – {storeName}",
     "description": "Premium salon paznokci w {city}. Manicure, żelowe paznokcie, pedicure i nail art. Zarezerwuj wizytę online.",
     "jsonLdDescription": "Premium salon paznokci w {city}. Manicure, żelowe paznokcie, pedicure i nail art."
+  },
+  "nav": {
+    "services": "Usługi",
+    "gallery": "Galeria",
+    "team": "Zespół",
+    "reviews": "Recenzje",
+    "contact": "Kontakt",
+    "booking": "Rezerwacja"
   }
 }

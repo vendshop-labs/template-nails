@@ -51,7 +51,7 @@ export default async function HomePage({
     catch { return null; }
   })();
 
-  const workingHoursLabel = formatWorkingHoursShort(parsedHours) || null;
+  const workingHoursLabel = formatWorkingHoursShort(parsedHours, locale) || null;
 
   const [heroConfig, galleryImages, dbTestimonials, dbMasters] = store
     ? await Promise.all([

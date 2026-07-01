@@ -574,7 +574,8 @@
     "from": "ab",
     "subtitle": "Was wir für Sie anbieten",
     "minutes": "Min.",
-    "bookCta": "Buchen"
+    "bookCta": "Buchen",
+    "description": "Von klassischer Maniküre bis zum Nail Art — wir sorgen für Ihre Hände und Nägel bis ins Detail."
   },
   "booking": {
     "title": "Termin buchen",
@@ -635,5 +636,13 @@
     "title": "Nagelstudio {city} | Maniküre, Gel-Nägel, Nail Art – {storeName}",
     "description": "Premium Nagelstudio in {city}. Maniküre, Gel-Nägel, Pediküre und Nail Art. Jetzt Termin buchen.",
     "jsonLdDescription": "Premium Nagelstudio in {city}. Maniküre, Gel-Nägel, Pediküre und Nail Art."
+  },
+  "nav": {
+    "services": "Leistungen",
+    "gallery": "Galerie",
+    "team": "Team",
+    "reviews": "Bewertungen",
+    "contact": "Kontakt",
+    "booking": "Reservierung"
   }
 }
