@@ -1,26 +1,38 @@
+import { useTranslations } from 'next-intl';
 import { WHATSAPP_LINKS, CONTACT, STORE_NAME_FALLBACK, STORE_TAGLINE } from '@/lib/constants';
+import { getDayName } from '@/lib/day-utils';
 
 type DayHours = { open: string; close: string } | null;
 type WorkingHoursMap = Record<string, DayHours>;
 
-const DAYS_SK: Record<string, string> = {
-  mon: 'Pondelok', tue: 'Utorok', wed: 'Streda',
-  thu: 'Štvrtok', fri: 'Piatok', sat: 'Sobota', sun: 'Nedeľa',
-};
 const DAY_ORDER = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
-function formatFooterHours(wh: unknown): { label: string; hours: string }[] {
+function formatFooterHours(
+  wh: unknown,
+  locale: string,
+): { label: string; hours: string | null }[] {
   if (!wh || typeof wh !== 'object' || Array.isArray(wh)) return [];
   const map = wh as WorkingHoursMap;
-  const result: { label: string; hours: string }[] = [];
+  const result: { label: string; hours: string | null }[] = [];
   let i = 0;
   while (i < DAY_ORDER.length) {
     const day = DAY_ORDER[i];
     const h = map[day];
-    if (!h) { result.push({ label: DAYS_SK[day] ?? day, hours: 'Zatvorené' }); i++; continue; }
+    if (!h) {
+      result.push({ label: getDayName(locale, day, 'long'), hours: null });
+      i++;
+      continue;
+    }
     let j = i + 1;
-    while (j < DAY_ORDER.length && map[DAY_ORDER[j]]?.open === h.open && map[DAY_ORDER[j]]?.close === h.close) j++;
-    const label = j - i > 1 ? `${DAYS_SK[day]} – ${DAYS_SK[DAY_ORDER[j - 1]]}` : DAYS_SK[day] ?? day;
+    while (
+      j < DAY_ORDER.length &&
+      map[DAY_ORDER[j]]?.open === h.open &&
+      map[DAY_ORDER[j]]?.close === h.close
+    ) j++;
+    const label =
+      j - i > 1
+        ? `${getDayName(locale, day, 'long')} – ${getDayName(locale, DAY_ORDER[j - 1], 'long')}`
+        : getDayName(locale, day, 'long');
     result.push({ label, hours: `${h.open} – ${h.close}` });
     i = j;
   }
@@ -34,10 +46,13 @@ interface FooterProps {
   workingHours?: unknown;
 }
 
-export default function Footer({ locale, legalEnabled, storeName, workingHours }: FooterProps) {
-  const hoursRows = formatFooterHours(workingHours);
+export default function Footer({ locale = 'sk', legalEnabled, storeName, workingHours }: FooterProps) {
+  const tf = useTranslations('footer');
+  const tn = useTranslations('nav');
+
+  const hoursRows = formatFooterHours(workingHours, locale);
   const currentYear = new Date().getFullYear();
-  const showLegal = locale === 'de' && legalEnabled;
+  const displayName = storeName || STORE_NAME_FALLBACK;
 
   return (
     <footer className="footer">
@@ -47,7 +62,7 @@ export default function Footer({ locale, legalEnabled, storeName, workingHours }
         <div className="footer__brand">
           <p className="footer__logo">
             {(() => {
-              const name = storeName || STORE_NAME_FALLBACK;
+              const name = displayName;
               const idx = name.lastIndexOf(' ');
               if (idx === -1) return <>{name}</>;
               return <><span className="footer__logo-accent">{name.slice(0, idx)}</span> {name.slice(idx + 1)}</>;
@@ -77,31 +92,42 @@ export default function Footer({ locale, legalEnabled, storeName, workingHours }
 
         {/* Col 2 — Navigation */}
         <div className="footer__col">
-          <h4 className="footer__heading">Navigácia</h4>
+          <h4 className="footer__heading">{tf('navTitle')}</h4>
           <ul className="footer__links">
-            <li><a href="#sluzby">Služby & Ceny</a></li>
-            <li><a href="#galeria">Galéria</a></li>
-            <li><a href="#tim">Náš tím</a></li>
-            <li><a href="#recenzie">Recenzie</a></li>
-            <li><a href="#o-nas">O nás</a></li>
-            <li><a href="#rezervacia">Rezervácia</a></li>
+            <li><a href="#sluzby">{tn('services')}</a></li>
+            <li><a href="#galeria">{tn('gallery')}</a></li>
+            <li><a href="#tim">{tn('team')}</a></li>
+            <li><a href="#recenzie">{tn('reviews')}</a></li>
+            <li><a href="#o-nas">{tf('aboutLink')}</a></li>
+            <li><a href="#rezervacia">{tn('booking')}</a></li>
           </ul>
         </div>
 
         {/* Col 3 — Hours */}
         <div className="footer__col">
-          <h4 className="footer__heading">Otváracie hodiny</h4>
+          <h4 className="footer__heading">{tf('hoursTitle')}</h4>
           <ul className="footer__hours">
             {hoursRows.length > 0 ? hoursRows.map((row) => (
               <li key={row.label}>
                 <span>{row.label}</span>
-                <span className={row.hours === 'Zatvorené' ? 'footer__closed' : undefined}>{row.hours}</span>
+                <span className={!row.hours ? 'footer__closed' : undefined}>
+                  {row.hours ?? tf('closed')}
+                </span>
               </li>
             )) : (
               <>
-                <li><span>Pondelok – Piatok</span><span>09:00 – 18:00</span></li>
-                <li><span>Sobota</span><span>09:00 – 15:00</span></li>
-                <li><span>Nedeľa</span><span className="footer__closed">Zatvorené</span></li>
+                <li>
+                  <span>{getDayName(locale, 'mon', 'long')} – {getDayName(locale, 'fri', 'long')}</span>
+                  <span>09:00 – 18:00</span>
+                </li>
+                <li>
+                  <span>{getDayName(locale, 'sat', 'long')}</span>
+                  <span>09:00 – 15:00</span>
+                </li>
+                <li>
+                  <span>{getDayName(locale, 'sun', 'long')}</span>
+                  <span className="footer__closed">{tf('closed')}</span>
+                </li>
               </>
             )}
           </ul>
@@ -109,7 +135,7 @@ export default function Footer({ locale, legalEnabled, storeName, workingHours }
 
         {/* Col 4 — Contact */}
         <div className="footer__col">
-          <h4 className="footer__heading">Kontakt</h4>
+          <h4 className="footer__heading">{tn('contact')}</h4>
           <ul className="footer__contact">
             <li>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -130,17 +156,17 @@ export default function Footer({ locale, legalEnabled, storeName, workingHours }
 
       {/* Bottom bar */}
       <div className="footer__bottom">
-        <p>© {currentYear} {storeName || STORE_NAME_FALLBACK}. Všetky práva vyhradené.</p>
+        <p>{tf('rights', { year: currentYear, storeName: displayName })}</p>
         <p className="footer__bottom-links">
-          <a href="#">Ochrana súkromia</a>
+          <a href="#">{tf('privacy')}</a>
           <span>·</span>
-          <a href="#">Obchodné podmienky</a>
-          {showLegal && (
+          <a href="#">{tf('terms')}</a>
+          {locale === 'de' && legalEnabled && (
             <>
               <span>·</span>
-              <a href="/de/impressum">Impressum</a>
+              <a href={`/${locale}/impressum`}>{tf('impressum')}</a>
               <span>·</span>
-              <a href="/de/datenschutz">Datenschutz</a>
+              <a href={`/${locale}/datenschutz`}>{tf('datenschutz')}</a>
             </>
           )}
         </p>

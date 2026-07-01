@@ -153,7 +153,7 @@
     "catalog": "Каталог",
     "info": "Информация",
     "contacts": "Контакты",
-    "rights": "© 2026 ElectroMarket. Все права защищены.",
+    "rights": "© {year} {storeName}. Все права защищены.",
     "privacy": "Политика конфиденциальности",
     "offer": "Публичная оферта",
     "delivery": "Доставка и оплата",
@@ -186,7 +186,14 @@
     "servicesTeam": "Команда",
     "servicesGallery": "Галерея",
     "servicesBookNow": "Записаться",
-    "servicesAdmin": "Админ"
+    "servicesAdmin": "Админ",
+    "navTitle": "Навигация",
+    "hoursTitle": "Часы работы",
+    "closed": "Закрыто",
+    "terms": "Условия использования",
+    "impressum": "Impressum",
+    "datenschutz": "Защита данных",
+    "aboutLink": "О нас"
   },
   "tags": {
     "popularQueries": "Популярные запросы:"
@@ -644,5 +651,16 @@
     "reviews": "Отзывы",
     "contact": "Контакт",
     "booking": "Бронирование"
+  },
+  "contact": {
+    "title": "Контакт",
+    "where": "Где нас найти",
+    "address": "Адрес",
+    "phoneLabel": "Телефон",
+    "emailLabel": "E-mail",
+    "hours": "Часы работы",
+    "closed": "Закрыто",
+    "writeUs": "Напишите нам",
+    "mapTitle": "Карта – {storeName}"
   }
 }

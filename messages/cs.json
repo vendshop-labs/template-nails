@@ -153,8 +153,8 @@
     "catalog": "Katalog",
     "info": "Informace",
     "contacts": "Kontakty",
-    "rights": "© 2026 ElectroMarket. Všechna práva vyhrazena.",
-    "privacy": "Zásady ochrany osobních údajů",
+    "rights": "© {year} {storeName}. Všechna práva vyhrazena.",
+    "privacy": "Ochrana soukromí",
     "offer": "Veřejná nabídka",
     "delivery": "Doprava a platba",
     "guarantee": "Záruka",
@@ -186,7 +186,14 @@
     "servicesTeam": "Tým",
     "servicesGallery": "Galerie",
     "servicesBookNow": "Rezervovat",
-    "servicesAdmin": "Admin"
+    "servicesAdmin": "Admin",
+    "navTitle": "Navigace",
+    "hoursTitle": "Otevírací doba",
+    "closed": "Zavřeno",
+    "terms": "Obchodní podmínky",
+    "impressum": "Impressum",
+    "datenschutz": "Ochrana dat",
+    "aboutLink": "O nás"
   },
   "tags": {
     "popularQueries": "Oblíbené dotazy:"
@@ -644,5 +651,16 @@
     "reviews": "Recenze",
     "contact": "Kontakt",
     "booking": "Rezervace"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "where": "Kde nás najdete",
+    "address": "Adresa",
+    "phoneLabel": "Telefon",
+    "emailLabel": "E-mail",
+    "hours": "Otevírací doba",
+    "closed": "Zavřeno",
+    "writeUs": "Napište nám",
+    "mapTitle": "Mapa – {storeName}"
   }
 }

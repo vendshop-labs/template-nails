@@ -30,6 +30,7 @@ export default async function HomePage({
     where: { slug: STORE_SLUG },
     select: {
       id: true,
+      name: true,
       address: true,
       city: true,
       phone: true,
@@ -107,6 +108,8 @@ export default async function HomePage({
       <BookingSection />
       <AboutSection aboutImage={store?.aboutImage} description={store?.description} />
       <ContactSection
+        locale={locale}
+        storeName={store?.name}
         address={store?.address}
         city={store?.city}
         phone={store?.phone}

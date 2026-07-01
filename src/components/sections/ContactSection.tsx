@@ -1,5 +1,7 @@
 import { Fragment } from 'react';
-import { CONTACT, HOURS, STORE_NAME, WHATSAPP_LINKS } from '@/lib/constants';
+import { useTranslations } from 'next-intl';
+import { CONTACT, HOURS, STORE_NAME_FALLBACK, WHATSAPP_LINKS } from '@/lib/constants';
+import { getDayName } from '@/lib/day-utils';
 import GoldDivider from '@/components/ui/GoldDivider';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import ScrollReveal from '@/components/ui/ScrollReveal';
@@ -8,21 +10,15 @@ import ScrollReveal from '@/components/ui/ScrollReveal';
 type DayHours = { open: string; close: string } | null;
 type WorkingHours = Record<string, DayHours>;
 
-const DAYS_SK: Record<string, string> = {
-  mon: 'Pondelok',
-  tue: 'Utorok',
-  wed: 'Streda',
-  thu: 'Štvrtok',
-  fri: 'Piatok',
-  sat: 'Sobota',
-  sun: 'Nedeľa',
-};
 const DAY_ORDER = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
-function formatHours(wh: WorkingHours | null | undefined): { label: string; hours: string }[] {
+function formatHours(
+  wh: WorkingHours | null | undefined,
+  locale: string,
+): { label: string; hours: string | null }[] {
   if (!wh || typeof wh !== 'object') return [];
 
-  const result: { label: string; hours: string }[] = [];
+  const result: { label: string; hours: string | null }[] = [];
   let i = 0;
 
   while (i < DAY_ORDER.length) {
@@ -30,12 +26,11 @@ function formatHours(wh: WorkingHours | null | undefined): { label: string; hour
     const hours = wh[day];
 
     if (!hours) {
-      result.push({ label: DAYS_SK[day] ?? day, hours: 'Zatvorené' });
+      result.push({ label: getDayName(locale, day, 'long'), hours: null });
       i++;
       continue;
     }
 
-    // Find consecutive days with identical hours
     let j = i + 1;
     while (
       j < DAY_ORDER.length &&
@@ -46,8 +41,8 @@ function formatHours(wh: WorkingHours | null | undefined): { label: string; hour
 
     const label =
       j - i > 1
-        ? `${DAYS_SK[day]} – ${DAYS_SK[DAY_ORDER[j - 1]]}`
-        : DAYS_SK[day] ?? day;
+        ? `${getDayName(locale, day, 'long')} – ${getDayName(locale, DAY_ORDER[j - 1], 'long')}`
+        : getDayName(locale, day, 'long');
 
     result.push({ label, hours: `${hours.open} – ${hours.close}` });
     i = j;
@@ -58,6 +53,8 @@ function formatHours(wh: WorkingHours | null | undefined): { label: string; hour
 
 // ─── Props ────────────────────────────────────────────────────────────────
 interface ContactSectionProps {
+  locale?: string;
+  storeName?: string | null;
   address?: string | null;
   city?: string | null;
   phone?: string | null;
@@ -68,6 +65,8 @@ interface ContactSectionProps {
 }
 
 export default function ContactSection({
+  locale = 'sk',
+  storeName,
   address,
   city,
   phone,
@@ -76,29 +75,29 @@ export default function ContactSection({
   mapLng,
   workingHours,
 }: ContactSectionProps) {
-  // Contact values — DB first, constants as fallback
+  const t = useTranslations('contact');
+
   const displayAddress = address ?? CONTACT.address;
   const displayCity    = city    ?? CONTACT.city;
   const displayPhone   = phone   ?? CONTACT.phone;
   const displayEmail   = email   ?? CONTACT.email;
+  const displayName    = storeName ?? STORE_NAME_FALLBACK;
 
   const phoneHref = displayPhone ? `tel:${displayPhone.replace(/\s/g, '')}` : CONTACT.phoneHref;
   const emailHref = displayEmail ? `mailto:${displayEmail}`                  : CONTACT.emailHref;
 
-  // Map embed — construct from lat/lng if available
   const mapSrc =
     mapLat && mapLng
       ? `https://maps.google.com/maps?q=${mapLat},${mapLng}&z=15&output=embed`
       : CONTACT.mapSrc;
 
-  // Hours — DB first, static HOURS as fallback
-  const hoursData = formatHours(workingHours as WorkingHours);
+  const hoursData = formatHours(workingHours as WorkingHours, locale);
 
   return (
     <section id="kontakt" className="contact">
       <ScrollReveal direction="up" className="section-header">
-        <p className="section-label">Kontakt</p>
-        <h2 className="section-title">Kde nás nájdete</h2>
+        <p className="section-label">{t('title')}</p>
+        <h2 className="section-title">{t('where')}</h2>
         <GoldDivider />
       </ScrollReveal>
 
@@ -106,14 +105,14 @@ export default function ContactSection({
         <ScrollReveal direction="left" delay={100}>
           <div className="contact-info">
             <div>
-              <p className="contact-item-label">Adresa</p>
+              <p className="contact-item-label">{t('address')}</p>
               <p className="contact-item-value contact-item-value--pre">
                 {displayCity ? `${displayAddress}\n${displayCity}` : displayAddress}
               </p>
             </div>
 
             <div>
-              <p className="contact-item-label">Kontakt</p>
+              <p className="contact-item-label">{t('phoneLabel')}</p>
               <p className="contact-item-value">
                 <a href={phoneHref} className="contact-link">{displayPhone}</a>
                 <br />
@@ -122,15 +121,17 @@ export default function ContactSection({
             </div>
 
             <div>
-              <p className="contact-item-label">Otváracie hodiny</p>
+              <p className="contact-item-label">{t('hours')}</p>
               <div className="contact-hours-grid">
                 {hoursData.length > 0
                   ? hoursData.map((row, idx) => (
                       <Fragment key={idx}>
                         <span className="contact-hours-day">{row.label}</span>
-                        <span className="contact-hours-time"
-                          style={{ fontWeight: row.hours === 'Zatvorené' ? 400 : undefined }}>
-                          {row.hours}
+                        <span
+                          className="contact-hours-time"
+                          style={{ fontWeight: row.hours === null ? 400 : undefined }}
+                        >
+                          {row.hours ?? t('closed')}
                         </span>
                       </Fragment>
                     ))
@@ -150,7 +151,7 @@ export default function ContactSection({
               className="contact-wa-btn"
             >
               <WhatsAppIcon size={18} />
-              Napíšte nám
+              {t('writeUs')}
             </a>
           </div>
         </ScrollReveal>
@@ -162,7 +163,7 @@ export default function ContactSection({
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            title={`Mapa — ${STORE_NAME}`}
+            title={t('mapTitle', { storeName: displayName })}
           />
         </ScrollReveal>
       </div>

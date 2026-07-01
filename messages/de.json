@@ -153,8 +153,8 @@
     "catalog": "Katalog",
     "info": "Informationen",
     "contacts": "Kontakte",
-    "rights": "© 2026 ElectroMarket. Alle Rechte vorbehalten.",
-    "privacy": "Datenschutzrichtlinie",
+    "rights": "© {year} {storeName}. Alle Rechte vorbehalten.",
+    "privacy": "Datenschutzerklärung",
     "offer": "Öffentliches Angebot",
     "delivery": "Lieferung & Zahlung",
     "guarantee": "Garantie",
@@ -186,7 +186,14 @@
     "servicesTeam": "Team",
     "servicesGallery": "Galerie",
     "servicesBookNow": "Jetzt buchen",
-    "servicesAdmin": "Admin"
+    "servicesAdmin": "Admin",
+    "navTitle": "Navigation",
+    "hoursTitle": "Öffnungszeiten",
+    "closed": "Geschlossen",
+    "terms": "AGB",
+    "impressum": "Impressum",
+    "datenschutz": "Datenschutz",
+    "aboutLink": "Über uns"
   },
   "tags": {
     "popularQueries": "Beliebte Suchanfragen:"
@@ -644,5 +651,16 @@
     "reviews": "Bewertungen",
     "contact": "Kontakt",
     "booking": "Reservierung"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "where": "Wo wir sind",
+    "address": "Adresse",
+    "phoneLabel": "Telefon",
+    "emailLabel": "E-Mail",
+    "hours": "Öffnungszeiten",
+    "closed": "Geschlossen",
+    "writeUs": "Schreiben Sie uns",
+    "mapTitle": "Karte – {storeName}"
   }
 }

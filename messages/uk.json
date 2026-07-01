@@ -153,7 +153,7 @@
     "catalog": "Каталог",
     "info": "Інформація",
     "contacts": "Контакти",
-    "rights": "© 2026 ElectroMarket. Всі права захищені.",
+    "rights": "© {year} {storeName}. Всі права захищені.",
     "privacy": "Політика конфіденційності",
     "offer": "Публічна оферта",
     "delivery": "Доставка та оплата",
@@ -186,7 +186,14 @@
     "servicesTeam": "Команда",
     "servicesGallery": "Галерея",
     "servicesBookNow": "Записатися",
-    "servicesAdmin": "Адмін"
+    "servicesAdmin": "Адмін",
+    "navTitle": "Навігація",
+    "hoursTitle": "Години роботи",
+    "closed": "Зачинено",
+    "terms": "Умови використання",
+    "impressum": "Impressum",
+    "datenschutz": "Захист даних",
+    "aboutLink": "Про нас"
   },
   "tags": {
     "popularQueries": "Популярні запити:"
@@ -644,5 +651,16 @@
     "reviews": "Відгуки",
     "contact": "Контакт",
     "booking": "Бронювання"
+  },
+  "contact": {
+    "title": "Контакт",
+    "where": "Де нас знайти",
+    "address": "Адреса",
+    "phoneLabel": "Телефон",
+    "emailLabel": "E-mail",
+    "hours": "Години роботи",
+    "closed": "Зачинено",
+    "writeUs": "Напишіть нам",
+    "mapTitle": "Карта – {storeName}"
   }
 }
