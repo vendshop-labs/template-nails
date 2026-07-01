@@ -87,10 +87,13 @@ export default function ContactSection({
   const phoneHref = displayPhone ? `tel:${displayPhone.replace(/\s/g, '')}` : CONTACT.phoneHref;
   const emailHref = displayEmail ? `mailto:${displayEmail}`                  : CONTACT.emailHref;
 
+  const mapQuery = encodeURIComponent(
+    [address ?? CONTACT.address, city].filter(Boolean).join(', ')
+  );
   const mapSrc =
     mapLat && mapLng
-      ? `https://maps.google.com/maps?q=${mapLat},${mapLng}&z=15&output=embed`
-      : CONTACT.mapSrc;
+      ? `https://maps.google.com/maps?q=${mapLat},${mapLng}&z=15&output=embed&hl=${locale}`
+      : `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embed&hl=${locale}`;
 
   const hoursData = formatHours(workingHours as WorkingHours, locale);
 
