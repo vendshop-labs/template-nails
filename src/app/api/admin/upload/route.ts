@@ -85,7 +85,13 @@ export async function POST(request: Request) {
       storage: 'blob',
     });
   } catch (error) {
-    console.error('[admin upload]', error);
+    console.error('[admin upload] FULL ERROR:', {
+      message: error instanceof Error ? error.message : String(error),
+      name: error instanceof Error ? error.name : 'unknown',
+      env_blob_token_set: !!process.env.BLOB_READ_WRITE_TOKEN,
+      env_blob_token_prefix: process.env.BLOB_READ_WRITE_TOKEN?.slice(0, 20) ?? 'NOT SET',
+      store_slug: process.env.STORE_SLUG ?? 'NOT SET (fallback: kate-barber)',
+    });
     return NextResponse.json({
       error: 'Upload processing failed',
       details: error instanceof Error ? error.message : String(error),
