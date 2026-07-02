@@ -359,14 +359,14 @@ export default function AdminSettingsPage() {
                   type="tel"
                   value={store.whatsappPhone}
                   onChange={(e) => sStore('whatsappPhone', e.target.value)}
-                  placeholder="+421900123456"
+                  placeholder="+4930901820600"
                 />
               </Field>
               <Field label="Adresa salóna">
                 <input className={styles.input} value={store.address} onChange={(e) => sStore('address', e.target.value)} placeholder="Hlavná ulica 15" />
               </Field>
               <Field label="Mesto">
-                <input className={styles.input} value={store.city} onChange={(e) => sStore('city', e.target.value)} placeholder="Trenčín" />
+                <input className={styles.input} value={store.city} onChange={(e) => sStore('city', e.target.value)} placeholder="Berlin" />
               </Field>
 
               {/* ── Working hours editor ─────────────────────────────── */}
@@ -445,7 +445,7 @@ export default function AdminSettingsPage() {
                 className={styles.input}
                 value={store.whatsappPhone}
                 onChange={(e) => sStore('whatsappPhone', e.target.value)}
-                placeholder="+421900000000"
+                placeholder="+4930901820600"
               />
               <span className={styles.hint}>Číslo sa zobrazí ako tlačidlo WhatsApp na webe pre klientov.</span>
             </div>

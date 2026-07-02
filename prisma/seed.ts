@@ -53,10 +53,10 @@ async function main() {
     where: { slug: 'lumiere-nails' },
     update: {
       name: 'Lumière Nails',
-      phone: '+421 900 000 000',
-      email: 'info@lumiere-nails.sk',
-      address: 'Mierové námestie 1',
-      city: 'Trenčín',
+      phone: '+49 30 901 820 60',
+      email: 'info@lumiere-nails.de',
+      address: 'Unter den Linden 1',
+      city: 'Berlin',
       instagramUrl: 'https://instagram.com/lumiere.nails',
       googleRating: '4.9',
       themeConfig: LUMIERE_THEME as unknown as Record<string, unknown>,
@@ -66,10 +66,10 @@ async function main() {
       slug: 'lumiere-nails',
       vertical: 'SERVICES',
       primaryMode: 'PHYSICAL',
-      phone: '+421 900 000 000',
-      email: 'info@lumiere-nails.sk',
-      address: 'Mierové námestie 1',
-      city: 'Trenčín',
+      phone: '+49 30 901 820 60',
+      email: 'info@lumiere-nails.de',
+      address: 'Unter den Linden 1',
+      city: 'Berlin',
       instagramUrl: 'https://instagram.com/lumiere.nails',
       googleRating: '4.9',
       openingHours: JSON.stringify({
@@ -87,21 +87,18 @@ async function main() {
   console.log('✅ Store:', store.slug);
 
   // ============ SERVICES ============
+  await db.service.deleteMany({ where: { storeId: store.id } });
   const serviceData = [
-    { slug: 'klasicka-manikura',       nameKey: 'Klasická manikúra',         price: 18, duration: 30, category: 'manicure' },
-    { slug: 'gelova-manikura',         nameKey: 'Gélová manikúra',           price: 35, duration: 60, category: 'manicure' },
-    { slug: 'gelova-manikura-dizajn',  nameKey: 'Gélová manikúra + dizajn',  price: 45, duration: 75, category: 'manicure' },
-    { slug: 'pediura-klasicka',        nameKey: 'Pedikúra klasická',          price: 25, duration: 45, category: 'pedicure' },
-    { slug: 'nechtova-modelaz',        nameKey: 'Nechtová modeláž (akryl)',  price: 55, duration: 90, category: 'nail-art' },
-    { slug: 'nail-art',                nameKey: 'Nail art (na 2 nechty)',    price: 10, duration: 20, category: 'nail-art' },
+    { slug: 'klassische-manikure',  nameKey: 'Klassische Maniküre', description: 'Pflege und Formgebung der natürlichen Nägel mit Nagellack nach Wahl.',         price: 18, duration: 45, category: 'manicure' },
+    { slug: 'gel-manikure',         nameKey: 'Gel-Maniküre',        description: 'Langanhaltende Gelnägel – bis zu 3–4 Wochen perfekter Halt.',                   price: 35, duration: 60, category: 'manicure' },
+    { slug: 'gel-design',           nameKey: 'Gel + Design',         description: 'Gel-Maniküre mit individuellem Nail-Art-Design Ihrer Wahl.',                    price: 45, duration: 75, category: 'manicure' },
+    { slug: 'pedikure',             nameKey: 'Pediküre',             description: 'Professionelle Fußpflege – weiche Haut, gepflegte Nägel.',                     price: 25, duration: 50, category: 'pedicure' },
+    { slug: 'modellage',            nameKey: 'Modellage',            description: 'Aufbau und Verlängerung der Nägel mit Gel für perfekte Form.',                  price: 55, duration: 90, category: 'nail-art' },
+    { slug: 'nail-art',             nameKey: 'Nail Art',             description: 'Kreative Designs, Glitter oder Stempel – auf Wunsch zu jedem Service buchbar.', price: 10, duration: 20, category: 'nail-art' },
   ];
 
   for (const s of serviceData) {
-    await db.service.upsert({
-      where: { storeId_slug: { storeId: store.id, slug: s.slug } },
-      update: { price: s.price, duration: s.duration, category: s.category },
-      create: { storeId: store.id, ...s },
-    });
+    await db.service.create({ data: { storeId: store.id, ...s } });
   }
   console.log('✅ Services:', serviceData.length);
 
@@ -131,27 +128,17 @@ async function main() {
 
   // ============ GALLERY ============
   // NOTE: seed creates structure only — url is set via admin panel
+  await db.galleryImage.deleteMany({ where: { storeId: store.id } });
   const galleryData = [
-    { alt: 'Gélová manikúra',   sortOrder: 0 },
-    { alt: 'Nail Art design',   sortOrder: 1 },
-    { alt: 'Pedikúra klasická', sortOrder: 2 },
-    { alt: 'Nechtová modeláž',  sortOrder: 3 },
-    { alt: 'Japonská manikúra', sortOrder: 4 },
+    { alt: 'Gel-Maniküre — perfekte Nägel',           sortOrder: 0 },
+    { alt: 'Nail Art Design',                          sortOrder: 1 },
+    { alt: 'Klassische Pediküre',                      sortOrder: 2 },
+    { alt: 'Modellage — Nagelverlängerung mit Gel',    sortOrder: 3 },
+    { alt: 'Lumière Nails Berlin — Innenraum',         sortOrder: 4 },
   ];
 
   for (const g of galleryData) {
-    const existing = await db.galleryImage.findFirst({
-      where: { storeId: store.id, alt: g.alt },
-    });
-    if (existing) {
-      // Reset CDN urls to ''; preserve real admin-uploaded urls
-      await db.galleryImage.update({
-        where: { id: existing.id },
-        data: { sortOrder: g.sortOrder, ...(isCdnUrl(existing.url) ? { url: '' } : {}) },
-      });
-    } else {
-      await db.galleryImage.create({ data: { storeId: store.id, url: '', ...g } });
-    }
+    await db.galleryImage.create({ data: { storeId: store.id, url: '', ...g } });
   }
   console.log('✅ Gallery:', galleryData.length);
 
@@ -159,26 +146,26 @@ async function main() {
   await db.heroConfig.upsert({
     where: { storeId: store.id },
     update: {
-      title: 'Vaše nechty. Váš štýl.',
-      subtitle: 'Prémiová manikúra, gélové nechty a nail art v Trenčíne.',
-      ctaText: 'Rezervovať termín',
+      title: 'Ihre Nägel. Ihr Stil.',
+      subtitle: 'Premium Maniküre, Gel-Nägel und Nail Art in Berlin.',
+      ctaText: 'Termin buchen',
     },
     create: {
       storeId: store.id,
-      title: 'Vaše nechty. Váš štýl.',
-      subtitle: 'Prémiová manikúra, gélové nechty a nail art v Trenčíne.',
-      ctaText: 'Rezervovať termín',
+      title: 'Ihre Nägel. Ihr Stil.',
+      subtitle: 'Premium Maniküre, Gel-Nägel und Nail Art in Berlin.',
+      ctaText: 'Termin buchen',
     },
   });
   console.log('✅ HeroConfig');
 
   // ============ COURSE ============
   const course = await db.digitalProduct.upsert({
-    where: { storeId_slug: { storeId: store.id, slug: 'kurz-gelovej-manikury' } },
-    update: {},
+    where: { storeId_slug: { storeId: store.id, slug: 'gel-manikure-kurs' } },
+    update: { price: 149 },
     create: {
       storeId: store.id,
-      slug: 'kurz-gelovej-manikury',
+      slug: 'gel-manikure-kurs',
       type: 'COURSE',
       price: 149,
       currency: 'EUR',
@@ -187,30 +174,80 @@ async function main() {
   });
 
   await db.digitalProductTranslation.upsert({
-    where: { productId_locale: { productId: course.id, locale: 'sk' } },
-    update: {},
+    where: { productId_locale: { productId: course.id, locale: 'de' } },
+    update: { name: 'Gel-Maniküre Kurs', description: 'Lernen Sie professionelle Gel-Techniken von unseren Meisterinnen. Ideal für Einsteiger und Fortgeschrittene.' },
     create: {
       productId: course.id,
-      locale: 'sk',
-      name: 'Kurz gélovej manikúry — začiatočníci',
-      description: 'Naučte sa profesionálnu gélovú manikúru od základov. 8-hodinový kurz.',
+      locale: 'de',
+      name: 'Gel-Maniküre Kurs',
+      description: 'Lernen Sie professionelle Gel-Techniken von unseren Meisterinnen. Ideal für Einsteiger und Fortgeschrittene.',
     },
   });
 
   await db.digitalProductTranslation.upsert({
     where: { productId_locale: { productId: course.id, locale: 'en' } },
-    update: {},
+    update: { name: 'Gel Nail Course — Beginners', description: 'Learn professional gel techniques from our nail artists. Perfect for beginners and intermediate levels.' },
     create: {
       productId: course.id,
       locale: 'en',
       name: 'Gel Nail Course — Beginners',
-      description: 'Learn professional gel manicure from scratch. 8-hour intensive course.',
+      description: 'Learn professional gel techniques from our nail artists. Perfect for beginners and intermediate levels.',
     },
   });
   console.log('✅ Course:', course.slug);
 
+  // ============ TESTIMONIALS ============
+  await db.testimonial.deleteMany({ where: { storeId: store.id } });
+  const testimonialData = [
+    {
+      authorName: 'Lena Fischer',
+      rating: 5,
+      text: 'Absolut traumhafte Gel-Nägel! Lena hat sich so viel Zeit genommen und das Ergebnis hält jetzt schon 4 Wochen perfekt. Ich komme definitiv wieder.',
+      status: 'APPROVED' as const,
+      locale: 'de',
+      adminReply: 'Liebe Lena, vielen Dank für deine lieben Worte! Es freut uns sehr, dass du mit deinen Nägeln so zufrieden bist. Wir freuen uns auf deinen nächsten Besuch! 💅',
+      adminReplyAt: new Date('2026-05-15T10:00:00Z'),
+      createdAt: new Date('2026-05-14T14:00:00Z'),
+    },
+    {
+      authorName: 'Sophie Wagner',
+      rating: 5,
+      text: 'Die Pediküre war ein Traum — meine Füße fühlen sich wie neu an. Das Studio ist wunderschön eingerichtet und das Team super freundlich. Sehr empfehlenswert!',
+      status: 'APPROVED' as const,
+      locale: 'de',
+      adminReply: 'Liebe Sophie, das ist so schön zu hören! Danke, dass du dir die Zeit genommen hast, uns zu bewerten. Bis bald im Lumière Nails! 🌸',
+      adminReplyAt: new Date('2026-05-22T09:00:00Z'),
+      createdAt: new Date('2026-05-21T16:30:00Z'),
+    },
+    {
+      authorName: 'Julia Becker',
+      rating: 5,
+      text: 'Ich war zum ersten Mal hier und bin begeistert. Modellage perfekt ausgeführt, sehr sauber gearbeitet. Die Atmosphäre ist entspannend und das Team professionell.',
+      status: 'APPROVED' as const,
+      locale: 'de',
+      adminReply: 'Liebe Julia, herzlich willkommen bei Lumière Nails! Wir freuen uns, dass dein erster Besuch so schön war. Wir sehen uns bald wieder! ✨',
+      adminReplyAt: new Date('2026-06-02T11:00:00Z'),
+      createdAt: new Date('2026-06-01T13:00:00Z'),
+    },
+    {
+      authorName: 'Marie Hofmann',
+      rating: 5,
+      text: 'Nail Art von Kristina ist unglaublich — genau nach meinen Wünschen, schnell und präzise. Das Studio hat eine tolle Atmosphäre. Ich empfehle es unbedingt weiter!',
+      status: 'APPROVED' as const,
+      locale: 'de',
+      adminReply: 'Liebe Marie, wir freuen uns so sehr über dein Feedback! Bis zum nächsten Mal! 💖',
+      adminReplyAt: new Date('2026-06-10T08:30:00Z'),
+      createdAt: new Date('2026-06-09T17:00:00Z'),
+    },
+  ];
+
+  for (const t of testimonialData) {
+    await db.testimonial.create({ data: { storeId: store.id, ...t } });
+  }
+  console.log('✅ Testimonials:', testimonialData.length);
+
   // ============ ADMIN USER ============
-  const adminEmail = process.env.ADMIN_EMAIL ?? 'admin@lumiere-nails.sk';
+  const adminEmail = process.env.ADMIN_EMAIL ?? 'admin@lumiere-nails.de';
   const adminPassword = process.env.ADMIN_PASSWORD ?? 'LumiereNails2026!';
   const passwordHash = await bcryptjs.hash(adminPassword, 10);
 
@@ -229,7 +266,7 @@ async function main() {
 
   console.log('\n🎉 Lumière Nails seed complete!');
   console.log(`   Store slug:  ${store.slug}`);
-  console.log(`   Address:     Mierové námestie 1, 911 01 Trenčín`);
+  console.log(`   Address:     Unter den Linden 1, 10117 Berlin`);
   console.log(`   Admin email: ${adminEmail}`);
   console.log(`   Admin pass:  ${adminPassword}`);
 }

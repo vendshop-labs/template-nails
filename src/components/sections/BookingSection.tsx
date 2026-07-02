@@ -22,7 +22,7 @@ type DbMaster = {
   photo: string | null;
 };
 
-const WA_HREF = `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '421900000000'}`;
+const WA_HREF = `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '4930901820600'}`;
 
 interface BookingSectionProps {
   locale?: string;

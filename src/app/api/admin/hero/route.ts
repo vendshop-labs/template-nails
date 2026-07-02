@@ -48,9 +48,9 @@ export async function PATCH(req: NextRequest) {
     where: { storeId: store.id },
     create: {
       storeId: store.id,
-      title: (data.title as string) ?? 'Kate Barber Studio',
-      subtitle: (data.subtitle as string) ?? 'Prémiový barber studio v Trenčíne',
-      ctaText: (data.ctaText as string) ?? 'Rezervovať termín',
+      title: (data.title as string) ?? 'Lumière Nails Berlin',
+      subtitle: (data.subtitle as string) ?? 'Premium Maniküre, Gel-Nägel und Nail Art in Berlin.',
+      ctaText: (data.ctaText as string) ?? 'Termin buchen',
       imageUrl: (data.imageUrl as string | null) ?? null,
     },
     update: data,

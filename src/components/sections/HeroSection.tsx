@@ -27,7 +27,7 @@ export default function HeroSection({ config, store }: HeroSectionProps) {
   const t = useTranslations('hero');
   const tw = useTranslations('whatsapp');
   const title    = config?.title    || t('defaultTitle');
-  const subtitle = config?.subtitle || t('defaultSubtitle', { city: store?.city ?? 'Trenčín' });
+  const subtitle = config?.subtitle || t('defaultSubtitle', { city: store?.city ?? 'Berlin' });
   const ctaText  = config?.ctaText  || t('ctaText');
   const imageSrc = config?.imageUrl || null;
 
@@ -37,7 +37,7 @@ export default function HeroSection({ config, store }: HeroSectionProps) {
       <div className={styles.heroLeft}>
         <p className="hero__tagline">
           <span className="hero__tagline-line" />
-          Est. 2024 — {store?.city ?? 'Trenčín'}
+          Est. 2024 — {store?.city ?? 'Berlin'}
         </p>
 
         <h1 className="hero__title">{title}</h1>
@@ -109,7 +109,7 @@ export default function HeroSection({ config, store }: HeroSectionProps) {
           <div className={styles.heroImageWrap}>
             <Image
               src={imageSrc}
-              alt="Lumière Nails — nechtové štúdio Trenčín"
+              alt="Lumière Nails — Nagelstudio Berlin"
               fill
               priority
               fetchPriority="high"

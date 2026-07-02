@@ -9,8 +9,8 @@ import styles from './testimonials.module.css';
 const STORE_SLUG = process.env.STORE_SLUG ?? 'lumiere-nails';
 
 export const metadata: Metadata = {
-  title: 'Recenzie | Lumière Nails',
-  description: 'Prečítajte si recenzie spokojných klientiek Lumière Nails štúdia v Trenčíne.',
+  title: 'Bewertungen | Lumière Nails Berlin',
+  description: 'Lesen Sie die Bewertungen unserer zufriedenen Kundinnen — Lumière Nails Nagelstudio Berlin.',
   robots: { index: true, follow: true },
 };
 
@@ -41,25 +41,25 @@ export default async function TestimonialsPage({
     <main style={{ paddingTop: '5rem', minHeight: '100vh' }}>
       <section className="testimonials-page__section">
 
-        <Link href={`/${locale}#recenzie`} className={styles.backBtn}>
-          ← Späť na hlavnú
+        <Link href={`/${locale}#bewertungen`} className={styles.backBtn}>
+          ← Zurück zur Startseite
         </Link>
 
         <div className="testimonials-list__header">
           <div>
-            <p className="section-label">Recenzie</p>
+            <p className="section-label">Bewertungen</p>
             <h1 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.75rem)', color: 'var(--color-text)', marginTop: '0.25rem' }}>
-              Čo hovoria naše klientky
+              Was unsere Kundinnen sagen
             </h1>
             <GoldDivider />
             {avgRating && (
               <p style={{ color: 'var(--color-text-muted)', marginTop: '0.5rem' }}>
-                ⭐ {avgRating} · {testimonials.length} spokojných klientiek
+                ⭐ {avgRating} · {testimonials.length} zufriedene Kundinnen
               </p>
             )}
           </div>
           <Link href={`/${locale}/testimonials/write`} className="btn-primary">
-            Napísať recenziu →
+            Bewertung schreiben →
           </Link>
         </div>
 
@@ -68,7 +68,7 @@ export default async function TestimonialsPage({
             {testimonials.map((t) => (
               <TestimonialCard
                 key={t.id}
-                name={(t as { authorName?: string | null }).authorName ?? t.customer?.name ?? 'Klient'}
+                name={(t as { authorName?: string | null }).authorName ?? t.customer?.name ?? 'Kundin'}
                 content={t.text}
                 rating={t.rating}
                 createdAt={t.createdAt.toISOString()}
@@ -79,9 +79,9 @@ export default async function TestimonialsPage({
           </div>
         ) : (
           <div className="testimonials-page__empty">
-            <p style={{ color: 'var(--color-text-muted)' }}>Zatiaľ žiadne recenzie.</p>
+            <p style={{ color: 'var(--color-text-muted)' }}>Noch keine Bewertungen vorhanden.</p>
             <Link href={`/${locale}/testimonials/write`} className="btn-outline" style={{ marginTop: '1rem', display: 'inline-block' }}>
-              Buďte prvá!
+              Erste Bewertung schreiben!
             </Link>
           </div>
         )}

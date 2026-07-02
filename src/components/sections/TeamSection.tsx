@@ -34,7 +34,7 @@ export default function TeamSection({ masters }: { masters: Master[] }) {
                 {member.photo ? (
                   <Image
                     src={member.photo}
-                    alt={`${member.name} — nechtová technička`}
+                    alt={`${member.name} — Nageldesignerin`}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="team-photo"
