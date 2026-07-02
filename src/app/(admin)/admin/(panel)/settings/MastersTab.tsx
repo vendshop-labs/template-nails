@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useAdminLocale } from '@/hooks/useAdminLocale';
+import { getAdminT } from '@/lib/admin-i18n';
 import styles from './settings.module.css';
 
 interface Master {
@@ -35,6 +37,8 @@ async function uploadPhoto(file: File): Promise<string> {
 }
 
 export default function MastersTab() {
+  const { locale } = useAdminLocale();
+  const t = getAdminT(locale);
   const [masters, setMasters] = useState<Master[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -145,19 +149,19 @@ export default function MastersTab() {
   };
 
   const remove = async (m: Master) => {
-    if (!confirm(`Vymazať majstra "${m.name}"?`)) return;
+    if (!confirm(t.masters.deleteConfirm.replace('{name}', m.name))) return;
     await fetch(`/api/admin/masters/${m.id}`, { method: 'DELETE' });
     setMasters((prev) => prev.filter((x) => x.id !== m.id));
   };
 
-  if (loading) return <p className={styles.muted}>Načítavam...</p>;
+  if (loading) return <p className={styles.muted}>{t.common.loading}</p>;
 
   return (
     <>
       {/* Add form toggle */}
       {!showAdd && (
         <button type="button" className={styles.saveBtn} onClick={() => setShowAdd(true)} style={{ marginBottom: 4 }}>
-          + Pridať majstra
+          {t.masters.add}
         </button>
       )}
 
@@ -191,10 +195,10 @@ export default function MastersTab() {
           </div>
           <div className={styles.addFormActions}>
             <button type="button" className={styles.saveBtn} onClick={submitAdd} disabled={saving || !addForm.name.trim() || !addForm.role.trim()}>
-              {saving ? 'Ukladám...' : 'Uložiť'}
+              {saving ? t.common.saving : t.common.save}
             </button>
             <button type="button" className={styles.outlineBtn} onClick={() => { setShowAdd(false); setAddForm(EMPTY_FORM); }}>
-              Zrušiť
+              {t.common.cancel}
             </button>
           </div>
         </div>
@@ -202,7 +206,7 @@ export default function MastersTab() {
 
       {/* List */}
       <div className={styles.masterList}>
-        {masters.length === 0 && <p className={styles.muted}>Žiadni majstri.</p>}
+        {masters.length === 0 && <p className={styles.muted}>{t.masters.noMasters}</p>}
         {masters.map((m) => (
           <div key={m.id}>
             {editingId === m.id ? (
@@ -235,10 +239,10 @@ export default function MastersTab() {
                 </div>
                 <div className={styles.addFormActions}>
                   <button type="button" className={styles.saveBtn} onClick={() => submitEdit(m.id)} disabled={saving}>
-                    {saving ? 'Ukladám...' : 'Uložiť'}
+                    {saving ? t.common.saving : t.common.save}
                   </button>
                   <button type="button" className={styles.outlineBtn} onClick={() => setEditingId(null)}>
-                    Zrušiť
+                    {t.common.cancel}
                   </button>
                 </div>
               </div>
@@ -268,13 +272,13 @@ export default function MastersTab() {
                 </div>
                 <div className={styles.masterActions}>
                   <button type="button" className={styles.outlineBtn} onClick={() => toggleActive(m)}>
-                    {m.active ? 'Skryť' : 'Zobraziť'}
+                    {m.active ? t.common.hide : t.common.show}
                   </button>
                   <button type="button" className={styles.outlineBtn} onClick={() => startEdit(m)}>
-                    Upraviť
+                    {t.masters.edit}
                   </button>
                   <button type="button" className={styles.dangerBtn} onClick={() => remove(m)}>
-                    Zmazať
+                    {t.common.delete}
                   </button>
                 </div>
               </div>

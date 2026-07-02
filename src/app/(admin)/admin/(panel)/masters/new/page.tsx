@@ -3,11 +3,15 @@
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useAdminLocale } from '@/hooks/useAdminLocale';
+import { getAdminT } from '@/lib/admin-i18n';
 
 const EMPTY = { name: '', role: '', bio: '' };
 
 export default function NewMasterPage() {
   const router = useRouter();
+  const { locale } = useAdminLocale();
+  const t = getAdminT(locale);
   const [form, setForm] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -69,8 +73,8 @@ export default function NewMasterPage() {
   return (
     <div className="admin-page">
       <div className="admin-page__header">
-        <h1>Nový majster</h1>
-        <Link href="/admin/masters" className="btn-outline btn-sm">← Späť</Link>
+        <h1>{t.masters.add}</h1>
+        <Link href="/admin/masters" className="btn-outline btn-sm">← {t.common.cancel}</Link>
       </div>
 
       <form onSubmit={submit} className="admin-masters__form">
@@ -133,9 +137,9 @@ export default function NewMasterPage() {
             className="btn-primary btn-sm"
             disabled={saving || uploading || !form.name.trim() || !form.role.trim()}
           >
-            {uploading ? 'Nahrávam fotku...' : saving ? 'Ukladá sa...' : 'Vytvoriť majstra'}
+            {uploading ? t.gallery.uploading : saving ? t.common.saving : t.masters.add}
           </button>
-          <Link href="/admin/masters" className="btn-outline btn-sm">Zrušiť</Link>
+          <Link href="/admin/masters" className="btn-outline btn-sm">{t.common.cancel}</Link>
         </div>
       </form>
     </div>

@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
+import { useAdminLocale } from '@/hooks/useAdminLocale';
+import { getAdminT } from '@/lib/admin-i18n';
 
 interface Master {
   id: string;
@@ -15,6 +17,8 @@ interface Master {
 
 export default function EditMasterPage() {
   const router = useRouter();
+  const { locale } = useAdminLocale();
+  const t = getAdminT(locale);
   const { id } = useParams<{ id: string }>();
 
   const [form, setForm] = useState({ name: '', role: '', bio: '', photoUrl: '' });
@@ -104,7 +108,7 @@ export default function EditMasterPage() {
   if (loading) {
     return (
       <div className="admin-page">
-        <p style={{ color: 'var(--color-text-muted)', padding: '2rem' }}>Načítavam...</p>
+        <p style={{ color: 'var(--color-text-muted)', padding: '2rem' }}>{t.common.loading}</p>
       </div>
     );
   }
@@ -114,8 +118,8 @@ export default function EditMasterPage() {
   return (
     <div className="admin-page">
       <div className="admin-page__header">
-        <h1>Upraviť majstra</h1>
-        <Link href="/admin/masters" className="btn-outline btn-sm">← Späť</Link>
+        <h1>{t.masters.edit}</h1>
+        <Link href="/admin/masters" className="btn-outline btn-sm">← {t.common.cancel}</Link>
       </div>
 
       <form onSubmit={submit} className="admin-masters__form">
@@ -196,9 +200,9 @@ export default function EditMasterPage() {
             className="btn-primary btn-sm"
             disabled={saving || uploading || !form.name.trim() || !form.role.trim()}
           >
-            {uploading ? 'Nahrávam fotku...' : saving ? 'Ukladá sa...' : 'Uložiť zmeny'}
+            {uploading ? t.gallery.uploading : saving ? t.common.saving : t.common.save}
           </button>
-          <Link href="/admin/masters" className="btn-outline btn-sm">Zrušiť</Link>
+          <Link href="/admin/masters" className="btn-outline btn-sm">{t.common.cancel}</Link>
         </div>
       </form>
     </div>

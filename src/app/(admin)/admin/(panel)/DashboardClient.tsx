@@ -1,6 +1,8 @@
 'use client';
 
 import type { Vertical } from '@prisma/client';
+import { useAdminLocale } from '@/hooks/useAdminLocale';
+import { getAdminT } from '@/lib/admin-i18n';
 import styles from './dashboard.module.css';
 
 interface DashboardProps {
@@ -72,19 +74,21 @@ export default function DashboardClient({
   upcomingAppointments = [],
   topMasters = [],
 }: DashboardProps) {
+  const { locale } = useAdminLocale();
+  const t = getAdminT(locale);
   const isRestaurant = vertical === 'RESTAURANT';
   const isServices = vertical === 'SERVICES';
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.h1}>Prehľad</h1>
+      <h1 className={styles.h1}>{t.dashboard.title}</h1>
 
       <div className={styles.stats}>
         {isServices ? (
           <>
-            <StatCard label="Dnešné rezervácie" value={stats.todayAppointments} />
-            <StatCard label="Klienti" value={stats.clientCount} />
-            <StatCard label="Recenzie" value={stats.reviewCount} />
+            <StatCard label={t.dashboard.todayAppointments} value={stats.todayAppointments} />
+            <StatCard label={t.dashboard.totalClients} value={stats.clientCount} />
+            <StatCard label={t.nav.reviews} value={stats.reviewCount} />
           </>
         ) : isRestaurant ? (
           <>

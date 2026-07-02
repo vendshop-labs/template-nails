@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useAdminLocale } from '@/hooks/useAdminLocale';
+import { getAdminT } from '@/lib/admin-i18n';
 import styles from './gallery.module.css';
 
 interface GalleryImage {
@@ -13,6 +15,8 @@ interface GalleryImage {
 }
 
 export default function GalleryPage() {
+  const { locale } = useAdminLocale();
+  const t = getAdminT(locale);
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState<string | null>(null);
@@ -92,7 +96,7 @@ export default function GalleryPage() {
   };
 
   const deleteImage = async (img: GalleryImage) => {
-    if (!confirm('Vymazať toto foto?')) return;
+    if (!confirm(t.gallery.deleteConfirm)) return;
     await fetch(`/api/admin/gallery?id=${img.id}`, { method: 'DELETE' });
     await fetchImages();
   };
@@ -117,7 +121,7 @@ export default function GalleryPage() {
   return (
     <div className={styles.page}>
       <div className={styles.topBar}>
-        <h1 className={styles.h1}>Galéria</h1>
+        <h1 className={styles.h1}>{t.gallery.title}</h1>
         <div className={styles.uploadArea}>
           <input
             ref={fileRef}
@@ -129,21 +133,17 @@ export default function GalleryPage() {
             id="gallery-upload"
           />
           <label htmlFor="gallery-upload" className={styles.uploadBtn}>
-            {uploading === 'new' ? 'Nahrávam...' : '↑ Pridať foto'}
+            {uploading === 'new' ? t.gallery.uploading : t.gallery.addPhoto}
           </label>
         </div>
       </div>
 
-      <p className={styles.hint}>
-        Fotky sa automaticky optimalizujú (WebP, max. 1200×800). Formáty: JPEG, PNG, WebP, GIF, AVIF. Max. 10 MB.
-      </p>
+      <p className={styles.hint}>{t.gallery.hint}</p>
 
       {loading ? (
-        <div className={styles.loading}>Načítavam...</div>
+        <div className={styles.loading}>{t.gallery.loading}</div>
       ) : images.length === 0 ? (
-        <div className={styles.empty}>
-          Galéria je prázdna — nahrajte prvé foto
-        </div>
+        <div className={styles.empty}>{t.gallery.empty}</div>
       ) : (
         <div className={styles.grid}>
           {images.map((img) => (
@@ -169,21 +169,21 @@ export default function GalleryPage() {
                     style={{ cursor: uploading ? 'not-allowed' : 'pointer' }}
                     aria-disabled={!!uploading}
                   >
-                    {uploading === img.id ? 'Nahrávam...' : '↑ Nahradiť'}
+                    {uploading === img.id ? t.gallery.uploading : t.gallery.replace}
                   </label>
                   <button
                     type="button"
                     className={styles.overlayBtn}
                     onClick={() => void toggleActive(img)}
                   >
-                    {img.active ? 'Skryť' : 'Zobraziť'}
+                    {img.active ? t.common.hide : t.common.show}
                   </button>
                   <button
                     type="button"
                     className={`${styles.overlayBtn} ${styles.overlayDelete}`}
                     onClick={() => void deleteImage(img)}
                   >
-                    Zmazať
+                    {t.common.delete}
                   </button>
                 </div>
               </div>
@@ -191,7 +191,7 @@ export default function GalleryPage() {
                 type="text"
                 className={styles.altInput}
                 defaultValue={img.alt}
-                placeholder="Popis fotky..."
+                placeholder={t.gallery.altPlaceholder}
                 onBlur={(e) => void updateAlt(img, e.target.value)}
               />
               <span className={styles.order}>#{img.sortOrder + 1}</span>

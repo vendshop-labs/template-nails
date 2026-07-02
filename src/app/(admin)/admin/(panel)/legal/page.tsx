@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import AdminLoading from '@/components/admin/AdminLoading/AdminLoading';
+import { useAdminLocale } from '@/hooks/useAdminLocale';
+import { getAdminT } from '@/lib/admin-i18n';
 import styles from './legal.module.css';
 
 interface LegalFormData {
@@ -38,6 +40,8 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean
 }
 
 export default function LegalPage() {
+  const { locale } = useAdminLocale();
+  const t = getAdminT(locale);
   const [form, setForm] = useState<LegalFormData>(DEFAULT);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -79,7 +83,7 @@ export default function LegalPage() {
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Legal (DE)</h1>
+        <h1 className={styles.title}>{t.legal.title}</h1>
         <p className={styles.note}>
           These pages are visible <strong>only for /de/ locale</strong> (German visitors).
           Impressum and Datenschutz are required for DE/AT/CH market.
@@ -189,7 +193,7 @@ export default function LegalPage() {
           onClick={handleSave}
           disabled={saving}
         >
-          {saving ? 'Saving...' : 'Speichern'}
+          {saving ? t.common.saving : t.legal.save}
         </button>
         {saved && <span className={styles.savedMsg}>✓ Saved</span>}
       </div>

@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react';
 import AdminLoading from '@/components/admin/AdminLoading/AdminLoading';
+import { useAdminLocale } from '@/hooks/useAdminLocale';
+import { getAdminT } from '@/lib/admin-i18n';
 
 interface HeroConfig {
   title: string;
@@ -18,6 +20,8 @@ const DEFAULTS: HeroConfig = {
 };
 
 export default function HeroAdminPage() {
+  const { locale } = useAdminLocale();
+  const t = getAdminT(locale);
   const [form, setForm] = useState<HeroConfig>(DEFAULTS);
   const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -98,7 +102,7 @@ export default function HeroAdminPage() {
   return (
     <div className="admin-page">
       <div className="admin-page__header">
-        <h1>Hero sekcia</h1>
+        <h1>{t.hero.title}</h1>
         {saved && <span style={{ color: '#4ade80', fontSize: '0.875rem' }}>✓ Uložené</span>}
       </div>
 
@@ -229,7 +233,7 @@ export default function HeroAdminPage() {
             className="btn-primary btn-sm"
             disabled={saving || uploading}
           >
-            {uploading ? 'Nahrávam fotku...' : saving ? 'Ukladá sa...' : 'Uložiť zmeny'}
+            {uploading ? t.hero.uploading : saving ? t.common.saving : t.common.save}
           </button>
         </div>
       </form>

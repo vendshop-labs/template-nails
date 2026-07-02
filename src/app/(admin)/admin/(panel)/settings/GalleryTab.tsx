@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useAdminLocale } from '@/hooks/useAdminLocale';
+import { getAdminT } from '@/lib/admin-i18n';
 import styles from './settings.module.css';
 
 interface GalleryImage {
@@ -26,6 +28,8 @@ async function uploadFile(file: File): Promise<string> {
 }
 
 export default function GalleryTab() {
+  const { locale } = useAdminLocale();
+  const t = getAdminT(locale);
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState<string | null>(null);
@@ -101,7 +105,7 @@ export default function GalleryTab() {
   };
 
   const deleteImage = async (img: GalleryImage) => {
-    if (!confirm('Vymazať toto foto?')) return;
+    if (!confirm(t.gallery.deleteConfirm)) return;
     await fetch(`/api/admin/gallery?id=${img.id}`, { method: 'DELETE' });
     setImages((prev) => prev.filter((i) => i.id !== img.id));
   };
@@ -140,7 +144,7 @@ export default function GalleryTab() {
     }
   };
 
-  if (loading) return <p className={styles.muted}>Načítavam...</p>;
+  if (loading) return <p className={styles.muted}>{t.gallery.loading}</p>;
 
   return (
     <>
@@ -163,13 +167,13 @@ export default function GalleryTab() {
       <div className={styles.galleryToolbar}>
         <label className={styles.uploadLabel}>
           <input ref={fileRef} type="file" accept="image/*" multiple onChange={handleUpload} />
-          {uploading === 'new' ? 'Nahrávam...' : '+ Pridať fotografiu'}
+          {uploading === 'new' ? t.gallery.uploading : t.gallery.addPhoto}
         </label>
         <span className={styles.muted}>{images.length} fotografií</span>
       </div>
 
       {images.length === 0 ? (
-        <p className={styles.muted}>Galéria je prázdna.</p>
+        <p className={styles.muted}>{t.gallery.empty}</p>
       ) : (
         <div className={styles.galleryGrid}>
           {images.map((img, index) => (
@@ -191,7 +195,7 @@ export default function GalleryTab() {
                     className={styles.hiddenInput}
                     onChange={(e) => handleImageChange(e, img.id)}
                   />
-                  <span>{uploading === img.id ? 'Nahrávam...' : '📷 Zmeniť foto'}</span>
+                  <span>{uploading === img.id ? t.gallery.uploading : `📷 ${t.gallery.replace}`}</span>
                 </label>
               </div>
               <div className={styles.galleryCardActions}>
@@ -215,7 +219,7 @@ export default function GalleryTab() {
                   className={`${styles.cardBtn} ${styles.cardBtnOutline}`}
                   onClick={() => toggleActive(img)}
                 >
-                  {img.active ? 'Skryť' : 'Zobraziť'}
+                  {img.active ? t.common.hide : t.common.show}
                 </button>
                 <button
                   type="button"
