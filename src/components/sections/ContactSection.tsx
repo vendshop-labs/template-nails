@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { useTranslations } from 'next-intl';
-import { CONTACT, HOURS, STORE_NAME_FALLBACK } from '@/lib/constants';
+import { HOURS, STORE_NAME_FALLBACK } from '@/lib/constants';
 import { getDayName } from '@/lib/day-utils';
 import GoldDivider from '@/components/ui/GoldDivider';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
@@ -80,17 +80,17 @@ export default function ContactSection({
   const t = useTranslations('contact');
   const tw = useTranslations('whatsapp');
 
-  const displayAddress = address ?? CONTACT.address;
-  const displayCity    = city    ?? CONTACT.city;
-  const displayPhone   = phone   ?? CONTACT.phone;
-  const displayEmail   = email   ?? CONTACT.email;
+  const displayAddress = address ?? '';
+  const displayCity    = city    ?? '';
+  const displayPhone   = phone   ?? '';
+  const displayEmail   = email   ?? '';
   const displayName    = storeName ?? STORE_NAME_FALLBACK;
 
-  const phoneHref = displayPhone ? `tel:${displayPhone.replace(/\s/g, '')}` : CONTACT.phoneHref;
-  const emailHref = displayEmail ? `mailto:${displayEmail}`                  : CONTACT.emailHref;
+  const phoneHref = displayPhone ? `tel:${displayPhone.replace(/\s/g, '')}` : '';
+  const emailHref = displayEmail ? `mailto:${displayEmail}` : '';
 
   const mapQuery = encodeURIComponent(
-    [address ?? CONTACT.address, city].filter(Boolean).join(', ')
+    [displayAddress, displayCity].filter(Boolean).join(', ')
   );
   const mapSrc =
     mapLat && mapLng

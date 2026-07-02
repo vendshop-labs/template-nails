@@ -75,8 +75,8 @@ export default function AdminSettingsPage() {
     city: '',
     mapLat: '',
     mapLng: '',
-    facebook: '',
     instagramUrl: '',
+    facebookUrl: '',
     googleRating: '',
     aboutImage: '',
     whatsappPhone: '',
@@ -112,6 +112,7 @@ export default function AdminSettingsPage() {
             aboutImage: (s.aboutImage as string) ?? '',
             whatsappPhone: (s.whatsappPhone as string) ?? '',
             instagramUrl: (s.instagramUrl as string) ?? '',
+            facebookUrl: (s.facebookUrl as string) ?? '',
             googleRating: (s.googleRating as string) ?? '',
           }));
           setHours(parseHours(s.openingHours));
@@ -156,6 +157,7 @@ export default function AdminSettingsPage() {
           aboutImage: store.aboutImage || null,
           whatsappPhone: store.whatsappPhone || null,
           instagramUrl: store.instagramUrl || null,
+          facebookUrl: store.facebookUrl || null,
           googleRating: store.googleRating || null,
         }),
       });
@@ -390,6 +392,11 @@ export default function AdminSettingsPage() {
                 <Field label="Instagram URL">
                   <input className={styles.input} value={store.instagramUrl} placeholder="https://instagram.com/lumiere.nails" onChange={(e) => sStore('instagramUrl', e.target.value)} />
                 </Field>
+                <Field label="Facebook URL">
+                  <input className={styles.input} value={store.facebookUrl} placeholder="https://facebook.com/lumierenails" onChange={(e) => sStore('facebookUrl', e.target.value)} />
+                </Field>
+              </div>
+              <div className={styles.grid2}>
                 <Field label="Google hodnotenie">
                   <input className={styles.input} value={store.googleRating} placeholder="4.9" onChange={(e) => sStore('googleRating', e.target.value)} />
                 </Field>

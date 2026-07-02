@@ -31,6 +31,7 @@ model Store {
   whatsappPhone  String?
   galleryLayout  String  @default("grid-3")
   instagramUrl   String?
+  facebookUrl    String?
   googleRating   String?
 
   themeConfig Json?

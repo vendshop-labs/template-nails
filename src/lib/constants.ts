@@ -62,8 +62,6 @@ export const CONTACT = {
   phoneHref:   'tel:+4930901820600',
   email:       'info@lumiere-nails.de',
   emailHref:   'mailto:info@lumiere-nails.de',
-  instagram:   'https://instagram.com/lumiere.nails',
-  facebook:    'https://facebook.com/lumierenails',
   mapSrc:      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2428.7!2d13.3888!3d52.5163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTLCsDMwJzU4LjciTiAxM8KwMjMnMjAuMCJF!5e0!3m2!1sde!2sde!4v1234567890',
 };
 

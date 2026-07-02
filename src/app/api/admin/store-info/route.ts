@@ -31,6 +31,7 @@ export async function GET() {
       whatsappPhone: true,
       galleryLayout: true,
       instagramUrl: true,
+      facebookUrl: true,
       googleRating: true,
     },
   });
@@ -49,7 +50,7 @@ export async function PUT(request: Request) {
   const allowed = ['name', 'description', 'primaryMode', 'address', 'city',
                    'openingHours', 'phone', 'email', 'mapLat', 'mapLng',
                    'aboutImage', 'whatsappPhone', 'galleryLayout',
-                   'instagramUrl', 'googleRating'] as const;
+                   'instagramUrl', 'facebookUrl', 'googleRating'] as const;
 
   const data: Record<string, unknown> = {};
   for (const key of allowed) {

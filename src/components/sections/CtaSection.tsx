@@ -1,7 +1,6 @@
-import { CONTACT } from '@/lib/constants';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 
-export default function CtaSection({ whatsapp = '' }: { whatsapp?: string }) {
+export default function CtaSection({ whatsapp = '', city }: { whatsapp?: string; city?: string | null }) {
   const rawWaNumber = whatsapp.replace(/[^\d]/g, '');
   const waHref = rawWaNumber ? `https://wa.me/${rawWaNumber}?text=${encodeURIComponent('Guten Tag, ich habe eine Frage.')}` : '';
 
@@ -11,7 +10,7 @@ export default function CtaSection({ whatsapp = '' }: { whatsapp?: string }) {
         <div className="cta-inner">
           <h2 className="cta-title">Ready for a Fresh Look?</h2>
           <p className="cta-subtitle">
-            Book your appointment today. Located in {CONTACT.city ?? 'the city centre'}.
+            Book your appointment today.{city ? ` Located in ${city}.` : ''}
           </p>
           <div className="cta-buttons">
             <a href="#booking" className="btn-primary">Book Now</a>
