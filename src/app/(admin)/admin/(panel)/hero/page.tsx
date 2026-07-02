@@ -147,7 +147,7 @@ export default function HeroAdminPage() {
                     letterSpacing: '0.05em',
                   }}
                 >
-                  Aktuálna hero fotka:
+                  {t.hero.currentPhoto}
                 </p>
                 <img
                   src={currentImageUrl}
@@ -204,7 +204,7 @@ export default function HeroAdminPage() {
                 marginTop: '0.35rem',
               }}
             >
-              Všetky formáty (JPEG, PNG, WebP, GIF, AVIF). Výstup: WebP 1920×1080. Max. 10MB
+              {t.hero.hint}
             </span>
             {currentImageUrl && (
               <button

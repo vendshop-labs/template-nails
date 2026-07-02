@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useAdminLocale } from '@/hooks/useAdminLocale';
+import { getAdminT } from '@/lib/admin-i18n';
 import styles from './tables.module.css';
 
 type TableType = 'round' | 'rect';
@@ -55,6 +57,8 @@ const DEFAULT_FORM: TableForm = {
 };
 
 export default function TablesPage() {
+  const { locale } = useAdminLocale();
+  const tr = getAdminT(locale);
   const [tables, setTables] = useState<RestaurantTable[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -145,7 +149,7 @@ export default function TablesPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Видалити цей стіл? Всі пов\'язані бронювання збережуться.')) return;
+    if (!confirm(tr.tables.deleteConfirm)) return;
     setDeletingId(id);
     try {
       const res = await fetch(`/api/admin/tables?id=${id}`, { method: 'DELETE' });
@@ -167,9 +171,9 @@ export default function TablesPage() {
   return (
     <div className={styles.page}>
       <div className={styles.topBar}>
-        <h1 className={styles.h1}>Столи</h1>
+        <h1 className={styles.h1}>{tr.tables.title}</h1>
         <button type="button" className={styles.addBtn} onClick={openAdd}>
-          + Додати стіл
+          + {tr.tables.add}
         </button>
       </div>
 
@@ -210,9 +214,9 @@ export default function TablesPage() {
       {/* Table list */}
       <div className={styles.tableWrap}>
         {loading ? (
-          <div className={styles.loading}>Завантаження...</div>
+          <div className={styles.loading}>{tr.common.loading}</div>
         ) : tables.length === 0 ? (
-          <div className={styles.empty}>Столів не знайдено</div>
+          <div className={styles.empty}>{tr.tables.noTables}</div>
         ) : (
           <table className={styles.table}>
             <thead>
@@ -256,7 +260,7 @@ export default function TablesPage() {
                       className={styles.editBtn}
                       onClick={() => openEdit(t)}
                     >
-                      Редагувати
+                      {tr.tables.edit}
                     </button>
                     <button
                       type="button"
@@ -264,7 +268,7 @@ export default function TablesPage() {
                       disabled={deletingId === t.id}
                       onClick={() => handleDelete(t.id)}
                     >
-                      Видалити
+                      {tr.common.delete}
                     </button>
                   </td>
                 </tr>
@@ -279,14 +283,14 @@ export default function TablesPage() {
         <div className={styles.modal} onClick={closeModal}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <h2 className={styles.modalTitle}>
-              {editingId ? 'Редагувати стіл' : 'Додати стіл'}
+              {editingId ? tr.tables.edit : tr.tables.add}
             </h2>
 
             {error && <div className={styles.error}>{error}</div>}
 
             <div className={styles.formGrid}>
               <label className={styles.formLabel}>
-                Номер столу
+                {tr.tables.nameLabel}
                 <input
                   className={styles.input}
                   type="text"
@@ -297,7 +301,7 @@ export default function TablesPage() {
               </label>
 
               <label className={styles.formLabel}>
-                Місць
+                {tr.tables.capacityLabel}
                 <input
                   className={styles.input}
                   type="number"
@@ -370,7 +374,7 @@ export default function TablesPage() {
 
             <div className={styles.modalActions}>
               <button type="button" className={styles.cancelModalBtn} onClick={closeModal}>
-                Скасувати
+                {tr.common.cancel}
               </button>
               <button
                 type="button"
@@ -378,7 +382,7 @@ export default function TablesPage() {
                 disabled={saving}
                 onClick={handleSave}
               >
-                {saving ? 'Збереження...' : 'Зберегти'}
+                {saving ? tr.common.saving : tr.common.save}
               </button>
             </div>
           </div>

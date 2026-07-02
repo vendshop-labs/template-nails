@@ -73,14 +73,14 @@ export default function NewMasterPage() {
   return (
     <div className="admin-page">
       <div className="admin-page__header">
-        <h1>{t.masters.add}</h1>
+        <h1>{t.masters.newTitle}</h1>
         <Link href="/admin/masters" className="btn-outline btn-sm">← {t.common.cancel}</Link>
       </div>
 
       <form onSubmit={submit} className="admin-masters__form">
         <div className="admin-services__form-grid">
           <div className="booking__field">
-            <label>Meno *</label>
+            <label>{t.masters.nameLabel}</label>
             <input
               value={form.name}
               onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
@@ -89,7 +89,7 @@ export default function NewMasterPage() {
             />
           </div>
           <div className="booking__field">
-            <label>Pozícia *</label>
+            <label>{t.masters.roleLabel}</label>
             <input
               value={form.role}
               onChange={(e) => setForm((p) => ({ ...p, role: e.target.value }))}
@@ -98,7 +98,7 @@ export default function NewMasterPage() {
             />
           </div>
           <div className="booking__field" style={{ gridColumn: '1 / -1' }}>
-            <label>Foto</label>
+            <label>{t.masters.photoLabel}</label>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               {preview && (
                 <img
@@ -117,7 +117,7 @@ export default function NewMasterPage() {
             </div>
           </div>
           <div className="booking__field" style={{ gridColumn: '1 / -1' }}>
-            <label>Bio</label>
+            <label>{t.masters.bioLabel}</label>
             <textarea
               rows={3}
               value={form.bio}

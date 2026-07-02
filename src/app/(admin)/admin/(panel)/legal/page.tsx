@@ -104,7 +104,7 @@ export default function LegalPage() {
         <h2 className={styles.sectionTitle}>Firmeninformationen</h2>
         <div className={styles.grid}>
           <label className={styles.field}>
-            <span className={styles.label}>Firmenname *</span>
+            <span className={styles.label}>{t.legal.ownerLabel}</span>
             <input
               className={styles.input}
               value={form.companyName}
@@ -114,7 +114,7 @@ export default function LegalPage() {
           </label>
 
           <label className={styles.field}>
-            <span className={styles.label}>Straße + Nr. *</span>
+            <span className={styles.label}>{t.legal.addressLabel}</span>
             <input
               className={styles.input}
               value={form.street}
@@ -154,7 +154,7 @@ export default function LegalPage() {
           </label>
 
           <label className={styles.field}>
-            <span className={styles.label}>E-Mail *</span>
+            <span className={styles.label}>{t.legal.emailLabel}</span>
             <input
               className={styles.input}
               type="email"
@@ -165,7 +165,7 @@ export default function LegalPage() {
           </label>
 
           <label className={styles.field}>
-            <span className={styles.label}>Telefon</span>
+            <span className={styles.label}>{t.legal.phoneLabel}</span>
             <input
               className={styles.input}
               value={form.phone}
@@ -175,7 +175,7 @@ export default function LegalPage() {
           </label>
 
           <label className={styles.field}>
-            <span className={styles.label}>USt-ID (optional)</span>
+            <span className={styles.label}>{t.legal.vatLabel}</span>
             <input
               className={styles.input}
               value={form.vatId}
