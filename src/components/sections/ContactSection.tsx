@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { useTranslations } from 'next-intl';
-import { CONTACT, HOURS, STORE_NAME_FALLBACK, WHATSAPP_NUMBER } from '@/lib/constants';
+import { CONTACT, HOURS, STORE_NAME_FALLBACK } from '@/lib/constants';
 import { getDayName } from '@/lib/day-utils';
 import GoldDivider from '@/components/ui/GoldDivider';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
@@ -62,6 +62,7 @@ interface ContactSectionProps {
   mapLat?: number | null;
   mapLng?: number | null;
   workingHours?: unknown;
+  whatsapp?: string;
 }
 
 export default function ContactSection({
@@ -74,6 +75,7 @@ export default function ContactSection({
   mapLat,
   mapLng,
   workingHours,
+  whatsapp = '',
 }: ContactSectionProps) {
   const t = useTranslations('contact');
   const tw = useTranslations('whatsapp');
@@ -96,6 +98,8 @@ export default function ContactSection({
       : `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embed&hl=${locale}`;
 
   const hoursData = formatHours(workingHours as WorkingHours, locale);
+  const rawWaNumber = whatsapp.replace(/[^\d]/g, '');
+  const waLocationHref = rawWaNumber ? `https://wa.me/${rawWaNumber}?text=${encodeURIComponent(tw('location'))}` : '';
 
   return (
     <section id="kontakt" className="contact">
@@ -148,15 +152,17 @@ export default function ContactSection({
               </div>
             </div>
 
-            <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(tw('location'))}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="contact-wa-btn"
-            >
-              <WhatsAppIcon size={18} />
-              {t('writeUs')}
-            </a>
+            {waLocationHref && (
+              <a
+                href={waLocationHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-wa-btn"
+              >
+                <WhatsAppIcon size={18} />
+                {t('writeUs')}
+              </a>
+            )}
           </div>
         </ScrollReveal>
 

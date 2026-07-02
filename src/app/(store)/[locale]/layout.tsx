@@ -136,7 +136,7 @@ export default async function LocaleLayout({
 
   const store = await db.store.findUnique({
     where: { slug: STORE_SLUG },
-    select: { id: true, name: true, openingHours: true, city: true, address: true, phone: true, email: true },
+    select: { id: true, name: true, openingHours: true, city: true, address: true, phone: true, email: true, whatsappPhone: true },
   });
   const legalConfig = (locale === 'de' && store)
     ? await db.legalConfig.findUnique({ where: { storeId: store.id } })
@@ -182,7 +182,7 @@ export default async function LocaleLayout({
           <CustomerProvider>
             <VerticalProvider config={config.vertical}>
               <PresenceProvider presence={config.presence}>
-                <Header logoUrl={config.logoUrl} storeName={store?.name ?? undefined} />
+                <Header logoUrl={config.logoUrl} storeName={store?.name ?? undefined} whatsapp={store?.whatsappPhone ?? ''} />
                 <main>{children}</main>
                 <Footer
                   locale={locale}
@@ -192,6 +192,7 @@ export default async function LocaleLayout({
                   city={store?.city ?? undefined}
                   phone={store?.phone ?? undefined}
                   email={store?.email ?? undefined}
+                  whatsapp={store?.whatsappPhone ?? ''}
                   workingHours={parsedFooterHours}
                 />
                 <CookieBanner />

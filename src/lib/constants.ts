@@ -17,12 +17,8 @@ export const LOCALE_LABELS: Record<SupportedLocale, string> = {
   de: 'Deutsch',
 };
 
-export const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '4930901820600';
-export const WHATSAPP_LINKS = {
-  booking:  `https://wa.me/${WHATSAPP_NUMBER}?text=Guten%20Tag%2C%20ich%20m%C3%B6chte%20gerne%20einen%20Termin%20buchen.`,
-  location: `https://wa.me/${WHATSAPP_NUMBER}?text=Guten%20Tag%2C%20wo%20genau%20befinden%20Sie%20sich%3F`,
-  general:  `https://wa.me/${WHATSAPP_NUMBER}?text=Guten%20Tag%2C%20ich%20habe%20eine%20Frage.`,
-};
+/** @deprecated DB whatsappPhone is the source of truth — do not use this constant */
+export const WHATSAPP_NUMBER = '';
 
 // Static services (used when DB not seeded yet or in static mode)
 export const STATIC_SERVICES: ServiceItem[] = [

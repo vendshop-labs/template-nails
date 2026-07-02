@@ -1,6 +1,5 @@
 import { setRequestLocale } from 'next-intl/server';
 import { db } from '@/lib/db';
-import { WHATSAPP_NUMBER } from '@/lib/constants';
 import type { Locale } from '@/i18n/routing';
 
 export const revalidate = 60;
@@ -43,7 +42,7 @@ export default async function DigitalProductsPage({
 
   const store = await db.store.findUnique({
     where: { slug: STORE_SLUG },
-    select: { id: true },
+    select: { id: true, whatsappPhone: true },
   });
 
   const products = store
@@ -100,7 +99,8 @@ export default async function DigitalProductsPage({
           {items.map((item) => {
             const symbol = CURRENCY_SYMBOLS[item.currency] ?? item.currency;
             const waMsg = (WA_MESSAGES[effectiveLocale] ?? WA_MESSAGES.sk)(item.name, item.price, item.currency);
-            const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsg)}`;
+            const rawWaNumber = (store?.whatsappPhone ?? '').replace(/[^\d]/g, '');
+            const waUrl = rawWaNumber ? `https://wa.me/${rawWaNumber}?text=${encodeURIComponent(waMsg)}` : '';
 
             return (
               <div
@@ -138,15 +138,17 @@ export default async function DigitalProductsPage({
                     <span style={{ color: 'var(--color-copper, #B87333)', fontSize: 'var(--font-size-xl, 1.5rem)', fontWeight: 700 }}>
                       {symbol}{item.price}
                     </span>
-                    <a
-                      href={waUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-primary"
-                      style={{ fontSize: 'var(--font-size-sm, 0.875rem)', padding: '0.5rem 1rem', textDecoration: 'none' }}
-                    >
-                      {labels.buy}
-                    </a>
+                    {waUrl && (
+                      <a
+                        href={waUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-primary"
+                        style={{ fontSize: 'var(--font-size-sm, 0.875rem)', padding: '0.5rem 1rem', textDecoration: 'none' }}
+                      >
+                        {labels.buy}
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>

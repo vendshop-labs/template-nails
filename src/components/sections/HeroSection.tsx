@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { WHATSAPP_NUMBER, CONTACT } from '@/lib/constants';
+import { CONTACT } from '@/lib/constants';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import styles from './HeroSection.module.css';
 
@@ -16,6 +16,7 @@ interface StoreInfo {
   instagramUrl?: string | null;
   googleRating?: string | null;
   workingHoursLabel?: string | null;
+  whatsapp?: string;
 }
 
 interface HeroSectionProps {
@@ -30,6 +31,8 @@ export default function HeroSection({ config, store }: HeroSectionProps) {
   const subtitle = config?.subtitle || t('defaultSubtitle', { city: store?.city ?? 'Berlin' });
   const ctaText  = config?.ctaText  || t('ctaText');
   const imageSrc = config?.imageUrl || null;
+  const rawWaNumber = (store?.whatsapp ?? '').replace(/[^\d]/g, '');
+  const waHref = rawWaNumber ? `https://wa.me/${rawWaNumber}?text=${encodeURIComponent(tw('booking'))}` : '';
 
   return (
     <section className={styles.hero}>
@@ -59,15 +62,17 @@ export default function HeroSection({ config, store }: HeroSectionProps) {
           <a href="#rezervacia" className="btn-primary">
             {ctaText}
           </a>
-          <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(tw('booking'))}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-whatsapp"
-          >
-            <WhatsAppIcon size={18} />
-            WhatsApp
-          </a>
+          {waHref && (
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-whatsapp"
+            >
+              <WhatsAppIcon size={18} />
+              WhatsApp
+            </a>
+          )}
         </div>
 
         <div className={styles.stats}>

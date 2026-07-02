@@ -3,14 +3,14 @@
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { WHATSAPP_NUMBER } from '@/lib/constants';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 
-export default function Header({ logoUrl, storeName }: { logoUrl?: string; storeName?: string }) {
+export default function Header({ logoUrl, storeName, whatsapp = '' }: { logoUrl?: string; storeName?: string; whatsapp?: string }) {
   const locale = useLocale();
   const t = useTranslations('nav');
   const tw = useTranslations('whatsapp');
-  const waBookingHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(tw('booking'))}`;
+  const rawNumber = whatsapp.replace(/[^\d]/g, '');
+  const waBookingHref = rawNumber ? `https://wa.me/${rawNumber}?text=${encodeURIComponent(tw('booking'))}` : '';
 
   const NAV_LINKS = [
     { href: `/${locale}/#sluzby`,   label: t('services') },
@@ -77,15 +77,17 @@ export default function Header({ logoUrl, storeName }: { logoUrl?: string; store
           <a href={`/${locale}/#rezervacia`} className="header__btn-reserve">
             {t('booking')}
           </a>
-          <a
-            href={waBookingHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="header__btn-whatsapp"
-          >
-            <WhatsAppIcon size={14} />
-            WhatsApp
-          </a>
+          {waBookingHref && (
+            <a
+              href={waBookingHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="header__btn-whatsapp"
+            >
+              <WhatsAppIcon size={14} />
+              WhatsApp
+            </a>
+          )}
         </nav>
 
         <button
@@ -115,16 +117,18 @@ export default function Header({ logoUrl, storeName }: { logoUrl?: string; store
             >
               {t('booking')}
             </a>
-            <a
-              href={waBookingHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="header__mobile-btn-wa"
-              onClick={() => setMenuOpen(false)}
-            >
-              <WhatsAppIcon size={16} />
-              WhatsApp
-            </a>
+            {waBookingHref && (
+              <a
+                href={waBookingHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="header__mobile-btn-wa"
+                onClick={() => setMenuOpen(false)}
+              >
+                <WhatsAppIcon size={16} />
+                WhatsApp
+              </a>
+            )}
           </nav>
         )}
       </div>

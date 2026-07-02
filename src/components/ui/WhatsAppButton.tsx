@@ -1,4 +1,3 @@
-import { WHATSAPP_NUMBER } from '@/lib/constants';
 import WhatsAppIcon from './WhatsAppIcon';
 
 interface WhatsAppButtonProps {
@@ -6,14 +5,12 @@ interface WhatsAppButtonProps {
 }
 
 export default function WhatsAppButton({ phone }: WhatsAppButtonProps) {
-  const number = phone
-    ? phone.replace(/\D/g, '')
-    : WHATSAPP_NUMBER;
-  const href = `https://wa.me/${number}`;
+  const number = (phone ?? '').replace(/[^\d]/g, '');
+  if (!number) return null;
 
   return (
     <a
-      href={href}
+      href={`https://wa.me/${number}`}
       target="_blank"
       rel="noopener noreferrer"
       title="WhatsApp"

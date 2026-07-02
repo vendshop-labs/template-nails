@@ -85,6 +85,7 @@ export default async function HomePage({
           instagramUrl: store?.instagramUrl,
           googleRating: store?.googleRating,
           workingHoursLabel,
+          whatsapp: store?.whatsappPhone ?? '',
         }}
       />
       <DecorativeDivider />
@@ -105,7 +106,7 @@ export default async function HomePage({
           adminReplyAt: t.adminReplyAt?.toISOString() ?? null,
         }))}
       />
-      <BookingSection locale={locale} />
+      <BookingSection locale={locale} whatsapp={store?.whatsappPhone ?? ''} />
       <AboutSection aboutImage={store?.aboutImage} description={store?.description} />
       <ContactSection
         locale={locale}
@@ -117,6 +118,7 @@ export default async function HomePage({
         mapLat={store?.mapLat}
         mapLng={store?.mapLng}
         workingHours={parsedHours}
+        whatsapp={store?.whatsappPhone ?? ''}
       />
       <WhatsAppButton phone={store?.whatsappPhone} />
     </>

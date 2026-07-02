@@ -1,7 +1,10 @@
-import { WHATSAPP_LINKS, CONTACT } from '@/lib/constants';
+import { CONTACT } from '@/lib/constants';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 
-export default function CtaSection() {
+export default function CtaSection({ whatsapp = '' }: { whatsapp?: string }) {
+  const rawWaNumber = whatsapp.replace(/[^\d]/g, '');
+  const waHref = rawWaNumber ? `https://wa.me/${rawWaNumber}?text=${encodeURIComponent('Guten Tag, ich habe eine Frage.')}` : '';
+
   return (
     <section className="cta-section">
       <ScrollReveal direction="up">
@@ -12,14 +15,16 @@ export default function CtaSection() {
           </p>
           <div className="cta-buttons">
             <a href="#booking" className="btn-primary">Book Now</a>
-            <a
-              href={WHATSAPP_LINKS.general}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-outline"
-            >
-              Contact Us
-            </a>
+            {waHref && (
+              <a
+                href={waHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline"
+              >
+                Contact Us
+              </a>
+            )}
           </div>
         </div>
       </ScrollReveal>

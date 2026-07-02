@@ -22,13 +22,12 @@ type DbMaster = {
   photo: string | null;
 };
 
-const WA_HREF = `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '4930901820600'}`;
-
 interface BookingSectionProps {
   locale?: string;
+  whatsapp?: string;
 }
 
-export default function BookingSection({ locale = 'sk' }: BookingSectionProps) {
+export default function BookingSection({ locale = 'sk', whatsapp = '' }: BookingSectionProps) {
   const t = useTranslations('booking');
 
   const STEP_LABELS = [t('stepService'), t('stepTechnician'), t('stepDateTime'), t('stepContact')];
@@ -128,6 +127,9 @@ export default function BookingSection({ locale = 'sk' }: BookingSectionProps) {
     }
   }
 
+  const rawWaNumber = whatsapp.replace(/[^\d]/g, '');
+  const waHref = rawWaNumber ? `https://wa.me/${rawWaNumber}` : '';
+
   // ── Confirmation screen ──────────────────────────────────────────────────
   if (confirmed) {
     return (
@@ -168,17 +170,19 @@ export default function BookingSection({ locale = 'sk' }: BookingSectionProps) {
               </div>
             </div>
 
-            <div style={{ marginBottom: '1rem' }}>
-              <a
-                href={WA_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-whatsapp"
-              >
-                <WhatsAppIcon size={18} />
-                {t('whatsappQuestion')}
-              </a>
-            </div>
+            {waHref && (
+              <div style={{ marginBottom: '1rem' }}>
+                <a
+                  href={waHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-whatsapp"
+                >
+                  <WhatsAppIcon size={18} />
+                  {t('whatsappQuestion')}
+                </a>
+              </div>
+            )}
 
             <p className="booking__note">{t('confirmNote')}</p>
           </div>
