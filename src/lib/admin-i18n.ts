@@ -101,13 +101,54 @@ export interface AdminTranslations {
     };
     savingBtn: string;
     saveBtn: string;
+    savedToast: string;
+    /* Logo */
     logoLabel: string;
+    logoSizeHint: string;
     changeLogo: string;
     uploadLogo: string;
     uploading: string;
     removeLogo: string;
     removeLogoConfirm: string;
+    /* Store tab fields */
+    storeNameLabel: string;
+    descriptionLabel: string;
+    aboutPhotoLabel: string;
+    aboutPhotoChange: string;
+    aboutPhotoUpload: string;
+    aboutPhotoSizeHint: string;
+    aboutPhotoFormatHint: string;
+    phoneLabel: string;
+    emailLabel: string;
+    whatsappLabel: string;
+    addressLabel: string;
+    cityLabel: string;
+    latLabel: string;
+    lngLabel: string;
+    googleRatingLabel: string;
+    /* Working hours */
     workingHoursLabel: string;
+    closedLabel: string;
+    days: {
+      mon: string; tue: string; wed: string; thu: string;
+      fri: string; sat: string; sun: string;
+    };
+    /* Notifications tab */
+    notifEmailLabel: string;
+    notifReviewsLabel: string;
+    whatsappNumberLabel: string;
+    whatsappNumberHint: string;
+    /* Security tab */
+    changePasswordTitle: string;
+    currentPasswordLabel: string;
+    newPasswordLabel: string;
+    confirmPasswordLabel: string;
+    changePasswordBtn: string;
+    activeSessionsLabel: string;
+    terminateSessionsBtn: string;
+    twoFactorLabel: string;
+    comingSoon: string;
+    passwordToggleAriaLabel: string;
   };
   reviews: {
     title: string;
@@ -332,7 +373,7 @@ const SK: AdminTranslations = {
     statCancelled:  'Zrušené',
   },
   settings: {
-    title:             'Nastavenia',
+    title:              'Nastavenia',
     tabs: {
       store:         'Obchod',
       gallery:       'Galéria',
@@ -341,15 +382,51 @@ const SK: AdminTranslations = {
       security:      'Bezpečnosť',
       schedule:      'Rozvrh',
     },
-    savingBtn:         'Ukladám...',
-    saveBtn:           'Uložiť zmeny',
-    logoLabel:         'Logo salóna',
-    changeLogo:        'Zmeniť logo',
-    uploadLogo:        'Nahrať logo',
-    uploading:         'Nahrávam...',
-    removeLogo:        'Odstrániť logo',
-    removeLogoConfirm: 'Naozaj chcete odstrániť logo? Zobrazí sa textový logotyp.',
-    workingHoursLabel: 'Pracovné hodiny',
+    savingBtn:          'Ukladám...',
+    saveBtn:            'Uložiť zmeny',
+    savedToast:         'Nastavenia uložené',
+    logoLabel:          'Logo salóna',
+    logoSizeHint:       'WebP / PNG / JPG · výstup 400×120 · max 5 MB',
+    changeLogo:         'Zmeniť logo',
+    uploadLogo:         'Nahrať logo',
+    uploading:          'Nahrávam...',
+    removeLogo:         'Odstrániť logo',
+    removeLogoConfirm:  'Naozaj chcete odstrániť logo? Zobrazí sa textový logotyp.',
+    storeNameLabel:     'Názov salóna',
+    descriptionLabel:   'Popis',
+    aboutPhotoLabel:    'Foto sekcie "O nás"',
+    aboutPhotoChange:   '📷 Zmeniť foto',
+    aboutPhotoUpload:   '📷 Nahrať foto pre sekciu O nás',
+    aboutPhotoSizeHint: 'Odporúčaný rozmer: 800×600px',
+    aboutPhotoFormatHint: 'Odporúčaný formát: horizontálny, min. 600×800 px',
+    phoneLabel:         'Telefón',
+    emailLabel:         'Email',
+    whatsappLabel:      'WhatsApp',
+    addressLabel:       'Adresa salóna',
+    cityLabel:          'Mesto',
+    latLabel:           'Zemepisná šírka (lat)',
+    lngLabel:           'Zemepisná dĺžka (lng)',
+    googleRatingLabel:  'Google hodnotenie',
+    workingHoursLabel:  'Pracovné hodiny',
+    closedLabel:        'Zatvorené',
+    days: {
+      mon: 'Pondelok', tue: 'Utorok', wed: 'Streda', thu: 'Štvrtok',
+      fri: 'Piatok',  sat: 'Sobota', sun: 'Nedeľa',
+    },
+    notifEmailLabel:     'Email pre notifikácie',
+    notifReviewsLabel:   'Notifikácie o nových recenziách',
+    whatsappNumberLabel: 'WhatsApp číslo',
+    whatsappNumberHint:  'Číslo sa zobrazí ako tlačidlo WhatsApp na webe pre klientov.',
+    changePasswordTitle:    'Zmena hesla',
+    currentPasswordLabel:   'Aktuálne heslo',
+    newPasswordLabel:       'Nové heslo',
+    confirmPasswordLabel:   'Potvrďte heslo',
+    changePasswordBtn:      'Zmeniť heslo',
+    activeSessionsLabel:    'Aktívnych relácií:',
+    terminateSessionsBtn:   'Ukončiť všetky relácie',
+    twoFactorLabel:         'Dvojfaktorová autentifikácia',
+    comingSoon:             'Čoskoro',
+    passwordToggleAriaLabel:'Zobraziť alebo skryť',
   },
   reviews: {
     title:    'Recenzie',
@@ -574,7 +651,7 @@ const EN: AdminTranslations = {
     statCancelled:  'Cancelled',
   },
   settings: {
-    title:             'Settings',
+    title:              'Settings',
     tabs: {
       store:         'Store',
       gallery:       'Gallery',
@@ -583,15 +660,51 @@ const EN: AdminTranslations = {
       security:      'Security',
       schedule:      'Schedule',
     },
-    savingBtn:         'Saving...',
-    saveBtn:           'Save changes',
-    logoLabel:         'Salon logo',
-    changeLogo:        'Change logo',
-    uploadLogo:        'Upload logo',
-    uploading:         'Uploading...',
-    removeLogo:        'Remove logo',
-    removeLogoConfirm: 'Remove the logo? The text logotype will be shown instead.',
-    workingHoursLabel: 'Working hours',
+    savingBtn:          'Saving...',
+    saveBtn:            'Save changes',
+    savedToast:         'Settings saved',
+    logoLabel:          'Salon logo',
+    logoSizeHint:       'WebP / PNG / JPG · output 400×120 · max 5 MB',
+    changeLogo:         'Change logo',
+    uploadLogo:         'Upload logo',
+    uploading:          'Uploading...',
+    removeLogo:         'Remove logo',
+    removeLogoConfirm:  'Remove the logo? The text logotype will be shown instead.',
+    storeNameLabel:     'Salon name',
+    descriptionLabel:   'Description',
+    aboutPhotoLabel:    'About section photo',
+    aboutPhotoChange:   '📷 Change photo',
+    aboutPhotoUpload:   '📷 Upload photo for About section',
+    aboutPhotoSizeHint: 'Recommended size: 800×600px',
+    aboutPhotoFormatHint: 'Recommended format: horizontal, min. 600×800 px',
+    phoneLabel:         'Phone',
+    emailLabel:         'Email',
+    whatsappLabel:      'WhatsApp',
+    addressLabel:       'Salon address',
+    cityLabel:          'City',
+    latLabel:           'Latitude (lat)',
+    lngLabel:           'Longitude (lng)',
+    googleRatingLabel:  'Google rating',
+    workingHoursLabel:  'Working hours',
+    closedLabel:        'Closed',
+    days: {
+      mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday',
+      fri: 'Friday', sat: 'Saturday', sun: 'Sunday',
+    },
+    notifEmailLabel:     'Notification email',
+    notifReviewsLabel:   'Notifications for new reviews',
+    whatsappNumberLabel: 'WhatsApp number',
+    whatsappNumberHint:  'This number will appear as a WhatsApp button on the website for clients.',
+    changePasswordTitle:    'Change password',
+    currentPasswordLabel:   'Current password',
+    newPasswordLabel:       'New password',
+    confirmPasswordLabel:   'Confirm password',
+    changePasswordBtn:      'Change password',
+    activeSessionsLabel:    'Active sessions:',
+    terminateSessionsBtn:   'Terminate all sessions',
+    twoFactorLabel:         'Two-factor authentication',
+    comingSoon:             'Coming soon',
+    passwordToggleAriaLabel:'Show or hide',
   },
   reviews: {
     title:    'Reviews',
@@ -728,7 +841,62 @@ const CS: AdminTranslations = {
   theme:        EN.theme,
   services:     EN.services,
   reservations: EN.reservations,
-  settings:     EN.settings,
+  settings: {
+    title:              'Nastavení',
+    tabs: {
+      store:         'Obchod',
+      gallery:       'Galerie',
+      masters:       'Mistři',
+      notifications: 'Oznámení',
+      security:      'Zabezpečení',
+      schedule:      'Rozvrh',
+    },
+    savingBtn:          'Ukládám...',
+    saveBtn:            'Uložit změny',
+    savedToast:         'Nastavení uložena',
+    logoLabel:          'Logo salonu',
+    logoSizeHint:       'WebP / PNG / JPG · výstup 400×120 · max 5 MB',
+    changeLogo:         'Změnit logo',
+    uploadLogo:         'Nahrát logo',
+    uploading:          'Nahrávám...',
+    removeLogo:         'Odstranit logo',
+    removeLogoConfirm:  'Opravdu odstranit logo? Zobrazí se textový logotyp.',
+    storeNameLabel:     'Název salonu',
+    descriptionLabel:   'Popis',
+    aboutPhotoLabel:    'Foto sekce „O nás"',
+    aboutPhotoChange:   '📷 Změnit foto',
+    aboutPhotoUpload:   '📷 Nahrát foto pro sekci O nás',
+    aboutPhotoSizeHint: 'Doporučená velikost: 800×600px',
+    aboutPhotoFormatHint: 'Doporučený formát: horizontální, min. 600×800 px',
+    phoneLabel:         'Telefon',
+    emailLabel:         'E-mail',
+    whatsappLabel:      'WhatsApp',
+    addressLabel:       'Adresa salonu',
+    cityLabel:          'Město',
+    latLabel:           'Zeměpisná šířka (lat)',
+    lngLabel:           'Zeměpisná délka (lng)',
+    googleRatingLabel:  'Google hodnocení',
+    workingHoursLabel:  'Pracovní hodiny',
+    closedLabel:        'Zavřeno',
+    days: {
+      mon: 'Pondělí', tue: 'Úterý', wed: 'Středa', thu: 'Čtvrtek',
+      fri: 'Pátek', sat: 'Sobota', sun: 'Neděle',
+    },
+    notifEmailLabel:     'E-mail pro oznámení',
+    notifReviewsLabel:   'Oznámení o nových recenzích',
+    whatsappNumberLabel: 'WhatsApp číslo',
+    whatsappNumberHint:  'Číslo se zobrazí jako tlačítko WhatsApp na webu pro klienty.',
+    changePasswordTitle:    'Změna hesla',
+    currentPasswordLabel:   'Aktuální heslo',
+    newPasswordLabel:       'Nové heslo',
+    confirmPasswordLabel:   'Potvrďte heslo',
+    changePasswordBtn:      'Změnit heslo',
+    activeSessionsLabel:    'Aktivních relací:',
+    terminateSessionsBtn:   'Ukončit všechny relace',
+    twoFactorLabel:         'Dvoufaktorová autentizace',
+    comingSoon:             'Brzy',
+    passwordToggleAriaLabel:'Zobrazit nebo skrýt',
+  },
   reviews:      EN.reviews,
   courses:      EN.courses,
   ai:           EN.ai,
@@ -803,7 +971,7 @@ const DE: AdminTranslations = {
     statCancelled:  'Storniert',
   },
   settings: {
-    title:             'Einstellungen',
+    title:              'Einstellungen',
     tabs: {
       store:         'Geschäft',
       gallery:       'Galerie',
@@ -812,15 +980,51 @@ const DE: AdminTranslations = {
       security:      'Sicherheit',
       schedule:      'Zeitplan',
     },
-    savingBtn:         'Speichere...',
-    saveBtn:           'Änderungen speichern',
-    logoLabel:         'Salon-Logo',
-    changeLogo:        'Logo ändern',
-    uploadLogo:        'Logo hochladen',
-    uploading:         'Lade hoch...',
-    removeLogo:        'Logo entfernen',
-    removeLogoConfirm: 'Logo entfernen? Stattdessen wird der Textlogotyp angezeigt.',
-    workingHoursLabel: 'Öffnungszeiten',
+    savingBtn:          'Speichere...',
+    saveBtn:            'Änderungen speichern',
+    savedToast:         'Einstellungen gespeichert',
+    logoLabel:          'Salon-Logo',
+    logoSizeHint:       'WebP / PNG / JPG · Ausgabe 400×120 · max. 5 MB',
+    changeLogo:         'Logo ändern',
+    uploadLogo:         'Logo hochladen',
+    uploading:          'Lade hoch...',
+    removeLogo:         'Logo entfernen',
+    removeLogoConfirm:  'Logo wirklich entfernen? Der Text-Logotyp wird angezeigt.',
+    storeNameLabel:     'Salonname',
+    descriptionLabel:   'Beschreibung',
+    aboutPhotoLabel:    'Foto für „Über uns"',
+    aboutPhotoChange:   '📷 Foto ändern',
+    aboutPhotoUpload:   '📷 Foto für „Über uns" hochladen',
+    aboutPhotoSizeHint: 'Empfohlene Größe: 800×600px',
+    aboutPhotoFormatHint: 'Empfohlenes Format: horizontal, min. 600×800 px',
+    phoneLabel:         'Telefon',
+    emailLabel:         'E-Mail',
+    whatsappLabel:      'WhatsApp',
+    addressLabel:       'Salonadresse',
+    cityLabel:          'Stadt',
+    latLabel:           'Breitengrad (lat)',
+    lngLabel:           'Längengrad (lng)',
+    googleRatingLabel:  'Google-Bewertung',
+    workingHoursLabel:  'Öffnungszeiten',
+    closedLabel:        'Geschlossen',
+    days: {
+      mon: 'Montag', tue: 'Dienstag', wed: 'Mittwoch', thu: 'Donnerstag',
+      fri: 'Freitag', sat: 'Samstag', sun: 'Sonntag',
+    },
+    notifEmailLabel:     'Benachrichtigungs-E-Mail',
+    notifReviewsLabel:   'Benachrichtigungen bei neuen Bewertungen',
+    whatsappNumberLabel: 'WhatsApp-Nummer',
+    whatsappNumberHint:  'Diese Nummer erscheint als WhatsApp-Schaltfläche auf der Website.',
+    changePasswordTitle:    'Passwort ändern',
+    currentPasswordLabel:   'Aktuelles Passwort',
+    newPasswordLabel:       'Neues Passwort',
+    confirmPasswordLabel:   'Passwort bestätigen',
+    changePasswordBtn:      'Passwort ändern',
+    activeSessionsLabel:    'Aktive Sitzungen:',
+    terminateSessionsBtn:   'Alle Sitzungen beenden',
+    twoFactorLabel:         'Zwei-Faktor-Authentifizierung',
+    comingSoon:             'Demnächst',
+    passwordToggleAriaLabel:'Anzeigen oder verbergen',
   },
   reviews: {
     title:    'Bewertungen',
@@ -957,7 +1161,62 @@ const UK: AdminTranslations = {
   theme:    EN.theme,
   services: EN.services,
   reservations: EN.reservations,
-  settings: EN.settings,
+  settings: {
+    title:              'Налаштування',
+    tabs: {
+      store:         'Магазин',
+      gallery:       'Галерея',
+      masters:       'Майстри',
+      notifications: 'Сповіщення',
+      security:      'Безпека',
+      schedule:      'Розклад',
+    },
+    savingBtn:          'Зберігаю...',
+    saveBtn:            'Зберегти зміни',
+    savedToast:         'Налаштування збережено',
+    logoLabel:          'Логотип салону',
+    logoSizeHint:       'WebP / PNG / JPG · вихід 400×120 · макс. 5 МБ',
+    changeLogo:         'Змінити логотип',
+    uploadLogo:         'Завантажити логотип',
+    uploading:          'Завантажую...',
+    removeLogo:         'Видалити логотип',
+    removeLogoConfirm:  'Справді видалити логотип? Відображатиметься текстовий логотип.',
+    storeNameLabel:     'Назва салону',
+    descriptionLabel:   'Опис',
+    aboutPhotoLabel:    'Фото секції "Про нас"',
+    aboutPhotoChange:   '📷 Змінити фото',
+    aboutPhotoUpload:   '📷 Завантажити фото для секції Про нас',
+    aboutPhotoSizeHint: 'Рекомендований розмір: 800×600px',
+    aboutPhotoFormatHint: 'Рекомендований формат: горизонтальний, мін. 600×800 px',
+    phoneLabel:         'Телефон',
+    emailLabel:         'Email',
+    whatsappLabel:      'WhatsApp',
+    addressLabel:       'Адреса салону',
+    cityLabel:          'Місто',
+    latLabel:           'Широта (lat)',
+    lngLabel:           'Довгота (lng)',
+    googleRatingLabel:  'Рейтинг Google',
+    workingHoursLabel:  'Робочі години',
+    closedLabel:        'Зачинено',
+    days: {
+      mon: 'Понеділок', tue: 'Вівторок', wed: 'Середа', thu: 'Четвер',
+      fri: 'Пʼятниця', sat: 'Субота', sun: 'Неділя',
+    },
+    notifEmailLabel:     'Email для сповіщень',
+    notifReviewsLabel:   'Сповіщення про нові відгуки',
+    whatsappNumberLabel: 'Номер WhatsApp',
+    whatsappNumberHint:  'Номер відображатиметься як кнопка WhatsApp на сайті для клієнтів.',
+    changePasswordTitle:    'Зміна пароля',
+    currentPasswordLabel:   'Поточний пароль',
+    newPasswordLabel:       'Новий пароль',
+    confirmPasswordLabel:   'Підтвердіть пароль',
+    changePasswordBtn:      'Змінити пароль',
+    activeSessionsLabel:    'Активних сесій:',
+    terminateSessionsBtn:   'Завершити всі сесії',
+    twoFactorLabel:         'Двофакторна автентифікація',
+    comingSoon:             'Незабаром',
+    passwordToggleAriaLabel:'Показати або приховати',
+  },
   reviews:  EN.reviews,
   courses:  EN.courses,
   ai:       EN.ai,

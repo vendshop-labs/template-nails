@@ -35,10 +35,12 @@ function Toggle({ checked, onChange, disabled }: { checked: boolean; onChange: (
 
 function MaskedInput({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
   const [show, setShow] = useState(false);
+  const { locale } = useAdminLocale();
+  const t = getAdminT(locale);
   return (
     <div className={styles.masked}>
       <input className={styles.input} type={show ? 'text' : 'password'} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} />
-      <button type="button" className={styles.eye} onClick={() => setShow((s) => !s)} aria-label="Zobraziť alebo skryť">
+      <button type="button" className={styles.eye} onClick={() => setShow((s) => !s)} aria-label={t.settings.passwordToggleAriaLabel}>
         <EyeIcon off={show} />
       </button>
     </div>
@@ -300,21 +302,21 @@ export default function AdminSettingsPage() {
                   }}>
                     <span style={{ fontSize: '1.5rem', lineHeight: 1 }}>↑</span>
                     <span>{logoUploading ? tr.settings.uploading : tr.settings.uploadLogo}</span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>WebP / PNG / JPG · výstup 400×120 · max 5 MB</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>{tr.settings.logoSizeHint}</span>
                     <input type="file" accept="image/*" onChange={handleLogoUpload} style={{ display: 'none' }} disabled={logoUploading} />
                   </label>
                 )}
               </div>
 
               {/* ── Store fields ─────────────────────────────────────── */}
-              <Field label="Názov salóna">
+              <Field label={tr.settings.storeNameLabel}>
                 <input className={styles.input} value={store.name} onChange={(e) => sStore('name', e.target.value)} />
               </Field>
-              <Field label="Popis">
+              <Field label={tr.settings.descriptionLabel}>
                 <textarea className={styles.textarea} rows={3} value={store.description} onChange={(e) => sStore('description', e.target.value)} />
               </Field>
               <div className={styles.field}>
-                <span className={styles.label}>Foto sekcie &quot;O nás&quot;</span>
+                <span className={styles.label}>{tr.settings.aboutPhotoLabel}</span>
                 <div className={styles.aboutImageWrap}>
                   {store.aboutImage ? (
                     <div className={styles.aboutPreview}>
@@ -328,7 +330,7 @@ export default function AdminSettingsPage() {
                           onChange={handleAboutImageUpload}
                           disabled={aboutImageUploading}
                         />
-                        <span>{aboutImageUploading ? 'Nahrávam...' : '📷 Zmeniť foto'}</span>
+                        <span>{aboutImageUploading ? tr.settings.uploading : tr.settings.aboutPhotoChange}</span>
                       </label>
                     </div>
                   ) : (
@@ -340,22 +342,22 @@ export default function AdminSettingsPage() {
                         onChange={handleAboutImageUpload}
                         disabled={aboutImageUploading}
                       />
-                      <span>{aboutImageUploading ? 'Nahrávam...' : '📷 Nahrať foto pre sekciu O nás'}</span>
-                      <small>Odporúčaný rozmer: 800×600px</small>
+                      <span>{aboutImageUploading ? tr.settings.uploading : tr.settings.aboutPhotoUpload}</span>
+                      <small>{tr.settings.aboutPhotoSizeHint}</small>
                     </label>
                   )}
                 </div>
-                <span className={styles.hint}>Odporúčaný formát: horizontálny, min. 600×800 px</span>
+                <span className={styles.hint}>{tr.settings.aboutPhotoFormatHint}</span>
               </div>
               <div className={styles.grid2}>
-                <Field label="Telefón">
+                <Field label={tr.settings.phoneLabel}>
                   <input className={styles.input} value={store.phone} onChange={(e) => sStore('phone', e.target.value)} />
                 </Field>
-                <Field label="Email">
+                <Field label={tr.settings.emailLabel}>
                   <input className={styles.input} type="email" value={store.email} onChange={(e) => sStore('email', e.target.value)} />
                 </Field>
               </div>
-              <Field label="WhatsApp">
+              <Field label={tr.settings.whatsappLabel}>
                 <input
                   className={styles.input}
                   type="tel"
@@ -364,10 +366,10 @@ export default function AdminSettingsPage() {
                   placeholder="+4930901820600"
                 />
               </Field>
-              <Field label="Adresa salóna">
+              <Field label={tr.settings.addressLabel}>
                 <input className={styles.input} value={store.address} onChange={(e) => sStore('address', e.target.value)} placeholder="Hlavná ulica 15" />
               </Field>
-              <Field label="Mesto">
+              <Field label={tr.settings.cityLabel}>
                 <input className={styles.input} value={store.city} onChange={(e) => sStore('city', e.target.value)} placeholder="Berlin" />
               </Field>
 
@@ -380,10 +382,10 @@ export default function AdminSettingsPage() {
               </div>
 
               <div className={styles.grid2} style={{ marginTop: '1rem' }}>
-                <Field label="Zemepisná šírka (lat)">
+                <Field label={tr.settings.latLabel}>
                   <input className={styles.input} type="number" step="any" value={store.mapLat} onChange={(e) => sStore('mapLat', e.target.value)} placeholder="48.8944" />
                 </Field>
-                <Field label="Zemepisná dĺžka (lng)">
+                <Field label={tr.settings.lngLabel}>
                   <input className={styles.input} type="number" step="any" value={store.mapLng} onChange={(e) => sStore('mapLng', e.target.value)} placeholder="18.0440" />
                 </Field>
               </div>
@@ -397,7 +399,7 @@ export default function AdminSettingsPage() {
                 </Field>
               </div>
               <div className={styles.grid2}>
-                <Field label="Google hodnotenie">
+                <Field label={tr.settings.googleRatingLabel}>
                   <input className={styles.input} value={store.googleRating} placeholder="4.9" onChange={(e) => sStore('googleRating', e.target.value)} />
                 </Field>
               </div>
@@ -432,11 +434,11 @@ export default function AdminSettingsPage() {
               <span className={styles.blockTitle}>Email</span>
               <Toggle checked={notif.emailOn} onChange={(v) => sNotif('emailOn', v)} />
             </div>
-            <Field label="Email pre notifikácie">
+            <Field label={tr.settings.notifEmailLabel}>
               <input className={styles.input} type="email" value={notif.email} onChange={(e) => sNotif('email', e.target.value)} />
             </Field>
             <div className={styles.settingRow}>
-              <span>Notifikácie o nových recenziách</span>
+              <span>{tr.settings.notifReviewsLabel}</span>
               <Toggle checked={notif.reviewsOn} onChange={(v) => sNotif('reviewsOn', v)} />
             </div>
           </div>
@@ -446,7 +448,7 @@ export default function AdminSettingsPage() {
               <span className={styles.blockTitle}>WhatsApp</span>
             </div>
             <div className={styles.field}>
-              <span className={styles.label}>WhatsApp číslo</span>
+              <span className={styles.label}>{tr.settings.whatsappNumberLabel}</span>
               <input
                 type="tel"
                 className={styles.input}
@@ -454,7 +456,7 @@ export default function AdminSettingsPage() {
                 onChange={(e) => sStore('whatsappPhone', e.target.value)}
                 placeholder="+4930901820600"
               />
-              <span className={styles.hint}>Číslo sa zobrazí ako tlačidlo WhatsApp na webe pre klientov.</span>
+              <span className={styles.hint}>{tr.settings.whatsappNumberHint}</span>
             </div>
           </div>
 
@@ -468,31 +470,31 @@ export default function AdminSettingsPage() {
       {tab === 'security' && (
         <div className={styles.card}>
           <div className={styles.block}>
-            <span className={styles.blockTitle}>Zmena hesla</span>
-            <Field label="Aktuálne heslo">
+            <span className={styles.blockTitle}>{tr.settings.changePasswordTitle}</span>
+            <Field label={tr.settings.currentPasswordLabel}>
               <MaskedInput value={security.currentPw} onChange={(v) => sSec('currentPw', v)} />
             </Field>
-            <Field label="Nové heslo">
+            <Field label={tr.settings.newPasswordLabel}>
               <MaskedInput value={security.newPw} onChange={(v) => sSec('newPw', v)} />
             </Field>
-            <Field label="Potvrďte heslo">
+            <Field label={tr.settings.confirmPasswordLabel}>
               <MaskedInput value={security.confirmPw} onChange={(v) => sSec('confirmPw', v)} />
             </Field>
-            <button type="button" className={styles.saveBtn} onClick={showToast}>Zmeniť heslo</button>
+            <button type="button" className={styles.saveBtn} onClick={showToast}>{tr.settings.changePasswordBtn}</button>
           </div>
 
           <div className={styles.block}>
             <div className={styles.settingRow}>
-              <span>Aktívnych relácií: <b>2</b></span>
-              <button type="button" className={styles.dangerBtn} onClick={() => console.log('[terminate all sessions]')}>Ukončiť všetky relácie</button>
+              <span>{tr.settings.activeSessionsLabel} <b>2</b></span>
+              <button type="button" className={styles.dangerBtn} onClick={() => console.log('[terminate all sessions]')}>{tr.settings.terminateSessionsBtn}</button>
             </div>
           </div>
 
           <div className={styles.block}>
             <div className={styles.settingRow}>
               <span className={styles.twoFa}>
-                Dvojfaktorová autentifikácia
-                <span className={styles.soon}>Čoskoro</span>
+                {tr.settings.twoFactorLabel}
+                <span className={styles.soon}>{tr.settings.comingSoon}</span>
               </span>
               <Toggle checked={security.twoFactor} onChange={(v) => sSec('twoFactor', v)} disabled />
             </div>
@@ -510,7 +512,7 @@ export default function AdminSettingsPage() {
       {toast && (
         <div className={styles.toast} role="status">
           <svg width="18" height="18" viewBox="0 0 24 24" {...stroke} aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-          Nastavenia uložené
+          {tr.settings.savedToast}
         </div>
       )}
     </div>
