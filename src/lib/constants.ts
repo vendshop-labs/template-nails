@@ -42,11 +42,11 @@ export const STATIC_TESTIMONIALS: StaticTestimonial[] = [
 ];
 
 export const GALLERY_IMAGES: GalleryImageItem[] = [
-  { src: '/gallery/gallery-1-manikura.webp', alt: 'Gel-Maniküre — perfekte Nägel'      },
-  { src: '/gallery/gallery-2-art.webp',      alt: 'Nail Art Design'                     },
-  { src: '/gallery/gallery-3-pediura.webp',  alt: 'Klassische Pediküre'                 },
-  { src: '/gallery/gallery-4-result.webp',   alt: 'Ergebnis — makellose Nägel'          },
-  { src: '/gallery/gallery-5-studio.webp',   alt: 'Lumière Nails Berlin — Innenraum'    },
+  { src: '', alt: 'Gel-Maniküre — perfekte Nägel'   },
+  { src: '', alt: 'Nail Art Design'                  },
+  { src: '', alt: 'Klassische Pediküre'              },
+  { src: '', alt: 'Ergebnis — makellose Nägel'       },
+  { src: '', alt: 'Lumière Nails Berlin — Innenraum' },
 ];
 
 export const BUSINESS_HOURS: HoursRow[] = [
