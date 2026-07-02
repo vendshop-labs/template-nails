@@ -201,25 +201,35 @@ export interface AdminTranslations {
     noMasters: string;
     deleteConfirm: string;
     edit: string;
-    role: string;
-    bio: string;
+    newTitle: string;
+    editTitle: string;
+    nameLabel: string;
+    roleLabel: string;
+    bioLabel: string;
+    photoLabel: string;
+    saveBtn: string;
+    deleteBtn: string;
+    backLink: string;
   };
   hero: {
     title: string;
-    uploadPhoto: string;
+    uploadBtn: string;
     hint: string;
     uploading: string;
+    currentPhoto: string;
   };
   legal: {
     title: string;
-    impressum: string;
-    datenschutz: string;
+    impressumTab: string;
+    datenschutzTab: string;
     ownerLabel: string;
     addressLabel: string;
     vatLabel: string;
     emailLabel: string;
     phoneLabel: string;
     save: string;
+    saveBtn: string;
+    saving: string;
   };
   tables: {
     title: string;
@@ -228,6 +238,7 @@ export interface AdminTranslations {
     nameLabel: string;
     capacityLabel: string;
     deleteConfirm: string;
+    edit: string;
   };
   appointments: {
     title: string;
@@ -240,6 +251,7 @@ export interface AdminTranslations {
     timeLabel: string;
     statusLabel: string;
     notesLabel: string;
+    deleteConfirm: string;
   };
 }
 
@@ -474,30 +486,40 @@ const SK: AdminTranslations = {
     altPlaceholder: 'Popis fotky...',
   },
   masters: {
-    title:         'Majstri',
-    add:           '+ Pridať majstra',
-    noMasters:     'Žiadni majstri. Pridajte prvého.',
-    deleteConfirm: 'Vymazať majstra "{name}"?',
-    edit:          'Upraviť',
-    role:          'Rola',
-    bio:           'Bio',
+    title:        'Majstri',
+    add:          '+ Pridať majstra',
+    noMasters:    'Žiadni majstri. Pridajte prvého.',
+    deleteConfirm:'Vymazať majstra "{name}"?',
+    edit:         'Upraviť',
+    newTitle:     'Nový majster',
+    editTitle:    'Upraviť majstra',
+    nameLabel:    'Meno',
+    roleLabel:    'Rola / pozícia',
+    bioLabel:     'Bio',
+    photoLabel:   'Fotografia',
+    saveBtn:      'Uložiť',
+    deleteBtn:    'Zmazať majstra',
+    backLink:     '← Späť na zoznam',
   },
   hero: {
-    title:       'Hero sekcia',
-    uploadPhoto: 'Nahrať foto',
-    hint:        'Odporúčaný rozmer: 1920×1080px. Max. 10 MB.',
-    uploading:   'Nahrávam...',
+    title:        'Hero sekcia',
+    uploadBtn:    '↑ Nahrať foto',
+    hint:         'Odporúčaný rozmer: 1920×1080px. Formáty: JPEG, PNG, WebP. Max. 10 MB.',
+    uploading:    'Nahrávam...',
+    currentPhoto: 'Aktuálna fotografia',
   },
   legal: {
-    title:        'Legal (DE)',
-    impressum:    'Impressum',
-    datenschutz:  'Datenschutz',
-    ownerLabel:   'Meno majiteľa',
-    addressLabel: 'Adresa',
-    vatLabel:     'IČ DPH (USt-IdNr.)',
-    emailLabel:   'E-mail',
-    phoneLabel:   'Telefón',
-    save:         'Uložiť',
+    title:         'Legal (DE)',
+    impressumTab:  'Impressum',
+    datenschutzTab:'Datenschutz',
+    ownerLabel:    'Meno majiteľa / Inhaber',
+    addressLabel:  'Adresa',
+    vatLabel:      'IČ DPH (USt-IdNr.)',
+    emailLabel:    'E-mail',
+    phoneLabel:    'Telefón',
+    save:          'Uložiť',
+    saveBtn:       'Uložiť',
+    saving:        'Ukladám...',
   },
   tables: {
     title:         'Stoly',
@@ -506,6 +528,7 @@ const SK: AdminTranslations = {
     nameLabel:     'Názov stola',
     capacityLabel: 'Kapacita (osôb)',
     deleteConfirm: 'Vymazať stôl?',
+    edit:          'Upraviť',
   },
   appointments: {
     title:          'Termíny',
@@ -518,6 +541,7 @@ const SK: AdminTranslations = {
     timeLabel:      'Čas',
     statusLabel:    'Stav',
     notesLabel:     'Poznámka',
+    deleteConfirm:  'Zrušiť tento termín?',
   },
 };
 
@@ -752,30 +776,40 @@ const EN: AdminTranslations = {
     altPlaceholder: 'Photo description...',
   },
   masters: {
-    title:         'Masters',
-    add:           '+ Add master',
-    noMasters:     'No masters yet. Add the first one.',
-    deleteConfirm: 'Delete master "{name}"?',
-    edit:          'Edit',
-    role:          'Role',
-    bio:           'Bio',
+    title:        'Masters',
+    add:          '+ Add master',
+    noMasters:    'No masters yet. Add the first one.',
+    deleteConfirm:'Delete master "{name}"?',
+    edit:         'Edit',
+    newTitle:     'New master',
+    editTitle:    'Edit master',
+    nameLabel:    'Name',
+    roleLabel:    'Role / position',
+    bioLabel:     'Bio',
+    photoLabel:   'Photo',
+    saveBtn:      'Save',
+    deleteBtn:    'Delete master',
+    backLink:     '← Back to list',
   },
   hero: {
-    title:       'Hero section',
-    uploadPhoto: 'Upload photo',
-    hint:        'Recommended size: 1920×1080px. Max. 10 MB.',
-    uploading:   'Uploading...',
+    title:        'Hero section',
+    uploadBtn:    '↑ Upload photo',
+    hint:         'Recommended size: 1920×1080px. Formats: JPEG, PNG, WebP. Max. 10 MB.',
+    uploading:    'Uploading...',
+    currentPhoto: 'Current photo',
   },
   legal: {
-    title:        'Legal (DE)',
-    impressum:    'Impressum',
-    datenschutz:  'Datenschutz',
-    ownerLabel:   'Owner name',
-    addressLabel: 'Address',
-    vatLabel:     'VAT ID (USt-IdNr.)',
-    emailLabel:   'Email',
-    phoneLabel:   'Phone',
-    save:         'Save',
+    title:         'Legal (DE)',
+    impressumTab:  'Impressum',
+    datenschutzTab:'Datenschutz',
+    ownerLabel:    'Owner name / Inhaber',
+    addressLabel:  'Address',
+    vatLabel:      'VAT ID (USt-IdNr.)',
+    emailLabel:    'Email',
+    phoneLabel:    'Phone',
+    save:          'Save',
+    saveBtn:       'Save',
+    saving:        'Saving...',
   },
   tables: {
     title:         'Tables',
@@ -784,6 +818,7 @@ const EN: AdminTranslations = {
     nameLabel:     'Table name',
     capacityLabel: 'Capacity (persons)',
     deleteConfirm: 'Delete this table?',
+    edit:          'Edit',
   },
   appointments: {
     title:          'Appointments',
@@ -796,6 +831,7 @@ const EN: AdminTranslations = {
     timeLabel:      'Time',
     statusLabel:    'Status',
     notesLabel:     'Notes',
+    deleteConfirm:  'Cancel this appointment?',
   },
 };
 
@@ -901,12 +937,63 @@ const CS: AdminTranslations = {
   courses:      EN.courses,
   ai:           EN.ai,
   dashboard:    EN.dashboard,
-  gallery:      EN.gallery,
-  masters:      EN.masters,
-  hero:         EN.hero,
+  gallery: {
+    title:          'Galerie',
+    addPhoto:       '↑ Přidat foto',
+    uploading:      'Nahrávám...',
+    hint:           'Fotky se automaticky optimalizují (WebP, max. 1200×800). Formáty: JPEG, PNG, WebP, GIF, AVIF. Max. 10 MB.',
+    loading:        'Načítám...',
+    empty:          'Galerie je prázdná — nahrajte první foto',
+    deleteConfirm:  'Smazat toto foto?',
+    replace:        '↑ Nahradit',
+    altPlaceholder: 'Popis fotky...',
+  },
+  masters: {
+    title:        'Mistři',
+    add:          '+ Přidat mistra',
+    noMasters:    'Žádní mistři. Přidejte prvního.',
+    deleteConfirm:'Smazat mistra "{name}"?',
+    edit:         'Upravit',
+    newTitle:     'Nový mistr',
+    editTitle:    'Upravit mistra',
+    nameLabel:    'Jméno',
+    roleLabel:    'Role / pozice',
+    bioLabel:     'Bio',
+    photoLabel:   'Fotografie',
+    saveBtn:      'Uložit',
+    deleteBtn:    'Smazat mistra',
+    backLink:     '← Zpět na seznam',
+  },
+  hero: {
+    title:        'Hero sekce',
+    uploadBtn:    '↑ Nahrát foto',
+    hint:         'Doporučená velikost: 1920×1080px. Formáty: JPEG, PNG, WebP. Max. 10 MB.',
+    uploading:    'Nahrávám...',
+    currentPhoto: 'Aktuální fotografie',
+  },
   legal:        EN.legal,
-  tables:       EN.tables,
-  appointments: EN.appointments,
+  tables: {
+    title:         'Stoly',
+    add:           '+ Přidat stůl',
+    noTables:      'Žádné stoly. Přidejte první.',
+    nameLabel:     'Název stolu',
+    capacityLabel: 'Kapacita (osob)',
+    deleteConfirm: 'Smazat stůl?',
+    edit:          'Upravit',
+  },
+  appointments: {
+    title:          'Termíny',
+    noAppointments: 'Žádné termíny',
+    loading:        'Načítám termíny...',
+    clientLabel:    'Klient',
+    serviceLabel:   'Služba',
+    masterLabel:    'Mistr',
+    dateLabel:      'Datum',
+    timeLabel:      'Čas',
+    statusLabel:    'Stav',
+    notesLabel:     'Poznámka',
+    deleteConfirm:  'Zrušit tento termín?',
+  },
 };
 
 // ─── German ────────────────────────────────────────────────────────────────
@@ -1072,30 +1159,40 @@ const DE: AdminTranslations = {
     altPlaceholder: 'Fotobeschreibung...',
   },
   masters: {
-    title:         'Mitarbeiter',
-    add:           '+ Mitarbeiter hinzufügen',
-    noMasters:     'Keine Mitarbeiter. Fügen Sie den ersten hinzu.',
-    deleteConfirm: 'Mitarbeiter "{name}" löschen?',
-    edit:          'Bearbeiten',
-    role:          'Rolle',
-    bio:           'Bio',
+    title:        'Mitarbeiter',
+    add:          '+ Mitarbeiter hinzufügen',
+    noMasters:    'Keine Mitarbeiter. Fügen Sie den ersten hinzu.',
+    deleteConfirm:'Mitarbeiter "{name}" löschen?',
+    edit:         'Bearbeiten',
+    newTitle:     'Neuer Mitarbeiter',
+    editTitle:    'Mitarbeiter bearbeiten',
+    nameLabel:    'Name',
+    roleLabel:    'Rolle / Position',
+    bioLabel:     'Bio',
+    photoLabel:   'Foto',
+    saveBtn:      'Speichern',
+    deleteBtn:    'Mitarbeiter löschen',
+    backLink:     '← Zurück zur Liste',
   },
   hero: {
-    title:       'Hero-Bereich',
-    uploadPhoto: 'Foto hochladen',
-    hint:        'Empfohlene Größe: 1920×1080px. Max. 10 MB.',
-    uploading:   'Lade hoch...',
+    title:        'Hero-Bereich',
+    uploadBtn:    '↑ Foto hochladen',
+    hint:         'Empfohlene Größe: 1920×1080px. Formate: JPEG, PNG, WebP. Max. 10 MB.',
+    uploading:    'Lade hoch...',
+    currentPhoto: 'Aktuelles Foto',
   },
   legal: {
-    title:        'Impressum / Legal',
-    impressum:    'Impressum',
-    datenschutz:  'Datenschutz',
-    ownerLabel:   'Inhabername',
-    addressLabel: 'Adresse',
-    vatLabel:     'USt-IdNr.',
-    emailLabel:   'E-Mail',
-    phoneLabel:   'Telefon',
-    save:         'Speichern',
+    title:         'Impressum / Legal',
+    impressumTab:  'Impressum',
+    datenschutzTab:'Datenschutz',
+    ownerLabel:    'Inhabername',
+    addressLabel:  'Adresse',
+    vatLabel:      'USt-IdNr.',
+    emailLabel:    'E-Mail',
+    phoneLabel:    'Telefon',
+    save:          'Speichern',
+    saveBtn:       'Speichern',
+    saving:        'Speichere...',
   },
   tables: {
     title:         'Tische',
@@ -1104,6 +1201,7 @@ const DE: AdminTranslations = {
     nameLabel:     'Tischname',
     capacityLabel: 'Kapazität (Personen)',
     deleteConfirm: 'Diesen Tisch löschen?',
+    edit:          'Bearbeiten',
   },
   appointments: {
     title:          'Termine',
@@ -1115,7 +1213,8 @@ const DE: AdminTranslations = {
     dateLabel:      'Datum',
     timeLabel:      'Uhrzeit',
     statusLabel:    'Status',
-    notesLabel:     'Notiz',
+    notesLabel:     'Notizen',
+    deleteConfirm:  'Diesen Termin absagen?',
   },
 };
 
@@ -1233,18 +1332,51 @@ const UK: AdminTranslations = {
     altPlaceholder: 'Опис фото...',
   },
   masters: {
-    title:         'Майстри',
-    add:           '+ Додати майстра',
-    noMasters:     'Немає майстрів. Додайте першого.',
-    deleteConfirm: 'Видалити майстра "{name}"?',
-    edit:          'Редагувати',
-    role:          'Роль',
-    bio:           'Біо',
+    title:        'Майстри',
+    add:          '+ Додати майстра',
+    noMasters:    'Немає майстрів. Додайте першого.',
+    deleteConfirm:'Видалити майстра "{name}"?',
+    edit:         'Редагувати',
+    newTitle:     'Новий майстер',
+    editTitle:    'Редагувати майстра',
+    nameLabel:    'Імʼя',
+    roleLabel:    'Роль / посада',
+    bioLabel:     'Біо',
+    photoLabel:   'Фотографія',
+    saveBtn:      'Зберегти',
+    deleteBtn:    'Видалити майстра',
+    backLink:     '← Назад до списку',
   },
-  hero:         EN.hero,
+  hero: {
+    title:        'Головний банер',
+    uploadBtn:    '↑ Завантажити фото',
+    hint:         'Рекомендований розмір: 1920×1080px. Формати: JPEG, PNG, WebP. Макс. 10 МБ.',
+    uploading:    'Завантажую...',
+    currentPhoto: 'Поточне фото',
+  },
   legal:        EN.legal,
-  tables:       EN.tables,
-  appointments: EN.appointments,
+  tables: {
+    title:         'Столики',
+    add:           '+ Додати столик',
+    noTables:      'Немає столиків. Додайте перший.',
+    nameLabel:     'Назва столика',
+    capacityLabel: 'Місткість (осіб)',
+    deleteConfirm: 'Видалити столик?',
+    edit:          'Редагувати',
+  },
+  appointments: {
+    title:          'Записи',
+    noAppointments: 'Немає записів',
+    loading:        'Завантажую записи...',
+    clientLabel:    'Клієнт',
+    serviceLabel:   'Послуга',
+    masterLabel:    'Майстер',
+    dateLabel:      'Дата',
+    timeLabel:      'Час',
+    statusLabel:    'Статус',
+    notesLabel:     'Нотатка',
+    deleteConfirm:  'Скасувати цей запис?',
+  },
 };
 
 // ─── Exports ───────────────────────────────────────────────────────────────
