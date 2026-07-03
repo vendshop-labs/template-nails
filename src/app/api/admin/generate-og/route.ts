@@ -18,100 +18,131 @@ function truncate(str: string, max: number): string {
 }
 
 export async function POST() {
-  const store = await db.store.findUnique({
-    where: { slug: STORE_SLUG },
-    select: { id: true, name: true, description: true, city: true, phone: true, email: true },
-  });
+  try {
+    const store = await db.store.findUnique({
+      where: { slug: STORE_SLUG },
+      select: { id: true, name: true, description: true, city: true, phone: true, email: true },
+    });
 
-  if (!store) {
-    return NextResponse.json({ error: 'Store not found' }, { status: 404 });
-  }
+    if (!store) {
+      return NextResponse.json({ error: 'Store not found' }, { status: 404 });
+    }
 
-  const name  = escapeXml(truncate(store.name, 40));
-  const city  = escapeXml(truncate(store.city ?? '', 60));
-  const desc  = escapeXml(truncate(store.description ?? '', 80));
-  const phone = escapeXml(store.phone ?? '');
+    const name  = escapeXml(truncate(store.name, 36));
+    const city  = escapeXml(truncate(store.city ?? '', 50));
+    const desc  = escapeXml(truncate(store.description ?? 'Profesionálna starostlivosť o nechty', 72));
+    const phone = escapeXml(store.phone ?? '');
 
-  const svg = `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+    // Lumière Nails brand: cream + rose-gold theme
+    const svg = `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0a0a0a"/>
-      <stop offset="100%" stop-color="#1a1008"/>
-    </linearGradient>
-    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#C9A347" stop-opacity="0.15"/>
-      <stop offset="100%" stop-color="#C9A347" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#fdf8f5"/>
+      <stop offset="100%" stop-color="#f5e6e3"/>
     </linearGradient>
   </defs>
 
+  <!-- Background -->
   <rect width="1200" height="630" fill="url(#bg)"/>
-  <rect width="480" height="630" fill="url(#accent)"/>
 
-  <rect x="80" y="60" width="60" height="4" fill="#C9A347" rx="2"/>
-  <rect x="80" y="566" width="1040" height="1" fill="#C9A347" fill-opacity="0.3"/>
+  <!-- Decorative circles right -->
+  <circle cx="960" cy="315" r="290" fill="#b87c6f" fill-opacity="0.10"/>
+  <circle cx="1080" cy="160" r="160" fill="#b87c6f" fill-opacity="0.07"/>
+  <circle cx="850"  cy="510" r="130" fill="#b87c6f" fill-opacity="0.06"/>
 
-  <text x="80" y="240"
+  <!-- Left accent bar -->
+  <rect x="80" y="160" width="5" height="310" rx="3" fill="#b87c6f" fill-opacity="0.55"/>
+
+  <!-- Store name -->
+  <text x="115" y="290"
     font-family="Georgia, 'Times New Roman', serif"
-    font-size="80"
-    font-weight="bold"
-    fill="#C9A347"
-    letter-spacing="-1">
+    font-size="76"
+    font-weight="400"
+    letter-spacing="2"
+    fill="#2d1b1b">
     ${name}
   </text>
 
-  ${city ? `<text x="80" y="310"
-    font-family="Arial, Helvetica, sans-serif"
-    font-size="32"
-    fill="#C8C0B0"
-    letter-spacing="3">
-    ${city.toUpperCase()}
-  </text>` : ''}
+  <!-- Divider -->
+  <rect x="115" y="315" width="140" height="2" rx="1" fill="#b87c6f" fill-opacity="0.45"/>
 
-  ${desc ? `<text x="80" y="390"
+  <!-- Description -->
+  <text x="115" y="360"
     font-family="Arial, Helvetica, sans-serif"
     font-size="26"
-    fill="#ffffff"
-    fill-opacity="0.85">
+    font-weight="300"
+    letter-spacing="0.5"
+    fill="#5a3a3a">
     ${desc}
+  </text>
+
+  <!-- City -->
+  ${city ? `<text x="115" y="402"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="20"
+    fill="#8a6a6a"
+    letter-spacing="0.5">
+    &#128205; ${city}
   </text>` : ''}
 
-  ${phone ? `<text x="80" y="460"
+  <!-- Phone -->
+  ${phone ? `<text x="115" y="440"
     font-family="Arial, Helvetica, sans-serif"
-    font-size="22"
-    fill="#C9A347"
-    fill-opacity="0.7">
+    font-size="19"
+    fill="#8a6a6a">
     ${phone}
   </text>` : ''}
 
-  <circle cx="1100" cy="315" r="200" fill="#C9A347" fill-opacity="0.03"/>
-  <circle cx="1100" cy="315" r="140" fill="#C9A347" fill-opacity="0.03"/>
+  <!-- Service pills -->
+  <rect x="115" y="470" width="148" height="34" rx="17" fill="#b87c6f" fill-opacity="0.14"/>
+  <text x="189" y="493" font-family="Arial, sans-serif" font-size="14"
+    fill="#7a4a42" text-anchor="middle">Manik&#250;ra</text>
 
-  <text x="80" y="600"
-    font-family="Arial, Helvetica, sans-serif"
-    font-size="18"
-    fill="#666666"
-    letter-spacing="2">
-    NAIL STUDIO
+  <rect x="275" y="470" width="148" height="34" rx="17" fill="#b87c6f" fill-opacity="0.14"/>
+  <text x="349" y="493" font-family="Arial, sans-serif" font-size="14"
+    fill="#7a4a42" text-anchor="middle">Pedik&#250;ra</text>
+
+  <rect x="435" y="470" width="168" height="34" rx="17" fill="#b87c6f" fill-opacity="0.14"/>
+  <text x="519" y="493" font-family="Arial, sans-serif" font-size="14"
+    fill="#7a4a42" text-anchor="middle">G&#233;lov&#233; nechty</text>
+
+  <!-- Bottom URL -->
+  <text x="600" y="600"
+    font-family="Arial, sans-serif"
+    font-size="17"
+    fill="#b87c6f"
+    fill-opacity="0.6"
+    text-anchor="middle"
+    letter-spacing="1">
+    ${STORE_SLUG}.vendshop.shop
   </text>
 </svg>`;
 
-  const svgBuffer = Buffer.from(svg);
+    const svgBuffer = Buffer.from(svg);
 
-  const jpegBuffer = await sharp(svgBuffer)
-    .resize(1200, 630)
-    .jpeg({ quality: 90, mozjpeg: true })
-    .toBuffer();
+    const jpegBuffer = await sharp(svgBuffer)
+      .resize(1200, 630)
+      .jpeg({ quality: 90 })   // no mozjpeg — not supported on Vercel
+      .toBuffer();
 
-  const blob = await put(`og/${STORE_SLUG}-og.jpg`, jpegBuffer, {
-    access: 'public',
-    contentType: 'image/jpeg',
-    addRandomSuffix: false,
-  });
+    const blob = await put(`og/${STORE_SLUG}-og.jpg`, jpegBuffer, {
+      access: 'public',
+      contentType: 'image/jpeg',
+      addRandomSuffix: false,
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    });
 
-  await db.store.update({
-    where: { slug: STORE_SLUG },
-    data: { ogImageUrl: blob.url },
-  });
+    await db.store.update({
+      where: { slug: STORE_SLUG },
+      data: { ogImageUrl: blob.url },
+    });
 
-  return NextResponse.json({ url: blob.url });
+    return NextResponse.json({ url: blob.url });
+  } catch (err) {
+    console.error('[generate-og] error:', err);
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : String(err) },
+      { status: 500 }
+    );
+  }
 }
