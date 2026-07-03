@@ -49,7 +49,7 @@ export async function generateMetadata(
 
   const store = await db.store.findUnique({
     where: { slug: STORE_SLUG },
-    select: { name: true, city: true },
+    select: { name: true, city: true, ogImageUrl: true },
   });
 
   const storeName = store?.name ?? 'Lumière Nails';
@@ -84,14 +84,14 @@ export async function generateMetadata(
       description,
       url: `${baseUrl}/${locale}`,
       images: [
-        { url: '/og-lumiere.jpg', width: 1200, height: 630, alt: storeName },
+        { url: store?.ogImageUrl ?? '/og-lumiere.jpg', width: 1200, height: 630, alt: storeName },
       ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: ['/og-lumiere.jpg'],
+      images: [store?.ogImageUrl ?? '/og-lumiere.jpg'],
     },
     robots: {
       index: true,

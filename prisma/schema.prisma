@@ -28,6 +28,7 @@ model Store {
   mapLng       Float?
 
   aboutImage     String?
+  ogImageUrl     String?
   whatsappPhone  String?
   galleryLayout  String  @default("grid-3")
   instagramUrl   String?

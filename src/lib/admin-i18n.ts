@@ -294,6 +294,9 @@ export interface AdminTranslations {
     hint: string;
     uploading: string;
     currentPhoto: string;
+    generateOg: string;
+    generatingOg: string;
+    ogPreview: string;
   };
   legal: {
     title: string;
@@ -741,6 +744,9 @@ const SK: AdminTranslations = {
     hint:         'Odporúčaný rozmer: 1920×1080px. Formáty: JPEG, PNG, WebP. Max. 10 MB.',
     uploading:    'Nahrávam...',
     currentPhoto: 'Aktuálna fotografia',
+    generateOg:   'Vygenerovať OG obrázok',
+    generatingOg: 'Generujem...',
+    ogPreview:    'OG náhľad (social media)',
   },
   legal: {
     title:         'Legal (DE)',
@@ -1188,6 +1194,9 @@ const EN: AdminTranslations = {
     hint:         'Recommended size: 1920×1080px. Formats: JPEG, PNG, WebP. Max. 10 MB.',
     uploading:    'Uploading...',
     currentPhoto: 'Current photo',
+    generateOg:   'Generate OG Image',
+    generatingOg: 'Generating...',
+    ogPreview:    'OG preview (social media)',
   },
   legal: {
     title:         'Legal (DE)',
@@ -1533,6 +1542,9 @@ const CS: AdminTranslations = {
     hint:         'Doporučená velikost: 1920×1080px. Formáty: JPEG, PNG, WebP. Max. 10 MB.',
     uploading:    'Nahrávám...',
     currentPhoto: 'Aktuální fotografie',
+    generateOg:   'Vygenerovat OG obrázek',
+    generatingOg: 'Generuji...',
+    ogPreview:    'OG náhled (sociální sítě)',
   },
   legal:        EN.legal,
   tables: {
@@ -1900,6 +1912,9 @@ const DE: AdminTranslations = {
     hint:         'Empfohlene Größe: 1920×1080px. Formate: JPEG, PNG, WebP. Max. 10 MB.',
     uploading:    'Lade hoch...',
     currentPhoto: 'Aktuelles Foto',
+    generateOg:   'OG-Bild generieren',
+    generatingOg: 'Generiere...',
+    ogPreview:    'OG-Vorschau (Social Media)',
   },
   legal: {
     title:         'Impressum / Legal',
@@ -2245,6 +2260,9 @@ const UK: AdminTranslations = {
     hint:         'Рекомендований розмір: 1920×1080px. Формати: JPEG, PNG, WebP. Макс. 10 МБ.',
     uploading:    'Завантажую...',
     currentPhoto: 'Поточне фото',
+    generateOg:   'Згенерувати OG зображення',
+    generatingOg: 'Генерую...',
+    ogPreview:    'OG прев\'ю (соцмережі)',
   },
   legal:        EN.legal,
   tables: {

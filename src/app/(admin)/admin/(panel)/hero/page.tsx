@@ -30,6 +30,8 @@ export default function HeroAdminPage() {
   const [uploading, setUploading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
+  const [ogUrl, setOgUrl] = useState<string | null>(null);
+  const [generating, setGenerating] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -95,6 +97,23 @@ export default function HeroAdminPage() {
       setError(d.error ?? 'Chyba pri ukladaní');
     }
     setSaving(false);
+  }
+
+  async function generateOg() {
+    setGenerating(true);
+    setError('');
+    try {
+      const res = await fetch('/api/admin/generate-og', { method: 'POST' });
+      if (!res.ok) {
+        const d = (await res.json()) as { error?: string };
+        setError(d.error ?? 'Chyba pri generovaní OG obrázka');
+        return;
+      }
+      const { url } = (await res.json()) as { url: string };
+      setOgUrl(url);
+    } finally {
+      setGenerating(false);
+    }
   }
 
   if (loading) return <AdminLoading rows={3} />;
@@ -237,6 +256,34 @@ export default function HeroAdminPage() {
           </button>
         </div>
       </form>
+
+      {/* OG Image Generator */}
+      <div style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid var(--color-border)' }}>
+        <button
+          type="button"
+          className="btn-outline btn-sm"
+          onClick={() => void generateOg()}
+          disabled={generating}
+        >
+          {generating ? t.hero.generatingOg : t.hero.generateOg}
+        </button>
+
+        {ogUrl && (
+          <div style={{ marginTop: '1rem' }}>
+            <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              {t.hero.ogPreview}
+            </p>
+            <img
+              src={ogUrl}
+              alt="OG preview"
+              style={{ width: '100%', maxWidth: '600px', borderRadius: '6px', border: '1px solid var(--color-border)' }}
+            />
+            <p style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', marginTop: '0.35rem', wordBreak: 'break-all' }}>
+              {ogUrl}
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
