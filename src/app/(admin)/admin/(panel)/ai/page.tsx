@@ -27,26 +27,10 @@ interface KnowledgeStatus {
 }
 
 interface PriorityItem { id: string; label: string; enabled: boolean }
-const DEFAULT_PRIORITIES: PriorityItem[] = [
-  { id: 'service', label: 'Služby a ceny',      enabled: true },
-  { id: 'master',  label: 'Majstri a tím',       enabled: true },
-  { id: 'review',  label: 'Recenzie zákazníkov', enabled: true },
-  { id: 'hours',   label: 'Pracovné hodiny',      enabled: true },
-  { id: 'about',   label: 'Kontakt a adresa',     enabled: true },
-];
 
 const PRIORITIES_KEY = 'ai_priorities';
 const CHAT_BG_KEY    = 'ai_chat_bg';
 const CHAT_BG_PRESETS = ['#fdf8f5', '#f9ede9', '#fff8f3', '#f5ece8', '#faf5f2'];
-
-const SUGGESTIONS = [
-  'Dnešné rezervácie',
-  'Najlepší majster',
-  'Priemerný rating',
-  'Aké máme služby?',
-  'Pracovné hodiny',
-  'Kontakt a adresa',
-];
 
 // ─── Icons ─────────────────────────────────────────────────────────────────
 const stroke = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.75, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
@@ -84,6 +68,23 @@ export default function AdminAiPage() {
   const { locale } = useAdminLocale();
   const tap = getAdminT(locale);
   const dateLocale = ({ sk: 'sk-SK', en: 'en-US', de: 'de-DE', cs: 'cs-CZ', uk: 'uk-UA' } as Record<string, string>)[locale] ?? 'sk-SK';
+
+  const KNOWLEDGE_SOURCES: PriorityItem[] = [
+    { id: 'service', label: tap.ai.kbServices, enabled: true },
+    { id: 'master',  label: tap.ai.kbMasters,  enabled: true },
+    { id: 'review',  label: tap.ai.kbReviews,  enabled: true },
+    { id: 'hours',   label: tap.ai.kbHours,    enabled: true },
+    { id: 'about',   label: tap.ai.kbContact,  enabled: true },
+  ];
+
+  const SUGGESTIONS = [
+    tap.ai.suggestBookings,
+    tap.ai.suggestTopMaster,
+    tap.ai.suggestRating,
+    tap.ai.suggestServices,
+    tap.ai.suggestHours,
+    tap.ai.suggestContact,
+  ];
 
   // Chat state
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -202,7 +203,7 @@ export default function AdminAiPage() {
   const [tone,           setTone]           = useState<Tone>('friendly');
   const [assistantName,  setAssistantName]  = useState('Kate AI');
   const [greeting,       setGreeting]       = useState('Dobrý deň! Som AI asistent Kate Barber Studio. Čím môžem pomôcť?');
-  const [priorities,     setPriorities]     = useState<PriorityItem[]>(DEFAULT_PRIORITIES);
+  const [priorities,     setPriorities]     = useState<PriorityItem[]>(KNOWLEDGE_SOURCES);
 
   useEffect(() => {
     try {
@@ -278,8 +279,7 @@ export default function AdminAiPage() {
           {messages.length === 0 && !loading && (
             <div className={styles.chatEmpty}>
               <BotIcon />
-              <p>Opýtajte sa čokoľvek alebo dajte pokyn.<br />
-                Môžem zobraziť rezervácie, <strong>zmeniť hodiny</strong>, <strong>odpovedať na recenzie</strong> a oveľa viac.</p>
+              <p>{tap.ai.emptyText}<br />{tap.ai.emptyHint}</p>
             </div>
           )}
 
