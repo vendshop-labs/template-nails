@@ -176,7 +176,7 @@ export default function AdminDigitalProductsClient({ initialProducts }: Props) {
         body: JSON.stringify(body),
       });
       const data = await res.json() as DigitalProduct & { error?: string };
-      if (!res.ok) throw new Error(data.error ?? 'Uloženie zlyhalo');
+      if (!res.ok) throw new Error(data.error ?? tprod.products.saveError);
 
       if (editing) {
         setProducts((prev) => prev.map((p) => (p.id === data.id ? data : p)));
@@ -185,7 +185,7 @@ export default function AdminDigitalProductsClient({ initialProducts }: Props) {
       }
       closeForm();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Chyba');
+      setError(err instanceof Error ? err.message : tprod.products.saveError);
     }
     setSaving(false);
   }
@@ -365,7 +365,7 @@ export default function AdminDigitalProductsClient({ initialProducts }: Props) {
               <label>{tprod.products.descField} ({activeLocale.toUpperCase()})</label>
               <textarea
                 rows={3}
-                placeholder={`Popis produktu (${activeLocale})`}
+                placeholder={`${tprod.products.descPlaceholder} (${activeLocale})`}
                 value={translations[activeLocale].description}
                 onChange={(e) =>
                   setTranslations((prev) => ({

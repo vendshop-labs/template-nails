@@ -166,7 +166,7 @@ export default function AdminCoursesPage() {
               <input
                 value={form.name}
                 onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
-                placeholder="Kurz klasického strihu"
+                placeholder={t.courses.namePlaceholder}
               />
             </div>
             <div className="booking__field">
@@ -217,7 +217,7 @@ export default function AdminCoursesPage() {
                 rows={2}
                 value={form.description}
                 onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
-                placeholder="Krátky popis kurzu..."
+                placeholder={t.courses.descPlaceholder}
               />
             </div>
             <div className="booking__field" style={{ gridColumn: '1 / -1' }}>
@@ -226,7 +226,7 @@ export default function AdminCoursesPage() {
                 rows={6}
                 value={form.lessonText}
                 onChange={(e) => setForm((p) => ({ ...p, lessonText: e.target.value }))}
-                placeholder="Obsah lekcie — text, poznámky, linky na materiály..."
+                placeholder={t.courses.contentPlaceholder}
               />
             </div>
           </div>

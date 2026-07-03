@@ -71,7 +71,7 @@ export default function HeroAdminPage() {
       setUploading(false);
       if (!up.ok) {
         const d = (await up.json()) as { error?: string };
-        setError(d.error ?? 'Chyba pri nahrávaní fotky');
+        setError(d.error ?? t.hero.uploadError);
         setSaving(false);
         return;
       }
@@ -94,7 +94,7 @@ export default function HeroAdminPage() {
       if (fileRef.current) fileRef.current.value = '';
     } else {
       const d = (await res.json()) as { error?: string };
-      setError(d.error ?? 'Chyba pri ukladaní');
+      setError(d.error ?? t.hero.saveError);
     }
     setSaving(false);
   }
@@ -106,7 +106,7 @@ export default function HeroAdminPage() {
       const res = await fetch('/api/admin/generate-og', { method: 'POST' });
       if (!res.ok) {
         const d = (await res.json()) as { error?: string };
-        setError(d.error ?? 'Chyba pri generovaní OG obrázka');
+        setError(d.error ?? t.hero.ogError);
         return;
       }
       const { url } = (await res.json()) as { url: string };
@@ -122,7 +122,7 @@ export default function HeroAdminPage() {
     <div className="admin-page">
       <div className="admin-page__header">
         <h1>{t.hero.title}</h1>
-        {saved && <span style={{ color: '#4ade80', fontSize: '0.875rem' }}>✓ Uložené</span>}
+        {saved && <span style={{ color: '#4ade80', fontSize: '0.875rem' }}>{t.hero.saved}</span>}
       </div>
 
       <form onSubmit={save} className="admin-masters__form">
@@ -193,7 +193,7 @@ export default function HeroAdminPage() {
                     letterSpacing: '0.05em',
                   }}
                 >
-                  Nová fotka (ešte neuložená):
+                  {t.hero.newPhotoUnsaved}
                 </p>
                 <img
                   src={previewUrl}

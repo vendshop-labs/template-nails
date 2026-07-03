@@ -67,7 +67,7 @@ export default function GalleryPage() {
       }
       await fetchImages();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Chyba pri nahrávaní');
+      alert(err instanceof Error ? err.message : t.gallery.uploadError);
     } finally {
       setUploading(null);
       if (fileRef.current) fileRef.current.value = '';
@@ -87,7 +87,7 @@ export default function GalleryPage() {
       });
       setImages(prev => prev.map(img => img.id === imageId ? { ...img, url } : img));
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Chyba pri nahrávaní');
+      alert(err instanceof Error ? err.message : t.gallery.uploadError);
     } finally {
       setUploading(null);
       const input = cardFileRefs.current.get(imageId);

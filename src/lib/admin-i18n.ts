@@ -54,6 +54,7 @@ export interface AdminTranslations {
     preview: string;
     colorLabels: Record<string, string>;
     colorDescriptions: Record<string, string>;
+    savedToast: string;
   };
   services: {
     title: string;
@@ -99,6 +100,7 @@ export interface AdminTranslations {
     bookings: string;
     noDataFilters: string;
     unknown: string;
+    whatsappMsg: string;
   };
   settings: {
     title: string;
@@ -188,6 +190,9 @@ export interface AdminTranslations {
     lessonTextLabel: string;
     noCourses: string;
     confirmDelete: string;
+    namePlaceholder: string;
+    descPlaceholder: string;
+    contentPlaceholder: string;
   };
   ai: {
     title: string;
@@ -217,6 +222,10 @@ export interface AdminTranslations {
     suggestServices: string;
     suggestHours: string;
     suggestContact: string;
+    notIndexed: string;
+    assistantName: string;
+    saveSettings: string;
+    greeting: string;
   };
   dashboard: {
     title: string;
@@ -310,6 +319,11 @@ export interface AdminTranslations {
     generateOg: string;
     generatingOg: string;
     ogPreview: string;
+    saved: string;
+    newPhotoUnsaved: string;
+    uploadError: string;
+    saveError: string;
+    ogError: string;
   };
   legal: {
     title: string;
@@ -425,6 +439,8 @@ export interface AdminTranslations {
     hidden: string;
     uploadError: string;
     validationError: string;
+    saveError: string;
+    descPlaceholder: string;
   };
 }
 
@@ -515,6 +531,7 @@ const SK: AdminTranslations = {
       overlayAlpha: 'Polopriehľadné prekrytie (rgba)',
       headerBg:     'Pozadie hlavičky po posunutí (rgba)',
     },
+    savedToast:      'Téma uložená! Obnovte stránku obchodu pre zobrazenie zmien.',
   },
   services: {
     title:           'Služby',
@@ -567,6 +584,7 @@ const SK: AdminTranslations = {
     bookings:        'rezervácií',
     noDataFilters:   'Žiadne záznamy pre vybraté filtre.',
     unknown:         'Neznámy',
+    whatsappMsg:     'Dobrý deň, {name} — ohľadom Vašej rezervácie {time} dňa {date}.',
   },
   settings: {
     title:              'Nastavenia',
@@ -649,8 +667,11 @@ const SK: AdminTranslations = {
     previewLabel:    'Náhľadový obrázok (URL)',
     descriptionLabel:'Krátky popis',
     lessonTextLabel: 'Obsah lekcie',
-    noCourses:       'Žiadne kurzy. Pridajte prvý.',
-    confirmDelete:   'Vymazať tento kurz?',
+    noCourses:          'Žiadne kurzy. Pridajte prvý.',
+    confirmDelete:      'Vymazať tento kurz?',
+    namePlaceholder:    'Kurz klasického strihu',
+    descPlaceholder:    'Krátky popis kurzu...',
+    contentPlaceholder: 'Obsah lekcie — text, poznámky, linky na materiály...',
   },
   ai: {
     title:           'AI správa',
@@ -680,6 +701,10 @@ const SK: AdminTranslations = {
     suggestServices: 'Aké máme služby?',
     suggestHours:    'Pracovné hodiny',
     suggestContact:  'Kontakt a adresa',
+    notIndexed:      'Nie je indexované',
+    assistantName:   'Meno asistenta',
+    saveSettings:    'Uložiť nastavenia',
+    greeting:        'Dobrý deň! Som AI asistent vašej predajne. Čím môžem pomôcť?',
   },
   dashboard: {
     title:             'Prehľad',
@@ -770,9 +795,14 @@ const SK: AdminTranslations = {
     hint:         'Odporúčaný rozmer: 1920×1080px. Formáty: JPEG, PNG, WebP. Max. 10 MB.',
     uploading:    'Nahrávam...',
     currentPhoto: 'Aktuálna fotografia',
-    generateOg:   'Vygenerovať OG obrázok',
-    generatingOg: 'Generujem...',
-    ogPreview:    'OG náhľad (social media)',
+    generateOg:      'Vygenerovať OG obrázok',
+    generatingOg:    'Generujem...',
+    ogPreview:       'OG náhľad (social media)',
+    saved:           '✓ Uložené',
+    newPhotoUnsaved: 'Nová fotka (ešte neuložená):',
+    uploadError:     'Chyba pri nahrávaní fotky',
+    saveError:       'Chyba pri ukladaní',
+    ogError:         'Chyba pri generovaní OG obrázka',
   },
   legal: {
     title:         'Legal (DE)',
@@ -888,6 +918,8 @@ const SK: AdminTranslations = {
     hidden:          'skrytý',
     uploadError:     'Chyba pri nahrávaní',
     validationError: 'Vyplňte slug, cenu a aspoň jeden preklad',
+    saveError:       'Uloženie zlyhalo',
+    descPlaceholder: 'Popis produktu',
   },
 };
 
@@ -978,6 +1010,7 @@ const EN: AdminTranslations = {
       overlayAlpha: 'Semi-transparent overlay (rgba)',
       headerBg:     'Header background after scroll (rgba)',
     },
+    savedToast:      'Theme saved! Refresh storefront to see changes.',
   },
   services: {
     title:           'Services',
@@ -1030,6 +1063,7 @@ const EN: AdminTranslations = {
     bookings:        'bookings',
     noDataFilters:   'No records for selected filters.',
     unknown:         'Unknown',
+    whatsappMsg:     'Hello {name}, regarding your booking at {time} on {date}.',
   },
   settings: {
     title:              'Settings',
@@ -1112,8 +1146,11 @@ const EN: AdminTranslations = {
     previewLabel:    'Preview Image (URL)',
     descriptionLabel:'Short Description',
     lessonTextLabel: 'Lesson Content',
-    noCourses:       'No courses yet. Add the first one.',
-    confirmDelete:   'Delete this course?',
+    noCourses:          'No courses yet. Add the first one.',
+    confirmDelete:      'Delete this course?',
+    namePlaceholder:    'Classic haircut course',
+    descPlaceholder:    'Short course description...',
+    contentPlaceholder: 'Lesson content — text, notes, links to materials...',
   },
   ai: {
     title:           'AI Assistant',
@@ -1143,6 +1180,10 @@ const EN: AdminTranslations = {
     suggestServices: 'What services do we offer?',
     suggestHours:    'Working hours',
     suggestContact:  'Contact & address',
+    notIndexed:      'Not indexed',
+    assistantName:   'Assistant name',
+    saveSettings:    'Save settings',
+    greeting:        'Hello! I am your store AI assistant. How can I help?',
   },
   dashboard: {
     title:             'Overview',
@@ -1233,9 +1274,14 @@ const EN: AdminTranslations = {
     hint:         'Recommended size: 1920×1080px. Formats: JPEG, PNG, WebP. Max. 10 MB.',
     uploading:    'Uploading...',
     currentPhoto: 'Current photo',
-    generateOg:   'Generate OG Image',
-    generatingOg: 'Generating...',
-    ogPreview:    'OG preview (social media)',
+    generateOg:      'Generate OG Image',
+    generatingOg:    'Generating...',
+    ogPreview:       'OG preview (social media)',
+    saved:           '✓ Saved',
+    newPhotoUnsaved: 'New photo (not saved yet):',
+    uploadError:     'Photo upload error',
+    saveError:       'Save error',
+    ogError:         'OG image generation error',
   },
   legal: {
     title:         'Legal (DE)',
@@ -1351,6 +1397,8 @@ const EN: AdminTranslations = {
     hidden:          'hidden',
     uploadError:     'Upload error',
     validationError: 'Fill in slug, price and at least one translation',
+    saveError:       'Save failed',
+    descPlaceholder: 'Product description',
   },
 };
 
@@ -1425,6 +1473,7 @@ const CS: AdminTranslations = {
     bookings:       'rezervací',
     noDataFilters:  'Žádné záznamy pro vybrané filtry.',
     unknown:        'Neznámý',
+    whatsappMsg:    'Dobrý den, {name} — k Vaší rezervaci v {time} dne {date}.',
   },
   settings: {
     title:              'Nastavení',
@@ -1525,6 +1574,10 @@ const CS: AdminTranslations = {
     suggestServices: 'Jaké máme služby?',
     suggestHours:    'Pracovní hodiny',
     suggestContact:  'Kontakt a adresa',
+    notIndexed:      'Není indexováno',
+    assistantName:   'Jméno asistenta',
+    saveSettings:    'Uložit nastavení',
+    greeting:        'Dobrý den! Jsem AI asistent vaší prodejny. Čím mohu pomoci?',
   },
   dashboard: {
     title:             'Přehled',
@@ -1615,9 +1668,14 @@ const CS: AdminTranslations = {
     hint:         'Doporučená velikost: 1920×1080px. Formáty: JPEG, PNG, WebP. Max. 10 MB.',
     uploading:    'Nahrávám...',
     currentPhoto: 'Aktuální fotografie',
-    generateOg:   'Vygenerovat OG obrázek',
-    generatingOg: 'Generuji...',
-    ogPreview:    'OG náhled (sociální sítě)',
+    generateOg:      'Vygenerovat OG obrázek',
+    generatingOg:    'Generuji...',
+    ogPreview:       'OG náhled (sociální sítě)',
+    saved:           '✓ Uloženo',
+    newPhotoUnsaved: 'Nová fotka (ještě neuložena):',
+    uploadError:     'Chyba při nahrávání fotky',
+    saveError:       'Chyba při ukládání',
+    ogError:         'Chyba při generování OG obrázku',
   },
   legal:        EN.legal,
   tables: {
@@ -1721,6 +1779,8 @@ const CS: AdminTranslations = {
     hidden:          'skrytý',
     uploadError:     'Chyba při nahrávání',
     validationError: 'Vyplňte slug, cenu a alespoň jeden překlad',
+    saveError:       'Uložení selhalo',
+    descPlaceholder: 'Popis produktu',
   },
 };
 
@@ -1795,6 +1855,7 @@ const DE: AdminTranslations = {
     bookings:        'Buchungen',
     noDataFilters:   'Keine Einträge für die gewählten Filter.',
     unknown:         'Unbekannt',
+    whatsappMsg:     'Guten Tag {name}, zu Ihrer Buchung um {time} am {date}.',
   },
   settings: {
     title:              'Einstellungen',
@@ -1877,8 +1938,11 @@ const DE: AdminTranslations = {
     previewLabel:    'Vorschaubild (URL)',
     descriptionLabel:'Kurzbeschreibung',
     lessonTextLabel: 'Kursinhalt',
-    noCourses:       'Noch keine Kurse. Fügen Sie den ersten hinzu.',
-    confirmDelete:   'Diesen Kurs löschen?',
+    noCourses:          'Noch keine Kurse. Fügen Sie den ersten hinzu.',
+    confirmDelete:      'Diesen Kurs löschen?',
+    namePlaceholder:    'Kurs klassischer Haarschnitt',
+    descPlaceholder:    'Kurze Kursbeschreibung...',
+    contentPlaceholder: 'Kursinhalt — Text, Notizen, Links zu Materialien...',
   },
   ai: {
     title:           'KI-Verwaltung',
@@ -1908,6 +1972,10 @@ const DE: AdminTranslations = {
     suggestServices: 'Welche Leistungen bieten wir?',
     suggestHours:    'Öffnungszeiten',
     suggestContact:  'Kontakt & Adresse',
+    notIndexed:      'Nicht indexiert',
+    assistantName:   'Name des Assistenten',
+    saveSettings:    'Einstellungen speichern',
+    greeting:        'Guten Tag! Ich bin Ihr KI-Assistent. Wie kann ich helfen?',
   },
   dashboard: {
     title:             'Übersicht',
@@ -1998,9 +2066,14 @@ const DE: AdminTranslations = {
     hint:         'Empfohlene Größe: 1920×1080px. Formate: JPEG, PNG, WebP. Max. 10 MB.',
     uploading:    'Lade hoch...',
     currentPhoto: 'Aktuelles Foto',
-    generateOg:   'OG-Bild generieren',
-    generatingOg: 'Generiere...',
-    ogPreview:    'OG-Vorschau (Social Media)',
+    generateOg:      'OG-Bild generieren',
+    generatingOg:    'Generiere...',
+    ogPreview:       'OG-Vorschau (Social Media)',
+    saved:           '✓ Gespeichert',
+    newPhotoUnsaved: 'Neues Foto (noch nicht gespeichert):',
+    uploadError:     'Fehler beim Hochladen des Fotos',
+    saveError:       'Speicherfehler',
+    ogError:         'Fehler beim Erstellen des OG-Bildes',
   },
   legal: {
     title:         'Impressum / Legal',
@@ -2116,6 +2189,8 @@ const DE: AdminTranslations = {
     hidden:          'versteckt',
     uploadError:     'Upload-Fehler',
     validationError: 'Slug, Preis und mindestens eine Übersetzung ausfüllen',
+    saveError:       'Speichern fehlgeschlagen',
+    descPlaceholder: 'Produktbeschreibung',
   },
 };
 
@@ -2190,6 +2265,7 @@ const UK: AdminTranslations = {
     bookings:       'записів',
     noDataFilters:  'Немає записів для вибраних фільтрів.',
     unknown:        'Невідомий',
+    whatsappMsg:    'Доброго дня, {name} — щодо Вашого запису о {time} {date}.',
   },
   settings: {
     title:              'Налаштування',
@@ -2290,6 +2366,10 @@ const UK: AdminTranslations = {
     suggestServices: 'Які у нас послуги?',
     suggestHours:    'Робочі години',
     suggestContact:  'Контакт та адреса',
+    notIndexed:      'Не проіндексовано',
+    assistantName:   'Ім\'я асистента',
+    saveSettings:    'Зберегти налаштування',
+    greeting:        'Доброго дня! Я AI-асистент вашого магазину. Чим можу допомогти?',
   },
   dashboard: {
     title:             'Огляд',
@@ -2380,9 +2460,14 @@ const UK: AdminTranslations = {
     hint:         'Рекомендований розмір: 1920×1080px. Формати: JPEG, PNG, WebP. Макс. 10 МБ.',
     uploading:    'Завантажую...',
     currentPhoto: 'Поточне фото',
-    generateOg:   'Згенерувати OG зображення',
-    generatingOg: 'Генерую...',
-    ogPreview:    'OG прев\'ю (соцмережі)',
+    generateOg:      'Згенерувати OG зображення',
+    generatingOg:    'Генерую...',
+    ogPreview:       'OG прев\'ю (соцмережі)',
+    saved:           '✓ Збережено',
+    newPhotoUnsaved: 'Нове фото (ще не збережено):',
+    uploadError:     'Помилка завантаження фото',
+    saveError:       'Помилка збереження',
+    ogError:         'Помилка генерації OG-зображення',
   },
   legal:        EN.legal,
   tables: {
@@ -2486,6 +2571,8 @@ const UK: AdminTranslations = {
     hidden:          'прихований',
     uploadError:     'Помилка завантаження',
     validationError: 'Введіть slug, ціну та хоча б один переклад',
+    saveError:       'Збереження не вдалось',
+    descPlaceholder: 'Опис продукту',
   },
 };
 

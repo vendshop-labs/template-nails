@@ -202,7 +202,7 @@ export default function AdminAiPage() {
   const [aiActive,       setAiActive]       = useState(true);
   const [tone,           setTone]           = useState<Tone>('friendly');
   const [assistantName,  setAssistantName]  = useState('Kate AI');
-  const [greeting,       setGreeting]       = useState('Dobrý deň! Som AI asistent Kate Barber Studio. Čím môžem pomôcť?');
+  const [greeting,       setGreeting]       = useState(getAdminT('sk').ai.greeting);
   const [priorities,     setPriorities]     = useState<PriorityItem[]>(KNOWLEDGE_SOURCES);
 
   useEffect(() => {
@@ -405,10 +405,10 @@ export default function AdminAiPage() {
                     </span>
                     <span className={styles.statusText}>
                       {indexing
-                        ? 'Indexujem...'
+                        ? tap.ai.indexing
                         : status && status.total > 0
                           ? '✅ AI up to date'
-                          : 'Nie je indexované'}
+                          : tap.ai.notIndexed}
                     </span>
                   </div>
 
@@ -450,7 +450,7 @@ export default function AdminAiPage() {
                     disabled={indexing}
                   >
                     <RefreshIcon spin={indexing} />
-                    {indexing ? 'Indexujem...' : 'Aktualizovať znalosti'}
+                    {indexing ? tap.ai.indexing : tap.ai.updateKnowledge}
                   </button>
                   <p className={styles.hint}>Aktualizuje znalosti z databázy a webu barbershopu</p>
                 </>
@@ -477,7 +477,7 @@ export default function AdminAiPage() {
                       </select>
                     </label>
                     <label className={styles.field}>
-                      <span className={styles.label}>Meno asistenta</span>
+                      <span className={styles.label}>{tap.ai.assistantName}</span>
                       <input
                         className={styles.input}
                         type="text"
@@ -524,7 +524,7 @@ export default function AdminAiPage() {
                     </div>
 
                     <button type="button" className={styles.saveBtn} onClick={saveSettings}>
-                      Uložiť nastavenia
+                      {tap.ai.saveSettings}
                     </button>
                   </div>
 

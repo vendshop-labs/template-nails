@@ -244,7 +244,10 @@ export default function RezervaciaPage() {
             const isCancelled = a.status === 'CANCELLED';
             const waLink      = a.guestPhone
               ? `https://wa.me/${a.guestPhone.replace(/\D/g, '')}?text=${encodeURIComponent(
-                  `Dobrý deň, ${a.guestName ?? ''} — ohľadom Vašej rezervácie ${a.timeSlot} dňa ${fmtDate(a.date, dateLocale)}.`
+                  r.whatsappMsg
+                    .replace('{name}', a.guestName ?? '')
+                    .replace('{time}', a.timeSlot)
+                    .replace('{date}', fmtDate(a.date, dateLocale))
                 )}`
               : null;
 

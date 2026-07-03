@@ -47,7 +47,7 @@ export default function ThemeEditorPage() {
     });
     const data = await res.json();
     if (data.success) {
-      setToast('Theme saved! Refresh storefront to see changes.');
+      setToast(t.theme.savedToast);
       setTimeout(() => setToast(''), 3000);
     }
     setSaving(false);
