@@ -1,6 +1,8 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { useAdminLocale } from '@/hooks/useAdminLocale';
+import { getAdminT } from '@/lib/admin-i18n';
 import styles from './reviews.module.css';
 
 type TestimonialStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
@@ -38,12 +40,6 @@ interface Props {
 
 type Filter = 'all' | TestimonialStatus;
 
-const STATUS_LABELS: Record<TestimonialStatus, string> = {
-  PENDING: 'Pending',
-  APPROVED: 'Published',
-  REJECTED: 'Rejected',
-};
-
 const stroke = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.75, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
 
 function Stars({ value }: { value: number }) {
@@ -74,15 +70,18 @@ function UserIcon() {
   return <svg width="16" height="16" viewBox="0 0 24 24" {...stroke} aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M5.5 21a7.5 7.5 0 0 1 13 0" /></svg>;
 }
 
-function formatDate(iso: string): string {
+function formatDate(iso: string, locale: string): string {
   try {
-    return new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(iso));
+    return new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(iso));
   } catch {
     return iso.slice(0, 10);
   }
 }
 
 export default function AdminReviewsClient({ initialTestimonials, counts, aggregate }: Props) {
+  const { locale } = useAdminLocale();
+  const tr = getAdminT(locale);
+  const dateLocale = ({ sk: 'sk-SK', en: 'en-US', de: 'de-DE', cs: 'cs-CZ', uk: 'uk-UA' } as Record<string, string>)[locale] ?? 'en-GB';
   const [testimonials, setTestimonials] = useState<Testimonial[]>(initialTestimonials);
   const [filter, setFilter] = useState<Filter>('all');
   const [replyOpen, setReplyOpen] = useState<string | null>(null);
@@ -90,10 +89,10 @@ export default function AdminReviewsClient({ initialTestimonials, counts, aggreg
   const [updating, setUpdating] = useState<string | null>(null);
 
   const filters: { key: Filter; label: string; count: number }[] = [
-    { key: 'all', label: 'All', count: counts.all },
-    { key: 'PENDING', label: 'Pending', count: counts.pending },
-    { key: 'APPROVED', label: 'Published', count: counts.approved },
-    { key: 'REJECTED', label: 'Rejected', count: counts.rejected },
+    { key: 'all', label: tr.reviews.all, count: counts.all },
+    { key: 'PENDING', label: tr.reviews.pending, count: counts.pending },
+    { key: 'APPROVED', label: tr.reviews.approved, count: counts.approved },
+    { key: 'REJECTED', label: tr.reviews.rejected, count: counts.rejected },
   ];
 
   const filtered = useMemo(
@@ -125,7 +124,7 @@ export default function AdminReviewsClient({ initialTestimonials, counts, aggreg
   };
 
   const deleteTestimonial = async (id: string) => {
-    if (!window.confirm('Delete this review permanently?')) return;
+    if (!window.confirm(tr.reviews.deleteConfirm)) return;
     try {
       const res = await fetch(`/api/admin/testimonials/${id}`, { method: 'DELETE' });
       if (res.ok) {
@@ -151,7 +150,7 @@ export default function AdminReviewsClient({ initialTestimonials, counts, aggreg
     <div className={styles.page}>
       <div className={styles.header}>
         <div>
-          <h1 className={styles.h1}>Reviews</h1>
+          <h1 className={styles.h1}>{tr.reviews.title}</h1>
           <div className={styles.filters}>
             {filters.map((f) => (
               <button
@@ -205,7 +204,7 @@ export default function AdminReviewsClient({ initialTestimonials, counts, aggreg
               </div>
               <div className={styles.topRight}>
                 {t.locale && <span className={styles.locale}>{t.locale.toUpperCase()}</span>}
-                <span className={styles.date}>{formatDate(t.createdAt)}</span>
+                <span className={styles.date}>{formatDate(t.createdAt, dateLocale)}</span>
               </div>
             </div>
 
@@ -214,7 +213,7 @@ export default function AdminReviewsClient({ initialTestimonials, counts, aggreg
               <p className={styles.text}>&ldquo;{t.text}&rdquo;</p>
               {t.adminReply && (
                 <div className={styles.existingReply}>
-                  <span className={styles.replyLabel}>Your reply:</span>
+                  <span className={styles.replyLabel}>{tr.reviews.ownerReplyLabel}</span>
                   {t.adminReply}
                 </div>
               )}
@@ -222,7 +221,7 @@ export default function AdminReviewsClient({ initialTestimonials, counts, aggreg
 
             <div className={styles.cardBottom}>
               <span className={`${styles.statusBadge} ${styles[t.status.toLowerCase()]}`}>
-                {STATUS_LABELS[t.status]}
+                {t.status === 'APPROVED' ? tr.reviews.approved : t.status === 'PENDING' ? tr.reviews.pending : tr.reviews.rejected}
               </span>
               <div className={styles.actions}>
                 <button
@@ -231,7 +230,7 @@ export default function AdminReviewsClient({ initialTestimonials, counts, aggreg
                   onClick={() => updateTestimonial(t.id, { status: 'APPROVED' })}
                   disabled={t.status === 'APPROVED' || updating === t.id}
                 >
-                  <CheckIcon /> Publish
+                  <CheckIcon /> {tr.reviews.approve}
                 </button>
                 <button
                   type="button"
@@ -239,13 +238,13 @@ export default function AdminReviewsClient({ initialTestimonials, counts, aggreg
                   onClick={() => updateTestimonial(t.id, { status: 'REJECTED' })}
                   disabled={t.status === 'REJECTED' || updating === t.id}
                 >
-                  <XIcon /> Reject
+                  <XIcon /> {tr.reviews.reject}
                 </button>
                 <button type="button" className={styles.reply} onClick={() => openReply(t)}>
-                  <ReplyIcon /> Reply
+                  <ReplyIcon /> {tr.reviews.reply}
                 </button>
                 <button type="button" className={styles.delete} onClick={() => deleteTestimonial(t.id)}>
-                  <TrashIcon /> Delete
+                  <TrashIcon /> {tr.common.delete}
                 </button>
               </div>
             </div>
@@ -255,23 +254,23 @@ export default function AdminReviewsClient({ initialTestimonials, counts, aggreg
                 <textarea
                   className={styles.textarea}
                   rows={3}
-                  placeholder="Your reply to the customer..."
+                  placeholder={tr.reviews.yourReply}
                   value={replyText}
                   onChange={(e) => setReplyText(e.target.value)}
                 />
                 <div className={styles.replyActions}>
                   <button type="button" className={styles.replyCancel} onClick={() => setReplyOpen(null)}>
-                    Cancel
+                    {tr.common.cancel}
                   </button>
                   <button type="button" className={styles.replySend} onClick={() => sendReply(t.id)}>
-                    Send Reply
+                    {tr.reviews.saveReply}
                   </button>
                 </div>
               </div>
             )}
           </article>
         ))}
-        {filtered.length === 0 && <div className={styles.empty}>No reviews found</div>}
+        {filtered.length === 0 && <div className={styles.empty}>{tr.common.noData}</div>}
       </div>
     </div>
   );
