@@ -25,6 +25,7 @@ interface AdminResponse {
 export default function AdminTestimonialsPage() {
   const { locale } = useAdminLocale();
   const t = getAdminT(locale);
+  const dateLocale = ({ sk: 'sk-SK', en: 'en-GB', de: 'de-DE', cs: 'cs-CZ', uk: 'uk-UA' } as Record<string, string>)[locale] ?? 'sk-SK';
   const [items, setItems] = useState<TestimonialRow[]>([]);
   const [counts, setCounts] = useState({ all: 0, pending: 0, approved: 0, rejected: 0 });
   const [filter, setFilter] = useState<Status | 'ALL'>('ALL');
@@ -104,7 +105,7 @@ export default function AdminTestimonialsPage() {
                 {item.status === 'PENDING' ? t.reviews.pending : item.status === 'APPROVED' ? t.reviews.approved : t.reviews.rejected}
               </span>
               <span className="admin-testimonials__date">
-                {new Date(item.createdAt).toLocaleDateString('sk-SK')}
+                {new Date(item.createdAt).toLocaleDateString(dateLocale)}
               </span>
             </div>
 
@@ -121,7 +122,7 @@ export default function AdminTestimonialsPage() {
               <label>{t.reviews.ownerReplyLabel}</label>
               <textarea
                 rows={2}
-                placeholder="Napíšte odpoveď..."
+                placeholder={t.reviews.yourReply}
                 value={replyDraft[item.id] ?? item.adminReply ?? ''}
                 onChange={(e) =>
                   setReplyDraft((p) => ({ ...p, [item.id]: e.target.value }))
@@ -170,7 +171,7 @@ export default function AdminTestimonialsPage() {
 
         {items.length === 0 && (
           <p style={{ color: 'var(--color-text-muted, #666)', padding: '2rem' }}>
-            Žiadne recenzie
+            {t.common.noData}
           </p>
         )}
       </div>
