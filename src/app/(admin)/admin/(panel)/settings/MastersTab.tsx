@@ -83,7 +83,7 @@ export default function MastersTab() {
       });
       setMasters((prev) => prev.map((m) => (m.id === masterId ? { ...m, photo } : m)));
     } catch {
-      alert('Chyba pri nahrávaní fotografie');
+      alert(t.masters.photoUploadError);
     } finally {
       setReplacingPhoto(null);
       e.target.value = '';
@@ -168,28 +168,28 @@ export default function MastersTab() {
       {/* Add form */}
       {showAdd && (
         <div className={styles.addForm}>
-          <p className={styles.addFormTitle}>Nový majster</p>
+          <p className={styles.addFormTitle}>{t.masters.newTitle}</p>
           <div className={styles.addFormRow}>
             <label className={styles.field} style={{ flex: 1, minWidth: 140 }}>
-              <span className={styles.label}>Meno *</span>
+              <span className={styles.label}>{t.masters.nameLabel} *</span>
               <input className={styles.input} value={addForm.name} onChange={(e) => setAdd('name', e.target.value)} placeholder="Martin" />
             </label>
             <label className={styles.field} style={{ flex: 1, minWidth: 140 }}>
-              <span className={styles.label}>Rola *</span>
+              <span className={styles.label}>{t.masters.roleLabel} *</span>
               <input className={styles.input} value={addForm.role} onChange={(e) => setAdd('role', e.target.value)} placeholder="Senior barber" />
             </label>
             <label className={styles.field} style={{ flex: 1, minWidth: 140 }}>
-              <span className={styles.label}>Bio</span>
-              <input className={styles.input} value={addForm.bio} onChange={(e) => setAdd('bio', e.target.value)} placeholder="Skúsenosti, špeciality..." />
+              <span className={styles.label}>{t.masters.bioLabel}</span>
+              <input className={styles.input} value={addForm.bio} onChange={(e) => setAdd('bio', e.target.value)} placeholder={t.masters.bioPlaceholder} />
             </label>
             <div className={styles.field} style={{ justifyContent: 'flex-end' }}>
-              <span className={styles.label}>Foto</span>
+              <span className={styles.label}>{t.masters.photoLabel}</span>
               <label className={styles.photoUploadLabel}>
                 <input ref={addPhotoRef} type="file" accept="image/*" onChange={handleAddPhoto} />
                 {addForm.photoUrl ? (
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img src={addForm.photoUrl} alt="" className={styles.photoPreview} />
-                ) : '↑ Foto'}
+                ) : t.masters.photoUpload}
               </label>
             </div>
           </div>
@@ -212,28 +212,28 @@ export default function MastersTab() {
             {editingId === m.id ? (
               /* Inline edit form */
               <div className={styles.addForm}>
-                <p className={styles.addFormTitle}>Upraviť: {m.name}</p>
+                <p className={styles.addFormTitle}>{t.masters.editingTitle.replace('{name}', m.name)}</p>
                 <div className={styles.addFormRow}>
                   <label className={styles.field} style={{ flex: 1, minWidth: 140 }}>
-                    <span className={styles.label}>Meno</span>
+                    <span className={styles.label}>{t.masters.nameLabel}</span>
                     <input className={styles.input} value={editForm.name} onChange={(e) => setEdit('name', e.target.value)} />
                   </label>
                   <label className={styles.field} style={{ flex: 1, minWidth: 140 }}>
-                    <span className={styles.label}>Rola</span>
+                    <span className={styles.label}>{t.masters.roleLabel}</span>
                     <input className={styles.input} value={editForm.role} onChange={(e) => setEdit('role', e.target.value)} />
                   </label>
                   <label className={styles.field} style={{ flex: 1, minWidth: 140 }}>
-                    <span className={styles.label}>Bio</span>
+                    <span className={styles.label}>{t.masters.bioLabel}</span>
                     <input className={styles.input} value={editForm.bio} onChange={(e) => setEdit('bio', e.target.value)} />
                   </label>
                   <div className={styles.field} style={{ justifyContent: 'flex-end' }}>
-                    <span className={styles.label}>Foto</span>
+                    <span className={styles.label}>{t.masters.photoLabel}</span>
                     <label className={styles.photoUploadLabel}>
                       <input ref={editPhotoRef} type="file" accept="image/*" onChange={handleEditPhoto} />
                       {editForm.photoUrl ? (
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img src={editForm.photoUrl} alt="" className={styles.photoPreview} />
-                      ) : '↑ Foto'}
+                      ) : t.masters.photoUpload}
                     </label>
                   </div>
                 </div>

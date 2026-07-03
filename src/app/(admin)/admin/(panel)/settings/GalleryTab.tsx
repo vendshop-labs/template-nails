@@ -72,7 +72,7 @@ export default function GalleryTab() {
       }
       await fetchImages();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Chyba pri nahrávaní');
+      alert(err instanceof Error ? err.message : t.gallery.uploadError);
     } finally {
       setUploading(null);
       if (fileRef.current) fileRef.current.value = '';
@@ -123,7 +123,7 @@ export default function GalleryTab() {
       });
       setImages((prev) => prev.map((img) => (img.id === id ? { ...img, url } : img)));
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Chyba pri nahrávaní');
+      alert(err instanceof Error ? err.message : t.gallery.uploadError);
     } finally {
       setUploading(null);
       e.target.value = '';
@@ -150,16 +150,16 @@ export default function GalleryTab() {
     <>
       {/* Layout selector */}
       <div className={styles.field} style={{ marginBottom: 16 }}>
-        <span className={styles.label}>Rozloženie galérie {savingLayout && <span style={{ color: 'var(--color-text-muted)', fontWeight: 400 }}>— ukladám...</span>}</span>
+        <span className={styles.label}>{t.gallery.layoutLabel} {savingLayout && <span style={{ color: 'var(--color-text-muted)', fontWeight: 400 }}>{t.gallery.savingLayout}</span>}</span>
         <select
           className={styles.input}
           value={galleryLayout}
           onChange={(e) => handleLayoutChange(e.target.value)}
         >
-          <option value="grid-2">2 stĺpce</option>
-          <option value="grid-3">3 stĺpce (predvolené)</option>
-          <option value="grid-4">4 stĺpce</option>
-          <option value="masonry">Masonry</option>
+          <option value="grid-2">{t.gallery.layout2col}</option>
+          <option value="grid-3">{t.gallery.layout3col}</option>
+          <option value="grid-4">{t.gallery.layout4col}</option>
+          <option value="masonry">{t.gallery.layoutMasonry}</option>
         </select>
       </div>
 
@@ -169,7 +169,7 @@ export default function GalleryTab() {
           <input ref={fileRef} type="file" accept="image/*" multiple onChange={handleUpload} />
           {uploading === 'new' ? t.gallery.uploading : t.gallery.addPhoto}
         </label>
-        <span className={styles.muted}>{images.length} fotografií</span>
+        <span className={styles.muted}>{t.gallery.photoCount.replace('{count}', String(images.length))}</span>
       </div>
 
       {images.length === 0 ? (
@@ -205,14 +205,14 @@ export default function GalleryTab() {
                   className={`${styles.cardBtn} ${styles.cardBtnOutline}`}
                   onClick={() => moveItem(index, 'up')}
                   disabled={index === 0}
-                  title="Posunúť hore"
+                  title={t.gallery.moveUp}
                 >↑</button>
                 <button
                   type="button"
                   className={`${styles.cardBtn} ${styles.cardBtnOutline}`}
                   onClick={() => moveItem(index, 'down')}
                   disabled={index === images.length - 1}
-                  title="Posunúť dole"
+                  title={t.gallery.moveDown}
                 >↓</button>
                 <button
                   type="button"

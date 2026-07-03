@@ -484,6 +484,7 @@
   gap: 6px;
   color: var(--color-text-muted);
   font-size: 1.5rem;
+  overflow: hidden;
 }
 
 .galleryPlaceholderTitle {
@@ -492,6 +493,10 @@
   color: var(--color-text-secondary);
   text-align: center;
   padding: 0 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 .galleryCardActions {
@@ -579,6 +584,9 @@
   font-size: 14px;
   font-weight: 700;
   color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .masterRole {
@@ -589,7 +597,7 @@
 
 .masterInactive { opacity: 0.5; }
 
-.masterActions { display: flex; gap: 8px; flex-shrink: 0; }
+.masterActions { display: flex; gap: 8px; flex-shrink: 0; flex-wrap: wrap; }
 
 .addForm {
   background: var(--color-surface);
