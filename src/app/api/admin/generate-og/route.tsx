@@ -9,11 +9,11 @@ let fontCache: ArrayBuffer | null = null;
 async function getFont(): Promise<ArrayBuffer> {
   if (fontCache) return fontCache;
   const res = await fetch(
-    'https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/files/inter-latin-400-normal.woff2'
+    'https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/files/inter-latin-400-normal.woff'
   );
   if (!res.ok) throw new Error(`Font fetch failed: ${res.status}`);
   const buf = await res.arrayBuffer();
-  if (buf.byteLength < 10_000) throw new Error(`Font data too small (${buf.byteLength} bytes) — likely an error page`);
+  if (buf.byteLength < 5_000) throw new Error(`Font data too small (${buf.byteLength} bytes) — likely an error page`);
   fontCache = buf;
   return fontCache;
 }
