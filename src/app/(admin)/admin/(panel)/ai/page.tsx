@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useAdminLocale } from '@/hooks/useAdminLocale';
+import { getAdminT } from '@/lib/admin-i18n';
 import styles from './ai.module.css';
 
 // ─── Types ─────────────────────────────────────────────────────────────────
@@ -79,6 +81,10 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean
 
 // ─── Main page ─────────────────────────────────────────────────────────────
 export default function AdminAiPage() {
+  const { locale } = useAdminLocale();
+  const tap = getAdminT(locale);
+  const dateLocale = ({ sk: 'sk-SK', en: 'en-US', de: 'de-DE', cs: 'cs-CZ', uk: 'uk-UA' } as Record<string, string>)[locale] ?? 'sk-SK';
+
   // Chat state
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput]       = useState('');
@@ -142,7 +148,7 @@ export default function AdminAiPage() {
           timestamp: Date.now(),
         },
       ]);
-      setLastUsed(new Date().toLocaleTimeString('sk-SK', { hour: '2-digit', minute: '2-digit' }));
+      setLastUsed(new Date().toLocaleTimeString(dateLocale, { hour: '2-digit', minute: '2-digit' }));
     } catch (err) {
       const errText = err instanceof Error ? err.message : 'AI connection error. Try again.';
       setMessages((prev) => [
@@ -218,7 +224,7 @@ export default function AdminAiPage() {
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.h1}>AI Management</h1>
+      <h1 className={styles.h1}>{tap.ai.title}</h1>
 
       {/* ── Status bar ─────────────────────────────────────────────────────── */}
       <div className={styles.statusBar}>
@@ -231,7 +237,7 @@ export default function AdminAiPage() {
           style={{ cursor: indexing ? 'wait' : 'pointer', border: 'none', background: 'none', padding: 0 }}
         >
           <RefreshIcon spin={indexing} />
-          {indexing ? 'Indexujem...' : 'Aktualizovať znalosti'}
+          {indexing ? tap.ai.indexing : tap.ai.updateKnowledge}
         </button>
         {status && status.total > 0 && (
           <span className={styles.statusChipIndexed}>✓ {status.total} chunks</span>
@@ -247,7 +253,7 @@ export default function AdminAiPage() {
         {/* Header */}
         <div className={styles.chatHeader}>
           <BotIcon />
-          <h2 className={styles.chatTitle}>Store AI Assistant</h2>
+          <h2 className={styles.chatTitle}>{tap.ai.chatTitle}</h2>
           <button
             type="button"
             className={styles.gearBtn}
@@ -262,7 +268,7 @@ export default function AdminAiPage() {
               className={styles.clearBtn}
               onClick={() => setMessages([])}
             >
-              Clear
+              {tap.ai.clearHistory}
             </button>
           )}
         </div>
@@ -324,7 +330,7 @@ export default function AdminAiPage() {
             ref={textareaRef}
             className={styles.chatTextarea}
             rows={1}
-            placeholder="Opýtajte sa alebo dajte pokyn... (Enter — odoslať)"
+            placeholder={tap.ai.placeholder}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -358,7 +364,7 @@ export default function AdminAiPage() {
       </section>
 
       {/* ── Save toast ───────────────────────────────────────────────────── */}
-      {savedToast && <div className={styles.toast}>✓ Nastavenia uložené</div>}
+      {savedToast && <div className={styles.toast}>✓ {tap.settings.savedToast}</div>}
 
       {/* ── Settings Modal ────────────────────────────────────────────────── */}
       {showSettings && (
@@ -369,7 +375,7 @@ export default function AdminAiPage() {
           <div className={styles.modal}>
             {/* Modal header */}
             <div className={styles.modalHeader}>
-              <h3 className={styles.modalTitle}>AI Settings</h3>
+              <h3 className={styles.modalTitle}>{tap.ai.settingsTitle}</h3>
               <button type="button" className={styles.modalClose} onClick={() => setShowSettings(false)}>×</button>
             </div>
 

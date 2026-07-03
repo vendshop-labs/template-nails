@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useAdminLocale } from '@/hooks/useAdminLocale';
+import { getAdminT } from '@/lib/admin-i18n';
 import PromoModal from '@/components/admin/PromoModal/PromoModal';
 import ConfirmDialog from '@/components/admin/ConfirmDialog/ConfirmDialog';
 import {
@@ -77,6 +79,9 @@ function TrashIcon() {
 type ModalState = { mode: 'add' } | { mode: 'edit'; id: string } | null;
 
 export default function AdminPromotionsPage() {
+  const { locale } = useAdminLocale();
+  const tprom = getAdminT(locale);
+
   const [promos, setPromos] = useState<Promo[]>(INITIAL_PROMOS);
   const [modal, setModal] = useState<ModalState>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -141,15 +146,15 @@ export default function AdminPromotionsPage() {
   return (
     <div className={styles.page}>
       <div className={styles.top}>
-        <h1 className={styles.h1}>Акції та оголошення</h1>
+        <h1 className={styles.h1}>{tprom.promotions.title}</h1>
         <button type="button" className={styles.createBtn} onClick={() => setModal({ mode: 'add' })}>
           <PlusIcon />
-          Створити акцію
+          {tprom.promotions.newPromo}
         </button>
       </div>
 
       {/* Section 1 — active promos */}
-      <h2 className={styles.sectionTitle}>Активні акції</h2>
+      <h2 className={styles.sectionTitle}>{tprom.promotions.active}</h2>
       <div className={styles.grid}>
         {promos.map((p) => (
           <article key={p.id} className={styles.card}>
@@ -159,34 +164,34 @@ export default function AdminPromotionsPage() {
             </div>
             <div className={styles.body}>
               <div className={styles.row}>
-                <span className={styles.rowLabel}>Тип</span>
+                <span className={styles.rowLabel}>{tprom.promotions.type}</span>
                 <span className={styles.rowValue}>{PROMO_TYPE_LABEL[p.type]}</span>
               </div>
               <div className={styles.row}>
-                <span className={styles.rowLabel}>Знижка</span>
+                <span className={styles.rowLabel}>{tprom.promotions.discount}</span>
                 <span className={styles.discount}>{discountLabel(p)}</span>
               </div>
               <div className={styles.row}>
-                <span className={styles.rowLabel}>Період</span>
+                <span className={styles.rowLabel}>{tprom.promotions.period}</span>
                 <span className={styles.rowValue}>{fmtDate(p.startDate)} — {fmtDate(p.endDate)}</span>
               </div>
               <div className={styles.row}>
-                <span className={styles.rowLabel}>Застосовано</span>
+                <span className={styles.rowLabel}>{tprom.promotions.applied}</span>
                 <span className={styles.rowValue}>{p.applied} {pluralRaz(p.applied)}</span>
               </div>
             </div>
             <div className={styles.footer}>
               <button type="button" className={styles.action} onClick={() => setModal({ mode: 'edit', id: p.id })}>
                 <EditIcon />
-                Редагувати
+                {tprom.common.edit}
               </button>
               <button type="button" className={styles.action} onClick={() => togglePause(p.id)}>
                 {p.status === 'active' ? <PauseIcon /> : <PlayIcon />}
-                {p.status === 'active' ? 'Призупинити' : 'Відновити'}
+                {p.status === 'active' ? tprom.promotions.pause : tprom.promotions.resume}
               </button>
               <button type="button" className={`${styles.action} ${styles.delete}`} onClick={() => setDeletingId(p.id)}>
                 <TrashIcon />
-                Видалити
+                {tprom.common.delete}
               </button>
             </div>
           </article>
@@ -194,7 +199,7 @@ export default function AdminPromotionsPage() {
       </div>
 
       {/* Section 2 — announcement strip */}
-      <h2 className={styles.sectionTitle}>Рядок оголошень</h2>
+      <h2 className={styles.sectionTitle}>{tprom.promotions.announcementTitle}</h2>
       <div className={styles.announceCard}>
         <div className={styles.preview} data-hidden={!announcementVisible}>
           <span className={styles.previewLabel}>Прев&apos;ю:</span>
@@ -215,10 +220,10 @@ export default function AdminPromotionsPage() {
               <input type="checkbox" checked={announcementVisible} onChange={(e) => setAnnouncementVisible(e.target.checked)} />
               <span className={styles.track} />
             </span>
-            {announcementVisible ? 'Показувати на сайті' : 'Приховано'}
+            {announcementVisible ? tprom.promotions.showOnSite : tprom.promotions.hiddenLabel}
           </label>
           <button type="button" className={styles.announceSave} onClick={saveAnnouncement}>
-            Зберегти
+            {tprom.common.save}
           </button>
         </div>
       </div>
@@ -235,7 +240,7 @@ export default function AdminPromotionsPage() {
       )}
 
       {deletingId && (
-        <ConfirmDialog message="Видалити цю акцію?" onConfirm={doDelete} onCancel={() => setDeletingId(null)} />
+        <ConfirmDialog message={tprom.promotions.deleteConfirm} onConfirm={doDelete} onCancel={() => setDeletingId(null)} />
       )}
     </div>
   );

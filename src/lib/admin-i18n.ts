@@ -186,6 +186,17 @@ export interface AdminTranslations {
     title: string;
     placeholder: string;
     send: string;
+    generate: string;
+    generating: string;
+    result: string;
+    copy: string;
+    copied: string;
+    error: string;
+    clearHistory: string;
+    chatTitle: string;
+    indexing: string;
+    updateKnowledge: string;
+    settingsTitle: string;
   };
   dashboard: {
     title: string;
@@ -330,6 +341,67 @@ export interface AdminTranslations {
     backLink: string;
     internalNote: string;
     saveNote: string;
+  };
+  promotions: {
+    title: string;
+    newPromo: string;
+    active: string;
+    inactive: string;
+    validFrom: string;
+    validTo: string;
+    discount: string;
+    code: string;
+    activate: string;
+    deactivate: string;
+    deleteConfirm: string;
+    noPromos: string;
+    type: string;
+    period: string;
+    applied: string;
+    pause: string;
+    resume: string;
+    announcementTitle: string;
+    showOnSite: string;
+    hiddenLabel: string;
+    freeDelivery: string;
+  };
+  orders: {
+    title: string;
+    export: string;
+    searchPlaceholder: string;
+    noOrders: string;
+    guest: string;
+    orderNum: string;
+    items: string;
+    payment: string;
+    delivery: string;
+    actions: string;
+    pickup: string;
+    dishes: string;
+    goods: string;
+    all: string;
+    newLabel: string;
+    processing: string;
+  };
+  products: {
+    title: string;
+    add: string;
+    edit: string;
+    newProduct: string;
+    slug: string;
+    price: string;
+    currency: string;
+    previewLabel: string;
+    fileLabel: string;
+    currentFile: string;
+    translationsLbl: string;
+    nameField: string;
+    descField: string;
+    deleteConfirm: string;
+    noProducts: string;
+    hidden: string;
+    uploadError: string;
+    validationError: string;
   };
 }
 
@@ -551,9 +623,20 @@ const SK: AdminTranslations = {
     confirmDelete:   'Vymazať tento kurz?',
   },
   ai: {
-    title:       'AI správa',
-    placeholder: 'Napíšte správu...',
-    send:        'Odoslať',
+    title:           'AI správa',
+    placeholder:     'Opýtajte sa alebo dajte pokyn...',
+    send:            'Odoslať',
+    generate:        'Generovať',
+    generating:      'Generujem...',
+    result:          'Výsledok',
+    copy:            'Kopírovať',
+    copied:          'Skopírované!',
+    error:           'Chyba. Skúste znova.',
+    clearHistory:    'Vymazať históriu',
+    chatTitle:       'Store AI asistent',
+    indexing:        'Indexujem...',
+    updateKnowledge: 'Aktualizovať znalosti',
+    settingsTitle:   'Nastavenia AI',
   },
   dashboard: {
     title:             'Prehľad',
@@ -698,6 +781,67 @@ const SK: AdminTranslations = {
     backLink:       '← Späť na termíny',
     internalNote:   'Interná poznámka',
     saveNote:       'Uložiť poznámku',
+  },
+  promotions: {
+    title:             'Akcie',
+    newPromo:          '+ Nová akcia',
+    active:            'Aktívna',
+    inactive:          'Neaktívna',
+    validFrom:         'Platí od',
+    validTo:           'Platí do',
+    discount:          'Zľava',
+    code:              'Kód',
+    activate:          'Aktivovať',
+    deactivate:        'Deaktivovať',
+    deleteConfirm:     'Naozaj zmazať túto akciu?',
+    noPromos:          'Žiadne akcie',
+    type:              'Typ',
+    period:            'Obdobie',
+    applied:           'Aplikované',
+    pause:             'Pozastaviť',
+    resume:            'Obnoviť',
+    announcementTitle: 'Oznamovací pás',
+    showOnSite:        'Zobrazovať na webe',
+    hiddenLabel:       'Skryté',
+    freeDelivery:      'Bezplatné doručenie',
+  },
+  orders: {
+    title:             'Objednávky',
+    export:            'Export Excel',
+    searchPlaceholder: 'Hľadať podľa mena, telefónu, č...',
+    noOrders:          'Žiadne objednávky',
+    guest:             'Hosť',
+    orderNum:          'Č. objednávky',
+    items:             'Položky',
+    payment:           'Platba',
+    delivery:          'Doručenie',
+    actions:           'Akcie',
+    pickup:            'Vyzdvihnúť',
+    dishes:            'jedál',
+    goods:             'produktov',
+    all:               'Všetky',
+    newLabel:          'Nové',
+    processing:        'Spracúva sa',
+  },
+  products: {
+    title:           'Digitálne produkty',
+    add:             '+ Pridať produkt',
+    edit:            'Upraviť produkt',
+    newProduct:      'Nový produkt',
+    slug:            'Slug (URL identifikátor)',
+    price:           'Cena',
+    currency:        'Mena',
+    previewLabel:    'Obrázok náhľadu',
+    fileLabel:       'Súbor produktu (PDF / zip)',
+    currentFile:     'Aktuálny súbor ↗',
+    translationsLbl: 'Preklady',
+    nameField:       'Názov',
+    descField:       'Popis',
+    deleteConfirm:   'Naozaj vymazať produkt?',
+    noProducts:      'Zatiaľ žiadne digitálne produkty.',
+    hidden:          'skrytý',
+    uploadError:     'Chyba pri nahrávaní',
+    validationError: 'Vyplňte slug, cenu a aspoň jeden preklad',
   },
 };
 
@@ -919,9 +1063,20 @@ const EN: AdminTranslations = {
     confirmDelete:   'Delete this course?',
   },
   ai: {
-    title:       'AI Manager',
-    placeholder: 'Type a message...',
-    send:        'Send',
+    title:           'AI Assistant',
+    placeholder:     'Ask a question or give an instruction...',
+    send:            'Send',
+    generate:        'Generate',
+    generating:      'Generating...',
+    result:          'Result',
+    copy:            'Copy',
+    copied:          'Copied!',
+    error:           'Error. Please try again.',
+    clearHistory:    'Clear history',
+    chatTitle:       'Store AI Assistant',
+    indexing:        'Indexing...',
+    updateKnowledge: 'Update knowledge',
+    settingsTitle:   'AI Settings',
   },
   dashboard: {
     title:             'Overview',
@@ -1067,6 +1222,67 @@ const EN: AdminTranslations = {
     internalNote:   'Internal note',
     saveNote:       'Save note',
   },
+  promotions: {
+    title:             'Promotions',
+    newPromo:          '+ New promo',
+    active:            'Active',
+    inactive:          'Inactive',
+    validFrom:         'Valid from',
+    validTo:           'Valid to',
+    discount:          'Discount',
+    code:              'Code',
+    activate:          'Activate',
+    deactivate:        'Deactivate',
+    deleteConfirm:     'Really delete this promotion?',
+    noPromos:          'No promotions',
+    type:              'Type',
+    period:            'Period',
+    applied:           'Applied',
+    pause:             'Pause',
+    resume:            'Resume',
+    announcementTitle: 'Announcement bar',
+    showOnSite:        'Show on site',
+    hiddenLabel:       'Hidden',
+    freeDelivery:      'Free delivery',
+  },
+  orders: {
+    title:             'Orders',
+    export:            'Export Excel',
+    searchPlaceholder: 'Search by name, phone, #...',
+    noOrders:          'No orders yet',
+    guest:             'Guest',
+    orderNum:          'Order #',
+    items:             'Items',
+    payment:           'Payment',
+    delivery:          'Delivery',
+    actions:           'Actions',
+    pickup:            'Pickup',
+    dishes:            'dishes',
+    goods:             'items',
+    all:               'All',
+    newLabel:          'New',
+    processing:        'Processing',
+  },
+  products: {
+    title:           'Digital products',
+    add:             '+ Add product',
+    edit:            'Edit product',
+    newProduct:      'New product',
+    slug:            'Slug (URL identifier)',
+    price:           'Price',
+    currency:        'Currency',
+    previewLabel:    'Preview image',
+    fileLabel:       'Product file (PDF / zip)',
+    currentFile:     'Current file ↗',
+    translationsLbl: 'Translations',
+    nameField:       'Name',
+    descField:       'Description',
+    deleteConfirm:   'Really delete this product?',
+    noProducts:      'No digital products yet.',
+    hidden:          'hidden',
+    uploadError:     'Upload error',
+    validationError: 'Fill in slug, price and at least one translation',
+  },
 };
 
 // ─── Czech ─────────────────────────────────────────────────────────────────
@@ -1182,7 +1398,22 @@ const CS: AdminTranslations = {
     reply:          'Odpovědět',
   },
   courses:      EN.courses,
-  ai:           EN.ai,
+  ai: {
+    title:           'AI asistent',
+    placeholder:     'Zeptejte se nebo zadejte pokyn...',
+    send:            'Odeslat',
+    generate:        'Generovat',
+    generating:      'Generuji...',
+    result:          'Výsledek',
+    copy:            'Kopírovat',
+    copied:          'Zkopírováno!',
+    error:           'Chyba. Zkuste znovu.',
+    clearHistory:    'Smazat historii',
+    chatTitle:       'Store AI asistent',
+    indexing:        'Indexuji...',
+    updateKnowledge: 'Aktualizovat znalosti',
+    settingsTitle:   'Nastavení AI',
+  },
   dashboard: {
     title:             'Přehled',
     todayAppointments: 'Dnešní termíny',
@@ -1314,6 +1545,67 @@ const CS: AdminTranslations = {
     backLink:       '← Zpět na termíny',
     internalNote:   'Interní poznámka',
     saveNote:       'Uložit poznámku',
+  },
+  promotions: {
+    title:             'Akce',
+    newPromo:          '+ Nová akce',
+    active:            'Aktivní',
+    inactive:          'Neaktivní',
+    validFrom:         'Platí od',
+    validTo:           'Platí do',
+    discount:          'Sleva',
+    code:              'Kód',
+    activate:          'Aktivovat',
+    deactivate:        'Deaktivovat',
+    deleteConfirm:     'Opravdu smazat tuto akci?',
+    noPromos:          'Žádné akce',
+    type:              'Typ',
+    period:            'Období',
+    applied:           'Použito',
+    pause:             'Pozastavit',
+    resume:            'Obnovit',
+    announcementTitle: 'Oznamovací pruh',
+    showOnSite:        'Zobrazit na webu',
+    hiddenLabel:       'Skryto',
+    freeDelivery:      'Bezplatné doručení',
+  },
+  orders: {
+    title:             'Objednávky',
+    export:            'Export Excel',
+    searchPlaceholder: 'Hledat podle jména, telefonu, č...',
+    noOrders:          'Žádné objednávky',
+    guest:             'Host',
+    orderNum:          'Č. objednávky',
+    items:             'Položky',
+    payment:           'Platba',
+    delivery:          'Doručení',
+    actions:           'Akce',
+    pickup:            'Vyzvednout',
+    dishes:            'jídel',
+    goods:             'produktů',
+    all:               'Vše',
+    newLabel:          'Nové',
+    processing:        'Zpracovává se',
+  },
+  products: {
+    title:           'Digitální produkty',
+    add:             '+ Přidat produkt',
+    edit:            'Upravit produkt',
+    newProduct:      'Nový produkt',
+    slug:            'Slug (URL identifikátor)',
+    price:           'Cena',
+    currency:        'Měna',
+    previewLabel:    'Náhledový obrázek',
+    fileLabel:       'Soubor produktu (PDF / zip)',
+    currentFile:     'Aktuální soubor ↗',
+    translationsLbl: 'Překlady',
+    nameField:       'Název',
+    descField:       'Popis',
+    deleteConfirm:   'Opravdu smazat produkt?',
+    noProducts:      'Zatím žádné digitální produkty.',
+    hidden:          'skrytý',
+    uploadError:     'Chyba při nahrávání',
+    validationError: 'Vyplňte slug, cenu a alespoň jeden překlad',
   },
 };
 
@@ -1467,9 +1759,20 @@ const DE: AdminTranslations = {
     confirmDelete:   'Diesen Kurs löschen?',
   },
   ai: {
-    title:       'KI-Verwaltung',
-    placeholder: 'Nachricht eingeben...',
-    send:        'Senden',
+    title:           'KI-Verwaltung',
+    placeholder:     'Frage stellen oder Anweisung geben...',
+    send:            'Senden',
+    generate:        'Generieren',
+    generating:      'Generiere...',
+    result:          'Ergebnis',
+    copy:            'Kopieren',
+    copied:          'Kopiert!',
+    error:           'Fehler. Bitte erneut versuchen.',
+    clearHistory:    'Verlauf löschen',
+    chatTitle:       'Store KI-Assistent',
+    indexing:        'Indexiere...',
+    updateKnowledge: 'Wissen aktualisieren',
+    settingsTitle:   'KI-Einstellungen',
   },
   dashboard: {
     title:             'Übersicht',
@@ -1615,6 +1918,67 @@ const DE: AdminTranslations = {
     internalNote:   'Interne Notiz',
     saveNote:       'Notiz speichern',
   },
+  promotions: {
+    title:             'Aktionen',
+    newPromo:          '+ Neue Aktion',
+    active:            'Aktiv',
+    inactive:          'Inaktiv',
+    validFrom:         'Gültig ab',
+    validTo:           'Gültig bis',
+    discount:          'Rabatt',
+    code:              'Code',
+    activate:          'Aktivieren',
+    deactivate:        'Deaktivieren',
+    deleteConfirm:     'Aktion wirklich löschen?',
+    noPromos:          'Keine Aktionen',
+    type:              'Typ',
+    period:            'Zeitraum',
+    applied:           'Angewendet',
+    pause:             'Pausieren',
+    resume:            'Fortsetzen',
+    announcementTitle: 'Ankündigungsleiste',
+    showOnSite:        'Auf Website anzeigen',
+    hiddenLabel:       'Versteckt',
+    freeDelivery:      'Kostenlose Lieferung',
+  },
+  orders: {
+    title:             'Bestellungen',
+    export:            'Excel exportieren',
+    searchPlaceholder: 'Suche nach Name, Telefon, Nr...',
+    noOrders:          'Noch keine Bestellungen',
+    guest:             'Gast',
+    orderNum:          'Bestell-Nr.',
+    items:             'Positionen',
+    payment:           'Zahlung',
+    delivery:          'Lieferung',
+    actions:           'Aktionen',
+    pickup:            'Abholung',
+    dishes:            'Gerichte',
+    goods:             'Produkte',
+    all:               'Alle',
+    newLabel:          'Neu',
+    processing:        'In Bearbeitung',
+  },
+  products: {
+    title:           'Digitale Produkte',
+    add:             '+ Produkt hinzufügen',
+    edit:            'Produkt bearbeiten',
+    newProduct:      'Neues Produkt',
+    slug:            'Slug (URL-Bezeichner)',
+    price:           'Preis',
+    currency:        'Währung',
+    previewLabel:    'Vorschaubild',
+    fileLabel:       'Produktdatei (PDF / zip)',
+    currentFile:     'Aktuelle Datei ↗',
+    translationsLbl: 'Übersetzungen',
+    nameField:       'Name',
+    descField:       'Beschreibung',
+    deleteConfirm:   'Produkt wirklich löschen?',
+    noProducts:      'Noch keine digitalen Produkte.',
+    hidden:          'versteckt',
+    uploadError:     'Upload-Fehler',
+    validationError: 'Slug, Preis und mindestens eine Übersetzung ausfüllen',
+  },
 };
 
 // ─── Ukrainian ─────────────────────────────────────────────────────────────
@@ -1730,7 +2094,22 @@ const UK: AdminTranslations = {
     reply:          'Відповісти',
   },
   courses:  EN.courses,
-  ai:       EN.ai,
+  ai: {
+    title:           'AI-менеджер',
+    placeholder:     'Запитайте або дайте вказівку...',
+    send:            'Надіслати',
+    generate:        'Генерувати',
+    generating:      'Генерую...',
+    result:          'Результат',
+    copy:            'Копіювати',
+    copied:          'Скопійовано!',
+    error:           'Помилка. Спробуйте знову.',
+    clearHistory:    'Очистити історію',
+    chatTitle:       'Store AI-асистент',
+    indexing:        'Індексую...',
+    updateKnowledge: 'Оновити знання',
+    settingsTitle:   'Налаштування AI',
+  },
   dashboard: {
     title:             'Огляд',
     todayAppointments: 'Записи сьогодні',
@@ -1862,6 +2241,67 @@ const UK: AdminTranslations = {
     backLink:       '← Назад до записів',
     internalNote:   'Внутрішня нотатка',
     saveNote:       'Зберегти нотатку',
+  },
+  promotions: {
+    title:             'Акції',
+    newPromo:          '+ Нова акція',
+    active:            'Активна',
+    inactive:          'Неактивна',
+    validFrom:         'Діє від',
+    validTo:           'Діє до',
+    discount:          'Знижка',
+    code:              'Код',
+    activate:          'Активувати',
+    deactivate:        'Деактивувати',
+    deleteConfirm:     'Справді видалити акцію?',
+    noPromos:          'Немає акцій',
+    type:              'Тип',
+    period:            'Період',
+    applied:           'Застосовано',
+    pause:             'Призупинити',
+    resume:            'Відновити',
+    announcementTitle: 'Рядок оголошень',
+    showOnSite:        'Показувати на сайті',
+    hiddenLabel:       'Приховано',
+    freeDelivery:      'Безкоштовна доставка',
+  },
+  orders: {
+    title:             'Замовлення',
+    export:            'Експорт Excel',
+    searchPlaceholder: 'Пошук по імені, телефону, №...',
+    noOrders:          'Замовлень поки немає',
+    guest:             'Гість',
+    orderNum:          '№ замовлення',
+    items:             'Товари',
+    payment:           'Оплата',
+    delivery:          'Доставка',
+    actions:           'Дії',
+    pickup:            'Самовивіз',
+    dishes:            'страв',
+    goods:             'товарів',
+    all:               'Всі',
+    newLabel:          'Нові',
+    processing:        'В обробці',
+  },
+  products: {
+    title:           'Цифрові продукти',
+    add:             '+ Додати продукт',
+    edit:            'Редагувати продукт',
+    newProduct:      'Новий продукт',
+    slug:            'Slug (URL ідентифікатор)',
+    price:           'Ціна',
+    currency:        'Валюта',
+    previewLabel:    'Зображення прев\'ю',
+    fileLabel:       'Файл продукту (PDF / zip)',
+    currentFile:     'Поточний файл ↗',
+    translationsLbl: 'Переклади',
+    nameField:       'Назва',
+    descField:       'Опис',
+    deleteConfirm:   'Справді видалити продукт?',
+    noProducts:      'Ще немає цифрових продуктів.',
+    hidden:          'прихований',
+    uploadError:     'Помилка завантаження',
+    validationError: 'Введіть slug, ціну та хоча б один переклад',
   },
 };
 

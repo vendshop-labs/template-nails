@@ -1,6 +1,8 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { useAdminLocale } from '@/hooks/useAdminLocale';
+import { getAdminT } from '@/lib/admin-i18n';
 import type { Vertical } from '@prisma/client';
 import OrderDetailModal from '@/components/admin/OrderDetailModal/OrderDetailModal';
 import TtnModal from '@/components/admin/TtnModal/TtnModal';
@@ -23,13 +25,6 @@ interface Props {
 
 type StatFilter = 'all' | OrderStatus;
 
-const STAT_FILTERS: { key: StatFilter; label: string }[] = [
-  { key: 'all', label: 'Всі' },
-  { key: 'PENDING', label: 'Нові' },
-  { key: 'PROCESSING', label: 'В обробці' },
-  { key: 'SHIPPED', label: 'Відправлено' },
-  { key: 'DELIVERED', label: 'Доставлено' },
-];
 
 // Maps Prisma status → CSS class name (lowercase, matches existing .module.css)
 const STATUS_CSS: Record<OrderStatus, string> = {
@@ -58,8 +53,20 @@ function BoxIcon() {
 }
 
 export default function OrdersClient({ orders: initialOrders, vertical }: Props) {
+  const { locale } = useAdminLocale();
+  const tord = getAdminT(locale);
+  const dateLocale = ({ sk: 'sk-SK', en: 'en-US', de: 'de-DE', cs: 'cs-CZ', uk: 'uk-UA' } as Record<string, string>)[locale] ?? 'sk-SK';
+
   const isFoodMarket = vertical === 'FOOD_MARKET';
   const isRestaurant = vertical === 'RESTAURANT';
+
+  const STAT_FILTERS: { key: StatFilter; label: string }[] = [
+    { key: 'all',        label: tord.orders.all },
+    { key: 'PENDING',    label: tord.orders.newLabel },
+    { key: 'PROCESSING', label: tord.orders.processing },
+    { key: 'SHIPPED',    label: tord.dashboard.shipped },
+    { key: 'DELIVERED',  label: tord.dashboard.delivered },
+  ];
 
   const [orders, setOrders] = useState<AdminOrder[]>(initialOrders);
   const [statusFilter, setStatusFilter] = useState<StatFilter>('all');
@@ -119,10 +126,10 @@ export default function OrdersClient({ orders: initialOrders, vertical }: Props)
   return (
     <div className={styles.page}>
       <div className={styles.top}>
-        <h1 className={styles.h1}>Замовлення</h1>
+        <h1 className={styles.h1}>{tord.orders.title}</h1>
         <button type="button" className={styles.exportBtn} onClick={exportExcel}>
           <ExportIcon />
-          Експорт Excel
+          {tord.orders.export}
         </button>
       </div>
 
@@ -147,7 +154,7 @@ export default function OrdersClient({ orders: initialOrders, vertical }: Props)
         <input
           className={styles.search}
           type="search"
-          placeholder="Пошук по імені, телефону, №..."
+          placeholder={tord.orders.searchPlaceholder}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -158,24 +165,24 @@ export default function OrdersClient({ orders: initialOrders, vertical }: Props)
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>№ замовлення</th>
-              <th>Покупець</th>
-              <th>Товари</th>
-              <th>Сума</th>
-              <th>Оплата</th>
-              {isFoodMarket && <th>Доставка</th>}
-              <th>Статус</th>
-              <th>Дата</th>
-              <th className={styles.colActions}>Дії</th>
+              <th>{tord.orders.orderNum}</th>
+              <th>{tord.dashboard.customer}</th>
+              <th>{tord.orders.items}</th>
+              <th>{tord.dashboard.amount}</th>
+              <th>{tord.orders.payment}</th>
+              {isFoodMarket && <th>{tord.orders.delivery}</th>}
+              <th>{tord.dashboard.status}</th>
+              <th>{tord.dashboard.date}</th>
+              <th className={styles.colActions}>{tord.orders.actions}</th>
             </tr>
           </thead>
           <tbody>
             {filtered.map((o) => {
-              const customerName = o.customer?.name ?? o.guestName ?? 'Гість';
+              const customerName = o.customer?.name ?? o.guestName ?? tord.orders.guest;
               const phone = o.customer?.phone ?? o.guestPhone ?? '';
               const itemCount = o.items.reduce((s, i) => s + i.quantity, 0);
-              const itemWord = isRestaurant ? 'страв' : 'товарів';
-              const dateStr = new Date(o.createdAt).toLocaleDateString('uk-UA');
+              const itemWord = isRestaurant ? tord.orders.dishes : tord.orders.goods;
+              const dateStr = new Date(o.createdAt).toLocaleDateString(dateLocale);
               const orderStatusLabels = getStatusLabels(vertical, o.deliveryMode);
 
               return (
@@ -199,7 +206,7 @@ export default function OrdersClient({ orders: initialOrders, vertical }: Props)
                           <span className={styles.zoneName}>{o.deliveryZone.name}</span>
                         )}
                         <span className={o.deliveryMode === 'PICKUP' ? styles.badgePickup : styles.badgeCourier}>
-                          {o.deliveryMode === 'PICKUP' ? '🏪 Самовивіз' : '🚗 Доставка'}
+                          {o.deliveryMode === 'PICKUP' ? `🏪 ${tord.orders.pickup}` : `🚗 ${tord.orders.delivery}`}
                         </span>
                         {o.deliveryZone && (
                           <span className={styles.deliveryTime}>
@@ -241,7 +248,7 @@ export default function OrdersClient({ orders: initialOrders, vertical }: Props)
             {filtered.length === 0 && (
               <tr>
                 <td colSpan={isFoodMarket ? 9 : 8} className={styles.emptyRow}>
-                  Замовлень поки немає
+                  {tord.orders.noOrders}
                 </td>
               </tr>
             )}
