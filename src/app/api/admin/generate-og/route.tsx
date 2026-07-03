@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { ImageResponse } from 'next/og';
-import { put } from '@vercel/blob';
+import { put, del } from '@vercel/blob';
 import { db } from '@/lib/db';
 
 const STORE_SLUG = process.env.STORE_SLUG ?? 'lumiere-nails';
@@ -26,7 +26,7 @@ export async function POST() {
   try {
     const store = await db.store.findUnique({
       where: { slug: STORE_SLUG },
-      select: { name: true, description: true, city: true, phone: true },
+      select: { name: true, description: true, city: true, phone: true, ogImageUrl: true },
     });
 
     if (!store) {
@@ -153,10 +153,18 @@ export async function POST() {
     const arrayBuf = await imageResponse.arrayBuffer();
     const buffer   = Buffer.from(arrayBuf);
 
+    if (store.ogImageUrl) {
+      try {
+        await del(store.ogImageUrl, { token: process.env.BLOB_READ_WRITE_TOKEN });
+      } catch {
+        // ignore if already deleted
+      }
+    }
+
     const blob = await put(`og/${STORE_SLUG}-og.png`, buffer, {
       access: 'public',
       contentType: 'image/png',
-      addRandomSuffix: false,
+      addRandomSuffix: true,
       token: process.env.BLOB_READ_WRITE_TOKEN,
     });
 
