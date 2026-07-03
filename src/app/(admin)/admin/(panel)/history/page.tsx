@@ -30,8 +30,8 @@ interface MasterSummary {
   revenue: number;
 }
 
-function fmtDate(iso: string) {
-  return new Date(iso).toLocaleDateString('sk-SK', { day: 'numeric', month: 'short', year: 'numeric' });
+function fmtDate(iso: string, loc: string) {
+  return new Date(iso).toLocaleDateString(loc, { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
 function fmtEur(n: number | null) {
@@ -42,6 +42,9 @@ function fmtEur(n: number | null) {
 export default function HistoryPage() {
   const { locale } = useAdminLocale();
   const t = getAdminT(locale);
+  const r = t.reservations;
+  const ta = t.appointments;
+  const dateLocale = ({ sk: 'sk-SK', en: 'en-US', de: 'de-DE', cs: 'cs-CZ', uk: 'uk-UA' } as Record<string, string>)[locale] ?? 'sk-SK';
 
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [masters,      setMasters]      = useState<Master[]>([]);
@@ -88,7 +91,7 @@ export default function HistoryPage() {
   // Master salary summary
   const summary: MasterSummary[] = Object.values(
     appointments.reduce<Record<string, MasterSummary>>((acc, a) => {
-      const key  = a.master ?? 'Neznámy';
+      const key  = a.master ?? r.unknown;
       const prev = acc[key] ?? { name: key, count: 0, revenue: 0 };
       acc[key] = {
         name:    key,
@@ -103,13 +106,22 @@ export default function HistoryPage() {
 
   const STATUS_OPTIONS = ['ALL', 'COMPLETED', 'CANCELLED', 'CONFIRMED', 'PENDING', 'NO_SHOW'];
 
+  const STATUS_LABEL: Record<string, string> = {
+    ALL:       r.allStatuses,
+    COMPLETED: r.completed,
+    CANCELLED: r.cancelled,
+    CONFIRMED: r.confirmed,
+    PENDING:   r.pending,
+    NO_SHOW:   r.noShow,
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.topBar}>
         <h1 className={styles.title}>
           {t.nav.history}
         </h1>
-        <span className={styles.count}>{appointments.length} záznamov</span>
+        <span className={styles.count}>{appointments.length} {r.records}</span>
       </div>
 
       {/* Filters */}
@@ -119,7 +131,7 @@ export default function HistoryPage() {
           onChange={(e) => setMasterId(e.target.value)}
           className={styles.select}
         >
-          <option value="">Všetci majstri</option>
+          <option value="">{r.allMasters}</option>
           {masters.map((m) => (
             <option key={m.id} value={m.id}>{m.name}</option>
           ))}
@@ -130,7 +142,7 @@ export default function HistoryPage() {
           onChange={(e) => setServiceId(e.target.value)}
           className={styles.select}
         >
-          <option value="">Všetky služby</option>
+          <option value="">{r.allServices}</option>
           {services.map((s) => (
             <option key={s.id} value={s.id}>{s.nameKey}</option>
           ))}
@@ -141,14 +153,14 @@ export default function HistoryPage() {
           value={from}
           onChange={(e) => setFrom(e.target.value)}
           className={styles.dateInput}
-          placeholder="Od"
+          placeholder={r.dateFrom}
         />
         <input
           type="date"
           value={to}
           onChange={(e) => setTo(e.target.value)}
           className={styles.dateInput}
-          placeholder="Do"
+          placeholder={r.dateTo}
         />
 
         <select
@@ -157,7 +169,7 @@ export default function HistoryPage() {
           className={styles.select}
         >
           {STATUS_OPTIONS.map((s) => (
-            <option key={s} value={s}>{s === 'ALL' ? 'Všetky statusy' : s}</option>
+            <option key={s} value={s}>{STATUS_LABEL[s] ?? s}</option>
           ))}
         </select>
 
@@ -169,18 +181,18 @@ export default function HistoryPage() {
       {/* Salary summary */}
       {summary.length > 0 && (
         <div className={styles.summary}>
-          <h2 className={styles.summaryTitle}>Prehľad podľa majstra</h2>
+          <h2 className={styles.summaryTitle}>{r.summaryByMaster}</h2>
           <div className={styles.summaryGrid}>
             {summary.map((m) => (
               <div key={m.name} className={styles.summaryCard}>
                 <p className={styles.summaryMaster}>{m.name}</p>
-                <p className={styles.summaryCount}>{m.count} rezervácií</p>
+                <p className={styles.summaryCount}>{m.count} {r.bookings}</p>
                 <p className={styles.summaryRevenue}>{fmtEur(m.revenue)}</p>
               </div>
             ))}
             <div className={`${styles.summaryCard} ${styles.summaryCardTotal}`}>
-              <p className={styles.summaryMaster}>Celkom</p>
-              <p className={styles.summaryCount}>{appointments.length} rezervácií</p>
+              <p className={styles.summaryMaster}>{r.total}</p>
+              <p className={styles.summaryCount}>{appointments.length} {r.bookings}</p>
               <p className={styles.summaryRevenue}>{fmtEur(totalRevenue)}</p>
             </div>
           </div>
@@ -191,26 +203,26 @@ export default function HistoryPage() {
       {loading ? (
         <AdminLoading rows={5} />
       ) : appointments.length === 0 ? (
-        <p className={styles.emptyText}>Žiadne záznamy pre vybraté filtre.</p>
+        <p className={styles.emptyText}>{r.noDataFilters}</p>
       ) : (
         <div className={styles.tableWrap}>
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>Dátum</th>
-                <th>Čas</th>
-                <th>Klient</th>
-                <th>Telefón</th>
-                <th>Majster</th>
-                <th>Služba</th>
-                <th>Cena</th>
-                <th>Status</th>
+                <th>{ta.date}</th>
+                <th>{ta.time}</th>
+                <th>{ta.client}</th>
+                <th>{ta.phone}</th>
+                <th>{ta.master}</th>
+                <th>{ta.service}</th>
+                <th>{t.dashboard.amount}</th>
+                <th>{ta.status}</th>
               </tr>
             </thead>
             <tbody>
               {appointments.map((a) => (
                 <tr key={a.id}>
-                  <td>{fmtDate(a.date)}</td>
+                  <td>{fmtDate(a.date, dateLocale)}</td>
                   <td>{a.timeSlot}</td>
                   <td>{a.guestName ?? '—'}</td>
                   <td>{a.guestPhone ?? '—'}</td>
@@ -219,7 +231,7 @@ export default function HistoryPage() {
                   <td>{fmtEur(a.priceAtBooking ?? a.servicePrice)}</td>
                   <td>
                     <span className={`${styles.badge} ${styles[`badge_${a.status.toLowerCase()}`] ?? ''}`}>
-                      {a.status}
+                      {STATUS_LABEL[a.status] ?? a.status}
                     </span>
                   </td>
                 </tr>

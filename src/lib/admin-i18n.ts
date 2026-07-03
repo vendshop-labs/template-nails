@@ -92,6 +92,13 @@ export interface AdminTranslations {
     allServices: string;
     dateFrom: string;
     dateTo: string;
+    allStatuses: string;
+    summaryByMaster: string;
+    total: string;
+    records: string;
+    bookings: string;
+    noDataFilters: string;
+    unknown: string;
   };
   settings: {
     title: string;
@@ -537,6 +544,13 @@ const SK: AdminTranslations = {
     allServices:    'Všetky služby',
     dateFrom:       'Od',
     dateTo:         'Do',
+    allStatuses:     'Všetky statusy',
+    summaryByMaster: 'Prehľad podľa majstra',
+    total:           'Celkom',
+    records:         'záznamov',
+    bookings:        'rezervácií',
+    noDataFilters:   'Žiadne záznamy pre vybraté filtre.',
+    unknown:         'Neznámy',
   },
   settings: {
     title:              'Nastavenia',
@@ -977,6 +991,13 @@ const EN: AdminTranslations = {
     allServices:    'All services',
     dateFrom:       'From',
     dateTo:         'To',
+    allStatuses:     'All statuses',
+    summaryByMaster: 'Summary by staff',
+    total:           'Total',
+    records:         'records',
+    bookings:        'bookings',
+    noDataFilters:   'No records for selected filters.',
+    unknown:         'Unknown',
   },
   settings: {
     title:              'Settings',
@@ -1326,7 +1347,16 @@ const CS: AdminTranslations = {
   },
   theme:        EN.theme,
   services:     EN.services,
-  reservations: EN.reservations,
+  reservations: {
+    ...EN.reservations,
+    allStatuses:     'Všechny stavy',
+    summaryByMaster: 'Přehled podle pracovníka',
+    total:           'Celkem',
+    records:         'záznamů',
+    bookings:        'rezervací',
+    noDataFilters:   'Žádné záznamy pro vybrané filtry.',
+    unknown:         'Neznámý',
+  },
   settings: {
     title:              'Nastavení',
     tabs: {
@@ -1673,6 +1703,13 @@ const DE: AdminTranslations = {
     allServices:    'Alle Leistungen',
     dateFrom:       'Von',
     dateTo:         'Bis',
+    allStatuses:     'Alle Status',
+    summaryByMaster: 'Übersicht nach Mitarbeitern',
+    total:           'Gesamt',
+    records:         'Einträge',
+    bookings:        'Buchungen',
+    noDataFilters:   'Keine Einträge für die gewählten Filter.',
+    unknown:         'Unbekannt',
   },
   settings: {
     title:              'Einstellungen',
@@ -2022,7 +2059,16 @@ const UK: AdminTranslations = {
   },
   theme:    EN.theme,
   services: EN.services,
-  reservations: EN.reservations,
+  reservations: {
+    ...EN.reservations,
+    allStatuses:     'Всі статуси',
+    summaryByMaster: 'Огляд по майстру',
+    total:           'Разом',
+    records:         'записів',
+    bookings:        'записів',
+    noDataFilters:   'Немає записів для вибраних фільтрів.',
+    unknown:         'Невідомий',
+  },
   settings: {
     title:              'Налаштування',
     tabs: {
