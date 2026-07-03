@@ -455,12 +455,13 @@
 }
 
 .galleryCard {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  overflow: hidden;
+  position: relative;
   display: flex;
   flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
 }
 
 .galleryCard img {
@@ -499,44 +500,57 @@
   max-width: 100%;
 }
 
-.galleryCardActions {
+.galleryCardOverlay {
+  position: absolute;
+  top: 6px;
+  right: 6px;
   display: flex;
-  gap: 6px;
-  padding: 8px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
 }
 
-.cardBtn {
-  flex: 1;
-  min-width: 0;
-  height: 30px;
-  padding: 0 8px;
-  font-family: inherit;
-  font-size: 11px;
-  font-weight: 700;
+.galleryCard:hover .galleryCardOverlay {
+  opacity: 1;
+}
+
+.overlayBtn {
+  width: 28px;
+  height: 28px;
   border-radius: 6px;
-  cursor: pointer;
   border: none;
-  white-space: nowrap;
-  transition: background 150ms ease;
-}
-
-.cardBtnOutline {
-  background: var(--color-bg-subtle);
-  color: var(--color-text-secondary);
-}
-
-.cardBtnOutline:hover {
-  background: var(--color-border);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  line-height: 1;
+  background: rgba(255, 255, 255, 0.92);
   color: var(--color-text-primary);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  transition: background 0.1s;
 }
 
-.cardBtnDanger {
-  background: var(--color-error-bg);
-  color: var(--color-error);
+.overlayBtn:hover {
+  background: #fff;
 }
 
-.cardBtnDanger:hover { background: var(--color-error-bg-hover); }
+.overlayBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.overlayBtnDanger {
+  color: #dc2626;
+}
+
+.galleryCardMeta {
+  padding: 4px 8px 6px;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  text-align: center;
+}
 
 /* ── Masters Tab ──────────────────────────────────── */
 .masterList {

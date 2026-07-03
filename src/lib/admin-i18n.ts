@@ -209,6 +209,10 @@ export interface AdminTranslations {
     moveUp: string;
     moveDown: string;
     uploadError: string;
+    hidePhoto: string;
+    showPhoto: string;
+    deletePhoto: string;
+    hidden: string;
   };
   masters: {
     title: string;
@@ -518,6 +522,10 @@ const SK: AdminTranslations = {
     moveUp:         'Posunúť hore',
     moveDown:       'Posunúť dole',
     uploadError:    'Chyba pri nahrávaní',
+    hidePhoto:      'Skryť',
+    showPhoto:      'Zobraziť',
+    deletePhoto:    'Zmazať',
+    hidden:         'skryté',
   },
   masters: {
     title:            'Majstri',
@@ -827,6 +835,10 @@ const EN: AdminTranslations = {
     moveUp:         'Move up',
     moveDown:       'Move down',
     uploadError:    'Upload error',
+    hidePhoto:      'Hide',
+    showPhoto:      'Show',
+    deletePhoto:    'Delete',
+    hidden:         'hidden',
   },
   masters: {
     title:            'Masters',
@@ -1027,6 +1039,10 @@ const CS: AdminTranslations = {
     moveUp:         'Posunout nahoru',
     moveDown:       'Posunout dolů',
     uploadError:    'Chyba při nahrávání',
+    hidePhoto:      'Skrýt',
+    showPhoto:      'Zobrazit',
+    deletePhoto:    'Smazat',
+    hidden:         'skryto',
   },
   masters: {
     title:            'Mistři',
@@ -1256,6 +1272,10 @@ const DE: AdminTranslations = {
     moveUp:         'Nach oben',
     moveDown:       'Nach unten',
     uploadError:    'Fehler beim Hochladen',
+    hidePhoto:      'Ausblenden',
+    showPhoto:      'Einblenden',
+    deletePhoto:    'Löschen',
+    hidden:         'verborgen',
   },
   masters: {
     title:            'Mitarbeiter',
@@ -1456,6 +1476,10 @@ const UK: AdminTranslations = {
     moveUp:         'Вгору',
     moveDown:       'Вниз',
     uploadError:    'Помилка завантаження',
+    hidePhoto:      'Сховати',
+    showPhoto:      'Показати',
+    deletePhoto:    'Видалити',
+    hidden:         'приховано',
   },
   masters: {
     title:            'Майстри',

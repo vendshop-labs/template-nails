@@ -178,56 +178,49 @@ export default function GalleryTab() {
         <div className={styles.galleryGrid}>
           {images.map((img, index) => (
             <div key={img.id} className={`${styles.galleryCard} ${!img.active ? styles.galleryCardInactive : ''}`}>
-              <div className={styles.cardImageWrap}>
-                {img.url ? (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img src={img.url} alt={img.alt} />
-                ) : (
-                  <div className={styles.galleryPlaceholder}>
-                    <span>📷</span>
-                    <span className={styles.galleryPlaceholderTitle}>{img.alt}</span>
-                  </div>
-                )}
-                <label className={styles.changePhotoOverlay}>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className={styles.hiddenInput}
-                    onChange={(e) => handleImageChange(e, img.id)}
-                  />
-                  <span>{uploading === img.id ? t.gallery.uploading : `📷 ${t.gallery.replace}`}</span>
-                </label>
-              </div>
-              <div className={styles.galleryCardActions}>
-                {/* Sort buttons */}
+              {img.url ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={img.url}
+                  alt={img.alt}
+                  style={{ width: '100%', aspectRatio: '4/3', objectFit: 'cover', display: 'block' }}
+                />
+              ) : (
+                <div className={styles.galleryPlaceholder}>
+                  <span>📷</span>
+                  <span className={styles.galleryPlaceholderTitle}>{img.alt}</span>
+                </div>
+              )}
+              <div className={styles.galleryCardOverlay}>
                 <button
                   type="button"
-                  className={`${styles.cardBtn} ${styles.cardBtnOutline}`}
+                  className={styles.overlayBtn}
                   onClick={() => moveItem(index, 'up')}
                   disabled={index === 0}
                   title={t.gallery.moveUp}
                 >↑</button>
                 <button
                   type="button"
-                  className={`${styles.cardBtn} ${styles.cardBtnOutline}`}
+                  className={styles.overlayBtn}
                   onClick={() => moveItem(index, 'down')}
                   disabled={index === images.length - 1}
                   title={t.gallery.moveDown}
                 >↓</button>
                 <button
                   type="button"
-                  className={`${styles.cardBtn} ${styles.cardBtnOutline}`}
+                  className={styles.overlayBtn}
                   onClick={() => toggleActive(img)}
-                >
-                  {img.active ? t.common.hide : t.common.show}
-                </button>
+                  title={img.active ? t.gallery.hidePhoto : t.gallery.showPhoto}
+                >{img.active ? '🙈' : '👁'}</button>
                 <button
                   type="button"
-                  className={`${styles.cardBtn} ${styles.cardBtnDanger}`}
+                  className={`${styles.overlayBtn} ${styles.overlayBtnDanger}`}
                   onClick={() => deleteImage(img)}
-                >
-                  ×
-                </button>
+                  title={t.gallery.deletePhoto}
+                >🗑</button>
+              </div>
+              <div className={styles.galleryCardMeta}>
+                {img.active ? `#${index + 1}` : t.gallery.hidden}
               </div>
             </div>
           ))}
