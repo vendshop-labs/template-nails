@@ -192,6 +192,38 @@ export interface AdminTranslations {
     todayAppointments: string;
     totalClients: string;
     pendingReviews: string;
+    welcome: string;
+    recentBookings: string;
+    recentOrders: string;
+    revenue: string;
+    totalBookings: string;
+    avgCheck: string;
+    today: string;
+    thisWeek: string;
+    thisMonth: string;
+    noData: string;
+    viewAll: string;
+    client: string;
+    service: string;
+    date: string;
+    status: string;
+    amount: string;
+    loading: string;
+    time: string;
+    guest: string;
+    guestCount: string;
+    orderNum: string;
+    customer: string;
+    topDishes: string;
+    topProducts: string;
+    salesUnit: string;
+    reviewsUnit: string;
+    noOrders: string;
+    todayReservations: string;
+    menuItems: string;
+    processing: string;
+    shipped: string;
+    delivered: string;
   };
   gallery: {
     title: string;
@@ -528,6 +560,38 @@ const SK: AdminTranslations = {
     todayAppointments: 'Dnešné rezervácie',
     totalClients:      'Klienti celkom',
     pendingReviews:    'Čakajúce recenzie',
+    welcome:           'Vitajte späť',
+    recentBookings:    'Najbližšie rezervácie',
+    recentOrders:      'Posledné objednávky',
+    revenue:           'Tržby',
+    totalBookings:     'Objednávky',
+    avgCheck:          'Priemerný nákup',
+    today:             'Dnes',
+    thisWeek:          'Za týždeň',
+    thisMonth:         'Tento mesiac',
+    noData:            'Žiadne dáta',
+    viewAll:           'Zobraziť všetky',
+    client:            'Klient',
+    service:           'Služba',
+    date:              'Dátum',
+    status:            'Stav',
+    amount:            'Suma',
+    loading:           'Načítavam...',
+    time:              'Čas',
+    guest:             'Hosť',
+    guestCount:        'Osôb',
+    orderNum:          'č.',
+    customer:          'Zákazník',
+    topDishes:         'Najlepšie jedlá',
+    topProducts:       'Najlepšie produkty',
+    salesUnit:         'predaní',
+    reviewsUnit:       'recenzií',
+    noOrders:          'Žiadne objednávky',
+    todayReservations: 'Rezervácie dnes',
+    menuItems:         'Jedál v menu',
+    processing:        'Spracováva sa',
+    shipped:           'Odoslané',
+    delivered:         'Doručené',
   },
   gallery: {
     title:          'Galéria',
@@ -860,10 +924,42 @@ const EN: AdminTranslations = {
     send:        'Send',
   },
   dashboard: {
-    title:             'Dashboard',
+    title:             'Overview',
     todayAppointments: "Today's appointments",
     totalClients:      'Total clients',
     pendingReviews:    'Pending reviews',
+    welcome:           'Welcome back',
+    recentBookings:    'Recent bookings',
+    recentOrders:      'Recent orders',
+    revenue:           'Revenue',
+    totalBookings:     'Bookings',
+    avgCheck:          'Avg. order',
+    today:             'Today',
+    thisWeek:          'This week',
+    thisMonth:         'This month',
+    noData:            'No data yet',
+    viewAll:           'View all',
+    client:            'Client',
+    service:           'Service',
+    date:              'Date',
+    status:            'Status',
+    amount:            'Amount',
+    loading:           'Loading...',
+    time:              'Time',
+    guest:             'Guest',
+    guestCount:        'Guests',
+    orderNum:          '#',
+    customer:          'Customer',
+    topDishes:         'Top dishes',
+    topProducts:       'Top products',
+    salesUnit:         'sold',
+    reviewsUnit:       'reviews',
+    noOrders:          'No orders',
+    todayReservations: "Today's reservations",
+    menuItems:         'Menu items',
+    processing:        'Processing',
+    shipped:           'Shipped',
+    delivered:         'Delivered',
   },
   gallery: {
     title:          'Gallery',
@@ -1087,7 +1183,44 @@ const CS: AdminTranslations = {
   },
   courses:      EN.courses,
   ai:           EN.ai,
-  dashboard:    EN.dashboard,
+  dashboard: {
+    title:             'Přehled',
+    todayAppointments: 'Dnešní termíny',
+    totalClients:      'Klienti celkem',
+    pendingReviews:    'Čekající recenze',
+    welcome:           'Vítejte zpět',
+    recentBookings:    'Poslední rezervace',
+    recentOrders:      'Poslední objednávky',
+    revenue:           'Tržby',
+    totalBookings:     'Rezervace',
+    avgCheck:          'Průměrná obj.',
+    today:             'Dnes',
+    thisWeek:          'Tento týden',
+    thisMonth:         'Tento měsíc',
+    noData:            'Žádná data',
+    viewAll:           'Zobrazit vše',
+    client:            'Klient',
+    service:           'Služba',
+    date:              'Datum',
+    status:            'Stav',
+    amount:            'Částka',
+    loading:           'Načítám...',
+    time:              'Čas',
+    guest:             'Host',
+    guestCount:        'Osob',
+    orderNum:          'č.',
+    customer:          'Zákazník',
+    topDishes:         'Nejlepší jídla',
+    topProducts:       'Nejlepší produkty',
+    salesUnit:         'prodáno',
+    reviewsUnit:       'recenzí',
+    noOrders:          'Žádné objednávky',
+    todayReservations: 'Rezervace dnes',
+    menuItems:         'Položky menu',
+    processing:        'Zpracovává se',
+    shipped:           'Odesláno',
+    delivered:         'Doručeno',
+  },
   gallery: {
     title:          'Galerie',
     addPhoto:       '↑ Přidat foto',
@@ -1343,6 +1476,38 @@ const DE: AdminTranslations = {
     todayAppointments: 'Heutige Termine',
     totalClients:      'Kunden gesamt',
     pendingReviews:    'Ausstehende Bewertungen',
+    welcome:           'Willkommen zurück',
+    recentBookings:    'Nächste Buchungen',
+    recentOrders:      'Letzte Bestellungen',
+    revenue:           'Umsatz',
+    totalBookings:     'Buchungen',
+    avgCheck:          'Ø Bestellung',
+    today:             'Heute',
+    thisWeek:          'Diese Woche',
+    thisMonth:         'Diesen Monat',
+    noData:            'Noch keine Daten',
+    viewAll:           'Alle anzeigen',
+    client:            'Kunde',
+    service:           'Leistung',
+    date:              'Datum',
+    status:            'Status',
+    amount:            'Betrag',
+    loading:           'Wird geladen...',
+    time:              'Uhrzeit',
+    guest:             'Gast',
+    guestCount:        'Personen',
+    orderNum:          'Nr.',
+    customer:          'Kunde',
+    topDishes:         'Top-Gerichte',
+    topProducts:       'Top-Produkte',
+    salesUnit:         'verkauft',
+    reviewsUnit:       'Bewertungen',
+    noOrders:          'Keine Bestellungen',
+    todayReservations: 'Reservierungen heute',
+    menuItems:         'Menü-Einträge',
+    processing:        'In Bearbeitung',
+    shipped:           'Versendet',
+    delivered:         'Geliefert',
   },
   gallery: {
     title:          'Galerie',
@@ -1566,7 +1731,44 @@ const UK: AdminTranslations = {
   },
   courses:  EN.courses,
   ai:       EN.ai,
-  dashboard: EN.dashboard,
+  dashboard: {
+    title:             'Огляд',
+    todayAppointments: 'Записи сьогодні',
+    totalClients:      'Клієнти разом',
+    pendingReviews:    'Відгуки на розгляді',
+    welcome:           'Ласкаво просимо',
+    recentBookings:    'Останні записи',
+    recentOrders:      'Останні замовлення',
+    revenue:           'Виручка',
+    totalBookings:     'Записи',
+    avgCheck:          'Сер. чек',
+    today:             'Сьогодні',
+    thisWeek:          'Цей тиждень',
+    thisMonth:         'Цей місяць',
+    noData:            'Немає даних',
+    viewAll:           'Переглянути всі',
+    client:            'Клієнт',
+    service:           'Послуга',
+    date:              'Дата',
+    status:            'Статус',
+    amount:            'Сума',
+    loading:           'Завантаження...',
+    time:              'Час',
+    guest:             'Гість',
+    guestCount:        'Осіб',
+    orderNum:          '№',
+    customer:          'Покупець',
+    topDishes:         'Топ страви',
+    topProducts:       'Топ продукти',
+    salesUnit:         'продано',
+    reviewsUnit:       'відгуків',
+    noOrders:          'Немає замовлень',
+    todayReservations: 'Записи сьогодні',
+    menuItems:         'Страви в меню',
+    processing:        'Обробляється',
+    shipped:           'Відправлено',
+    delivered:         'Доставлено',
+  },
   gallery: {
     title:          'Галерея',
     addPhoto:       '↑ Додати фото',
