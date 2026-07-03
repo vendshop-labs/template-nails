@@ -88,6 +88,10 @@ export interface AdminTranslations {
     statConfirmed: string;
     statCompleted: string;
     statCancelled: string;
+    allMasters: string;
+    allServices: string;
+    dateFrom: string;
+    dateTo: string;
   };
   settings: {
     title: string;
@@ -275,6 +279,25 @@ export interface AdminTranslations {
     statusLabel: string;
     notesLabel: string;
     deleteConfirm: string;
+    date: string;
+    time: string;
+    client: string;
+    service: string;
+    master: string;
+    status: string;
+    confirmed: string;
+    pending: string;
+    cancelled: string;
+    confirm: string;
+    cancel: string;
+    cancelConfirm: string;
+    phone: string;
+    email: string;
+    duration: string;
+    notes: string;
+    backLink: string;
+    internalNote: string;
+    saveNote: string;
   };
 }
 
@@ -406,6 +429,10 @@ const SK: AdminTranslations = {
     statConfirmed:  'Potvrdené',
     statCompleted:  'Dokončené',
     statCancelled:  'Zrušené',
+    allMasters:     'Všetci majstri',
+    allServices:    'Všetky služby',
+    dateFrom:       'Od',
+    dateTo:         'Do',
   },
   settings: {
     title:              'Nastavenia',
@@ -588,6 +615,25 @@ const SK: AdminTranslations = {
     statusLabel:    'Stav',
     notesLabel:     'Poznámka',
     deleteConfirm:  'Zrušiť tento termín?',
+    date:           'Dátum',
+    time:           'Čas',
+    client:         'Klient',
+    service:        'Služba',
+    master:         'Majster',
+    status:         'Stav',
+    confirmed:      'Potvrdený',
+    pending:        'Čakajúci',
+    cancelled:      'Zrušený',
+    confirm:        'Potvrdiť',
+    cancel:         'Zrušiť',
+    cancelConfirm:  'Zrušiť termín?',
+    phone:          'Telefón',
+    email:          'Email',
+    duration:       'Trvanie',
+    notes:          'Poznámka',
+    backLink:       '← Späť na termíny',
+    internalNote:   'Interná poznámka',
+    saveNote:       'Uložiť poznámku',
   },
 };
 
@@ -719,6 +765,10 @@ const EN: AdminTranslations = {
     statConfirmed:  'Confirmed',
     statCompleted:  'Completed',
     statCancelled:  'Cancelled',
+    allMasters:     'All masters',
+    allServices:    'All services',
+    dateFrom:       'From',
+    dateTo:         'To',
   },
   settings: {
     title:              'Settings',
@@ -901,6 +951,25 @@ const EN: AdminTranslations = {
     statusLabel:    'Status',
     notesLabel:     'Notes',
     deleteConfirm:  'Cancel this appointment?',
+    date:           'Date',
+    time:           'Time',
+    client:         'Client',
+    service:        'Service',
+    master:         'Master',
+    status:         'Status',
+    confirmed:      'Confirmed',
+    pending:        'Pending',
+    cancelled:      'Cancelled',
+    confirm:        'Confirm',
+    cancel:         'Cancel',
+    cancelConfirm:  'Cancel appointment?',
+    phone:          'Phone',
+    email:          'Email',
+    duration:       'Duration',
+    notes:          'Note',
+    backLink:       '← Back to appointments',
+    internalNote:   'Internal note',
+    saveNote:       'Save note',
   },
 };
 
@@ -1093,6 +1162,25 @@ const CS: AdminTranslations = {
     statusLabel:    'Stav',
     notesLabel:     'Poznámka',
     deleteConfirm:  'Zrušit tento termín?',
+    date:           'Datum',
+    time:           'Čas',
+    client:         'Klient',
+    service:        'Služba',
+    master:         'Mistr',
+    status:         'Stav',
+    confirmed:      'Potvrzeno',
+    pending:        'Čeká',
+    cancelled:      'Zrušeno',
+    confirm:        'Potvrdit',
+    cancel:         'Zrušit',
+    cancelConfirm:  'Zrušit termín?',
+    phone:          'Telefon',
+    email:          'E-mail',
+    duration:       'Délka',
+    notes:          'Poznámka',
+    backLink:       '← Zpět na termíny',
+    internalNote:   'Interní poznámka',
+    saveNote:       'Uložit poznámku',
   },
 };
 
@@ -1156,6 +1244,10 @@ const DE: AdminTranslations = {
     statConfirmed:  'Bestätigt',
     statCompleted:  'Abgeschlossen',
     statCancelled:  'Storniert',
+    allMasters:     'Alle Mitarbeiter',
+    allServices:    'Alle Leistungen',
+    dateFrom:       'Von',
+    dateTo:         'Bis',
   },
   settings: {
     title:              'Einstellungen',
@@ -1338,6 +1430,25 @@ const DE: AdminTranslations = {
     statusLabel:    'Status',
     notesLabel:     'Notizen',
     deleteConfirm:  'Diesen Termin absagen?',
+    date:           'Datum',
+    time:           'Uhrzeit',
+    client:         'Kunde',
+    service:        'Leistung',
+    master:         'Mitarbeiter',
+    status:         'Status',
+    confirmed:      'Bestätigt',
+    pending:        'Ausstehend',
+    cancelled:      'Storniert',
+    confirm:        'Bestätigen',
+    cancel:         'Stornieren',
+    cancelConfirm:  'Termin stornieren?',
+    phone:          'Telefon',
+    email:          'E-Mail',
+    duration:       'Dauer',
+    notes:          'Notiz',
+    backLink:       '← Zurück zu Terminen',
+    internalNote:   'Interne Notiz',
+    saveNote:       'Notiz speichern',
   },
 };
 
@@ -1530,6 +1641,25 @@ const UK: AdminTranslations = {
     statusLabel:    'Статус',
     notesLabel:     'Нотатка',
     deleteConfirm:  'Скасувати цей запис?',
+    date:           'Дата',
+    time:           'Час',
+    client:         'Клієнт',
+    service:        'Послуга',
+    master:         'Майстер',
+    status:         'Статус',
+    confirmed:      'Підтверджено',
+    pending:        'Очікує',
+    cancelled:      'Скасовано',
+    confirm:        'Підтвердити',
+    cancel:         'Скасувати',
+    cancelConfirm:  'Скасувати запис?',
+    phone:          'Телефон',
+    email:          'Email',
+    duration:       'Тривалість',
+    notes:          'Нотатка',
+    backLink:       '← Назад до записів',
+    internalNote:   'Внутрішня нотатка',
+    saveNote:       'Зберегти нотатку',
   },
 };
 

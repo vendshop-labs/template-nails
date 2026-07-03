@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { useAdminLocale } from '@/hooks/useAdminLocale';
+import { getAdminT } from '@/lib/admin-i18n';
 import StatusBadge from '@/components/ui/StatusBadge';
 import type { AppointmentStatus } from '@/lib/types';
 
@@ -25,6 +27,16 @@ const STATUSES: AppointmentStatus[] = ['PENDING', 'CONFIRMED', 'CANCELLED', 'COM
 export default function AppointmentDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
+  const { locale } = useAdminLocale();
+  const ta = getAdminT(locale);
+  const dateLocale = ({ sk: 'sk-SK', en: 'en-US', de: 'de-DE', cs: 'cs-CZ', uk: 'uk-UA' } as Record<string, string>)[locale] ?? 'sk-SK';
+  const STATUS_LABELS: Record<AppointmentStatus, string> = {
+    PENDING:   ta.appointments.pending,
+    CONFIRMED: ta.appointments.confirmed,
+    CANCELLED: ta.appointments.cancelled,
+    COMPLETED: ta.reservations.completed,
+    NO_SHOW:   ta.reservations.noShow,
+  };
   const [data, setData] = useState<AppointmentDetail | null>(null);
   const [internalNote, setInternalNote] = useState('');
   const [saving, setSaving] = useState(false);
@@ -60,16 +72,16 @@ export default function AppointmentDetailPage() {
     setSaving(false);
   }
 
-  if (!data) return <p style={{ padding: '2rem' }}>Loading...</p>;
+  if (!data) return <p style={{ padding: '2rem' }}>{ta.common.loading}</p>;
 
   return (
     <div style={{ padding: '2rem', maxWidth: 640 }}>
       <a href="/admin/appointments" style={{ color: 'var(--color-primary)', fontSize: '0.85rem' }}>
-        ← Back to appointments
+        {ta.appointments.backLink}
       </a>
 
       <h1 style={{ marginTop: '1.5rem', marginBottom: '0.5rem' }}>
-        Appointment — {data.guestName ?? 'Guest'}
+        {ta.appointments.title} — {data.guestName ?? '—'}
       </h1>
 
       <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
@@ -90,22 +102,22 @@ export default function AppointmentDetailPage() {
               borderRadius: 'var(--radius-sm)',
             }}
           >
-            {s}
+            {STATUS_LABELS[s]}
           </button>
         ))}
       </div>
 
       <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '1.5rem' }}>
         {[
-          ['Status',   <StatusBadge key="s" status={data.status} />],
-          ['Service',  data.service.nameKey],
-          ['Master',   data.master?.name ?? 'Any'],
-          ['Date',     new Date(data.date).toLocaleDateString('sk-SK')],
-          ['Time',     data.timeSlot],
-          ['Duration', `${data.duration} min`],
-          ['Phone',    data.guestPhone ?? '—'],
-          ['Email',    data.guestEmail ?? '—'],
-          ['Note',     data.note ?? '—'],
+          [ta.appointments.status,   <StatusBadge key="s" status={data.status} />],
+          [ta.appointments.service,  data.service.nameKey],
+          [ta.appointments.master,   data.master?.name ?? '—'],
+          [ta.appointments.date,     new Date(data.date).toLocaleDateString(dateLocale)],
+          [ta.appointments.time,     data.timeSlot],
+          [ta.appointments.duration, `${data.duration} min`],
+          [ta.appointments.phone,    data.guestPhone ?? '—'],
+          [ta.appointments.email,    data.guestEmail ?? '—'],
+          [ta.appointments.notes,    data.note ?? '—'],
         ].map(([label, value]) => (
           <tr key={String(label)} style={{ borderBottom: '1px solid var(--color-border)' }}>
             <td style={{ padding: '0.5rem 0', color: 'var(--color-text-muted)', width: 120, fontSize: '0.85rem' }}>{label}</td>
@@ -116,7 +128,7 @@ export default function AppointmentDetailPage() {
 
       <div>
         <label style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', color: 'var(--color-text-muted)', display: 'block', marginBottom: '0.5rem' }}>
-          Internal Note
+          {ta.appointments.internalNote}
         </label>
         <textarea
           value={internalNote}
@@ -129,7 +141,7 @@ export default function AppointmentDetailPage() {
           disabled={saving}
           className="btn-primary"
         >
-          {saving ? 'Saving...' : 'Save Note'}
+          {saving ? ta.common.saving : ta.appointments.saveNote}
         </button>
       </div>
     </div>

@@ -44,14 +44,15 @@ function avatarLetter(name: string | null) {
   return name ? name.trim()[0]?.toUpperCase() ?? '?' : '?';
 }
 
-function fmtDate(iso: string) {
-  return new Date(iso).toLocaleDateString('sk-SK', { day: 'numeric', month: 'short', year: 'numeric' });
+function fmtDate(iso: string, loc: string) {
+  return new Date(iso).toLocaleDateString(loc, { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
 export default function RezervaciaPage() {
   const { locale } = useAdminLocale();
   const t = getAdminT(locale);
   const r = t.reservations;
+  const dateLocale = ({ sk: 'sk-SK', en: 'en-US', de: 'de-DE', cs: 'cs-CZ', uk: 'uk-UA' } as Record<string, string>)[locale] ?? 'sk-SK';
 
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [masters,      setMasters]      = useState<Master[]>([]);
@@ -155,7 +156,7 @@ export default function RezervaciaPage() {
           onChange={(e) => setMasterId(e.target.value)}
           className={styles.filterSelect}
         >
-          <option value="">Všetci majstri</option>
+          <option value="">{r.allMasters}</option>
           {masters.map((m) => (
             <option key={m.id} value={m.id}>{m.name}</option>
           ))}
@@ -166,7 +167,7 @@ export default function RezervaciaPage() {
           onChange={(e) => setServiceId(e.target.value)}
           className={styles.filterSelect}
         >
-          <option value="">Všetky služby</option>
+          <option value="">{r.allServices}</option>
           {services.map((s) => (
             <option key={s.id} value={s.id}>{s.nameKey}</option>
           ))}
@@ -177,7 +178,7 @@ export default function RezervaciaPage() {
           value={from}
           onChange={(e) => setFrom(e.target.value)}
           className={styles.datePicker}
-          title="Od"
+          title={r.dateFrom}
         />
 
         <input
@@ -185,7 +186,7 @@ export default function RezervaciaPage() {
           value={to}
           onChange={(e) => setTo(e.target.value)}
           className={styles.datePicker}
-          title="Do"
+          title={r.dateTo}
         />
 
         {hasExtraFilters && (
@@ -243,7 +244,7 @@ export default function RezervaciaPage() {
             const isCancelled = a.status === 'CANCELLED';
             const waLink      = a.guestPhone
               ? `https://wa.me/${a.guestPhone.replace(/\D/g, '')}?text=${encodeURIComponent(
-                  `Dobrý deň, ${a.guestName ?? ''} — ohľadom Vašej rezervácie ${a.timeSlot} dňa ${fmtDate(a.date)}.`
+                  `Dobrý deň, ${a.guestName ?? ''} — ohľadom Vašej rezervácie ${a.timeSlot} dňa ${fmtDate(a.date, dateLocale)}.`
                 )}`
               : null;
 
@@ -275,7 +276,7 @@ export default function RezervaciaPage() {
                 {/* Chips */}
                 <div className={styles.chips}>
                   <span className={`${styles.chip} ${styles.chipDate}`}>
-                    📆 {fmtDate(a.date)} · {a.timeSlot}
+                    📆 {fmtDate(a.date, dateLocale)} · {a.timeSlot}
                   </span>
                   {a.service && <span className={styles.chip}>✂️ {a.service}</span>}
                   {a.master  && <span className={styles.chip}>💈 {a.master}</span>}
