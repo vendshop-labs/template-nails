@@ -219,7 +219,7 @@ export default function AdminServicesPage() {
                 type="button"
                 className={`btn-sm ${s.active ? 'btn-outline' : 'btn-primary'}`}
                 onClick={() => toggleActive(s)}
-                title={s.active ? 'Skryť zo stránky' : 'Zobraziť na stránke'}
+                title={s.active ? t.common.hide : t.common.show}
               >
                 {s.active ? t.common.hide : t.common.show}
               </button>

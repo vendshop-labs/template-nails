@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import type { AdminLocale } from '@/lib/admin-i18n';
 
 const COOKIE_KEY = 'admin_locale';
@@ -17,6 +18,7 @@ const AdminLocaleContext = createContext<AdminLocaleContextValue>({
 });
 
 export function AdminLocaleProvider({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   const [locale, setLocale] = useState<AdminLocale>('sk');
 
   useEffect(() => {
@@ -32,6 +34,7 @@ export function AdminLocaleProvider({ children }: { children: React.ReactNode })
   function changeLocale(newLocale: AdminLocale) {
     setLocale(newLocale);
     document.cookie = `${COOKIE_KEY}=${newLocale};path=/;max-age=31536000`;
+    router.refresh();
   }
 
   return (
