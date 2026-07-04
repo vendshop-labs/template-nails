@@ -632,8 +632,8 @@ body::after {
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 1fr;
   gap: 2rem;
+  align-items: stretch;
 }
 
 .why-us__card {
@@ -645,8 +645,7 @@ body::after {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 210px;
+  height: 100%;
 }
 .why-us__card:hover { border-color: var(--color-gold); transform: translateY(-4px); }
 
@@ -670,7 +669,10 @@ body::after {
   color: var(--color-text-muted);
   font-size: 0.9rem;
   line-height: 1.6;
+  flex: 1;
 }
+
+.why-us__grid > * { height: 100%; }
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .why-us__grid { grid-template-columns: repeat(2, 1fr); }
