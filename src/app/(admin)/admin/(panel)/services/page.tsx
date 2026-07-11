@@ -15,7 +15,7 @@ interface Service {
   active: boolean;
 }
 
-const EMPTY = { nameKey: '', description: '', price: 0, duration: 30, category: '' };
+const EMPTY = { nameKey: '', description: '', price: '', duration: 30, category: '' };
 
 export default function AdminServicesPage() {
   const { locale } = useAdminLocale();
@@ -44,7 +44,7 @@ export default function AdminServicesPage() {
     setForm({
       nameKey: s.nameKey,
       description: s.description ?? '',
-      price: s.price,
+      price: s.price != null ? String(s.price) : '',
       duration: s.duration ?? 30,
       category: s.category ?? '',
     });
@@ -64,8 +64,8 @@ export default function AdminServicesPage() {
     const payload = {
       nameKey: form.nameKey,
       description: form.description,
-      price: Number(form.price),
-      duration: Number(form.duration),
+      price: Number(form.price) || 0,
+      duration: Number(form.duration) || 0,
       category: form.category || undefined,
     };
 
@@ -142,7 +142,8 @@ export default function AdminServicesPage() {
                 min="0"
                 step="0.5"
                 value={form.price}
-                onChange={(e) => setForm((p) => ({ ...p, price: Number(e.target.value) }))}
+                placeholder="0"
+                onChange={(e) => setForm((p) => ({ ...p, price: e.target.value }))}
               />
             </div>
             <div className="booking__field">
