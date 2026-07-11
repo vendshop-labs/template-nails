@@ -16,15 +16,20 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const store = await db.store.findUnique({ where: { slug: STORE_SLUG } });
-  if (!store) return NextResponse.json([]);
+  try {
+    const store = await db.store.findUnique({ where: { slug: STORE_SLUG } });
+    if (!store) return NextResponse.json([]);
 
-  const services = await db.service.findMany({
-    where: { storeId: store.id },
-    orderBy: [{ category: 'asc' }, { price: 'asc' }],
-  });
+    const services = await db.service.findMany({
+      where: { storeId: store.id },
+      orderBy: [{ category: 'asc' }, { price: 'asc' }],
+    });
 
-  return NextResponse.json(services);
+    return NextResponse.json(services);
+  } catch (e) {
+    console.error('[admin/services GET]', e);
+    return NextResponse.json({ error: (e as Error).message }, { status: 500 });
+  }
 }
 
 export async function POST(req: NextRequest) {
