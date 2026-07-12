@@ -1,11 +1,19 @@
 import type { Metadata } from 'next';
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import WriteTestimonialForm from './WriteTestimonialForm';
 
-export const metadata: Metadata = {
-  title: 'Napísať recenziu | Lumière Nails',
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'testimonials' });
+  return {
+    title: `${t('writeTitle')} | Lumière Nails`,
+    robots: { index: false, follow: false },
+  };
+}
 
 export default async function WriteTestimonialPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

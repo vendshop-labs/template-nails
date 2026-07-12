@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface Customer {
   id: string;
@@ -10,6 +11,9 @@ interface Customer {
 }
 
 export default function TestimonialSubmitPage() {
+  const t = useTranslations('testimonials');
+  const locale = useLocale();
+
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [authChecked, setAuthChecked] = useState(false);
   const [form, setForm] = useState({ content: '', rating: 5 });
@@ -47,7 +51,7 @@ export default function TestimonialSubmitPage() {
       setSent(true);
     } else {
       const body = await res.json() as { error?: string };
-      setError(body.error ?? 'Chyba pri odosielaní. Skúste znova.');
+      setError(body.error ?? t('errNetwork'));
     }
     setSending(false);
   }
@@ -56,19 +60,19 @@ export default function TestimonialSubmitPage() {
     <main style={{ paddingTop: '5rem', minHeight: '100vh' }}>
       <section className="testimonials-page__form-section">
 
-        <Link href="/sk/testimonials" className="testimonials-submit__back">
-          ← Späť na recenzie
+        <Link href={`/${locale}/testimonials`} className="testimonials-submit__back">
+          ← {t('backToReviews')}
         </Link>
 
         <h1 style={{ color: 'var(--color-text-primary)', fontSize: '2rem', margin: '1.5rem 0 0.5rem' }}>
-          Zanechajte recenziu
+          {t('leaveReview')}
         </h1>
         <p style={{ color: 'var(--color-text-muted)', marginBottom: '2rem', fontSize: '0.9rem' }}>
-          Podeľte sa o vašu skúsenosť s Lumière Nails
+          {t('writeSubtitle', { store: 'Lumière Nails' })}
         </p>
 
         {!authChecked ? (
-          <p style={{ color: 'var(--color-text-muted)' }}>Načítava sa...</p>
+          <p style={{ color: 'var(--color-text-muted)' }}>{t('loading')}</p>
 
         ) : !customer ? (
           <div className="testimonials-page__auth-gate">
@@ -77,15 +81,11 @@ export default function TestimonialSubmitPage() {
               <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
               <circle cx="12" cy="7" r="4" />
             </svg>
-            <h3 style={{ color: 'var(--color-text-primary)' }}>Prihlásenie je potrebné</h3>
-            <p>
-              Recenziu môžu zanechať iba registrovaní klienti.
-              <br />
-              Overíme, že ste skutočná klientka Lumière Nails.
-            </p>
+            <h3 style={{ color: 'var(--color-text-primary)' }}>{t('loginRequired')}</h3>
+            <p>{t('registeredOnly')}</p>
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <Link href="/sk/login" className="btn-primary">Prihlásiť sa</Link>
-              <Link href="/sk/register" className="btn-outline">Registrovať sa</Link>
+              <Link href={`/${locale}/login`} className="btn-primary">{t('alreadyRegistered')}</Link>
+              <Link href={`/${locale}/register`} className="btn-outline">{t('registerToReview')}</Link>
             </div>
           </div>
 
@@ -96,17 +96,17 @@ export default function TestimonialSubmitPage() {
               <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
               <polyline points="22 4 12 14.01 9 11.01" />
             </svg>
-            <h3>Ďakujeme, {customer.name}!</h3>
-            <p>Vaša recenzia bude zverejnená po schválení administrátorom.</p>
-            <Link href="/sk/testimonials" className="btn-outline">
-              ← Zobraziť všetky recenzie
+            <h3>{t('greeting', { name: customer.name })}</h3>
+            <p>{t('successPending')}</p>
+            <Link href={`/${locale}/testimonials`} className="btn-outline">
+              ← {t('viewAll')}
             </Link>
           </div>
 
         ) : (
           <>
             <p className="testimonials-page__logged-as">
-              Píšete ako: <strong>{customer.name}</strong>
+              {t('writingAs', { name: customer.name })}
               <span style={{ color: 'var(--color-text-muted)', marginLeft: '0.5rem' }}>
                 ({customer.email})
               </span>
@@ -114,7 +114,7 @@ export default function TestimonialSubmitPage() {
 
             <form onSubmit={handleSubmit} className="testimonials-page__form">
               <div className="booking__field">
-                <label>Hodnotenie *</label>
+                <label>{t('ratingLabel')} *</label>
                 <div className="testimonials-page__rating">
                   {[1, 2, 3, 4, 5].map((n) => (
                     <button
@@ -122,7 +122,7 @@ export default function TestimonialSubmitPage() {
                       type="button"
                       onClick={() => setForm((p) => ({ ...p, rating: n }))}
                       className={`testimonials-page__star${n <= form.rating ? ' active' : ''}`}
-                      aria-label={`${n} hviezd`}
+                      aria-label={`${n} ★`}
                     >
                       ★
                     </button>
@@ -134,12 +134,12 @@ export default function TestimonialSubmitPage() {
               </div>
 
               <div className="booking__field">
-                <label>Vaša recenzia *</label>
+                <label>{t('textLabel')} *</label>
                 <textarea
                   rows={5}
                   value={form.content}
                   onChange={(e) => setForm((p) => ({ ...p, content: e.target.value }))}
-                  placeholder="Opíšte vašu skúsenosť v Lumière Nails... (min. 20 znakov)"
+                  placeholder={t('textPlaceholder')}
                   required
                   minLength={20}
                 />
@@ -151,10 +151,10 @@ export default function TestimonialSubmitPage() {
 
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                 <button type="submit" className="btn-primary" disabled={sending}>
-                  {sending ? 'Odosiela sa...' : 'Odoslať recenziu'}
+                  {sending ? t('submitting') : t('submitBtn')}
                 </button>
-                <Link href="/sk/testimonials" className="btn-outline">
-                  Zrušiť
+                <Link href={`/${locale}/testimonials`} className="btn-outline">
+                  {t('backToReviews')}
                 </Link>
               </div>
             </form>

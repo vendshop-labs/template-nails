@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 import TestimonialCard from '@/components/ui/TestimonialCard';
 
 interface TestimonialItem {
@@ -25,6 +26,9 @@ interface Props {
 }
 
 export default function TestimonialsPageClient({ testimonials, total }: Props) {
+  const t = useTranslations('testimonials');
+  const locale = useLocale();
+
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [authChecked, setAuthChecked] = useState(false);
   const [form, setForm] = useState({ content: '', rating: 5 });
@@ -61,7 +65,7 @@ export default function TestimonialsPageClient({ testimonials, total }: Props) {
     if (res.ok) {
       setSent(true);
     } else {
-      setError('Chyba pri odosielaní. Skúste znova.');
+      setError(t('errNetwork'));
     }
     setSending(false);
   }
@@ -69,46 +73,45 @@ export default function TestimonialsPageClient({ testimonials, total }: Props) {
   return (
     <main style={{ paddingTop: '5rem', minHeight: '100vh' }}>
 
-      {/* ── СЕКЦИЯ 1: Список отзывов ── */}
+      {/* List */}
       <section className="testimonials-page__section">
         <div className="section-header">
-          <p className="section-label">Recenzie</p>
-          <h1 className="section-title">Čo hovoria naši klienti</h1>
+          <p className="section-label">{t('label')}</p>
+          <h1 className="section-title">{t('sectionTitle')}</h1>
           <p style={{ color: 'var(--color-text-muted)', marginTop: '0.5rem' }}>
-            {total} overených recenzií
+            {total} {t('happyCustomers')}
           </p>
         </div>
 
         {testimonials.length > 0 ? (
           <div className="testimonials-page__grid">
-            {testimonials.map((t) => (
+            {testimonials.map((item) => (
               <TestimonialCard
-                key={t.id}
-                name={t.customerName}
-                content={t.text}
-                rating={t.rating}
-                createdAt={t.createdAt}
-                adminReply={t.adminReply}
-                adminReplyAt={t.adminReplyAt}
+                key={item.id}
+                name={item.customerName}
+                content={item.text}
+                rating={item.rating}
+                createdAt={item.createdAt}
+                adminReply={item.adminReply}
+                adminReplyAt={item.adminReplyAt}
               />
             ))}
           </div>
         ) : (
           <p className="testimonials-page__empty">
-            Zatiaľ žiadne recenzie. Buďte prvý!
+            {t('noReviews')}
           </p>
         )}
       </section>
 
-      {/* ── РАЗДЕЛИТЕЛЬ ── */}
       <div className="testimonials-page__divider" />
 
-      {/* ── СЕКЦИЯ 2: Форма ── */}
+      {/* Form */}
       <section className="testimonials-page__form-section" id="submit">
-        <h2>Zanechajte recenziu</h2>
+        <h2>{t('leaveReview')}</h2>
 
         {!authChecked ? (
-          <p style={{ color: 'var(--color-text-muted)' }}>Načítava sa...</p>
+          <p style={{ color: 'var(--color-text-muted)' }}>{t('loading')}</p>
 
         ) : !customer ? (
           <div className="testimonials-page__auth-gate">
@@ -117,10 +120,10 @@ export default function TestimonialsPageClient({ testimonials, total }: Props) {
               <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
               <circle cx="12" cy="7" r="4" />
             </svg>
-            <p>Recenziu môžu zanechať iba registrovaní klienti.</p>
+            <p>{t('registeredOnly')}</p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="/sk/login" className="btn-primary">Prihlásiť sa</a>
-              <a href="/sk/register" className="btn-outline">Registrovať sa</a>
+              <a href={`/${locale}/login`} className="btn-primary">{t('alreadyRegistered')}</a>
+              <a href={`/${locale}/register`} className="btn-outline">{t('registerToReview')}</a>
             </div>
           </div>
 
@@ -131,18 +134,18 @@ export default function TestimonialsPageClient({ testimonials, total }: Props) {
               <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
               <polyline points="22 4 12 14.01 9 11.01" />
             </svg>
-            <h3>Ďakujeme, {customer.name}!</h3>
-            <p>Vaša recenzia bude zverejnená po schválení.</p>
+            <h3>{t('greeting', { name: customer.name })}</h3>
+            <p>{t('successPending')}</p>
           </div>
 
         ) : (
           <>
             <p className="testimonials-page__logged-as">
-              Píšete ako: <strong>{customer.name}</strong>
+              {t('writingAs', { name: customer.name })}
             </p>
             <form onSubmit={handleSubmit} className="testimonials-page__form">
               <div className="booking__field">
-                <label>Hodnotenie *</label>
+                <label>{t('ratingLabel')} *</label>
                 <div className="testimonials-page__rating">
                   {[1, 2, 3, 4, 5].map((n) => (
                     <button
@@ -150,7 +153,7 @@ export default function TestimonialsPageClient({ testimonials, total }: Props) {
                       type="button"
                       onClick={() => setForm((p) => ({ ...p, rating: n }))}
                       className={`testimonials-page__star${n <= form.rating ? ' active' : ''}`}
-                      aria-label={`${n} hviezd`}
+                      aria-label={`${n} ★`}
                     >
                       ★
                     </button>
@@ -159,12 +162,12 @@ export default function TestimonialsPageClient({ testimonials, total }: Props) {
               </div>
 
               <div className="booking__field">
-                <label>Vaša recenzia *</label>
+                <label>{t('textLabel')} *</label>
                 <textarea
                   rows={5}
                   value={form.content}
                   onChange={(e) => setForm((p) => ({ ...p, content: e.target.value }))}
-                  placeholder="Opíšte vašu skúsenosť v Lumière Nails..."
+                  placeholder={t('textPlaceholder')}
                   required
                   minLength={20}
                 />
@@ -180,7 +183,7 @@ export default function TestimonialsPageClient({ testimonials, total }: Props) {
                 disabled={sending}
                 style={{ alignSelf: 'flex-start' }}
               >
-                {sending ? 'Odosiela sa...' : 'Odoslať recenziu'}
+                {sending ? t('submitting') : t('submitBtn')}
               </button>
             </form>
           </>

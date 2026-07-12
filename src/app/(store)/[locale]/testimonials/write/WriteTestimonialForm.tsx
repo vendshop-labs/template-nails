@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import styles from './write.module.css';
 
 interface Props {
@@ -9,6 +10,8 @@ interface Props {
 }
 
 export default function WriteTestimonialForm({ locale }: Props) {
+  const t = useTranslations('testimonials');
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [text, setText] = useState('');
@@ -29,10 +32,10 @@ export default function WriteTestimonialForm({ locale }: Props) {
               <path d="m9 12 2 2 4-4" />
             </svg>
           </div>
-          <h1 className={styles.title}>Ďakujeme!</h1>
-          <p className={styles.subtitle}>Vaša recenzia čaká na schválenie. Zverejníme ju čo najskôr.</p>
+          <h1 className={styles.title}>{t('successTitle')}</h1>
+          <p className={styles.subtitle}>{t('successPending')}</p>
           <Link href={`/${locale}/testimonials`} className={styles.btn}>
-            Zobraziť všetky recenzie
+            {t('viewAll')}
           </Link>
         </div>
       </main>
@@ -44,19 +47,19 @@ export default function WriteTestimonialForm({ locale }: Props) {
     setError('');
 
     if (name.trim().length < 2) {
-      setError('Zadajte meno (min. 2 znaky)');
+      setError(t('errName'));
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Zadajte platný email');
+      setError(t('errEmail'));
       return;
     }
     if (text.trim().length < 20) {
-      setError('Recenzia musí mať aspoň 20 znakov');
+      setError(t('errText'));
       return;
     }
     if (!consent) {
-      setError('Súhlas so zverejnením je povinný');
+      setError(t('errConsent'));
       return;
     }
 
@@ -69,12 +72,12 @@ export default function WriteTestimonialForm({ locale }: Props) {
       });
       const data = (await res.json()) as { error?: string };
       if (!res.ok) {
-        setError(data.error ?? 'Chyba pri odosielaní');
+        setError(data.error ?? t('errSend'));
       } else {
         setSubmitted(true);
       }
     } catch {
-      setError('Sieťová chyba. Skúste znova.');
+      setError(t('errNetwork'));
     } finally {
       setSubmitting(false);
     }
@@ -83,19 +86,19 @@ export default function WriteTestimonialForm({ locale }: Props) {
   return (
     <main className={styles.page} style={{ paddingTop: '5rem' }}>
       <div className={styles.card}>
-        <h1 className={styles.title}>Napísať recenziu</h1>
-        <p className={styles.subtitle}>Podeľte sa o svoju skúsenosť s Lumière Nails</p>
+        <h1 className={styles.title}>{t('writeTitle')}</h1>
+        <p className={styles.subtitle}>{t('writeSubtitle', { store: 'Lumière Nails' })}</p>
 
         <form className={styles.form} onSubmit={handleSubmit}>
 
           <label className={styles.label}>
-            <span className={styles.labelText}>Meno *</span>
+            <span className={styles.labelText}>{t('nameLabel')} *</span>
             <input
               className={styles.input}
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Jana Nováková"
+              placeholder={t('namePlaceholder')}
               required
               minLength={2}
               maxLength={80}
@@ -103,19 +106,19 @@ export default function WriteTestimonialForm({ locale }: Props) {
           </label>
 
           <label className={styles.label}>
-            <span className={styles.labelText}>Email *</span>
+            <span className={styles.labelText}>{t('emailLabel')} *</span>
             <input
               className={styles.input}
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="jana@example.com"
+              placeholder={t('emailPlaceholder')}
               required
             />
           </label>
 
           <div className={styles.ratingGroup}>
-            <span className={styles.ratingLabel}>Hodnotenie *</span>
+            <span className={styles.ratingLabel}>{t('ratingLabel')} *</span>
             <div className={styles.starPicker}>
               {[1, 2, 3, 4, 5].map((v) => (
                 <button
@@ -125,7 +128,7 @@ export default function WriteTestimonialForm({ locale }: Props) {
                   onMouseEnter={() => setHoverRating(v)}
                   onMouseLeave={() => setHoverRating(0)}
                   onClick={() => setRating(v)}
-                  aria-label={`${v} hviezdičk${v === 1 ? 'a' : v < 5 ? 'y' : 'ičiek'}`}
+                  aria-label={`${v} ★`}
                 >
                   ★
                 </button>
@@ -134,12 +137,12 @@ export default function WriteTestimonialForm({ locale }: Props) {
           </div>
 
           <label className={styles.label}>
-            <span className={styles.labelText}>Vaša recenzia * (min. 20 znakov)</span>
+            <span className={styles.labelText}>{t('textLabel')} *</span>
             <textarea
               className={styles.textarea}
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Povedzte nám, ako ste boli spokojná..."
+              placeholder={t('textPlaceholder')}
               minLength={20}
               maxLength={2000}
               rows={5}
@@ -155,18 +158,18 @@ export default function WriteTestimonialForm({ locale }: Props) {
               onChange={(e) => setConsent(e.target.checked)}
               required
             />
-            <span>Súhlasím so zverejnením recenzie na stránke Lumière Nails</span>
+            <span>{t('consent')}</span>
           </label>
 
           {error && <p className={styles.error}>{error}</p>}
 
           <button type="submit" className={styles.btn} disabled={submitting || !consent}>
-            {submitting ? 'Odosielam...' : 'Odoslať recenziu'}
+            {submitting ? t('submitting') : t('submitBtn')}
           </button>
         </form>
 
         <Link href={`/${locale}/testimonials`} className={styles.backLink}>
-          ← Späť na recenzie
+          ← {t('backToReviews')}
         </Link>
       </div>
     </main>
